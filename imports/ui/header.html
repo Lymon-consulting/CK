@@ -1,0 +1,51 @@
+<template name="header">
+
+<nav class="navbar navbar-default bg-dark navbar-expand sticky-top justify-content-center">
+    <a href="#" class="navbar-brand d-flex mr-auto"><img src="/images/logo.svg" width="40px" height="40px" alt="logo" class="logo d-inline-block align-top"></a> &nbsp;
+    
+    <button class="btn btn-primary-outline" type="button" onclick="openNav(); return(false)">
+          <i class="fa fa-bars" aria-hidden="true"></i>
+    </button>
+    
+    <div class="navbar-collapse collapse" id="collapsingNavbar3">
+        
+        <ul class="nav navbar-nav ml-auto w-100 justify-content-end" ng-hide="token">
+            <li class="nav-item">
+                <button type="button" class="btn btn-outline-light button_white btn-fixed-width"><a href="people.html" class="text-button">DESCUBRE</a></button>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="btn btn-outline-light button_white btn-fixed-width"><a href="entrar_opcion.html" class="text-button">ENTRAR</a></button>
+            </li>
+            <li class="nav-item">
+                {{> loginButtons}}
+            </li>
+        </ul>
+
+        
+
+    </div>
+</nav>
+<!-- Central Banner -->
+<div class="container-fluid padding-0">
+   <div id="imageBanner">
+   </div>
+</div>
+<!-- /Central Banner -->
+
+
+{{#if currentUser}}
+   <div class="container">
+      <form class="new-people">
+        <input type="text" name="name" placeholder="Nombre" />
+        <input type="text" name="lastname" placeholder="Apellido paterno" />
+        <input type="text" name="lastname2" placeholder="Apellido materno" />
+        <input type="text" name="role" placeholder="Rol" />
+        <input type="text" name="state" placeholder="Estado" />
+        <input type="text" name="country" placeholder="País" />
+        <input type="text" name="likes" placeholder="Likes" />
+        <input type="text" name="views" placeholder="Views" />
+        <button class="submit">Guardar</button>
+      </form>
+   </div>
+{{/if}}
+</template>

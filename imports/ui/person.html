@@ -1,0 +1,63 @@
+<template name="person">
+
+   <div class="row">
+      <div class="col-md-2 vertical-align-middle">
+         <img src="/images/people/griffith.jpg" class="rounded-circle center-block" alt="" height="100px" width="100px">
+      </div>
+      <div class="col-md-7">
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col">
+                  <table class="table table-responsive borderless">
+                     <tbody>
+                        <tr>
+                           <td class="no-padding text-no-wrap">
+                              <a href="/people/{{_id}}"><h5 class="h5-name">{{name}} {{lastname}} {{lastname2}}</h5></a>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="no-padding text-no-wrap subtitle-underline">
+                              {{role}}
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="no-padding text-no-wrap location-underline">
+                              <i class="fa fa-map-marker fa-sm"></i> {{state}}, {{country}}
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="text-no-wrap">
+                              <div class="row">
+                                 <div class="col-md-4">
+                                    {{#if currentUser}}
+                                    <button class="btn button-follow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>      
+                                    {{/if}}
+                                 </div>
+                                 <div class="col-md-2 vdivide"></div>
+                                 <div class="col-md-3 numbers">
+                                    <i class="fa fa-thumbs-up fa-sm"></i> {{likes}}
+                                 </div>
+                                 <div class="col-md-3 numbers">
+                                    <i class="fa fa-eye fa-sm"></i> {{views}}
+                                    {{#if currentUser}}
+                                    <button class="delete">&times;</button>
+                                    {{/if}}
+                                 </div>
+                              </div>
+                              
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-3">
+         <img src="/images/people/cover1.jpg" class="img-fluid cover-thumbnail">
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-md-12"><hr></div>
+   </div>
+</template>
