@@ -1,3 +1,23 @@
+.navbar-nav{
+
+   margin-top: 8px;
+}
+
+
+#forgot-password-link{
+   color: #666
+}
+
+#signup-link{
+   color: #666;
+}
+
+.dropdown-toggle{
+   border-width: 1px;
+   border-color: #fff;
+   background: transparent;
+   color: #fff;
+}
 
 hr{
    border-color:#333;

@@ -1,36 +1,38 @@
 <template name="header">
 
-<nav class="navbar navbar-default bg-dark navbar-expand sticky-top justify-content-center">
+<nav class="navbar navbar-default dark-bg navbar-expand sticky-top justify-content-center container-fluid padding-0">
     <a href="#" class="navbar-brand d-flex mr-auto"><img src="/images/logo.svg" width="40px" height="40px" alt="logo" class="logo d-inline-block align-top"></a> &nbsp;
     
     <button class="btn btn-primary-outline" type="button" onclick="openNav(); return(false)">
           <i class="fa fa-bars" aria-hidden="true"></i>
     </button>
-    
-    <div class="navbar-collapse collapse" id="collapsingNavbar3">
+
+    <div class="navbar-collapse collapse navbar-right" id="collapsingNavbar3">
         
-        <ul class="nav navbar-nav ml-auto w-100 justify-content-end" ng-hide="token">
-            <li class="nav-item">
-                <button type="button" class="btn btn-outline-light button_white btn-fixed-width"><a href="people.html" class="text-button">DESCUBRE</a></button>
+        <ul class="nav navbar-nav" ng-hide="token">
+            <li class="nav navbar-nav">
+               <button type="button" class="btn btn-outline-light button_white text-button">{{> loginButtons }}</button>
+                
             </li>
+            {{#if currentUser}} 
+            <li class="nav navbar-nav">
+                <a href="/editProfile/{{userId}}" class="text-button"><img src="https://vignette.wikia.nocookie.net/bungostraydogs/images/1/1e/Profile-icon-9.png/revision/latest?cb=20171030104015" width="40px" height="40px"></a>
+            </li>
+            {{else}} 
+            <li class="nav navbar-nav">
+                <button type="button" class="btn btn-outline-light button_white btn-fixed-width"><a href="/peopleList" class="text-button">DESCUBRE</a></button>
+            </li>
+            {{/if}}
+            <!--
             <li class="nav-item">
                 <button type="button" class="btn btn-outline-light button_white btn-fixed-width"><a href="entrar_opcion.html" class="text-button">ENTRAR</a></button>
-            </li>
-            <li class="nav-item">
-                {{> loginButtons}}
-            </li>
+            </li> -->
+            
         </ul>
-
-        
 
     </div>
 </nav>
-<!-- Central Banner -->
-<div class="container-fluid padding-0">
-   <div id="imageBanner">
-   </div>
-</div>
-<!-- /Central Banner -->
+
 
 
 {{#if currentUser}}
