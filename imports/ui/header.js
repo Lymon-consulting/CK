@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor'
 import './header.html';
 
 Template.header.helpers({
-  userId(){
-    return Meteor.userId();
+  user(){
+      return = Meteor.user();
   }
 });

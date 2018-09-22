@@ -11,7 +11,7 @@ accountsUIBootstrap3.setLanguage('es'); // for Spanish
 Accounts.ui.config({
     requestPermissions: {},
     extraSignupFields: [{
-        fieldName: 'first-name',
+        fieldName: 'name',
         fieldLabel: 'Nombre',
         inputType: 'text',
         visible: true,
@@ -24,12 +24,12 @@ Accounts.ui.config({
           }
         }
     }, {
-        fieldName: 'last-name',
+        fieldName: 'lastname',
         fieldLabel: 'Apellido Paterno',
         inputType: 'text',
         visible: true,
     }, {
-        fieldName: 'last-name2',
+        fieldName: 'lastname2',
         fieldLabel: 'Apellido Materno',
         inputType: 'text',
         visible: true,

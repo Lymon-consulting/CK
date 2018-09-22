@@ -3,7 +3,8 @@ import { Template } from 'meteor/templating';
 import { People } from '../api/people.js';
  
 import './person.html';
- 
+
+
 Template.person.events({
   'click .toggle-checked'() {
     // Set the checked property to the opposite of its current value

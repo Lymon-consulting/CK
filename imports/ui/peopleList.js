@@ -6,6 +6,7 @@ import './person.js';
 
 import './peopleList.html';
 
+
 Template.peopleList.helpers({
   people(){
     return People.find({}, {sort: {name: 1 }});

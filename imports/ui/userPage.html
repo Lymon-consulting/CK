@@ -1,3 +1,288 @@
 <template name="userPage">
-   <h1>Aquí los detalles del usuario</h1>
+
+
+   <div class="container text-center">
+      <h1 class="h1-title">EDITAR EL PERFIL DE</h1>
+      <h2>{{firstName}} {{lastName}} {{lastName2}}</h2>
+      <hr class="hr_width_600">
+   </div>
+
+   
+
+   <div class="container">
+      <div class="col-md-8 mx-auto">
+         <!-- Tab panes -->
+         <div class="tab-content" ng-controller="loginCtrl">
+           <div role="tabpanel" class="tab-pane active" id="persona_panel">
+               
+                  <div class="row">
+                     <div class="col form-group">
+                        <label for="name">Cambiar mi nombre</label>
+                        {{#if currentUser}}
+                            {{> user }}
+                        {{/if}}
+                     </div>
+                  </div>
+
+                  <div class="spacer20"></div>
+
+                  <!-- {{> acreditation }} -->
+                  
+                  <div class="spacer20"></div>
+                  
+                  {{> firstSetOfInformation }}
+
+           </div>
+           <div role="tabpanel" class="tab-pane fade" id="negocio_panel">
+               Acá lo de negocio
+           </div>
+         </div>
+      </div>
+   </div>      
+   
+   <div class="spacer80"></div>
+
+
+
+<!-- Content ends here -->
+
+
+</template>
+
+
+
+
+<template name="user">
+  
+  
+  <div>  
+   <form>
+      <input type="text" id="personName" placeholder="Nombres">
+      <input type="text" id="personLastName" placeholder="Apellido paterno">
+      <input type="text" id="personLastName2" placeholder="Apellido materno">
+      <button class="btn" id="updateName" type="button" role="button">Guardar</button>
+   </form>
+  </div>
+
+</template> 
+
+
+
+<template name="acreditation">
+                  <div class="row">
+                     <div class="col form-group">¿Eres el <strong>{{firstName}} {{lastName}} {{lastName2}}</strong> acreditado en los siguientes proyectos?</div>
+                     
+                  </div>
+
+                  <div class="row">
+                     <div class="col">
+                           <table class="table table-bordered">
+                            <tbody>
+                              <tr>
+                                <td>
+                                    Nombre: <strong>De día y de noche</strong> <br>
+                                    Actividades(es): <strong>Productora, Casting</strong> <br>
+                                    
+                                    <label class="custom-control custom-radio">
+                                      <input id="radio1" name="radio" type="radio" class="custom-control-input">
+                                      <span class="custom-control-indicator"></span>
+                                      <span class="custom-control-description">Si</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                      <input id="radio2" name="radio" type="radio" class="custom-control-input">
+                                      <span class="custom-control-indicator"></span>
+                                      <span class="custom-control-description">No</span>
+                                    </label> <br>
+                                    <a href="#" class="text-purple">Ver proyecto</a> 
+                                </td>
+                                <td>
+                                   <img src="../images/cover1.jpg" alt="" width="150" height="100" class="img-tumbnail">
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                    Nombre: <strong>De día y de noche</strong> <br>
+                                    Actividades(es): <strong>Productora, Casting</strong> <br>
+                                    <label class="custom-control custom-radio">
+                                      <input id="radio3" name="radio" type="radio" class="custom-control-input">
+                                      <span class="custom-control-indicator"></span>
+                                      <span class="custom-control-description">Si</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                      <input id="radio4" name="radio" type="radio" class="custom-control-input">
+                                      <span class="custom-control-indicator"></span>
+                                      <span class="custom-control-description">No</span>
+                                    </label><br>
+                                    <a href="#" class="text-purple">Ver proyecto</a>
+                                </td>
+                                <td>
+                                   <img src="../images/cover2.jpg" alt="" width="150" height="100" class="img-tumbnail">
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                    Nombre: <strong>De día y de noche</strong> <br>
+                                    Actividades(es): <strong>Productora, Casting</strong> <br>
+                                    <label class="custom-control custom-radio">
+                                      <input id="radio5" name="radio" type="radio" class="custom-control-input">
+                                      <span class="custom-control-indicator"></span>
+                                      <span class="custom-control-description">Si</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                      <input id="radio6" name="radio" type="radio" class="custom-control-input">
+                                      <span class="custom-control-indicator"></span>
+                                      <span class="custom-control-description">No</span>
+                                    </label><br>
+                                    <a href="#" class="text-purple">Ver proyecto</a> 
+                                </td>
+                                <td>
+                                   <img src="../images/cover3.jpg" alt="" width="150" height="100" class="img-tumbnail">
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                    Nombre: <strong>De día y de noche</strong> <br>
+                                    Actividades(es): <strong>Productora, Casting</strong> <br>
+                                    <label class="custom-control custom-radio">
+                                      <input id="radio7" name="radio" type="radio" class="custom-control-input">
+                                      <span class="custom-control-indicator"></span>
+                                      <span class="custom-control-description">Si</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                      <input id="radio8" name="radio" type="radio" class="custom-control-input">
+                                      <span class="custom-control-indicator"></span>
+                                      <span class="custom-control-description">No</span> 
+                                    </label><br>
+                                    <a href="#" class="text-purple">Ver proyecto</a>
+                                </td>
+                                <td>
+                                   <img src="../images/cover4.jpg" alt="" width="150" height="100" class="img-tumbnail">
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                     </div>
+                  </div>   
+</template>
+
+
+<template name="firstSetOfInformation">
+                  <form class="navbar-form navbar-left" role="register" enctype="multipart/form-data">
+                  <div class="form-group">
+                     <label for="ocupation">Ocupación</label>
+                      <select multiple name="Ocupation" id="ocupation" class="form-control">
+                          {{#each item in Ocupations}}
+                              <option value="{{item}}"> {{item}} </option>
+                          {{/each}}
+                     </select>
+                  </div>
+                  <div class="spacer20"></div>
+                  <div class="form-group">
+                     <label for="resumen">Resumen</label>
+                     <textarea class="form-control" rows="5" id="resume" value="" placeholder="Cuéntanos de ti (450 caracteres máx)."></textarea>
+                  </div>
+                  <div class="spacer20"></div>
+                  <div class="form-group">
+                     <label for="web">Página Web</label>
+                     <input type="text" class="form-control" id="web_page" value="" placeholder="Ej: www.cinekomuna.com">
+                  </div>
+                  <div class="spacer20"></div>
+                  <div class="form-group">
+                     <label for="">En la red <br> <small>Vincula tus cuentas de otros sitios en la red</small></label>
+                  </div>
+                  <div class="spacer20"></div>
+                  <div class="form-group">
+                     <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-facebook fa-lg"></i></span>
+                        <input id="facebook" type="text" class="form-control" id="facebook_page" value="" placeholder="Ej. www.facebook.com/cinekomuna">
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-twitter fa-lg"></i></span>
+                        <input id="twitter" type="text" class="form-control" id="twitter_page" value="" placeholder="Ej. www.twitter.com/cinekomuna">
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-vimeo fa-lg"></i></span>
+                        <input id="vimeo" type="text" class="form-control" id="vimeo_page" value="" placeholder="Ej. www.vimeo.com/cinekomuna">
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-youtube fa-lg"></i></span>
+                        <input id="youtube" type="text" class="form-control" id="youtube_page" value="" placeholder="Ej. www.youtube.com/cinekomuna">
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-instagram fa-lg"></i></span>
+                        <input id="instagram" type="text" class="form-control" id="instagram_page" value="" placeholder="Ej. www.instagram.com/cinekomuna">
+                     </div>
+                  </div>
+                  <div class="spacer20"></div>
+                  <div class="row">
+                     <div class="col">Imagen de perfil</div>
+                  </div>
+                  <div class="row">
+                     <div class="col"><hr></div>
+                  </div>
+                  <div class="row">
+                     <div class="col">
+                        <img src="../images/profile-icon.png" class="img-thumbnail" alt="profile" width="50" height="50"/>
+                     </div>
+                     <div class="col">
+                        <label class="btn btn-gray" for="my-file-selector">
+                            <input id="my-file-selector" type="file" name="userPhoto" style="display:none" file-model="userPhoto"
+                            onchange="$('#upload-file-info').html(this.files[0].name)">
+                            Escoger imagen
+                        </label>
+                        <span class='label label-info' id="upload-file-info"></span>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col"><hr></div>
+                  </div>
+                  <div class="row">
+                     <div class="col">Imagen de portada</div>
+                  </div>
+                  <div class="row">
+                     <div class="col"><hr></div>
+                  </div>
+                  <div class="row">
+                     <div class="col">
+                        <img src="../images/portrait.png" class="img-thumbnail" alt="portrait" width="50" height="50"/>
+                        <!--
+                        <span ng-switch on="{{user.imagecover}}">
+                           <img ng-switch-when="{{user.imagecover}}" src='../images/uploads/{{user.imagecover}}' class="img-thumbnail" alt="portrait" width="50" height="50">
+                           <img ng-switch-default src='../images/portrait.png' class="img-thumbnail" alt="portrait" width="50" height="50">
+                        </span>-->
+                           
+                     </div>
+                     <div class="col">
+                        <label class="btn btn-gray" for="my-file-selector2">
+                            <input id="my-file-selector2" type="file" name="portraitPhoto" style="display:none" file-model="portraitPhoto"
+                            onchange="$('#upload-file-info2').html(this.files[0].name)">
+                            Escoger imagen
+                        </label>
+                        <span class='label label-info' id="upload-file-info2"></span>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col"><hr></div>
+                  </div>
+
+
+                  <div class="spacer20"></div>
+                  <div class="form-group row">
+                     <div class="col text-center">
+
+                        <button class="btn" id="guardar_set1" type="button" role="button">
+                           GUARDAR
+                        </button>
+                     </div>
+                  </div>
+
+               </form>
 </template>

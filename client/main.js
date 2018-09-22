@@ -1,5 +1,6 @@
 /*Imports for configuration*/
 import '../imports/startup/client/accounts-config.js';
+import '../imports/startup/client/alerts-config.js';
 import '../imports/layouts/mainLayout.js';
 
 
@@ -12,6 +13,7 @@ import '../imports/ui/footer.html';
 import '../imports/ui/peopleList.js';
 import '../imports/ui/home.html';
 import '../imports/ui/userPage.html';
+import '../imports/ui/userPage.js';
 
 /*Imports for routing*/
 import '/lib/router.js';

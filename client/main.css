@@ -429,7 +429,8 @@ a.text-gray{
    border-width: 1px;
    background-color: #333;
    color: #fff;
-   font-weight: bold;
+   height: 20px;
+   /*font-weight: bold;*/
 }
 
 .btn-gray a, a:hover{

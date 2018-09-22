@@ -16,7 +16,7 @@
             </li>
             {{#if currentUser}} 
             <li class="nav navbar-nav">
-                <a href="/editProfile/{{userId}}" class="text-button"><img src="https://vignette.wikia.nocookie.net/bungostraydogs/images/1/1e/Profile-icon-9.png/revision/latest?cb=20171030104015" width="40px" height="40px"></a>
+                <a href="/editProfile/{{currentUser._id}}" class="text-button"><img src="https://vignette.wikia.nocookie.net/bungostraydogs/images/1/1e/Profile-icon-9.png/revision/latest?cb=20171030104015" width="40px" height="40px"></a>
             </li>
             {{else}} 
             <li class="nav navbar-nav">
@@ -36,6 +36,7 @@
 
 
 {{#if currentUser}}
+<!--
    <div class="container">
       <form class="new-people">
         <input type="text" name="name" placeholder="Nombre" />
@@ -49,5 +50,6 @@
         <button class="submit">Guardar</button>
       </form>
    </div>
+-->
 {{/if}}
 </template>
