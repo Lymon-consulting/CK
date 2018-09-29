@@ -5,7 +5,7 @@ import { Accounts } from 'meteor/accounts-base';
 Accounts.onCreateUser((options,user) => {
    const newUser = user;
    if(validator.isEmail(options.email)){
-      if(options.profile) newUser.profile = options.profile;
+      //if(options.profile) newUser.profile = options.profile;
       return newUser;
    }
 

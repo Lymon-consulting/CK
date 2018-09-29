@@ -3,7 +3,7 @@
 
    <div class="container text-center">
       <h1 class="h1-title">EDITAR EL PERFIL DE</h1>
-      <h2>{{firstName}} {{lastName}} {{lastName2}}</h2>
+      <h2>{{userFullName}}</h2>
       <hr class="hr_width_600">
    </div>
 
@@ -19,7 +19,7 @@
                      <div class="col form-group">
                         <label for="name">Cambiar mi nombre</label>
                         {{#if currentUser}}
-                            {{> user }}
+                           {{> user }}
                         {{/if}}
                      </div>
                   </div>
@@ -57,16 +57,16 @@
   
   <div>  
    <form>
-      <input type="text" id="personName" placeholder="Nombres">
-      <input type="text" id="personLastName" placeholder="Apellido paterno">
-      <input type="text" id="personLastName2" placeholder="Apellido materno">
+      <input type="text" id="personName" placeholder="Nombres" value="{{name}}">
+      <input type="text" id="personLastName" placeholder="Apellido paterno" value="{{lastname}}">
+      <input type="text" id="personLastName2" placeholder="Apellido materno" value="{{lastname2}}">
       <button class="btn" id="updateName" type="button" role="button">Guardar</button>
    </form>
   </div>
 
 </template> 
 
-
+<!--
 
 <template name="acreditation">
                   <div class="row">
@@ -164,7 +164,7 @@
                      </div>
                   </div>   
 </template>
-
+-->
 
 <template name="firstSetOfInformation">
                   <form class="navbar-form navbar-left" role="register" enctype="multipart/form-data">
@@ -179,12 +179,12 @@
                   <div class="spacer20"></div>
                   <div class="form-group">
                      <label for="resumen">Resumen</label>
-                     <textarea class="form-control" rows="5" id="resume" value="" placeholder="Cuéntanos de ti (450 caracteres máx)."></textarea>
+                     <textarea class="form-control" rows="5" id="resume" value="" placeholder="Cuéntanos de ti (450 caracteres máx).">{{resume}}</textarea>
                   </div>
                   <div class="spacer20"></div>
                   <div class="form-group">
                      <label for="web">Página Web</label>
-                     <input type="text" class="form-control" id="web_page" value="" placeholder="Ej: www.cinekomuna.com">
+                     <input type="text" class="form-control" id="web_page" value="{{webpage}}" placeholder="Ej: www.cinekomuna.com">
                   </div>
                   <div class="spacer20"></div>
                   <div class="form-group">
@@ -194,31 +194,31 @@
                   <div class="form-group">
                      <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-facebook fa-lg"></i></span>
-                        <input id="facebook" type="text" class="form-control" id="facebook_page" value="" placeholder="Ej. www.facebook.com/cinekomuna">
+                        <input  type="text" class="form-control" id="facebook_page" value="{{facebook}}" placeholder="Ej. www.facebook.com/cinekomuna">
                      </div>
                   </div>
                   <div class="form-group">
                      <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-twitter fa-lg"></i></span>
-                        <input id="twitter" type="text" class="form-control" id="twitter_page" value="" placeholder="Ej. www.twitter.com/cinekomuna">
+                        <input type="text" class="form-control" id="twitter_page" value="{{twitter}}" placeholder="Ej. www.twitter.com/cinekomuna">
                      </div>
                   </div>
                   <div class="form-group">
                      <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-vimeo fa-lg"></i></span>
-                        <input id="vimeo" type="text" class="form-control" id="vimeo_page" value="" placeholder="Ej. www.vimeo.com/cinekomuna">
+                        <input type="text" class="form-control" id="vimeo_page" value="{{vimeo}}" placeholder="Ej. www.vimeo.com/cinekomuna">
                      </div>
                   </div>
                   <div class="form-group">
                      <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-youtube fa-lg"></i></span>
-                        <input id="youtube" type="text" class="form-control" id="youtube_page" value="" placeholder="Ej. www.youtube.com/cinekomuna">
+                        <input  type="text" class="form-control" id="youtube_page" value="{{youtube}}" placeholder="Ej. www.youtube.com/cinekomuna">
                      </div>
                   </div>
                   <div class="form-group">
                      <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-instagram fa-lg"></i></span>
-                        <input id="instagram" type="text" class="form-control" id="instagram_page" value="" placeholder="Ej. www.instagram.com/cinekomuna">
+                        <input type="text" class="form-control" id="instagram_page" value="{{instagram}}" placeholder="Ej. www.instagram.com/cinekomuna">
                      </div>
                   </div>
                   <div class="spacer20"></div>
@@ -253,11 +253,6 @@
                   <div class="row">
                      <div class="col">
                         <img src="../images/portrait.png" class="img-thumbnail" alt="portrait" width="50" height="50"/>
-                        <!--
-                        <span ng-switch on="{{user.imagecover}}">
-                           <img ng-switch-when="{{user.imagecover}}" src='../images/uploads/{{user.imagecover}}' class="img-thumbnail" alt="portrait" width="50" height="50">
-                           <img ng-switch-default src='../images/portrait.png' class="img-thumbnail" alt="portrait" width="50" height="50">
-                        </span>-->
                            
                      </div>
                      <div class="col">

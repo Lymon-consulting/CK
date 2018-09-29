@@ -1,24 +1,57 @@
 import { Template } from 'meteor/templating';
-import { People } from '../api/people.js';
 
 import './userPage.html';
 
+Template.userPage.helpers({
+  userFullName(){
+    if (Meteor.user()){
+      return Meteor.user().profile.name + " " + Meteor.user().profile.lastname + " " +Meteor.user().profile.lastname2;
+    }
+    else{
+      return "Nada";
+    }
+  }
+});
+
+
+
+Template.user.helpers({
+   name(){
+      if(Meteor.user()){
+         return Meteor.user().profile.name;
+      }
+   },
+   lastname(){
+      if(Meteor.user()){
+         return Meteor.user().profile.lastname;
+      }
+   },
+   lastname2(){
+      if(Meteor.user()){
+         return Meteor.user().profile.lastname2;
+      }
+   }
+});
 
 Template.user.events({
   'click #updateName': function(event, template) {
    event.preventDefault();
-   var user, lastname, lastname2;
-   $('#personName').val()!="" ? user = $('#personName').val(): user = Meteor.user().profile.name; 
-   $('#personLastName').val()!="" ? lastname = $('#personLastName').val(): lastname = Meteor.user().profile.lastname; 
-   $('#personLastName2').val()!="" ? lastname2 = $('#personLastName2').val(): lastname2 = Meteor.user().profile.lastname2; 
-   if(user!="" || lastname!="" || lastname2!=""){
-      console.log('Actualizando nombre del usuario ' + user + " " + lastname + " " + lastname2);
+   var name, lastname, lastname2;
+  
+   name = $('#personName').val();
+   lastname = $('#personLastName').val();
+   lastname2 = $('#personLastName2').val();
+
+   if(name!="" || lastname!="" || lastname2!=""){
+      console.log('Actualizando nombre del usuario ' + name + " " + lastname + " " + lastname2);
+      
       Meteor.users.update({_id: Meteor.userId()}, {$set: 
-         {"profile.name": user, 
+         {"profile.name": name, 
           "profile.lastname": lastname, 
           "profile.lastname2": lastname2
          }
       });
+      
       $('#personName').val("");
       $('#personLastName').val("");
       $('#personLastName2').val("");
@@ -26,29 +59,78 @@ Template.user.events({
    }
    else{
       sAlert.error('Los campos no pueden estar vacíos',{});   
-   }
-   
+   } 
+      
+     
   }
 });
 
+
+Template.firstSetOfInformation.helpers({
+   resume(){
+      if(Meteor.user()){
+         return Meteor.user().profile.resume;
+      }
+   },
+   webpage(){
+      if(Meteor.user()){
+         return Meteor.user().profile.webpage;
+      }
+   },
+   facebook(){
+      if(Meteor.user()){
+         return Meteor.user().profile.facebook;
+      }
+   },
+   twitter(){
+      if(Meteor.user()){
+         return Meteor.user().profile.twitter;
+      }
+   },
+   vimeo(){
+      if(Meteor.user()){
+         return Meteor.user().profile.vimeo;
+      }
+   },
+   youtube(){
+      if(Meteor.user()){
+         return Meteor.user().profile.youtube;
+      }
+   },
+   instagram(){
+      if(Meteor.user()){
+         return Meteor.user().profile.instagram;
+      }
+   }
+
+});
+
 Template.firstSetOfInformation.events({
-   'clic #guardar_set1': function(event, template){
+   'click #guardar_set1': function(event, template){
+      console.log('Entrando a la función');
+      
       event.preventDefault();
-      var ocupation, resume, web_page, facebook_page, twitter_page, vimeo_page, youtube_page, instagram_page;
+      var ocupation, resume, webpage, facebook_page, twitter, vimeo, youtube, instagram;
       ocupation = $('#ocupation').val(); 
+      resume = $('#resume').val();
+      webpage = $('#web_page').val();
+      facebook = $('#facebook_page').val();
+      twitter = $('#twitter_page').val();
+      vimeo = $('#vimeo_page').val();
+      youtube = $('#youtube_page').val();
+      instagram = $('#instagram_page').val();
+      userId = Meteor.userId();
 
-      People.update({$set {
-            'userId': Meteor.userId(), 
-            'ocupation': ocupation,
-            'resume': resume,
-            'web_page': web_page,
-            'facebook_page': facebook_page,
-            'twitter_page': twitter_page,
-            'vimeo_page': vimeo_page,
-            'youtube_page': youtube_page,
-            'instagram_page': instagram_page
-         } 
-      })
-
+      console.log('Actualizando los datos de '+ userId);
+      Meteor.users.update({_id: Meteor.userId()}, {$set: {
+         "profile.resume": resume, 
+         "profile.webpage": webpage, 
+         "profile.facebook": facebook,
+         "profile.twitter": twitter,
+         "profile.vimeo": vimeo,
+         "profile.youtube": youtube,
+         "profile.instagram": instagram
+      }});
+      console.log('Datos actualizados');
    }
 });
