@@ -1,0 +1,257 @@
+<template name="userProjects">
+
+
+   <div class="container text-center">
+      <h1 class="h1-title">ADMINISTRAR PROYECTOS DE</h1>
+      <h2>{{userFullName}}</h2>
+      <hr class="hr_width_600">
+   </div>
+
+   
+
+   <div class="container">
+      <div class="col-md-8 mx-auto">
+         <!-- Tab panes -->
+         <div class="tab-content" ng-controller="loginCtrl">
+           <div role="tabpanel" class="tab-pane active" id="persona_panel">    
+             {{#if currentUser}}
+                {{> projects }}
+             {{/if}}
+           </div>       
+         </div>
+      </div>
+   </div>
+</template>
+
+
+
+
+<template name="projects">
+   <form>
+      <!--Sección de recuadros de proyectos-->
+      <div class="row">
+         <div class="col-md-12">
+            <div class="container-fluid">
+               <table class="table">
+                 <tbody>
+                   <tr>
+                     <td><label for="proj_name">Título del proyecto: </label></td>
+                     <td colspan="2"><input type="text" id="proj_name" class="form-control" placeholder="Proyecto" value=""></td>
+                   </tr>
+                   <tr>
+                     <td><label for="proj_type">Tipo de proyecto: </label></td>
+                     <td colspan="2">
+                        <select name="proj_type" id="proj_type" class="form-control">
+                              <option value=""> Seleccione </option>
+                              <option value="Largometraje"> Largometraje </option>
+                        </select>
+                      </td>
+                   </tr>
+                   <tr>
+                     <td><label for="proj_genre">Género: </label></td>
+                     <td colspan="2">
+                        <select name="proj_genre" id="proj_genre" class="form-control">
+                              <option value=""> Seleccione </option>
+                              <option value="Terror"> Terror </option>
+                        </select>
+                      </td>
+                   </tr>
+                   <tr>
+                     <td><label for="proj_desc">Descripción del proyecto:</label></td>
+                     <td colspan="2">
+                       <textarea class="form-control" rows="5" id="proj_desc" value="" placeholder="Descripción del proyecto (450 caracteres máx)."></textarea> 
+                     </td>
+                   </tr>
+                   <tr>
+                     <td><label for="proj_year">Año: </label></td>
+                     <td colspan="2">
+                        <select name="proj_year" id="proj_year" class="form-control">
+                              <option value=""> Seleccione </option>
+                              <option value="2018"> 2018 </option>
+                        </select>
+                      </td>
+                   </tr>
+                   <tr>
+                     <td><label for="role">Rol en el proyecto</label></td>
+                     <td colspan="2">
+                        <select multiple name="Role" id="proj_role" class="form-control">
+                           {{#each item in Ocupations}}
+                              <option value="{{item}}"> {{item}} </option>
+                           {{/each}}
+                        </select>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td><label for="proj_main">Marcar como principal: </label></td>
+                     <td colspan="2">
+                        <input type="checkbox" id="proj_main" value=""> 
+                        <small class="agreements">El proyecto se mostrará en la parte superior de tu perfil, con una imagen más grande</small>
+                      </td>
+                   </tr>
+                   <tr>
+                      <td><label for="web">Página Web del proyecto</label></td>
+                      <td colspan="2">
+                        <div class="col-sm-2">
+                           <div class="input-group">
+                              <span class="input-group-addon"><i class="fa fa-globe fa-lg"></i></span>
+                              <input type="text" class="form-control" id="proj_web_page" value="" placeholder="Ej: www.cinekomuna.com">
+                           </div>
+                        </div>
+
+                     </td>
+                   </tr>
+                   <tr>
+                      <td><label for="facebook">Facebook del proyecto</label></td>
+                      <td colspan="2">
+                        <div class="col-sm-2">
+                           <div class="input-group">
+                              <span class="input-group-addon"><i class="fa fa-facebook fa-lg"></i></span>
+                              <input  type="text" class="form-control" id="proj_facebook_page" value="" placeholder="Ej. www.facebook.com/cinekomuna">
+                           </div>
+                        </div>
+                     </td>
+                   </tr>
+                   <tr>
+                      <td><label for="facebook">Twitter del proyecto</label></td>
+                      <td colspan="2">
+                        <div class="col-sm-2">
+                           <div class="input-group">
+                              <span class="input-group-addon"><i class="fa fa-twitter fa-lg"></i></span>
+                              <input type="text" class="form-control" id="proj_twitter_page" value="" placeholder="Ej. www.twitter.com/cinekomuna">
+                           </div>
+                        </div>
+                        
+                     </td>
+                   </tr>
+                   <tr>
+                      <td><label for="vimeo">Vimeo del proyecto</label></td>
+                      <td colspan="2">
+                        <div class="col-sm-2">
+                           <div class="input-group">
+                              <span class="input-group-addon"><i class="fa fa-vimeo fa-lg"></i></span>
+                              <input type="text" class="form-control" id="proj_vimeo_page" value="" placeholder="Ej. www.vimeo.com/cinekomuna">
+                           </div>
+                        </div>
+                        
+                     </td>
+                   </tr>
+                   <tr>
+                      <td><label for="youtube">Youtube del proyecto</label></td>
+                      <td colspan="2">
+                        <div class="col-sm-2">
+                           <div class="input-group">
+                              <span class="input-group-addon"><i class="fa fa-youtube fa-lg"></i></span>
+                              <input  type="text" class="form-control" id="proj_youtube_page" value="" placeholder="Ej. www.youtube.com/cinekomuna">
+                           </div>
+                        </div>
+                        
+                     </td>
+                   </tr>
+                   <tr>
+                      <td><label for="instagram">Instagram del proyecto</label></td>
+                      <td colspan="2">
+                        <div class="col-sm-2">
+                           <div class="input-group">
+                              <span class="input-group-addon"><i class="fa fa-instagram fa-lg"></i></span>
+                              <input type="text" class="form-control" id="proj_instagram_page" value="" placeholder="Ej. www.instagram.com/cinekomuna">
+                           </div>
+                        </div>
+                        
+                     </td>
+                   </tr>
+                 </tbody>
+               </table>
+               <table class="table table-condensed">
+                  <tbody>
+                    <tr>
+                       <td><label for="proj_pic">Portada del proyecto</label></td>
+                    </tr>
+                 </tbody>
+              </table>
+              <input class="your-upload-class" type="file">
+              <table class="table table-condensed">
+                    <tbody>
+                    <tr>
+                      <td><img src='/images/uploading.png' alt="" class="thumbnail" /></td>
+                      <td><button id="deleteFileButton">delete</button></td>
+                    </tr>
+                    </tbody>
+                  </table>
+               <button class="btn btn-purple" id="guardar_proyecto" type="button" role="button">GUARDAR PROYECTO</button>
+               <div class="row">
+                  <div class="col-md-3 borderless">
+                     <table class="table table-responsive border-exterior table-low-padding">
+                        <tr><td class="text-center vertical-align-top"><img src="../images/c1.jpg" alt="" class="img-fluid" height="132" width="202"></td></tr>
+                        <tr><td class="text-center"><strong>DOLLS</strong></td></tr>
+                        <tr><td class="spacer20"></td></tr>
+                        <tr class="background-lightgray">
+                           <td class="text-center"><small>por <strong>Regina Mendieta Arango</strong></small></td>
+                        </tr>
+                        <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                        <tr class="background-lightgray"><td class="text-center"><small>Guión</small></td></tr>
+                        <tr class="background-lightgray"><td class="spacer20"></td></tr>
+                        <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                        <tr class="background-lightgray">
+                           <td class="text-center">
+                              <i class="fa fa-thumbs-up fa-sm"></i><small>300</small>
+                              <i class="fa fa-eye fa-sm"></i><small>7320</small>
+                           </td>
+                        </tr>
+                     </table>
+                  </div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-3 borderless">
+                     <table class="table table-responsive border-exterior table-low-padding">
+                        <tr><td class="text-center"><img src="../images/c2.jpg" alt="" class="img-fluid" height="132" width="202"></td></tr>
+                        <tr><td class="text-center"><strong>CUATRO CIÉNEGAS</strong></td></tr>
+                        <tr><td class="spacer20"></td></tr>
+                        <tr class="background-lightgray">
+                           <td class="text-center"><small>por <strong>Heinz Malcher K.</strong></small></td>
+                        </tr>
+                        <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                        <tr class="background-lightgray"><td class="text-center"><small>Actuación, Dirección</small></td></tr>
+                        <tr class="background-lightgray"><td class="spacer20"></td></tr>
+                        <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                        <tr class="background-lightgray">
+                           <td class="text-center">
+                              <i class="fa fa-thumbs-up fa-sm"></i><small>342</small>
+                              <i class="fa fa-eye fa-sm"></i><small>546</small>
+                           </td>
+                        </tr>
+                     </table>
+                  </div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-3 borderless">
+                     <table class="table table-responsive border-exterior table-low-padding">
+                        <tr><td class="text-center"><img src="../images/c3.jpg" alt="" class="img-fluid" height="132" width="202"></td></tr>
+                        <tr><td class="text-center"><strong>LA MONTAÑA DE GIRÓN</strong></td></tr>
+                        <tr><td class="spacer20"></td></tr>
+                        <tr class="background-lightgray">
+                           <td class="text-center"><small>por <strong>Federica Gárcia Lorca</strong></small></td>
+                        </tr>
+                        <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                        <tr class="background-lightgray"><td class="text-center"><small>Cinematografía</small></td></tr>
+                        <tr class="background-lightgray"><td class="spacer20"></td></tr>
+                        <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                        <tr class="background-lightgray">
+                           <td class="text-center">
+                              <i class="fa fa-thumbs-up fa-sm"></i><small>45318</small>
+                              <i class="fa fa-eye fa-sm"></i><small>47893</small>
+                           </td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+
+               <div class="row">
+                  <div class="col spacer80"></div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+
+   
+      
+   </form>
+</template> 

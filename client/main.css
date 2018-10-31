@@ -19,6 +19,15 @@
    color: #fff;
 }
 
+.navbar-nav > li > a {
+    padding-top: 0px;
+}
+
+.thumbnail{
+   background: transparent;
+}
+
+
 hr{
    border-color:#333;
 }
@@ -429,7 +438,7 @@ a.text-gray{
    border-width: 1px;
    background-color: #333;
    color: #fff;
-   height: 20px;
+   height: 35px;
    /*font-weight: bold;*/
 }
 

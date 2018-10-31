@@ -1,3 +1,4 @@
+/*
 import { Template } from 'meteor/templating';
 import { People } from '../api/people.js';
 
@@ -12,3 +13,4 @@ Template.peopleList.helpers({
     return People.find({}, {sort: {name: 1 }});
   }
 });
+*/
