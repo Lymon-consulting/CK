@@ -19,21 +19,27 @@ if (Meteor.isClient) {
      }
    });
 
-
+   
    Template.projects.events({
+      'change #proj_main': function(event) {
+        var x = event.target.checked;
+        $('#isMainProject').val(x);
+        console.log($('#isMainProject').val());
+       },
       'click #guardar_proyecto': function(event, template) {
       event.preventDefault();
       console.log('Guardando datos del proyecto...');
       var proj_name, proj_type, proj_genre, proj_desc, proj_year, proj_role, proj_main; 
       var proj_web_page, proj_facebook_page, proj_twitter_page, proj_vimeo_page, proj_youtube_page, proj_instagram_page;
      
+      console.log("asi viene el valor del check="+$('#proj_main').val());
       proj_name = $('#proj_name').val();
       proj_type = $('#proj_type').val();
       proj_genre = $('#proj_genre').val();
       proj_desc = $('#proj_desc').val();
       proj_year = $('#proj_year').val();
       proj_role = $('#proj_role').val();
-      proj_main = $('#proj_main').val();
+      proj_main = $('#isMainProject').val();
       proj_web_page = $('#proj_web_page').val();
       proj_facebook_page = $('#proj_facebook_page').val();
       proj_twitter_page = $('#proj_twitter_page').val();
@@ -47,6 +53,8 @@ if (Meteor.isClient) {
          doc = Collection.findOne({owner: Meteor.userId()});
          doc ? Collection.update({_id: doc._id}, {$set: {field: value}})  : Collection.insert({owner: Meteor.userId(), field: value});
       */
+
+
       Project.insert({
             "project_title": proj_name,
             "project_type": proj_type,
@@ -64,6 +72,7 @@ if (Meteor.isClient) {
             "userId": Meteor.userId()
          });
          console.log('Proyecto agregado');
+         FlowRouter.go('/viewProjects/' + Meteor.userId());
       }
    });
 

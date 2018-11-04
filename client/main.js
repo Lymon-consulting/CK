@@ -14,6 +14,9 @@ import '../imports/ui/home.html';
 import '../imports/ui/userPage.html';
 import '../imports/ui/userPage.js';
 import '../imports/ui/userProjects.js';
+import '../imports/ui/userEditProject.js';
+import '../imports/ui/viewProjects.js';
+
 
 /*Imports for routing*/
 import '/lib/router.js';

@@ -1,22 +1,17 @@
-<template name="userProjects">
-
-
+<template name="viewProjects">
    <div class="container text-center">
-      <h1 class="h1-title">PROYECTOS DE</h1>
+      <h1 class="h1-title">TUS PROYECTOS</h1>
       <h2>{{userFullName}}</h2>
       <hr class="hr_width_600">
    </div>
-
-   
-
    <div class="container">
       <div class="col-md-8 mx-auto">
          <!-- Tab panes -->
          <div class="tab-content" ng-controller="loginCtrl">
            <div role="tabpanel" class="tab-pane active" id="persona_panel">    
-             {{#if currentUser}}
-                {{> projects }}
-             {{/if}}
+             
+                {{> projectList }}
+             
            </div>       
          </div>
       </div>
@@ -24,90 +19,49 @@
 </template>
 
 
-
-
 <template name="projectList">
-   <form>
-      <!--Sección de recuadros de proyectos-->
+   
       <div class="row">
-         <div class="col-md-12">
-            <div class="container-fluid">
-               {{#each getUserProjects}}
-               <div class="row">
-                  <div class="col-md-3 borderless">
-                     <table class="table table-responsive border-exterior table-low-padding">
-                        <tr><td class="text-center vertical-align-top"><img src="../images/c1.jpg" alt="" class="img-fluid" height="132" width="202"></td></tr>
-                        <tr><td class="text-center"><strong>{{project_title}}</strong></td></tr>
-                        <tr><td class="spacer20"></td></tr>
-                        <tr class="background-lightgray">
-                           <td class="text-center"><small>por <strong>{{this.project_genre}}</strong></small></td>
-                        </tr>
-                        <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
-                        <tr class="background-lightgray"><td class="text-center"><small>{{this.project_type}}</small></td></tr>
-                        <tr class="background-lightgray"><td class="spacer20"></td></tr>
-                        <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
-                        <tr class="background-lightgray">
-                           <td class="text-center">
-                              <i class="fa fa-thumbs-up fa-sm"></i><small>300</small>
-                              <i class="fa fa-eye fa-sm"></i><small>7320</small>
-                           </td>
-                        </tr>
-                     </table>
-                  </div>
-                  <div class="col-md-1"></div>
+         <div class="col-md-3 borderless">
+            <table>
+               <p class="text-right"><a href="/addProject/{{currentUser._id}}" class="btn btn-purple">+</a></p>
+            </table>
+            
+            {{#if myProjects}}
+            <table class="table table-responsive">
+               <thead>
+                  <tr>
+                     <td class=""><strong>Título</strong></td>
+                     <td class=""><strong>Tipo</strong></td>
+                     <td class=""><strong>Género</strong></td>
+                     <td class=""><strong>Año</strong></td>
+                     <td class=""><strong>Rol</strong></td>
+                     <td class=""><strong>Principal</strong></td>
+                  </tr>   
+               </thead>
+               <tbody>
+                  {{#each myProjects}}
+                  <tr>
+                     <td class=""><a href="/editProject/{{this._id}}">{{this.project_title}}</a></td>
+                     <td class="">{{this.project_type}}</td>
+                     <td class="">{{this.project_genre}}</td>
+                     <td class="">{{this.project_year}}</td>
+                     <td class="">{{this.project_role}}</td>
+                     <td class="">{{this.project_is_main}}</td>
+                  </tr>
                   {{/each}}
-                  <div class="col-md-3 borderless">
-                     <table class="table table-responsive border-exterior table-low-padding">
-                        <tr><td class="text-center"><img src="../images/c2.jpg" alt="" class="img-fluid" height="132" width="202"></td></tr>
-                        <tr><td class="text-center"><strong>CUATRO CIÉNEGAS</strong></td></tr>
-                        <tr><td class="spacer20"></td></tr>
-                        <tr class="background-lightgray">
-                           <td class="text-center"><small>por <strong>Heinz Malcher K.</strong></small></td>
-                        </tr>
-                        <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
-                        <tr class="background-lightgray"><td class="text-center"><small>Actuación, Dirección</small></td></tr>
-                        <tr class="background-lightgray"><td class="spacer20"></td></tr>
-                        <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
-                        <tr class="background-lightgray">
-                           <td class="text-center">
-                              <i class="fa fa-thumbs-up fa-sm"></i><small>342</small>
-                              <i class="fa fa-eye fa-sm"></i><small>546</small>
-                           </td>
-                        </tr>
-                     </table>
-                  </div>
-                  <div class="col-md-1"></div>
-                  <div class="col-md-3 borderless">
-                     <table class="table table-responsive border-exterior table-low-padding">
-                        <tr><td class="text-center"><img src="../images/c3.jpg" alt="" class="img-fluid" height="132" width="202"></td></tr>
-                        <tr><td class="text-center"><strong>LA MONTAÑA DE GIRÓN</strong></td></tr>
-                        <tr><td class="spacer20"></td></tr>
-                        <tr class="background-lightgray">
-                           <td class="text-center"><small>por <strong>Federica Gárcia Lorca</strong></small></td>
-                        </tr>
-                        <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
-                        <tr class="background-lightgray"><td class="text-center"><small>Cinematografía</small></td></tr>
-                        <tr class="background-lightgray"><td class="spacer20"></td></tr>
-                        <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
-                        <tr class="background-lightgray">
-                           <td class="text-center">
-                              <i class="fa fa-thumbs-up fa-sm"></i><small>45318</small>
-                              <i class="fa fa-eye fa-sm"></i><small>47893</small>
-                           </td>
-                        </tr>
-                     </table>
-                  </div>
-               </div>
-
-               <div class="row">
-                  <div class="col spacer80"></div>
-               </div>
-            </div>
+               </tbody>
+            </table>
+            {{else}}
+               No tienes proyectos, agrega tu primer proyecto
+            {{/if}}
+         </div>
+         <div class="col-md-1"></div>
+         <div class="row">
+            <div class="col spacer80"></div>
          </div>
       </div>
-
-
    
-      
-   </form>
-</template> 
+</template>
+
+

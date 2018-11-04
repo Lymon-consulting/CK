@@ -1,8 +1,8 @@
-<template name="userProjects">
+<template name="userEditProject">
 
 
    <div class="container text-center">
-      <h1 class="h1-title">AGREGAR UN PROYECTO</h1>
+      <h1 class="h1-title">MODIFICAR PROYECTO</h1>
       <h2>{{userFullName}}</h2>
       <hr class="hr_width_600">
    </div>
@@ -15,7 +15,7 @@
          <div class="tab-content" ng-controller="loginCtrl">
            <div role="tabpanel" class="tab-pane active" id="persona_panel">    
              {{#if currentUser}}
-                {{> projects }}
+                {{> editProject }}
              {{/if}}
            </div>       
          </div>
@@ -26,7 +26,7 @@
 
 
 
-<template name="projects">
+<template name="editProject">
    <form>
       <!--Sección de recuadros de proyectos-->
       <div class="row">
@@ -36,17 +36,17 @@
                  <tbody>
                    <tr>
                      <td><label for="proj_name">Título del proyecto: </label></td>
-                     <td colspan="2"><input type="text" id="proj_name" class="form-control" placeholder="Proyecto" value=""></td>
+                     <td colspan="2"><input type="text" id="proj_name" class="form-control" placeholder="Proyecto" value="{{projData.project_title}}"></td>
                    </tr>
                    <tr>
                      <td><label for="proj_type">Tipo de proyecto: </label></td>
                      <td colspan="2">
                         <select name="proj_type" id="proj_type" class="form-control">
                               <option value="" disabled selected style='display:none;'> Seleccione </option>
-                              <option value="Cortometraje"> Cortometraje </option>
-                              <option value="Documental"> Documental </option>
-                              <option value="Largometraje"> Largometraje </option>
-                              <option value="Serie"> Serie </option>
+                              <option value="Cortometraje" {{ typeSelected "Cortometraje"}}> Cortometraje </option>
+                              <option value="Documental" {{ typeSelected "Documental"}}> Documental </option>
+                              <option value="Largometraje" {{ typeSelected "Largometraje"}}> Largometraje </option>
+                              <option value="Serie" {{ typeSelected "Serie"}}> Serie </option>
                         </select>
                       </td>
                    </tr>
@@ -55,18 +55,18 @@
                      <td colspan="2">
                         <select name="proj_genre" id="proj_genre" class="form-control">
                               <option value="" disabled selected style='display:none;'> Seleccione </option>
-                              <option value="Comedia"> Comedia </option>
-                              <option value="Drama"> Drama </option>
-                              <option value="Ficción"> Ficción </option>
-                              <option value="Terror"> Terror </option>
-                              <option value="Thriller"> Thriller </option>
+                              <option value="Comedia" {{ genreSelected "Comedia"}}> Comedia </option>
+                              <option value="Drama" {{ genreSelected "Drama"}}> Drama </option>
+                              <option value="Ficción" {{ genreSelected "Ficción"}}> Ficción </option>
+                              <option value="Terror" {{ genreSelected "Terror"}}> Terror </option>
+                              <option value="Thriller" {{ genreSelected "Thriller"}}> Thriller </option>
                         </select>
                       </td>
                    </tr>
                    <tr>
                      <td><label for="proj_desc">Descripción del proyecto:</label></td>
                      <td colspan="2">
-                       <textarea class="form-control" rows="5" id="proj_desc" value="" placeholder="Descripción del proyecto (450 caracteres máx)."></textarea> 
+                       <textarea class="form-control" rows="5" id="proj_desc" value="" placeholder="Descripción del proyecto (450 caracteres máx).">{{projData.project_desc}}</textarea> 
                      </td>
                    </tr>
                    <tr>
@@ -74,13 +74,13 @@
                      <td colspan="2">
                         <select name="proj_year" id="proj_year" class="form-control">
                               <option value="" disabled selected style='display:none;'> Seleccione </option>
-                              <option value="2012"> 2018 </option>
-                              <option value="2013"> 2013 </option>
-                              <option value="2014"> 2014 </option>
-                              <option value="2015"> 2015 </option>
-                              <option value="2016"> 2016 </option>
-                              <option value="2017"> 2017 </option>
-                              <option value="2018"> 2018 </option>
+                              <option value="2012" {{ typeSelected "2012"}}> 2012 </option>
+                              <option value="2013" {{ yearSelected "2013"}}> 2013 </option>
+                              <option value="2014" {{ yearSelected "2014"}}> 2014 </option>
+                              <option value="2015" {{ yearSelected "2015"}}> 2015 </option>
+                              <option value="2016" {{ yearSelected "2016"}}> 2016 </option>
+                              <option value="2017" {{ yearSelected "2017"}}> 2017 </option>
+                              <option value="2018" {{ yearSelected "2018"}}> 2018 </option>
                         </select>
                       </td>
                    </tr>
@@ -89,7 +89,7 @@
                      <td colspan="2">
                         <select multiple name="Role" id="proj_role" class="form-control">
                            {{#each item in Ocupations}}
-                              <option value="{{item}}"> {{item}} </option>
+                              <option value="{{item}}" {{roleSelected item}}> {{item}} </option>
                            {{/each}}
                         </select>
                      </td>
@@ -97,9 +97,13 @@
                    <tr>
                      <td><label for="proj_main">Marcar como principal: </label></td>
                      <td colspan="2">
-                        <input type="checkbox" id="proj_main"> 
+                        <input type="checkbox" id="proj_main" {{ isMainProject }}> 
                         <small class="agreements">El proyecto se mostrará en la parte superior de tu perfil, con una imagen más grande</small>
+                        {{#if isMainProject}}
+                        <input type="hidden" name="isMainProject" id="isMainProject" value="true">
+                        {{else}}
                         <input type="hidden" name="isMainProject" id="isMainProject" value="">
+                        {{/if}}
                       </td>
                    </tr>
                    <tr>
@@ -108,7 +112,7 @@
                         <div class="col-sm-2">
                            <div class="input-group">
                               <span class="input-group-addon"><i class="fa fa-globe fa-lg"></i></span>
-                              <input type="text" class="form-control" id="proj_web_page" value="" placeholder="Ej: www.cinekomuna.com">
+                              <input type="text" class="form-control" id="proj_web_page" value="{{projData.project_web_page}}" placeholder="Ej: www.cinekomuna.com">
                            </div>
                         </div>
 
@@ -120,7 +124,7 @@
                         <div class="col-sm-2">
                            <div class="input-group">
                               <span class="input-group-addon"><i class="fa fa-facebook fa-lg"></i></span>
-                              <input  type="text" class="form-control" id="proj_facebook_page" value="" placeholder="Ej. www.facebook.com/cinekomuna">
+                              <input  type="text" class="form-control" id="proj_facebook_page" value="{{projData.project_facebook_page}}" placeholder="Ej. www.facebook.com/cinekomuna">
                            </div>
                         </div>
                      </td>
@@ -131,7 +135,7 @@
                         <div class="col-sm-2">
                            <div class="input-group">
                               <span class="input-group-addon"><i class="fa fa-twitter fa-lg"></i></span>
-                              <input type="text" class="form-control" id="proj_twitter_page" value="" placeholder="Ej. www.twitter.com/cinekomuna">
+                              <input type="text" class="form-control" id="proj_twitter_page" value="{{projData.project_twitter_page}}" placeholder="Ej. www.twitter.com/cinekomuna">
                            </div>
                         </div>
                         
@@ -143,7 +147,7 @@
                         <div class="col-sm-2">
                            <div class="input-group">
                               <span class="input-group-addon"><i class="fa fa-vimeo fa-lg"></i></span>
-                              <input type="text" class="form-control" id="proj_vimeo_page" value="" placeholder="Ej. www.vimeo.com/cinekomuna">
+                              <input type="text" class="form-control" id="proj_vimeo_page" value="{{projData.proj_vimeo_page}}" placeholder="Ej. www.vimeo.com/cinekomuna">
                            </div>
                         </div>
                         
@@ -155,7 +159,7 @@
                         <div class="col-sm-2">
                            <div class="input-group">
                               <span class="input-group-addon"><i class="fa fa-youtube fa-lg"></i></span>
-                              <input  type="text" class="form-control" id="proj_youtube_page" value="" placeholder="Ej. www.youtube.com/cinekomuna">
+                              <input  type="text" class="form-control" id="proj_youtube_page" value="{{projData.proj_youtube_page}}" placeholder="Ej. www.youtube.com/cinekomuna">
                            </div>
                         </div>
                         
@@ -167,7 +171,7 @@
                         <div class="col-sm-2">
                            <div class="input-group">
                               <span class="input-group-addon"><i class="fa fa-instagram fa-lg"></i></span>
-                              <input type="text" class="form-control" id="proj_instagram_page" value="" placeholder="Ej. www.instagram.com/cinekomuna">
+                              <input type="text" class="form-control" id="proj_instagram_page" value="{{projData.proj_instagram_page}}" placeholder="Ej. www.instagram.com/cinekomuna">
                            </div>
                         </div>
                         
@@ -175,9 +179,26 @@
                    </tr>
                  </tbody>
                </table>
-               
+               <table class="table table-condensed">
+                  <tbody>
+                    <tr>
+                       <td><label for="proj_pic">Portada del proyecto</label></td>
+                    </tr>
+                 </tbody>
+              </table>
+              <input class="your-upload-class" type="file">
+              <table class="table table-condensed">
+                    <tbody>
+                    {{#each coverPicture}}
+                    <tr>
+                      <td>{{#if isUploaded}}<img src="{{this.url store='cover' uploading='/images/uploading.png' storing='/images/saving.png'}}" alt="" class="thumbnail" />{{/if}}</td>  <!-- <img src="/uploads/images-{{_id}}-{{original.name}}"> -->
+                      <td><button id="deleteFileButton">delete</button></td>
+                    </tr>
+                    {{/each}}
+                    </tbody>
+                  </table>
                <button class="btn btn-purple" id="guardar_proyecto" type="button" role="button">GUARDAR PROYECTO</button>
-
+               
                <div class="row">
                   <div class="col spacer80"></div>
                </div>

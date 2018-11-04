@@ -33,3 +33,4 @@ cfs:standard-packages
 cfs:filesystem
 cfs:graphicsmagick
 lepozepo:cloudinary
+session
