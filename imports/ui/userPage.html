@@ -10,9 +10,20 @@
    
 
    <div class="container">
-      <div class="col-md-8 mx-auto">
+      <div class="col-md-10 mx-auto">
+         <!--
+         <ul class="nav nav-tabs nav-justified" role="tablist" id="Navigation">
+           <li class="nav-item">
+             <a class="nav-link text-white active" href="#persona_panel" role="tab" data-toggle="tab">PERSONA</a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link text-white" href="#negocio_panel" role="tab" data-toggle="tab">NEGOCIO/INSTITUCIÓN</a>
+           </li>
+         </ul>
+      -->
+
          <!-- Tab panes -->
-         <div class="tab-content" ng-controller="loginCtrl">
+         <div class="tab-content">
            <div role="tabpanel" class="tab-pane active" id="persona_panel">    
              {{#if currentUser}}
                 {{> user }}
@@ -33,148 +44,131 @@
 
 <template name="user">
    <form>
-      <table class="table">
-        <tbody>
-          <tr>
-            <td><label for="name">Nombre: </label><input type="text" id="personName" class="form-control" placeholder="Nombres" value="{{name}}"></td>
-            <td><label for="lastname">Apellido paterno: </label><input type="text" id="personLastName" class="form-control" placeholder="Apellido paterno" value="{{lastname}}"></td>
-            <td><label for="lastName2">Apellido materno: </label><input type="text" id="personLastName2" class="form-control" placeholder="Apellido materno" value="{{lastname2}}"></td>
-          </tr>
-          <tr>
-            <td><label for="ocupation">Ocupación</label></td>
-            <td colspan="2">
-               <select multiple name="Ocupation" id="ocupation" class="form-control">
-                  {{#each item in Ocupations}}
-                     <option value="{{item}}"> {{item}} </option>
-                  {{/each}}
-               </select>
-            </td>
-          </tr>
-          <tr>
-            <td><label for="resumen">Resumen</label></td>
-            <td colspan="2"><textarea class="form-control" rows="5" id="resume" value="" placeholder="Cuéntanos de ti (450 caracteres máx).">{{resume}}</textarea></td>
-          </tr>
-          <tr>
-             <td><label for="web">Página Web</label></td>
-             <td colspan="2">
-               <div class="col-sm-2">
-                  <div class="input-group">
-                     <span class="input-group-addon"><i class="fa fa-globe fa-lg"></i></span>
-                     <input type="text" class="form-control" id="web_page" value="{{webpage}}" placeholder="Ej: www.cinekomuna.com">
-                  </div>
-               </div>
 
-            </td>
-          </tr>
-          <tr>
-             <td><label for="facebook">Facebook</label></td>
-             <td colspan="2">
-               <div class="col-sm-2">
-                  <div class="input-group">
-                     <span class="input-group-addon"><i class="fa fa-facebook fa-lg"></i></span>
-                     <input  type="text" class="form-control" id="facebook_page" value="{{facebook}}" placeholder="Ej. www.facebook.com/cinekomuna">
-                  </div>
-               </div>
-            </td>
-          </tr>
-          <tr>
-             <td><label for="facebook">Twitter</label></td>
-             <td colspan="2">
-               <div class="col-sm-2">
-                  <div class="input-group">
-                     <span class="input-group-addon"><i class="fa fa-twitter fa-lg"></i></span>
-                     <input type="text" class="form-control" id="twitter_page" value="{{twitter}}" placeholder="Ej. www.twitter.com/cinekomuna">
-                  </div>
-               </div>
-               
-            </td>
-          </tr>
-          <tr>
-             <td><label for="vimeo">Vimeo</label></td>
-             <td colspan="2">
-               <div class="col-sm-2">
-                  <div class="input-group">
-                     <span class="input-group-addon"><i class="fa fa-vimeo fa-lg"></i></span>
-                     <input type="text" class="form-control" id="vimeo_page" value="{{vimeo}}" placeholder="Ej. www.vimeo.com/cinekomuna">
-                  </div>
-               </div>
-               
-            </td>
-          </tr>
-          <tr>
-             <td><label for="youtube">Youtube</label></td>
-             <td colspan="2">
-               <div class="col-sm-2">
-                  <div class="input-group">
-                     <span class="input-group-addon"><i class="fa fa-youtube fa-lg"></i></span>
-                     <input  type="text" class="form-control" id="youtube_page" value="{{youtube}}" placeholder="Ej. www.youtube.com/cinekomuna">
-                  </div>
-               </div>
-               
-            </td>
-          </tr>
-          <tr>
-             <td><label for="instagram">Instagram</label></td>
-             <td colspan="2">
-               <div class="col-sm-2">
-                  <div class="input-group">
-                     <span class="input-group-addon"><i class="fa fa-instagram fa-lg"></i></span>
-                     <input type="text" class="form-control" id="instagram_page" value="{{instagram}}" placeholder="Ej. www.instagram.com/cinekomuna">
-                  </div>
-               </div>
-               
-            </td>
-          </tr>
-        </tbody>
-      </table>
+         <div class="spacer40"></div>
+         <div class="row">
+            <div class="col form-group">
+               <label for="nombre">Nombre <span class="text-purple">(Requerido)</span></label>
+               <input type="text" class="form-control" id="personName" placeholder="Nombres" value="{{name}}">
+            </div>
+            <div class="col form-group">
+               <label for="nombre">Apellido Paterno <span class="text-purple">(Requerido)</span></label>
+               <input type="text" class="form-control" id="personLastName" placeholder="Apellido paterno" value="{{lastname}}">
+            </div>
+            <div class="col form-group">
+               <label for="nombre">Apellido Materno <span class="text-purple">(Requerido)</span></label>
+               <input type="text" class="form-control" id="personLastName2" placeholder="Apellido materno" value="{{lastname2}}">
+            </div>
+         </div>
+         <div class="spacer20"></div>
+
+         
+         <div class="spacer20"></div>
+         <div ng-controller="getOcupationsCtrl">
+            <label for="ubicacion">Ocupación <span class="text-purple">(Requerido)</span></label>
+             <select multiple name="Ocupation" id="ocupation" class="form-control">
+               {{#each item in Ocupations}}
+                  <option value="{{item}}" {{roleSelected item}}> {{item}} </option>
+               {{/each}}
+            </select>
+         </div>
+         <div class="spacer20"></div>
+         <div class="form-group">
+            <label for="resumen">Resumen <span class="text-purple">(Requerido)</span></label>
+            <textarea class="form-control" rows="5" id="resume" value="" placeholder="Cuéntanos de ti (450 caracteres máx).">{{resume}}</textarea>
+         </div>
+         <div class="spacer20"></div>
+         <div class="form-group">
+            <label for="web">Página Web</label>
+             <div class="input-group">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"><i class="fa fa-globe fa-lg"></i></div>
+              </div>
+               <input type="text" class="form-control" id="web_page" value="{{webpage}}" placeholder="Ej: www.cinekomuna.com">
+            </div>
+         </div>
+         <div class="spacer20"></div>
+         <div class="form-group">
+            <label for="">En la red <br> <small>Vincula tus cuentas de otros sitios en la red</small></label>
+         </div>
+         <div class="spacer20"></div>
+         <div class="form-group">
+            <div class="input-group">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"><i class="fa fa-facebook fa-lg"></i></div>
+              </div>
+               <input  type="text" class="form-control" id="facebook_page" value="{{facebook}}" placeholder="Ej. www.facebook.com/cinekomuna">
+            </div>
+         </div>
+         <div class="form-group">
+            <div class="input-group">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"><i class="fa fa-twitter fa-lg"></i></div>
+              </div>
+               <input type="text" class="form-control" id="twitter_page" value="{{twitter}}" placeholder="Ej. www.twitter.com/cinekomuna">
+            </div>
+         </div>
+         <div class="form-group">
+            <div class="input-group">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"><i class="fa fa-vimeo fa-lg"></i></div>
+              </div>
+               <input type="text" class="form-control" id="vimeo_page" value="{{vimeo}}" placeholder="Ej. www.vimeo.com/cinekomuna">
+            </div>
+         </div>
+         <div class="form-group">
+            <div class="input-group">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"><i class="fa fa-youtube fa-lg"></i></div>
+              </div>
+               <input  type="text" class="form-control" id="youtube_page" value="{{youtube}}" placeholder="Ej. www.youtube.com/cinekomuna">
+            </div>
+         </div>
+         <div class="form-group">
+            <div class="input-group">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"><i class="fa fa-instagram fa-lg"></i></div>
+              </div>
+               <input type="text" class="form-control" id="instagram_page" value="{{instagram}}" placeholder="Ej. www.instagram.com/cinekomuna">
+            </div>
+         </div>
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col">Imagen de perfil</div>
+         </div>
+         <div class="row">
+            <div class="col"><hr></div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <input class="your-upload-class" type="file">
+               <table class="table table-condensed">
+                 <tbody>
+                 {{#each profilePicture}}
+                 <tr>
+                   <td>{{#if isUploaded}}<img src="{{this.url store='thumbs' uploading='/images/uploading.png' storing='/images/saving.png'}}" alt="" class="thumbnail" />{{/if}}</td>  <!-- <img src="/uploads/images-{{_id}}-{{original.name}}"> -->
+                   <!--<td><button id="deleteFileButton">delete</button></td>-->
+                 </tr>
+                 {{/each}}
+                 </tbody>
+               </table>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col"><hr></div>
+         </div>
+         <div class="spacer20"></div>
+         <div class="form-group row">
+            <div class="col text-center">
+               <button class="btn btn-purple" id="guardar_set1" type="button" role="button">GUARDAR PERFIL</button>
+               <a href="/viewProjects/{{currentUser._id}}" class="btn btn-purple" id="mis_proyectos" type="button" role="button">MIS PROYECTOS</a>
+            </div>
+         </div>
+
+      </form>
 
 
-   
-      <!--
-      <label for="name">Cambiar mi nombre</label>
-      <input type="text" id="personName" placeholder="Nombres" value="{{name}}">
-      <input type="text" id="personLastName" placeholder="Apellido paterno" value="{{lastname}}">
-      <input type="text" id="personLastName2" placeholder="Apellido materno" value="{{lastname2}}">
-      <button class="btn" id="updateName" type="button" role="button">Guardar</button> -->
 
-      
-      
-      
-      
-      <!--
-      <label for="">En la red <br> <small>Vincula tus cuentas de otros sitios en la red</small></label>
-      <span class="input-group-addon"><i class="fa fa-facebook fa-lg"></i></span>
-      <input  type="text" class="form-control" id="facebook_page" value="{{facebook}}" placeholder="Ej. www.facebook.com/cinekomuna">
-      <span class="input-group-addon"><i class="fa fa-twitter fa-lg"></i></span>
-      <input type="text" class="form-control" id="twitter_page" value="{{twitter}}" placeholder="Ej. www.twitter.com/cinekomuna">
-      <span class="input-group-addon"><i class="fa fa-vimeo fa-lg"></i></span>
-      <input type="text" class="form-control" id="vimeo_page" value="{{vimeo}}" placeholder="Ej. www.vimeo.com/cinekomuna">
-      <span class="input-group-addon"><i class="fa fa-youtube fa-lg"></i></span>
-      <input  type="text" class="form-control" id="youtube_page" value="{{youtube}}" placeholder="Ej. www.youtube.com/cinekomuna">
-      <span class="input-group-addon"><i class="fa fa-instagram fa-lg"></i></span>
-      <input type="text" class="form-control" id="instagram_page" value="{{instagram}}" placeholder="Ej. www.instagram.com/cinekomuna">
-      -->
-      <table class="table table-condensed">
-           <tbody>
-           <tr>
-              <td><label for="profilePic">Foto de perfil</label></td>
-           </tr>
-        </tbody>
-     </table>
-     <input class="your-upload-class" type="file">
-     <table class="table table-condensed">
-           <tbody>
-           {{#each profilePicture}}
-           <tr>
-             <td>{{#if isUploaded}}<img src="{{this.url store='thumbs' uploading='/images/uploading.png' storing='/images/saving.png'}}" alt="" class="thumbnail" />{{/if}}</td>  <!-- <img src="/uploads/images-{{_id}}-{{original.name}}"> -->
-             <td><button id="deleteFileButton">delete</button></td>
-           </tr>
-           {{/each}}
-           </tbody>
-         </table>
-      <button class="btn btn-purple" id="guardar_set1" type="button" role="button">GUARDAR PERFIL</button>
-      <a href="/viewProjects/{{currentUser._id}}" class="btn btn-purple" id="mis_proyectos" type="button" role="button">MIS PROYECTOS</a>
-   </form>
 </template> 
 
 <!--

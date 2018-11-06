@@ -28,9 +28,9 @@ coagmano:stylus
 juliancwirko:s-alert
 underscore@1.0.10
 fortawesome:fontawesome
-twbs:bootstrap
 cfs:standard-packages
 cfs:filesystem
 cfs:graphicsmagick
 lepozepo:cloudinary
 session
+alexwine:bootstrap-4

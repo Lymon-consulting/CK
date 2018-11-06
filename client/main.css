@@ -3,6 +3,9 @@
    margin-top: 8px;
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
 
 #forgot-password-link{
    color: #666

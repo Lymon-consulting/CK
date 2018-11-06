@@ -88,7 +88,22 @@ if (Meteor.isClient) {
          if(Meteor.user()){
             return Meteor.user().profile.instagram;
          }
-      }/*,
+      },
+      roleSelected: function(value){
+        var result="";
+        var prole = Meteor.user().profile.role;
+        if(prole){
+           var elem = prole.indexOf(value);
+           if(elem >= 0){
+             result = 'selected';
+           }
+           else{
+             result = "";
+           } 
+        }
+        return result;
+      }
+      /*,
       profilePicture: function () {
          if(Meteor.user()){
             return Images.find({'owner': Meteor.userId()}); //, 'use': 'profile'
@@ -137,29 +152,28 @@ if (Meteor.isClient) {
          name = $('#personName').val();
          lastname = $('#personLastName').val();
          lastname2 = $('#personLastName2').val();
+         ocupation = $('#ocupation').val(); 
+         resume = $('#resume').val();
 
-         if(name!="" || lastname!="" || lastname2!=""){
+         if(name!="" || lastname!="" || lastname2!="" || ocupation!="" || resume!=""){
             console.log('Actualizando nombre del usuario ' + name + " " + lastname + " " + lastname2);
             
             Meteor.users.update({_id: Meteor.userId()}, {$set: 
                {"profile.name": name, 
                 "profile.lastname": lastname, 
-                "profile.lastname2": lastname2
+                "profile.lastname2": lastname2,
+                "profile.role" : ocupation,
+                "profile.resume" : resume
                }
             });
             
-            $('#personName').val("");
-            $('#personLastName').val("");
-            $('#personLastName2').val("");
-            sAlert.success('Tu nombre ha sido actualizado',{});
          }
          else{
             sAlert.error('Los campos no pueden estar vacíos',{});   
          } 
 
 
-         ocupation = $('#ocupation').val(); 
-         resume = $('#resume').val();
+         
          webpage = $('#web_page').val();
          facebook = $('#facebook_page').val();
          twitter = $('#twitter_page').val();
@@ -170,16 +184,17 @@ if (Meteor.isClient) {
 
          console.log('Actualizando los datos de '+ userId);
          Meteor.users.update({_id: Meteor.userId()}, {$set: {
-            "profile.resume": resume, 
             "profile.webpage": webpage, 
             "profile.facebook": facebook,
             "profile.twitter": twitter,
             "profile.vimeo": vimeo,
             "profile.youtube": youtube,
             "profile.instagram": instagram
+            
          }});
          console.log('Datos actualizados');
          sAlert.success('Tus datos han sido actualizados');
+         FlowRouter.go('/viewProjects/' + Meteor.userId());
       },
 
       'click #deleteFileButton ': function (event) {

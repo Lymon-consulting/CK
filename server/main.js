@@ -44,6 +44,22 @@ Images = new FS.Collection("images", {
             gm(readStream).autoOrient().resize(size, size + '^').gravity('Center').extent(size, size).stream('PNG').pipe(writeStream);
           // The new file size will be automatically detected and set for this store
         }
+      }),
+      new FS.Store.FileSystem("profile", {
+        beforeWrite: function(fileObj) {
+          // We return an object, which will change the
+          // filename extension and type for this store only.
+          return {
+            extension: 'png',
+            type: 'image/png'
+          };
+        },
+        transformWrite: function(fileObj, readStream, writeStream) {
+            // Transform the image into a 40x40px PNG thumbnail
+            var size = "100";
+            gm(readStream).autoOrient().resize(size, size + '^').gravity('Center').extent(size, size).stream('PNG').pipe(writeStream);
+          // The new file size will be automatically detected and set for this store
+        }
       })
     ],
     
@@ -83,3 +99,11 @@ Cover = new FS.Collection("cover", {
       })
     ]
 });
+
+
+
+Meteor.publish("otherUsers", function () {
+  return Meteor.users.find({},{ fields: { '_id': 1 , 'profile': 1}});
+});
+
+

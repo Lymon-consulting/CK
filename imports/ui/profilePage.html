@@ -1,0 +1,458 @@
+<template name="profilePage">
+   <div class="container-fluid" id="bannerBack">
+   </div> 
+
+   <!-- Content starts here -->
+   
+   <div class="spacer60"></div>
+
+   <div class="container">
+      <div class="row">
+         <div class="col">
+            <h1 class="h1-title">{{getProfile.profile.name}} {{getProfile.profile.lastname}} {{getProfile.profile.lastname2}}</h1>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-2 vertical-align-middle">
+            {{#each profilePicture getProfile._id}}
+            <img src="{{this.url store='profile'}}" border="0" class="rounded-circle" />
+            {{/each}}
+         </div>
+         <div class="col-md-10">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-4">
+                     <table class="table table-responsive borderless">
+                        <tbody>
+                           <tr>
+                              <td class="no-padding text-no-wrap">
+                                 <small class="uppercase">{{getProfile.profile.role}}</small>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td class="no-padding text-no-wrap">
+                                 <i class="fa fa-map-marker fa-sm"></i> <small>Campeche, México</small>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td class="no-padding">
+                                 <button class="btn btn-gray text-button"> <i class="fa fa-plus-circle fa-sm"></i> Seguir</button>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <div class="col-md-4 vertical-align-middle">
+                     <table class="table table-responsive borderless">
+                        <tr>
+                           <td class="low-padding text-no-wrap" rowspan="2"><div class="vertical-line" style="height: 55px;"></div></td>
+                           <td class="low-padding text-no-wrap"><i class="fa fa-envelope fa-sm"></i></td>
+                           <td class="low-padding text-no-wrap numbers">Contactar</td>
+                           <td class="low-padding text-no-wrap" rowspan="2"><div class="vertical-line" style="height: 55px;"></div></td>
+                           <td class="low-padding text-no-wrap"><i class="fa fa-user fa-sm"></i></td>
+                           <td class="low-padding text-no-wrap numbers">560</td>
+                           <td class="low-padding text-no-wrap" rowspan="2"><div class="vertical-line" style="height: 55px;"></div></td>
+                           <td class="low-padding text-no-wrap"><i class="fa fa-thumbs-up fa-sm"></i></td>
+                           <td class="low-padding text-no-wrap numbers">12056</td>
+                        </tr>
+                        <tr>
+                           <td class="low-padding text-no-wrap"><i class="fa fa-share-alt-square fa-sm"></i></td>
+                           <td class="low-padding text-no-wrap numbers">Compartir</td>
+                           <td class="low-padding text-no-wrap"><i class="fa fa-user fa-sm"></i></td>
+                           <td class="low-padding text-no-wrap numbers">1560</td>
+                           <td class="low-padding text-no-wrap"><i class="fa fa-eye fa-sm"></i></td>
+                           <td class="low-padding text-no-wrap numbers">7450</td>
+                        </tr>
+                     </table>
+                  </div>
+                  <div class="col-md-4 vertical-align-top">
+                     <div class="input-group input-group-sm">
+                       <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="sizing-addon2">
+                       <button class="btn input-group-addon fa fa-search fa-sm"></button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         
+      </div>
+      <div class="row">
+         <div class="col-md-12">
+            <div class="spacer40"></div>
+            <div class="row">
+               <div class="col-md-12 agreements">
+                  Home - {{getProfile.profile.name}} {{getProfile.profile.lastname}}
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="row">
+               <div class="col-md-9">
+                  <div class="container">
+                     <div class="row">
+                        <div class="col-md-12">
+                           <hr>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-12">
+                           {{#each getProjectImages getMainProject._id}}
+                           <a href="#lightbox" data-toggle="modal" data-target="#ModalCarousel"><img src="{{this.url store='cover'}}" class="img-fluid" alt=""></a>
+                           {{/each}}
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="spacer40"></div>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-4">
+                           <table class="table table-responsive borderless">
+                              <tr>
+                                 <td class="no-padding text-title-gray uppercase" colspan="2">{{getMainProject.project_role}}</td>
+                              </tr>
+                              <tr>
+                                 <td class="no-padding"><i class="fa fa-thumbs-up fa-sm"></i></td>
+                                 <td class="no-padding numbers">120560</td>
+                              </tr>
+                              <tr>
+                                 <td class="no-padding"><i class="fa fa-eye fa-sm"></i></td>
+                                 <td class="no-padding numbers">217450</td>
+                              </tr>
+                           </table>
+                        </div>
+                        <div class="col-md-8">
+                           <p class="agreements text-justify">
+                              {{getMainProject.project_desc}}
+                           </p>
+                        </div>
+
+                     </div>
+                     <div class="row">
+                        <div class="col-md-12"><hr></div>
+                     </div>
+                     <div class="row">
+                        <div class="spacer20"></div>
+                     </div>
+                     <!--Sección de recuadros de proyectos-->
+                     <div class="row">
+                        <div class="col-md-12">
+                           <div class="container-fluid">
+                              <div class="row">
+                                 <div class="col-md-4 borderless">
+                                    <table class="table table-responsive border-exterior table-low-padding">
+                                       <tr><td class="text-center vertical-align-top"><img src="../images/c1.jpg" alt="" class="img-fluid" height="132" width="202"></td></tr>
+                                       <tr><td class="text-center"><strong>DOLLS</strong></td></tr>
+                                       <tr><td class="spacer20"></td></tr>
+                                       <tr class="background-lightgray">
+                                          <td class="text-center"><small>por <strong>Regina Mendieta Arango</strong></small></td>
+                                       </tr>
+                                       <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                                       <tr class="background-lightgray"><td class="text-center"><small>Guión</small></td></tr>
+                                       <tr class="background-lightgray"><td class="spacer20"></td></tr>
+                                       <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                                       <tr class="background-lightgray">
+                                          <td class="text-center">
+                                             <i class="fa fa-thumbs-up fa-sm"></i><small>300</small>
+                                             <i class="fa fa-eye fa-sm"></i><small>7320</small>
+                                          </td>
+                                       </tr>
+                                    </table>
+
+                                 </div>
+                                 <div class="col-md-4 borderless">
+                                    <table class="table table-responsive border-exterior table-low-padding">
+                                       <tr><td class="text-center"><img src="../images/c2.jpg" alt="" class="img-fluid" height="132" width="202"></td></tr>
+                                       <tr><td class="text-center"><strong>CUATRO CIÉNEGAS</strong></td></tr>
+                                       <tr><td class="spacer20"></td></tr>
+                                       <tr class="background-lightgray">
+                                          <td class="text-center"><small>por <strong>Heinz Malcher K.</strong></small></td>
+                                       </tr>
+                                       <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                                       <tr class="background-lightgray"><td class="text-center"><small>Actuación, Dirección</small></td></tr>
+                                       <tr class="background-lightgray"><td class="spacer20"></td></tr>
+                                       <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                                       <tr class="background-lightgray">
+                                          <td class="text-center">
+                                             <i class="fa fa-thumbs-up fa-sm"></i><small>342</small>
+                                             <i class="fa fa-eye fa-sm"></i><small>546</small>
+                                          </td>
+                                       </tr>
+                                    </table>
+                                 </div>
+                                 <div class="col-md-4 borderless">
+                                    <table class="table table-responsive border-exterior table-low-padding">
+                                       <tr><td class="text-center"><img src="../images/c3.jpg" alt="" class="img-fluid" height="132" width="202"></td></tr>
+                                       <tr><td class="text-center"><strong>LA MONTAÑA DE GIRÓN</strong></td></tr>
+                                       <tr><td class="spacer20"></td></tr>
+                                       <tr class="background-lightgray">
+                                          <td class="text-center"><small>por <strong>Federica Gárcia Lorca</strong></small></td>
+                                       </tr>
+                                       <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                                       <tr class="background-lightgray"><td class="text-center"><small>Cinematografía</small></td></tr>
+                                       <tr class="background-lightgray"><td class="spacer20"></td></tr>
+                                       <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                                       <tr class="background-lightgray">
+                                          <td class="text-center">
+                                             <i class="fa fa-thumbs-up fa-sm"></i><small>45318</small>
+                                             <i class="fa fa-eye fa-sm"></i><small>47893</small>
+                                          </td>
+                                       </tr>
+                                    </table>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col spacer80"></div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-4 borderless">
+                                    <table class="table table-responsive border-exterior table-low-padding">
+                                       <tr><td class="text-center"><img src="../images/c4.jpg" alt="" class="img-fluid" height="132" width="202"></td></tr>
+                                       <tr><td class="text-center"><strong>LA CIZAÑA</strong></td></tr>
+                                       <tr><td class="spacer20"></td></tr>
+                                       <tr class="background-lightgray">
+                                          <td class="text-center"><small>por <strong>Plutarco Elias</strong></small></td>
+                                       </tr>
+                                       <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                                       <tr class="background-lightgray"><td class="text-center"><small>Actuación</small></td></tr>
+                                       <tr class="background-lightgray"><td class="spacer20"></td></tr>
+                                       <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                                       <tr class="background-lightgray">
+                                          <td class="text-center">
+                                             <i class="fa fa-thumbs-up fa-sm"></i><small>1287</small>
+                                             <i class="fa fa-eye fa-sm"></i><small>2310</small>
+                                          </td>
+                                       </tr>
+                                    </table>
+                                 </div>
+                                 <div class="col-md-4 borderless">
+                                       <tr><td class="spacer5"></td></tr>
+                                    <table class="table table-responsive border-exterior table-low-padding">
+                                       <tr><td class="text-center"><img src="../images/c5.jpg" alt="" class="img-fluid" height="132" width="202"></td></tr>
+                                       <tr><td class="text-center"><strong>FAST</strong></td></tr>
+                                       <tr><td class="spacer20"></td></tr>
+                                       <tr class="background-lightgray">
+                                          <td class="text-center"><small>por <strong>Karina Marcín Pallares</strong></small></td>
+                                       </tr>
+                                       <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                                       <tr class="background-lightgray"><td class="text-center"><small>Producción, Direacción</small></td></tr>
+                                       <tr class="background-lightgray"><td class="spacer20"></td></tr>
+                                       <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                                       <tr class="background-lightgray">
+                                          <td class="text-center">
+                                             <i class="fa fa-thumbs-up fa-sm"></i><small>432</small>
+                                             <i class="fa fa-eye fa-sm"></i><small>853</small>
+                                          </td>
+                                       </tr>
+                                    </table>
+                                 </div>
+                                 <div class="col-md-4 borderless">
+                                    <table class="table table-responsive border-exterior table-low-padding">
+                                       <tr><td class="text-center"><img src="../images/c6.jpg" alt="" class="img-fluid" height="132" width="202"></td></tr>
+                                       <tr><td class="text-center"><strong>PATZCUARO</strong></td></tr>
+                                       <tr><td class="spacer20"></td></tr>
+                                       <tr class="background-lightgray">
+                                          <td class="text-center"><small>por <strong>Ana Alicia Torres</strong></small></td>
+                                       </tr>
+                                       <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                                       <tr class="background-lightgray"><td class="text-center"><small>Vestuario</small></td></tr>
+                                       <tr class="background-lightgray"><td class="spacer20"></td></tr>
+                                       <tr class="background-lightgray"><td class="text-center"><hr class="hr_width_180"></td></tr>
+                                       <tr class="background-lightgray">
+                                          <td class="text-center">
+                                             <i class="fa fa-thumbs-up fa-sm"></i><small>46598</small>
+                                             <i class="fa fa-eye fa-sm"></i><small>86911</small>
+                                          </td>
+                                       </tr>
+                                    </table>
+                                 </div>
+                              </div>
+                              
+
+                              <div class="row">
+                                 <div class="col spacer40"></div>
+                              </div>
+
+
+
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <hr>
+                                 </div>
+                              </div>
+
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <nav aria-label="..." class="mx-auto">
+                                      <ul class="pagination pagination-sm justify-content-center">
+                                        <li class="page-item disabled">
+                                          <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                          </a>
+                                        </li>
+                                        <li class="page-item active">
+                                             <span class="page-link">1<span class="sr-only">(current)</span></span>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">6</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">7</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">8</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">9</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">+</a></li>
+                                        <li class="page-item">
+                                          <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                          </a>
+                                        </li>
+                                      </ul>
+                                    </nav>
+                                 </div>
+                              </div>
+
+                              <div class="row">
+                                 <div class="col spacer40"></div>
+                              </div>
+
+
+                           </div>
+                        </div>
+                     </div>
+                     <!--Termina sección de recuadros de proyectos-->
+
+
+
+                  </div>
+               </div>
+               <!--Termina Columna izquierda del cuerpo-->
+               <!--Columna derecha del cuerpo-->
+
+               <div class="col-md-3">
+                  <div class="container">
+                     <div class="row">
+                        <div class="col-md-12">
+                           <hr>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-12">
+                           <strong class="uppercase">ACERCA DE {{getProfile.profile.name}}</strong>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col">
+                           <hr>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col">
+                           <p class="agreements text-justify">
+                              {{getProfile.profile.resume}}
+                           </p>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col">
+                           <a href="{{getProfile.profile.webpage}}" target="_blank" class="text-gray"><strong class="text-gray">{{getProfile.profile.webpage}}</strong></a>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-12">
+                           <table class="table table-responsive borderless">
+                              <tr>
+                                 {{#if getProfile.profile.facebook}}
+                                 <td><a href="{{getProfile.profile.facebook}}" target="_blank"> <i class="fa fa-sm fa-facebook text-gray"></i></a></td>
+                                 {{/if}}
+                                 {{#if getProfile.profile.twitter}}
+                                 <td><a href="{{getProfile.profile.twitter}}"><i class="fa fa-sm fa-twitter text-gray"></i></a></td>
+                                 {{/if}}
+                                 {{#if getProfile.profile.vimeo}}
+                                 <td><a href="{{getProfile.profile.vimeo}}"><i class="fa fa-sm fa-vimeo text-gray"></i></a></td>
+                                 {{/if}}
+                                 {{#if getProfile.profile.youtube}}
+                                 <td><a href="{{getProfile.profile.youtube}}"><i class="fa fa-sm fa-youtube text-gray"></i></a></td>
+                                 {{/if}}
+                                 {{#if getProfile.profile.instagram}}
+                                 <td><a href="{{getProfile.profile.instagram}}"><i class="fa fa-sm fa-instagram text-gray"></i></a></td>
+                                 {{/if}}
+                              </tr>
+                           </table>
+                        </div>
+                     </div>
+
+                     <div class="row">
+                        <div class="col spacer120"></div>
+                     </div>
+
+                     <div class="row">
+                        <div class="col"><hr></div>
+                     </div>
+
+                     <div class="row">
+                        <div class="col-md-6">
+                           <strong>SEGUIDORES</strong>
+                        </div>
+                        <div class="col-md-6">
+                           <small>2044</small>
+                        </div>
+                     </div>
+
+                     <div class="row">
+                        <div class="col"><hr></div>
+                     </div>
+                     <div class="row">
+                        <div class="col">
+                           <table class="table table-responsive borderless">
+                              <tr>
+                                 
+                                 <td><img src="../images/griffith.jpg" class="rounded-circle center-block" data-toggle="popover" title="Lee Grifith M." data-content="DIRECTOR, GUIONISTA" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                                 
+                                 <td><img src="../images/profile2.jpg" class="rounded-circle center-block" data-toggle="popover" title="Dinorah Méndez" data-content="CASTING" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                                 
+                                 <td><img src="../images/profile4.jpg" class="rounded-circle center-block" data-toggle="popover" title="Regina Orozco" data-content="ACTRIZ" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                              </tr>
+                              <tr>
+                                 <td><img src="../images/profile5.jpg" class="rounded-circle center-block" data-toggle="popover" title="Zoyla Vaca del Corral" data-content="DIRECCIÓN, PRODUCCIÓN" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                                 <td><img src="../images/profile-mock.jpg" class="rounded-circle center-block" data-toggle="popover" title="Omar Orlaineta" data-content="PRODUCCIÓN" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                                 <td><img src="../images/nc.jpg" class="rounded-circle center-block" data-toggle="popover" title="Nino Cozzi" data-content="PRODUCCIÓN, DIRECCIÓN" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                              </tr>
+                              <tr>
+                                 <td><img src="../images/profile6.jpg" class="rounded-circle center-block" data-toggle="popover" title="Mario Pulido" data-content="ASISTENTE GENERAL" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                                 <td><img src="../images/profile7.jpg" class="rounded-circle center-block" data-toggle="popover" title="Stephanie Solís" data-content="ACTRIZ, MODELO" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                                 <td><img src="../images/profile8.jpg" class="rounded-circle center-block" data-toggle="popover" title="Sheyla Williams" data-content="MAQUILLAJE" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                              </tr>
+                              <tr>
+                                 <td><img src="../images/profile9.jpg" class="rounded-circle center-block" data-toggle="popover" title="Haydee Amber" data-content="DIRECCIÓN" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                                 <td><img src="../images/profile10.jpg" class="rounded-circle center-block" data-toggle="popover" title="Mona Simeone" data-content="CASTING" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                                 <td><img src="../images/profile11.jpg" class="rounded-circle center-block" data-toggle="popover" title="Lou Benson" data-content="CAMARÓGRAFO" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                              </tr>
+                              <tr>
+                                 <td><img src="../images/profile12.jpg" class="rounded-circle center-block" data-toggle="popover" title="Martha Wrideth" data-content="DIRECCIÓN" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                                 <td><img src="../images/profile13.jpg" class="rounded-circle center-block" data-toggle="popover" title="Alfonso Gamm" data-content="ACTOR" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                                 <td><img src="../images/profile14.jpg" class="rounded-circle center-block" data-toggle="popover" title="Sandy Rizo" data-content="MAQUILLAJE" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                              </tr>
+                              <tr>
+                                 <td><img src="../images/profile15.jpg" class="rounded-circle center-block" data-toggle="popover" title="Anton Philliph" data-content="ACTOR" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                                 <td><img src="../images/profile16.jpg" class="rounded-circle center-block" data-toggle="popover" title="Susana Del Río" data-content="PRODUCCIÓN, DIRECCIÓN" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                                 <td><img src="../images/profile17.jpg" class="rounded-circle center-block" data-toggle="popover" title="Héctor Mojarro" data-content="GAFFER" data-trigger="hover" data-placement="bottom" height="50px" width="50px"></td>
+                              </tr>
+                           </table>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!--Termina Columna derecha del cuerpo-->
+            </div>
+         </div>
+      </div>   
+   </div>
+</template>
+

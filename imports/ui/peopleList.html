@@ -1,9 +1,227 @@
 <template name="peopleList">
- <div class="container">
-  <ul>
-     {{#each people}}
-       {{> person}}
-     {{/each}}
-   </ul>
- </div>
+<div class="container">
+      <div class="spacer40"></div>
+      <div class="row">
+         <div class="col-md-3 vdivide">
+            <div class="dropdown">
+              <span class="btn-borderless"> <i class="fa fa-users fa-sm text-purple"></i> </span>
+              <a class="btn-borderless dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Personas <i class="fa fa-chevron-down fa-md"></i>
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#"><span class="text-gray"> <i class="fa fa-film fa-lg"></i> Proyectos</span></a>
+                <a class="dropdown-item" href="#"><span class="text-gray"> <i class="fa fa-video-camera fa-lg"></i> Industrias</span></a>
+                <a class="dropdown-item" href="#"><span class="text-gray"> <i class="fa fa-television fa-lg"></i> Casting</span></a>
+              </div>
+            </div>
+         </div>
+         
+         <div class="col-md-3 vdivide">
+            <div class="dropdown">
+              <a class="btn-borderless dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Ordenar por <i class="fa fa-chevron-down fa-md"></i>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#"><span class="text-gray">1er Asistente de Dirección</span></a>
+                <a class="dropdown-item" href="#"><span class="text-gray">2do Asistente de Dirección</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Asitente de Escenografía</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Actor</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Asitente de Dirección de Arte</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Asistente de Post Producción</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Asistente de Cámara</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Asistente de Dirección</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Asistente de Producción</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Asistente Director de Casting</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Camarógrafo</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Carpintero</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Chofer</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Cinematógrafo</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Colorista</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Constructor</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Contador</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Continuista</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Coordinador de Producción</span></a>
+                <a href="#" class="dropdown-item"><span class="text-gray">Copywriter</span></a>
+
+
+              </div>
+            </div>
+         </div>
+        
+         <div class="col-md-3 vdivide">
+            <div class="dropdown">
+              <a class="btn-borderless" href="#" role="modal" id="dropdownMenuLink" data-toggle="modal" data-target="#exampleModal">
+                Ubicación <i class="fa fa-chevron-down fa-md"></i>
+              </a>
+              
+            </div>
+         </div>
+         
+         <div class="col-md-3">
+            <div class="input-group">
+               <span class="btn-borderless"><strong class="text-purple">Ir</strong>&nbsp;</span>
+               <input type="text" class="form-control" placeholder="Buscar...">
+               <span class="input-group-btn">
+                 <button class="btn btn-secondary" type="button">
+                     <i class="fa fa-search fa-sm"></i>
+                 </button>
+               </span>
+             </div>
+         </div>
+      </div>
+
+      <div class="spacer40"></div>
+      
+      <div class="row">
+         <div class="col-md-12 agreements">
+            Page 1 - 3777 results
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-12">
+            <hr>
+         </div>
+      </div>
+   </div>
+      
+
+
+   <div class="container">
+      <div class="row">
+         <!-- Inicia contenido -->
+         <div class="col-md-9">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-md-12"><hr></div>
+               </div>
+               {{#each people}}
+               <div class="row">
+                  <div class="col-md-2 vertical-align-middle">
+                     {{#each profilePicture this._id}}
+                     <img src="{{this.url store='profile'}}" border="0" class="rounded-circle" />
+                     {{/each}}
+                  </div>
+                  <div class="col-md-7">
+                     <div class="container-fluid">
+                        <div class="row">
+                           <div class="col">
+                              <table class="table table-responsive borderless">
+                                 <tbody>
+                                    <tr>
+                                       <td class="no-padding text-no-wrap">
+                                          <a href="/profilePage/{{this._id}}"><h5 class="h5-name">{{this.profile.name}} {{this.profile.lastname}} {{this.profile.lastname2}}</h5></a>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td class="no-padding text-no-wrap subtitle-underline">
+                                          {{this.profile.role}}
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td class="no-padding text-no-wrap location-underline">
+                                          <i class="fa fa-map-marker fa-sm"></i> Campeche, México
+                                       </td>
+                                    </tr>
+                                    {{#if currentUser}}
+                                    <tr>
+                                       <td class="text-no-wrap">
+                                          <div class="row">
+                                             <div class="col-md-4">
+                                                <button class="btn button-follow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>      
+                                             </div>
+                                             <div class="col-md-2 vdivide"></div>
+                                             <div class="col-md-3 numbers">
+                                                <i class="fa fa-thumbs-up fa-sm"></i> 12056
+                                             </div>
+                                             <div class="col-md-3 numbers">
+                                                <i class="fa fa-eye fa-sm"></i> 7450
+                                             </div>
+                                          </div>
+                                          
+                                       </td>
+                                    </tr>
+                                    {{/if}}
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <img src="../images/cover1.jpg" class="img-fluid cover-thumbnail">
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-12"><hr></div>
+               </div>
+               {{/each}}
+            </div>
+         </div>
+         <!-- Fin contenido -->
+         <!-- Inicia banners -->
+         <div class="col-md-3">
+            <div class="container">
+               <div class="spacer20"></div>
+               <div class="row">
+                  <div class="col">
+                     <img src="../images/banner-section.jpg" alt="" class="img-responsive">
+                  </div>
+               </div>
+               <div class="spacer60"></div>
+               <div class="row">
+                  <div class="col">
+                     <img src="../images/banner-section.jpg" alt="" class="img-responsive">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- Fin banners -->
+      </div>
+
+      <div class="row">
+         <div class="col-md-12">
+            <hr>
+         </div>
+      </div>
+
+      <div class="row">
+         <div class="col-md-12">
+            <nav aria-label="..." class="mx-auto">
+              <ul class="pagination pagination-sm justify-content-center">
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                <li class="page-item active">
+                     <span class="page-link">1<span class="sr-only">(current)</span></span>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" href="#">6</a></li>
+                <li class="page-item"><a class="page-link" href="#">7</a></li>
+                <li class="page-item"><a class="page-link" href="#">8</a></li>
+                <li class="page-item"><a class="page-link" href="#">9</a></li>
+                <li class="page-item"><a class="page-link" href="#">+</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+         </div>
+      </div>
+
+
+   </div>
+
+   
+   
+   <div class="spacer80"></div>
 </template>
+

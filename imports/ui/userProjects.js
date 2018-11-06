@@ -47,15 +47,8 @@ if (Meteor.isClient) {
       proj_youtube_page = $('#proj_youtube_page').val();
       proj_instagram_page = $('#proj_instagram_page').val();
 
-     
-
-      /*
-         doc = Collection.findOne({owner: Meteor.userId()});
-         doc ? Collection.update({_id: doc._id}, {$set: {field: value}})  : Collection.insert({owner: Meteor.userId(), field: value});
-      */
-
-
-      Project.insert({
+     if(proj_name!="" && proj_type!="" && proj_desc!="" && proj_genre!="" && proj_year!="" && proj_role!=""){
+         Project.insert({
             "project_title": proj_name,
             "project_type": proj_type,
             "project_genre": proj_genre,
@@ -71,8 +64,14 @@ if (Meteor.isClient) {
             "proj_instagram_page": proj_instagram_page,
             "userId": Meteor.userId()
          });
-         console.log('Proyecto agregado');
          FlowRouter.go('/viewProjects/' + Meteor.userId());
+         console.log('Proyecto agregado');
+      }
+      else{
+         sAlert.error('Los campos no pueden estar vacíos',{});   
+         console.log("Los campos vienen vacíos");
+      } 
+      
       }
    });
 

@@ -1,87 +1,64 @@
 <template name="header">
 
-<nav class="navbar navbar-default dark-bg navbar-expand sticky-top justify-content-center container-fluid padding-0">
-    <a href="/" class="navbar-brand d-flex mr-auto"><img src="/images/logo.svg" width="40px" height="40px" alt="logo" class="logo d-inline-block align-top"></a> &nbsp;
-    
-    <button class="btn btn-primary-outline" type="button" onclick="openNav(); return(false)">
-          <i class="fa fa-bars" aria-hidden="true"></i>
-    </button>
+<!-- Header starts here -->
+   <nav class="navbar navbar-default bg-dark navbar-expand sticky-top justify-content-center">
+       <a href="home.html" class="navbar-brand d-flex mr-auto"><img src="../images/logo.svg" width="40px" height="40px" alt="logo" class="logo d-inline-block align-top"></a> &nbsp;
+       
+       <button class="btn btn-primary-outline" type="button" onclick="openNav(); return(false)">
+             <i class="fa fa-bars" aria-hidden="true"></i>
+       </button>
+       
+       <div class="navbar-collapse collapse" id="collapsingNavbar3">
+           
+           <ul class="nav navbar-nav ml-auto w-100 justify-content-end" ng-hide="token">
+               <li class="nav-item">
+                   <button type="button" class="btn btn-outline-light button_white text-button">{{> loginButtons }}</button>
+               </li>
+               <li class="nav-item">
+                   <button type="button" class="btn btn-outline-light button_white btn-fixed-width"><a href="/peopleList" class="text-button">DESCUBRE</a></button>
+               </li>
+               {{>profile}}
+           </ul>
 
-    <div class="navbar-collapse collapse navbar-right vcenter" id="collapsingNavbar3">
-        
-        <ul class="nav navbar-nav vcenter">
-            <li class="nav-item vcenter">
-               <button type="button" class="btn btn-outline-light button_white text-button">{{> loginButtons }}</button>
-                
-            </li>
-            
-            {{>profile}}
-            <!--
-            {{#if currentUser}} 
-            <li class="nav navbar-nav">
-               <button class="btn-link">
-                  <a href="/editProfile/{{currentUser._id}}" class="text-button">
-                     <img src="{{profilePicture}}" width="40px" height="40px">
-                  </a>
-               </button>
-            </li>
-            {{else}} 
-            <li class="nav navbar-nav">
-                <button type="button" class="btn btn-outline-light button_white btn-fixed-width"><a href="/peopleList" class="text-button">DESCUBRE</a></button>
-            </li>
-            {{/if}}
-            -->
-            <!--
-            <li class="nav-item">
-                <button type="button" class="btn btn-outline-light button_white btn-fixed-width"><a href="entrar_opcion.html" class="text-button">ENTRAR</a></button>
-            </li> -->
-            
-        </ul>
+           
 
-    </div>
-</nav>
+       </div>
+   </nav>
+   <!-- Header ends here -->
 
 
 
-{{#if currentUser}}
-<!--
-   <div class="container">
-      <form class="new-people">
-        <input type="text" name="name" placeholder="Nombre" />
-        <input type="text" name="lastname" placeholder="Apellido paterno" />
-        <input type="text" name="lastname2" placeholder="Apellido materno" />
-        <input type="text" name="role" placeholder="Rol" />
-        <input type="text" name="state" placeholder="Estado" />
-        <input type="text" name="country" placeholder="País" />
-        <input type="text" name="likes" placeholder="Likes" />
-        <input type="text" name="views" placeholder="Views" />
-        <button class="submit">Guardar</button>
-      </form>
-   </div>
--->
-{{/if}}
 </template>
 
 
 
 <template name="profile">
-{{#if profilePicture.count}}   
-   {{#each profilePicture}}
-      {{#if this.hasStored 'thumbs'}}
-         <li class="nav-item vcenter">
-           <a href="/editProfile/{{currentUser._id}}" class="text-button"><img src="{{this.url store='thumbs' uploading='/images/uploading.png' storing='/images/saving.png'}}" border="0" class="img-circle" /></a>
-         </li>
-      {{else}}
-         <li class="nav-item vcenter">
-           <a href="/editProfile/{{currentUser._id}}" class="text-button"><img src="/images/profile-icon.png" border="0" class="img-circle" /></a>
-         </li>      
-      {{/if}}
-   {{/each}}
+
+{{#if loggingIn}}
+  <p>Loggin in...</p>
 {{else}}
-   <li class="nav-item vcenter">
-     <a href="/editProfile/{{currentUser._id}}" class="text-button"><img src="/images/profile-icon.png" border="0" class="img-circle" /></a>
-   </li>      
+  {{#if currentUser}}  
+    {{#if profilePicture.count}}   
+      {{#each profilePicture}}
+         {{#if this.hasStored 'thumbs'}}
+            <li class="nav-item vcenter">
+              <a href="/editProfile/{{currentUser._id}}" class="text-button"><img src="{{this.url store='thumbs' uploading='/images/uploading.png' storing='/images/saving.png'}}" border="0" class="rounded-circle" /></a>
+            </li>
+         {{else}}
+            <li class="nav-item vcenter">
+              <a href="/editProfile/{{currentUser._id}}" class="text-button"><img src="/images/profile-icon.png" border="0" class="rounded-circle" /></a>
+            </li>      
+         {{/if}}
+      {{/each}}
+   {{else}}
+      <li class="nav-item vcenter">
+        <a href="/editProfile/{{currentUser._id}}" class="text-button"><img src="/images/profile-icon.png" border="0" class="rounded-circle" /></a>
+      </li>      
+   {{/if}}
+  
+  {{/if}}
 {{/if}}
+
    
    
 </template>
