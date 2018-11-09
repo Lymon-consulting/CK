@@ -3,6 +3,9 @@ import { Project } from '../api/project.js';
 import './viewProjects.html';
 
 
+
+
+
 Template.viewProjects.helpers({
   userFullName(){
     if (Meteor.user()){
@@ -17,7 +20,8 @@ Template.viewProjects.helpers({
 
 Template.projectList.helpers({
    myProjects(){      
-      return Project.find({userId: Meteor.userId()}).fetch();
+      Meteor.subscribe('myProjects');
+      return Project.find().fetch();
    },
    isMainProject: function(value){
      var main = Project.findOne({'_id': value}).project_is_main;

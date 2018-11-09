@@ -21,7 +21,6 @@ if (Meteor.isClient) {
 
    Template.editProject.helpers({
       projData(){
-
          return Project.findOne({'_id': Session.get("projID")});
       },
       typeSelected: function(value){
@@ -54,6 +53,7 @@ if (Meteor.isClient) {
       },
       coverPicture: function () {
          if(Meteor.user()){
+            Meteor.subscribe("cover");
             return Cover.find({'project_id': Session.get("projID")});
          }
       }

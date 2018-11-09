@@ -3,25 +3,7 @@ import { Template } from 'meteor/templating';
 import './userPage.html';
 import '/lib/common.js';
 
-/*
-FileData = new FS.Collection("fileData", {
-  stores: [new FS.Store.FileSystem("fileData", {path: "~/meteor_uploads"})]
-});
-FileData.allow({
-  insert: function (userId, doc) {
-    return true;
-  },
-  update: function (userId, doc) {
-    return true;
-  },
-  remove: function (userId, doc) {
-    return true;
-  },
-  download: function (userId, doc) {
-    return true;
-  }
-});
-*/
+
 if (Meteor.isClient) {
    Meteor.subscribe("fileUploads");
 
@@ -102,7 +84,12 @@ if (Meteor.isClient) {
            } 
         }
         return result;
+      },
+      personalCover:function(){
+         Meteor.subscribe("personalcover");
+         return PersonalCover.find({'owner': Meteor.userId()});
       }
+
       /*,
       profilePicture: function () {
          if(Meteor.user()){
@@ -247,6 +234,32 @@ if (Meteor.isClient) {
             });
 
          });
+      },
+      'change .your-cover-class': function (event, template) {
+         console.log("uploading...")
+         FS.Utility.eachFile(event, function (file) {
+            console.log("each file...");
+            var yourFile = new FS.File(file);
+            yourFile.owner = Meteor.userId(); 
+            yourFile.use = 'profile';
+
+            var verifyOnlyOne = PersonalCover.find({'owner': Meteor.userId()}).forEach( function(myDoc) {
+               console.log("Va a borrar " + myDoc._id);
+               PersonalCover.remove({'_id': myDoc._id});
+            });
+
+            PersonalCover.insert(yourFile, function (err, fileObj) {
+                 console.log("callback for the insert, err: ", err);
+                 if (!err) {
+                   console.log("inserted without error");
+                   sAlert.success('Tus foto de portada ha cambiado');
+                 }
+                 else {
+                   console.log("there was an error", err);
+                 }    
+            });
+
+         });
       }
 
    });
@@ -255,6 +268,18 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Images.allow({
+     'insert': function (userId, doc) {
+       // add custom authentication code here
+       return true;
+     },
+     'remove': function (userId, doc) {
+       return true;
+     },
+     'download': function (userId, doc) {
+       return true;
+     }
+   });
+  PersonalCover.allow({
      'insert': function (userId, doc) {
        // add custom authentication code here
        return true;

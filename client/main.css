@@ -7,6 +7,11 @@
   text-transform: uppercase;
 }
 
+.thumbnail-cover{
+   height: 132px; 
+   width: 202px;
+}
+
 #forgot-password-link{
    color: #666
 }
@@ -70,7 +75,7 @@ footer{
 
 .text-title-gray{
    font-family: "AvenirNext-Medium";
-   font-size: 20px;
+   font-size: 16px;
    color:#999;
 }
 
@@ -192,9 +197,13 @@ input::-webkit-input-placeholder {
 
 .cover-thumbnail{
    height: 120px; 
-   width: 400px;
+   width: 200px;
 }
 
+.cover-large{
+   height: 300px; 
+   width: 1080px;
+}
 
 .background-verydarkgray{
    background-color: #111;
@@ -258,6 +267,10 @@ td.low-padding{
 
 .hr_width_180{
    width: 180px;
+}
+
+.hr_width_80{
+   width: 80px;
 }
 
 .hr_width_600{

@@ -1,15 +1,45 @@
 import { Meteor } from 'meteor/meteor';
-/*import '../imports/api/people.js';*/
+import { Project } from '../imports/api/project.js';
 import '../imports/api/ocupations.js';
-import '../imports/api/project.js';
+//import '../imports/api/project.js';
 import '../imports/startup/server/on-create-user.js';
+
 
 Meteor.startup(() => {
   // code to run on server at startup
 });
-/*
-Images = new FS.Collection("images", {
-  stores: [new FS.Store.FileSystem("images", {path: "C:\\workspace\\cinekomuna\\ck_v0.1\\public\\uploads\\"})]
+
+Meteor.publish("otherUsers", function () {
+  return Meteor.users.find({},{ fields: { '_id': 1 , 'profile': 1, 'emails' : 1}});
+});
+
+Meteor.publish('images', function() {
+  return Images.find();
+});
+
+Meteor.publish('cover', function() {
+  return Cover.find();
+});
+
+Meteor.publish('personalcover', function() {
+  return PersonalCover.find();
+});
+
+Meteor.publish('myProjects', function() {
+   var currentUserId = this.userId;
+   return Project.find({'userId' : currentUserId});
+});
+
+Meteor.publish('myMainProject', function(userId) {
+   return Project.find({'userId' : userId, 'project_is_main' : 'true'});
+});
+
+
+
+
+/*Meteor.publish('projects', function (dataQuery) {
+   console.log("Recibiendo en el dataQuery="+dataQuery);
+  return Project.find(dataQuery);
 });*/
 
 Images = new FS.Collection("images", {
@@ -100,10 +130,41 @@ Cover = new FS.Collection("cover", {
     ]
 });
 
-
-
-Meteor.publish("otherUsers", function () {
-  return Meteor.users.find({},{ fields: { '_id': 1 , 'profile': 1}});
+PersonalCover = new FS.Collection("personalcover", {
+   filter: {
+       maxSize: 5 * 1024 * 1024, //in bytes
+       allow: {
+         contentTypes: ['image/*']
+       },
+       onInvalid: function (message) {
+         if (Meteor.isClient) {
+           alert(message);
+         } else {
+           console.log(message);
+         }
+       }
+    },
+    stores: [
+      new FS.Store.FileSystem("personalcover"), // , {path: "C:\\workspace\\cinekomuna\\ck_v0.1\\public\\uploads\\"}
+      new FS.Store.FileSystem("personalcover_min", {
+        beforeWrite: function(fileObj) {
+          // We return an object, which will change the
+          // filename extension and type for this store only.
+          return {
+            extension: 'png',
+            type: 'image/png'
+          };
+        },
+        transformWrite: function(fileObj, readStream, writeStream) {
+            // Transform the image into a 40x40px PNG thumbnail
+            var size = "100";
+            //gm(readStream).autoOrient().resize(size, size + '^').gravity('Center').extent(size, size).stream('PNG').pipe(writeStream);
+          // The new file size will be automatically detected and set for this store
+        }
+      })
+    ]
 });
+
+
 
 

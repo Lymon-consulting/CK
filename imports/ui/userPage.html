@@ -154,6 +154,32 @@
                </table>
             </div>
          </div>
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col">Imagen de portada</div>
+         </div>
+         <div class="row">
+            <div class="col"><hr></div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <input class="your-cover-class" type="file">
+               <table class="table table-condensed">
+                 <tbody>
+                 {{#each personalCover}}
+                 <tr>
+                    <td>
+                      {{#if isUploaded}}
+                        <img src="{{this.url store='personalcover' uploading='/images/uploading.png' storing='/images/saving.png'}}" alt="" class="thumbnail" />
+                      {{/if}}
+                    </td>  <!-- <img src="/uploads/images-{{_id}}-{{original.name}}"> -->
+                   <!--<td><button id="deleteFileButton">delete</button></td>-->
+                 </tr>
+                 {{/each}}
+                 </tbody>
+               </table>
+            </div>
+         </div>
          <div class="row">
             <div class="col"><hr></div>
          </div>
