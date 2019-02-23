@@ -20,43 +20,53 @@
          </div>
       </div>
       <div class="spacer20"></div>
+
+      <table class="table">
       {{#if myProjects}}
-         <div class="row">
-            <div class="col"><strong>Principal</strong></div>
-            <div class="col"><strong>Título</strong></div>
-            <div class="col"><strong>Tipo</strong></div>
-            <div class="col"><strong>Género</strong></div>
-            <div class="col"><strong>Año</strong></div>
-            <div class="col"><strong>Rol</strong></div>
-         </div>        
-         <div class="row">
-            <div class="col"><hr></div>
-         </div>
-         {{#each myProjects}}
-         <div class="row">
-            <div class="col"><input type="radio" name="selectMain" id="proj_main" {{ isMainProject this._id }} value="{{this._id}}"></div>
-            <div class="col"><a href="/editProject/{{this._id}}">{{this.project_title}}</a></div>
-            <div class="col">{{this.project_type}}</div>
-            <div class="col">{{this.project_genre}}</div>
-            <div class="col">{{this.project_year}}</div>
-            <div class="col">{{this.project_role}}</div>
-         </div>
-         <div class="row">
-            <div class="col"><hr></div>
-         </div>
-         {{/each}}
+         <thead>
+            <tr>
+               <th class="col agreements"><strong>Principal</strong></th>
+               <th class="col agreements"><strong>Portada</strong></th>
+               <th class="col agreements"><strong>Título</strong></th>
+               <th class="col agreements"><strong>Tipo</strong></th>
+               <th class="col agreements"><strong>Género</strong></th>
+               <th class="col agreements"><strong>Año</strong></th>
+               <th class="col agreements"><strong>Rol</strong></th>
+               <th class="col agreements"><strong>Ver</strong></th>
+               <th class="col agreements"><strong>Editar</strong></th>
+            </tr>        
+         </thead>
+         <tbody>
+            {{#each myProjects}}
+            <tr>
+               <td><input type="radio" name="selectMain" id="proj_main" {{ isMainProject this._id }} value="{{this._id}}"></td>
+               <td>
+                  {{#each coverPicture this._id}}
+                     {{#if isUploaded}}<img src="{{this.url store='cover' uploading='/images/uploading.png' storing='/images/saving.png'}}" alt="" class="thumbs" />
+                     {{/if}}
+                  {{/each}}
+               </td>
+               <td class="col agreements">{{this.project_title}}</td>
+               <td class="col agreements">{{this.project_type}}</td>
+               <td class="col agreements">{{this.project_genre}}</td>
+               <td class="col agreements">{{this.project_year}}</td>
+               <td class="col agreements">{{this.project_role}}</td>
+               <td class="col agreements"><a href="/projectPage/{{this._id}}"><i class="fa fa-search">&nbsp;</i></a></td>
+               <td class="col agreements"><a href="/editProject/{{this._id}}"><i class="fa fa-edit">&nbsp;</i></a></td>
+            </tr>
+            {{/each}}
+         </tbody>
       {{else}}
-      <div class="row">
-         <div class="col-md-12">
+      <tr>
+         <td colspan="9">
             No tienes proyectos, agrega tu primer proyecto
-         </div>
-      </div>
+         </td>
+      </tr>
       {{/if}}
-      <div class="col-md-12"></div>
-      <div class="row">
-         <div class="col spacer80"></div>
-      </div>
-   
+      <tr>
+         <td colspan="9" class="spacer80">&nbsp;</td>
+      </tr>
+   </table>
 </template>
 
 

@@ -5,12 +5,20 @@ import '../imports/api/ocupations.js';
 import '../imports/startup/server/on-create-user.js';
 
 
+
+
+
 Meteor.startup(() => {
-  // code to run on server at startup
+  process.env.MAIL_URL ="smtp://ljimenez%40lymon.com.mx:ico2000a_B@mail.lymon.com.mx:587?tls.rejectUnauthorized=false";
 });
 
 Meteor.publish("otherUsers", function () {
   return Meteor.users.find({},{ fields: { '_id': 1 , 'profile': 1, 'emails' : 1}});
+});
+
+Meteor.publish("follows", function (userId) {
+   var cuantos = Meteor.users.find({'_id' : userId} , { fields: {'_id': 1 , 'profile': 1}});
+   return cuantos;
 });
 
 Meteor.publish('images', function() {
@@ -25,9 +33,15 @@ Meteor.publish('personalcover', function() {
   return PersonalCover.find();
 });
 
-Meteor.publish('myProjects', function() {
-   var currentUserId = this.userId;
-   return Project.find({'userId' : currentUserId});
+Meteor.publish('myProjects', function(userId) {
+   //
+   //return Project.find({'userId' : userId, 'project_is_main' : ''});
+   //return Project.find({$and : [ {'userId' : userId} , {"project_is_main": '' }]});
+   return Project.find();
+});
+
+Meteor.publish('projectData', function(projId){
+   return Project.find();
 });
 
 Meteor.publish('myMainProject', function(userId) {
@@ -35,7 +49,11 @@ Meteor.publish('myMainProject', function(userId) {
 });
 
 
-
+Meteor.users.allow({
+    update: function () {
+           return true;
+    }
+});
 
 /*Meteor.publish('projects', function (dataQuery) {
    console.log("Recibiendo en el dataQuery="+dataQuery);
@@ -167,4 +185,29 @@ PersonalCover = new FS.Collection("personalcover", {
 
 
 
+// Server: Define a method that the client can call.
+Meteor.methods({
+  sendEmail(to, from, subject, text) {
+    // Make sure that all arguments are strings.
+    //check([to, from, subject, text], [String]);
 
+    // Let other method calls from the same client start running, without
+    // waiting for the email sending to complete.
+    this.unblock();
+
+    SSR.compileTemplate('htmlEmail', Assets.getText('collaboration-template.html'));
+
+   var emailData = {
+     name: "Luis",
+     favoriteRestaurant: "Toks",
+     bestFriend: "Tomás",
+   };
+
+    Email.send({
+     to: to,
+     from: from,
+     subject: subject,
+     html: SSR.render('htmlEmail', emailData),
+   });
+  }
+});

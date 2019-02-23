@@ -113,9 +113,11 @@ if (Meteor.isClient) {
          Meteor.users.update({_id: Meteor.userId()}, {$set: 
             {"profile.name": name, 
              "profile.lastname": lastname, 
-             "profile.lastname2": lastname2
+             "profile.lastname2": lastname2,
+             "profile.fullname": name + " " + lastname + " " + lastname2
             }
          });
+
          
          $('#personName').val("");
          $('#personLastName').val("");
@@ -150,10 +152,11 @@ if (Meteor.isClient) {
                 "profile.lastname": lastname, 
                 "profile.lastname2": lastname2,
                 "profile.role" : ocupation,
-                "profile.resume" : resume
+                "profile.resume" : resume,
+                "profile.fullname": name + " " + lastname + " " + lastname2
                }
             });
-            
+
          }
          else{
             sAlert.error('Los campos no pueden estar vacíos',{});   

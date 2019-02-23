@@ -1,0 +1,464 @@
+<template name="projectPage">
+
+   <div class="container-fluid" id="bannerProject">
+      <div class="spacer20"></div>
+      {{#if isOwner}}
+      <div class="container text-center">
+         <div class="btn-group" role="group" aria-label="...">
+           <button type="button" class="btn btn-outline-light button_white"><a href="/editProject/{{projData._id}}" class="text-button">EDITAR PROYECTO</a></button>
+           <button type="button" class="btn btn-outline-light button_white"><a href="editar_proyecto.html" class="text-button">PUBLICAR CAMBIOS</a></button>
+           <button type="button" class="btn button_white"><i class="fa fa-trash fa-sm"></i></button>
+         </div>   
+         <br><br>
+         <div class="btn-group" role="group" aria-label="...">
+           <button type="button" class="btn button_white" data-toggle="modal" data-target="#collabModal"><i class="fa fa-users fa-sm"></i> <a href="#" class="text-button">COLABORADORES</a></button>
+           <button type="button" class="btn button_white" data-toggle="modal" data-target="#imageModal"><i class="fa fa-camera fa-sm"></i> <a href="#" class="text-button">IMAGEN</a></button>
+           <button type="button" class="btn button_white" data-toggle="modal" data-target="#videoModal"><i class="fa fa-video-camera fa-sm"></i> <a href="#" class="text-button">VIDEO</a></button>
+           <button type="button" class="btn button_white" data-toggle="modal" data-target="#textModal"><i class="fa fa-file-text-o fa-sm"></i> <a href="#" class="text-button">TEXTO</a></button>
+           <button type="button" class="btn button_white" data-toggle="modal" data-target="#phraseModal"><i class="fa fa-quote-right fa-sm"></i> <a href="#" class="text-button">FRASE</a></button>
+           <button type="button" class="btn button_white" data-toggle="modal" data-target="#linkModal"><i class="fa fa-link fa-sm"></i> <a href="#" class="text-button">LINK</a></button>
+           <button type="button" class="btn button_white" id="sendMail"><i class="fa fa-link fa-sm"></i> <a href="#" class="text-button">ENVIAR CORREOS</a></button>
+         </div> 
+      </div>
+      {{/if}}
+      <section>
+         <div class="container-fluid">
+            <div class="spacer120"></div>
+            <div class="spacer120"></div>
+            <div class="row">
+               <div class="col-md-12 col-lg-12 clasification-text text-description">
+                  {{projData.project_type}} / {{projData.project_genre}} / {{projData.project_year}}
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-12 col-lg-12 project-title-text h1-title">
+                  {{projData.project_title}}
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-12 col-lg-12">
+                  <hr align="left" width="50%">
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="container">
+                     <div class="row justify-content-start align-items-center">
+                          <div class="col-2">
+                             {{#each profilePicture projData.userId}}
+                                <a href="/profilePage/{{projData.userId}}"><img src="{{this.url store='profile'}}" border="0" class="rounded-circle" /></a>
+                             {{/each}}
+                          </div>
+                          <div class="col-10">
+                              <div class="container">
+                                 <div class="row justify-content-start align-items-center">
+                                    <div class="col-10 people-name-text">
+                                       <a href="/profilePage/{{projData.userId}}" class="text-white">{{ownerName projData.userId}}</a>
+                                    </div>
+                                 </div>
+                                 <div class="row justify-content-start align-items-center">
+                                    <div class="col-10 text-white uppercase">
+                                     {{ownerRole projData.userId}}
+                                    </div>
+                                </div>
+                             </div>
+                          </div>
+                      </div>
+                  </div>
+               </div>
+            </div>
+            
+         </div>
+
+      </section>
+   </div>
+
+   <div class="container-fluid background-verydarkgray">
+         <div class="row">
+            <div class="col-md-4">
+               <table class="table table-responsive borderless">
+                  <tbody class="">
+                     <tr>
+                        <td><a href="{{projData.project_facebook_page}}"><i class="fa fa-sm fa-facebook text-gray"></i></a></td>
+                        <td><a href="{{projData.project_twitter_page}}"><i class="fa fa-sm fa-twitter text-gray"></i></a></td>
+                        <td><a href="{{projData.proj_vimeo_page}}"><i class="fa fa-sm fa-vimeo text-gray"></i></a></td>
+                        <td><a href="{{projData.proj_youtube_page}}"><i class="fa fa-sm fa-youtube text-gray"></i></a></td>
+                        <td><a href="{{projData.proj_instagram_page}}"><i class="fa fa-sm fa-instagram text-gray"></i></a></td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <div class="col-md-4 vertical-align-middle">
+               <table class="table table-responsive borderless">
+                  <tr>
+                     <td class="low-padding text-no-wrap" rowspan="2"><div class="vertical-line-white" style="height: 55px;"></div></td>
+                     <td class="low-padding text-no-wrap text-white"></td>
+                     <td class="low-padding text-no-wrap text-white numbers"><small>Año: {{projData.project_year}}</small></td>
+                     <td class="low-padding text-no-wrap text-white" rowspan="2"><div class="vertical-line-white" style="height: 55px;" ></div></td>
+                     <td class="low-padding text-no-wrap text-white"><a href="mailto:{{ownerEmail projData.userId}}"><i class="fa fa-envelope fa-sm text-white"></i></a></td>
+                     <td class="low-padding text-no-wrap text-white numbers"><small>Contactar</small></td>
+                     <td class="low-padding text-no-wrap text-white" rowspan="2"><div class="vertical-line-white" style="height: 55px;" ></div></td>
+                     <td class="low-padding text-no-wrap text-white"><i class="fa fa-thumbs-up fa-sm"></i></td>
+                     <td class="low-padding text-no-wrap text-white numbers"><small>{{projData.likes}}</small></td>
+                  </tr>
+                  <tr>
+
+                     <td class="low-padding text-no-wrap text-white"><a href="#" id="pushLike"><i class="fa fa-thumbs-up fa-sm text-white"></i></a></td>
+                     <td class="low-padding text-no-wrap text-white numbers"><a href="#" id="pushLike"><small class="text-white">Me gusta</small></a></td>
+                     <td class="low-padding text-no-wrap text-white"><i class="fa fa-share-alt-square fa-sm"></i></td>
+                     <td class="low-padding text-no-wrap text-white numbers"><small>Compartir</small></td>
+                     <td class="low-padding text-no-wrap text-white"><i class="fa fa-eye fa-sm"></i></td>
+                     <td class="low-padding text-no-wrap text-white numbers"><small>{{projData.views}}</small></td>
+                  </tr>
+               </table>
+            </div>
+            
+         </div>
+      </div>
+
+      <div class="spacer80"></div>
+
+   <div class="container text-center">
+      
+      <h3 class="h1-title">DESCRIPCIÓN</h3>
+      <hr>
+     
+   </div>
+
+   <div class="spacer40"></div>
+
+   <div class="container">
+      <div id="demo">
+          {{projData.project_desc}}
+     </div>
+      
+   </div>      
+   <div class="spacer40"></div>
+
+
+   <div class="container text-center">
+      
+      <h3 class="h1-title">CREW</h3>
+      <hr>
+      <div class="float-right">
+         <button class="btn"> <i class="fa fa-arrow-down fa-sm"></i> </button>
+      </div>
+   </div>
+
+   <div class="spacer40"></div>
+
+
+   <div class="d-flex justify-content-around">
+      <div class="p-2">
+         <img src="../images/griffith.jpg" class="rounded-circle center-block" data-toggle="popover" title="Lee Grifith M." data-content="DIRECTOR, GUIONISTA" data-trigger="hover" data-placement="bottom" height="100px" width="100px">
+               <br><span class="people-name-text-circle">Nino Cozzi</span> <br><span class="people-role-text-circle">DIRECCIÓN</span> 
+      </div>
+      <div class="p-2">
+         <img src="../images/profile2.jpg" class="rounded-circle center-block" data-toggle="popover" title="Dinorah Méndez" data-content="CASTING" data-trigger="hover" data-placement="bottom" height="100px" width="100px">
+               <br><span class="people-name-text-circle">Nino Cozzi</span> <br><span class="people-role-text-circle">DIRECCIÓN</span>
+      </div>
+      <div class="p-2">
+         <img src="../images/profile4.jpg" class="rounded-circle center-block" data-toggle="popover" title="Regina Orozco" data-content="ACTRIZ" data-trigger="hover" data-placement="bottom" height="100px" width="100px">
+               <br><span class="people-name-text-circle">Nino Cozzi</span> <br><span class="people-role-text-circle">DIRECCIÓN</span>
+      </div>
+   </div>
+
+   <div class="d-flex justify-content-around">
+      <div class="p-2">
+         <img src="../images/griffith.jpg" class="rounded-circle center-block" data-toggle="popover" title="Lee Grifith M." data-content="DIRECTOR, GUIONISTA" data-trigger="hover" data-placement="bottom" height="100px" width="100px">
+               <br><span class="people-name-text-circle">Nino Cozzi</span> <br><span class="people-role-text-circle">DIRECCIÓN</span> 
+      </div>
+      <div class="p-2">
+         <img src="../images/profile2.jpg" class="rounded-circle center-block" data-toggle="popover" title="Dinorah Méndez" data-content="CASTING" data-trigger="hover" data-placement="bottom" height="100px" width="100px">
+               <br><span class="people-name-text-circle">Nino Cozzi</span> <br><span class="people-role-text-circle">DIRECCIÓN</span>
+      </div>
+      <div class="p-2">
+         <img src="../images/profile4.jpg" class="rounded-circle center-block" data-toggle="popover" title="Regina Orozco" data-content="ACTRIZ" data-trigger="hover" data-placement="bottom" height="100px" width="100px">
+               <br><span class="people-name-text-circle">Nino Cozzi</span> <br><span class="people-role-text-circle">DIRECCIÓN</span>
+      </div>
+   </div>
+
+
+   <div class="spacer40"></div>
+
+   <div class="container">
+      
+      <div class="row">
+         <div class="col-md-1 vertical-align-middle">
+            <img src="../images/griffith.jpg" class="rounded-circle center-block" alt="" height="50px" width="50px">
+         </div>
+         <div class="col-md-2">
+            <table class="table borderless table-low-padding">
+               <tr>
+                  <td class="people-name-text-circle"><small>Diana Berrondo</small></td>
+               </tr>
+               <tr>
+                  <td>
+                     <small>Hace 19 horas</small>
+                  </td>
+               </tr>
+            </table>
+         </div>
+         <div class="col-md-9"> <hr> </div>
+
+      </div>
+
+      <div class="float-right">
+         <button class="btn btn-gray" >EDITAR </button>
+         <button class="btn"> <i class="fa fa-arrow-down fa-sm"></i> </button>
+      </div>
+   </div>
+
+   <div class="spacer40"></div>
+
+   <div class="container">
+      <div id="demo3">
+
+         <div class="row">
+            <div class="col text-center">
+               <h1 class="h1-title">Lorem Ipsum</h1>
+               <h2>Odorgan</h2>
+            </div>
+         </div>
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col">
+               <p class="text-justify">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo odio, perspiciatis fugiat. Beatae veritatis ullam, in cum esse voluptas itaque doloremque. Necessitatibus delectus, maiores dolorem reprehenderit commodi officiis doloremque voluptas. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo odio, perspiciatis fugiat. Beatae veritatis ullam, in cum esse voluptas itaque doloremque. Necessitatibus delectus, maiores dolorem reprehenderit commodi officiis doloremque voluptas. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo odio, perspiciatis fugiat. Beatae veritatis ullam, in cum esse voluptas itaque doloremque. Necessitatibus delectus, maiores dolorem reprehenderit commodi officiis doloremque voluptas. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo odio, perspiciatis fugiat. Beatae veritatis ullam, in cum esse voluptas itaque doloremque. Necessitatibus delectus, maiores dolorem reprehenderit commodi officiis doloremque voluptas. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo odio, perspiciatis fugiat. Beatae veritatis ullam, in cum esse voluptas itaque doloremque. Necessitatibus delectus, maiores dolorem reprehenderit commodi officiis doloremque voluptas. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo odio, perspiciatis fugiat. Beatae veritatis ullam, in cum esse voluptas itaque doloremque. Necessitatibus delectus, maiores dolorem reprehenderit commodi officiis doloremque voluptas. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo odio, perspiciatis fugiat. Beatae veritatis ullam, in cum esse voluptas itaque doloremque. Necessitatibus delectus, maiores dolorem reprehenderit commodi officiis doloremque voluptas.
+               </p>
+            </div>
+         </div>
+          
+          
+          
+     </div>
+      <hr>
+   </div>  
+
+
+   <div class="spacer80"></div>
+   
+   <div class="spacer40"></div>
+
+   <div class="container">
+      
+      <div class="row">
+         <div class="col-md-1 vertical-align-middle">
+            <img src="../images/griffith.jpg" class="rounded-circle center-block" alt="" height="50px" width="50px">
+         </div>
+         <div class="col-md-2">
+            <table class="table borderless table-low-padding">
+               <tr>
+                  <td class="people-name-text-circle"><small>Diana Berrondo</small></td>
+               </tr>
+               <tr>
+                  <td>
+                     <small>Hace 19 horas</small>
+                  </td>
+               </tr>
+            </table>
+         </div>
+         <div class="col-md-9"> <hr> </div>
+
+      </div>
+
+      <div class="float-right">
+         <button class="btn btn-gray" >EDITAR </button>
+         <button class="btn"> <i class="fa fa-arrow-down fa-sm"></i> </button>
+      </div>
+   </div>
+
+   <div class="spacer40"></div>
+
+   <div class="container">
+      <div id="demo4">
+
+         <div class="row">
+            <div class="col text-center">
+               <h1 class="h1-title">Story Board</h1>
+            </div>
+         </div>
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col">
+               <div class="spacer120"></div>
+               <div class="spacer120"></div>
+               <div class="spacer120"></div>
+            </div>
+         </div>
+          
+          
+          
+     </div>
+      <hr>
+   </div>  
+   
+      <!-- Collab Modal -->
+<div class="modal fade" id="collabModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        
+      </div>
+      <div class="modal-body">
+         <div class="row">
+            <div class="col">
+               <h4 class="modal-title" id="myModalLabel">COLABORADORES</h4>          
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <hr>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               Invita a colaboradores que participaron en tu proyecto. Recibirán una invitación directa en caso de pertenecer a Cinekomuna, y opcionalmente una invitación al correo en caso de que no.
+            </div>
+         </div>
+         <div class="row">
+            <div class="col spacer20"></div>
+         </div>
+         <div class="row">
+            <div class="col">
+               Nombre: {{> inputAutocomplete settings=settings id="msg" class="form-control form-control-sm" placeholder="Nombre..."}}
+            </div>
+            <div class="col">
+               Rol:
+               <select id="oficio" class="form-control form-control-sm">
+                  <option value="Actor">Actor</option>
+                  <option value="Director">Director</option>
+                  <option value="Guionista">Guionista</option>
+                  <option value="Productor">Productor</option>
+               </select>
+            </div>
+            
+         </div>
+         <div class="row">
+            <div class="col">
+               <button type="button" id="add_collaborator" class="btn btn-purple">Agregar</button>
+               <input type="hidden" id="userId">
+               <input type="hidden" id="userMail">
+            </div>
+         </div>
+         <div class="spacer40"></div>
+         {{>selectedUsers}}
+      </div>
+      <div class="modal-footer">
+         <div class="row">
+            <div class="col mx-auto">
+               <a href="#" id="sendNotification" class=" btn-purple"><i class="fa fa-envelope fa-xl btn-purple"></i> Enviar notificación</a>
+               
+            </div>
+         </div>
+         
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      <!-- inviteByMail Modal -->
+<div class="modal fade" id="inviteByMail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        
+      </div>
+      <div class="modal-body">
+         <div class="row">
+            <div class="col">
+               <h4 class="modal-title" id="myModalLabel">INVITAR</h4>          
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <hr>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               Escribe el correo y el rol de la persona que colaboró contigo en este proyecto, recibirá una invitación para unirse a Cinekomuna
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <input class="form-control" type="email" id="addByMail" placeholder="nombre@ejemplo.com...">
+            </div>
+            <div class="col">
+               <select id="oficioByMail" class="form-control form-control-sm">
+                  <option value="Actor">Actor</option>
+                  <option value="Director">Director</option>
+                  <option value="Guionista">Guionista</option>
+                  <option value="Productor">Productor</option>
+               </select>
+            </div>
+            
+         </div>
+         <div class="row">
+            <div class="col">
+               <button type="button" id="add_collaborator_by_mail" class="btn btn-purple">Aceptar</button>
+               <input type="hidden" id="userId">
+               <input type="hidden" id="userMail">
+            </div>
+         </div>
+         <div class="spacer40"></div>
+         {{>selectedUsers}}
+      </div>
+      <div class="modal-footer">
+        
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</template> 
+
+<template name="userPill">
+    <span class="label">{{profile.fullname}}</span>
+</template>
+
+<template name="noMatch">
+    <span class="label text-body-gray">
+      No se encontró a nadie con ese nombre ¿Quieres enviarle una invitación por correo?
+      <button type="button" class="btn btn-purple" id="manageModal"><a href="#" class="text-button">Enviar invitación</a></button>
+   </span>
+    <input type="hidden" id="notfound">
+</template>
+
+<template name="selectedUsers">
+   <div class="table-responsive">
+      <table class="table table-sm">
+         {{#if getCollabs}}
+            <thead>
+               <tr>
+                  <th class="col agreements">Correo</th>
+                  <th class="col agreements">Nombre</th>
+                  <th class="col agreements">Rol</th>
+                  <th class="col agreements">Confirmado</th>
+                  <th class="col agreements">Eliminar</th>
+               </tr>
+            </thead>
+            <tbody>
+               {{#each getCollabs}}
+               <tr>
+                  <td class="col agreements">{{this.email}}</td>
+                  <td class="col agreements">{{this.name}}</td>
+                  <td class="col agreements">{{this.role}}</td>
+                  {{#if this.confirmed}}
+                  <td class="col agreements text-center"><i class="fa fa-check fa-sm"></i></td>
+                  {{else}}
+                  <td class="col agreements text-center"><i class="fa fa-times fa-sm"></i></td>
+                  {{/if}}
+                  <td class="col agreements text-center"><a href="#" class="single-delete"><i class="fa fa-trash fa-sm" data-id="{{this._id}}" data-name="{{this.name}}" data-email="{{this.email}}" data-role="{{this.role}}"></i></a></td>
+               </tr>
+               {{/each}}
+            </tbody>
+         {{/if}}
+      </table>
+   </div>
+</template>

@@ -26,7 +26,56 @@
    </nav>
    <!-- Header ends here -->
 
+   <!--Collapsable menu starts here-->
+   <div id="mySidenav" class="sidenav">
+            
+      <div class="spacer40"></div>
+      {{#if currentUser}}
+      
+      <div class="nav-side-menu">
+         <div class="menu-list">
+            <ul id="menu-content" ng-hide="token">
+                
+                <li><a href="/profilePage/{{currentUser._id}}" onclick="openNav();"><i class="fa fa-search fa-lg">&nbsp;</i>MI PERFIL</a></li>
+                <li><a href="/viewProjects/{{currentUser._id}}" onclick="openNav();"><i class="fa fa-search fa-lg">&nbsp;</i>MIS PROYECTOS</a></li>
+                <li><hr></li>
+                <li><a href="/editProfile/{{currentUser._id}}" onclick="openNav();"><i class="fa fa-search fa-lg">&nbsp;</i>EDITAR PERFIL</a></li>
+            </ul>
+         </div>
+      </div>
+   
+   {{else}}
+      <div class="nav-side-menu">
+         <div class="menu-list">
+            <ul id="menu-content" ng-hide="token">
+                
+                <li><a href="empleos.html"><i class="fa fa-suitcase fa-lg">&nbsp;</i> EMPLEOS</a></li>
+                <li><hr></li>
+                <li><a href="editar_proyecto2.html"><i class="fa fa-newspaper-o fa-lg">&nbsp;</i> BLOG</a></li>  
+                <li><a href="contacto.html"><i class="fa fa-envelope fa-lg">&nbsp;</i> CONTACTO</a></li>
+            </ul>
+         </div>
+      </div>
+   {{/if}}
+   </div>
+   <!--Collapsable menu ends here-->
 
+
+<script>
+   function openNav() {
+    if (document.getElementById("mySidenav").style.width != "250px") {
+        document.getElementById("mySidenav").style.width = "250px";
+    } else {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+   }
+
+   function closeNav() {
+    if (document.getElementById("mySidenav").style.width != "0px") {
+      document.getElementById("mySidenav").style.width = "0px";
+    }
+   }
+</script>
 
 </template>
 

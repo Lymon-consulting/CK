@@ -29,7 +29,7 @@
                         <tbody>
                            <tr>
                               <td class="no-padding text-no-wrap">
-                                 <small class="uppercase">{{getProfile.profile.role}}</small>
+                                 <small class="uppercase">{{ownerRole}}</small>
                               </td>
                            </tr>
                            <tr>
@@ -43,6 +43,8 @@
                                  {{#if notSameUser}}
                                     {{#if showButtonFollow}}
                                        <button class="btn btn-gray text-button" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> Seguir</button>
+                                    {{else}}
+                                       <button class="btn button-follow disabled"> <i class="fa fa-plus-circle fa-sm"></i> SIGUIENDO</button>
                                     {{/if}}
                                  {{/if}}
                               </td>
@@ -55,8 +57,8 @@
                      <table class="table table-responsive borderless">
                         <tr>
                            <td class="low-padding text-no-wrap" rowspan="2"><div class="vertical-line" style="height: 55px;"></div></td>
-                           <td class="low-padding text-no-wrap"><a href="mailto:{{getEmail}}"><i class="fa fa-envelope fa-sm"></i></a></td>
-                           <td class="low-padding text-no-wrap numbers"><a href="mailto:{{getEmail}}">Contactar</a></td>
+                           <td class="low-padding text-no-wrap"><a href="mailto:{{getEmail}}"><i class="fa fa-envelope fa-sm text-black"></i></a></td>
+                           <td class="low-padding text-no-wrap numbers"><a href="mailto:{{getEmail}}" class="text-black">Contactar</a></td>
                            <td class="low-padding text-no-wrap" rowspan="2"><div class="vertical-line" style="height: 55px;"></div></td>
                            <td class="low-padding text-no-wrap"><i class="fa fa-user fa-sm"></i></td>
                            <td class="low-padding text-no-wrap numbers">0</td>
@@ -70,7 +72,7 @@
                            <td class="low-padding text-no-wrap"><i class="fa fa-user fa-sm"></i></td>
                            <td class="low-padding text-no-wrap numbers">0</td>
                            <td class="low-padding text-no-wrap"><i class="fa fa-eye fa-sm"></i></td>
-                           <td class="low-padding text-no-wrap numbers">0</td>
+                           <td class="low-padding text-no-wrap numbers">{{getProfile.profile.views}}</td>
                         </tr>
                      </table>
                   </div>
@@ -109,8 +111,8 @@
                         </div>
                      </div>
                      <div class="row">
-                        <div class="col-md-12 h3-title">
-                           {{getMainProject.project_title}}
+                        <div class="col-md-12 h2-title">
+                           <a href="/projectPage/{{getMainProject._id}}" class="h2-title">{{getMainProject.project_title}}</a>
                         </div>
                      </div>
                      <div class="row">
@@ -132,15 +134,15 @@
                         <div class="col-md-6">
                            <table class="table table-responsive borderless">
                               <tr>
-                                 <td class="no-padding text-title-gray uppercase" colspan="2">{{getMainProject.project_role}}</td>
+                                 <td class="no-padding text-title-gray uppercase" colspan="2">{{projectRole getMainProject._id}}</td>
                               </tr>
                               <tr>
                                  <td class="no-padding"><i class="fa fa-thumbs-up fa-sm"></i></td>
-                                 <td class="no-padding numbers">0</td>
+                                 <td class="no-padding numbers">{{getMainProject.likes}}</td>
                               </tr>
                               <tr>
                                  <td class="no-padding"><i class="fa fa-eye fa-sm"></i></td>
-                                 <td class="no-padding numbers">0</td>
+                                 <td class="no-padding numbers">{{getMainProject.views}}</td>
                               </tr>
                            </table>
                         </div>
@@ -159,22 +161,22 @@
                      </div>
                      <!--Sección de recuadros de proyectos-->
                      <div class="row">
-                        <div class="col-md-12">
-                           <div class="container-fluid">
+                        <div class="col-md-12 text-center">
+                           <div class="container-fluid text-center">
                               <div class="row">
                                  {{#each getProjects}}
-                                 <div class="col-md-4">
-                                    <div class="container-fluid border-exterior">
+                                 <div class="col-md-4 text-center">
+                                    <div class="container-fluid border-exterior text-center">
                                        <div class="row">
-                                          <div class="col">
+                                          <div class="col text-center">
                                              {{#each getProjectImages this._id}}
-                                             <img src="{{this.url store='cover'}}" alt="" class="img-fluid thumbnail-cover">
+                                             <a href="/projectPage/{{this.project_id}}"><img src="{{this.url store='cover'}}" alt="" class="img-fluid thumbnail-cover"></a>
                                              {{/each}}
                                           </div>
                                        </div>
                                        <div class="row">
                                           <div class="col text-center">
-                                             <strong>{{this.project_title}}</strong>
+                                             <strong><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a></strong>
                                           </div>
                                        </div>
                                        <div class="row">
@@ -201,7 +203,7 @@
                                                 </div>
                                                 <div class="row background-lightgray">
                                                    <div class="col text-center">
-                                                      <small class="uppercase">{{this.project_role}}</small>
+                                                      <small class="uppercase">{{projectRole this._id}}</small>
                                                    </div>
                                                 </div>
                                                 <div class="row background-lightgray">
@@ -214,8 +216,8 @@
                                                 </div>
                                                 <div class="row background-lightgray">
                                                    <div class="col text-center">
-                                                      <i class="fa fa-thumbs-up fa-sm"></i><small>0</small>
-                                                      <i class="fa fa-eye fa-sm"></i><small>0</small>
+                                                      <i class="fa fa-thumbs-up fa-sm"></i><small>{{this.likes}}</small>
+                                                      <i class="fa fa-eye fa-sm"></i><small>{{this.views}}</small>
                                                    </div>
                                                 </div>
                                              </div>
@@ -351,7 +353,6 @@
                      <div class="row">
                         <div class="col"><hr></div>
                      </div>
-
                      <div class="row">
                         <div class="col-md-6">
                            <strong>SEGUIDORES</strong>
@@ -360,7 +361,6 @@
                            <small>{{getFollowers.count getProfile._id}}</small>
                         </div>
                      </div>
-
                      <div class="row">
                         <div class="col"><hr></div>
                      </div>
@@ -380,6 +380,39 @@
                            </div>
                         </div>
                      </div>
+                     <div class="row">
+                        <div class="col spacer80"></div>
+                     </div>
+                     <!--
+                     <div class="row">
+                        <div class="col"><hr></div>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-6">
+                           <strong>SIGUIENDO</strong>
+                        </div>
+                        <div class="col-md-6">
+                           <small>0</small>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col"><hr></div>
+                     </div>
+                     <div class="row">
+                        <div class="col">
+                           <div class="container">
+                              <div class="row">
+                                 {{#each value in getFollowing}}
+                                 <div class="col-md-4">
+                                    {{>followsPic ID=value}}
+                                 </div>
+                                 {{/each}}
+
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  -->
                   </div>
                </div>
                <!--Termina Columna derecha del cuerpo-->
@@ -388,4 +421,3 @@
       </div>   
    </div>
 </template>
-

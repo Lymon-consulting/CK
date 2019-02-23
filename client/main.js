@@ -18,12 +18,23 @@ import '../imports/ui/userEditProject.js';
 import '../imports/ui/viewProjects.js';
 import '../imports/ui/peopleList.js';
 import '../imports/ui/profilePage.js';
+import '../imports/ui/projectPage.js';
+
 
 
 /*Imports for routing*/
 import '/lib/router.js';
 
-
+Bert.defaults = {
+  hideDelay: 2500,
+  // Accepts: a number in milliseconds.
+  style: 'growl-top-right',
+  // Accepts: fixed-top, fixed-bottom, growl-top-left,   growl-top-right,
+  // growl-bottom-left, growl-bottom-right.
+  type: 'default',
+  // Accepts: default, success, info, warning, danger.
+  title: 'Mensaje de Cinekomuna'
+};
 
 Template.registerHelper('profilePicture', function () {
     Meteor.subscribe("images");
