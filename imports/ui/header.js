@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor'
 import { Project } from '../api/project.js';
  
 import './header.html';
+import './projectPage.html';
 import '/lib/common.js';
 
 Template.header.helpers({
@@ -38,7 +39,8 @@ Template.notifications.helpers({
                         "projectID": item._id,
                         "owner": owner.profile.fullname, 
                         "ownerID": owner._id, 
-                        "role": item.project_staff[i].role
+                        "role": item.project_staff[i].role,
+                        "collabID": item.project_staff[i]._id
                      };
                      
                      //console.log(alert);
@@ -47,11 +49,26 @@ Template.notifications.helpers({
                }
 
             });
-            console.log("Tamaño del arreglo: " + alertsFound.length);
+            //console.log("Tamaño del arreglo: " + alertsFound.length);
          }
 
       }
       return alertsFound;
+   }
+});
+
+Template.notifications.events({
+   'click .confirmCollaboration' : function(e, template, doc){
+       e.preventDefault();
+
+       var id = $(e.target).attr('data-id');
+       var proj = $(e.target).attr('data-proj');
+       Meteor.call(
+         'updateConfirmation',
+         proj,
+         id,
+         true
+       );
    }
 });
 

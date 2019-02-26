@@ -64,5 +64,15 @@ Meteor.methods({
    */
   updateInvitationStatusForAll(projectID, collabs, status){
     Project.update({"_id": projectID}, {$set: {"project_staff": collabs}});
-  }
+  },
+  updateConfirmation(projectID, collabID, status){
+   //console.log("Llamada a updateInvitationStatusForOne desde el server");
+    Project.update(
+      {'_id': projectID, 'project_staff._id': collabID}, 
+      { 
+         "$set": {
+            'project_staff.$.confirmed': true
+         }
+      });
+  },
 });
