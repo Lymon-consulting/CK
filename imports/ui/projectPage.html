@@ -439,7 +439,9 @@
                   <th class="col agreements">Correo</th>
                   <th class="col agreements">Nombre</th>
                   <th class="col agreements">Rol</th>
+                  <th class="col agreements">Invitación enviada</th>
                   <th class="col agreements">Confirmado</th>
+                  <th class="col agreements">Reenviar invitación</th>
                   <th class="col agreements">Eliminar</th>
                </tr>
             </thead>
@@ -449,11 +451,17 @@
                   <td class="col agreements">{{this.email}}</td>
                   <td class="col agreements">{{this.name}}</td>
                   <td class="col agreements">{{this.role}}</td>
+                  {{#if this.invite_sent}}
+                  <td class="col agreements text-center"><i class="fa fa-check fa-sm"></i></td>
+                  {{else}}
+                  <td class="col agreements text-center"><i class="fa fa-times fa-sm"></i></td>
+                  {{/if}}
                   {{#if this.confirmed}}
                   <td class="col agreements text-center"><i class="fa fa-check fa-sm"></i></td>
                   {{else}}
                   <td class="col agreements text-center"><i class="fa fa-times fa-sm"></i></td>
                   {{/if}}
+                  <td class="col agreements text-center"><a href="#" class="sendIndividualInvite"><i class="fa fa-envelope fa-sm" data-id="{{this._id}}" data-name="{{this.name}}" data-email="{{this.email}}" data-role="{{this.role}}"></i></a></td>
                   <td class="col agreements text-center"><a href="#" class="single-delete"><i class="fa fa-trash fa-sm" data-id="{{this._id}}" data-name="{{this.name}}" data-email="{{this.email}}" data-role="{{this.role}}"></i></a></td>
                </tr>
                {{/each}}

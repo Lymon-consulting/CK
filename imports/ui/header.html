@@ -11,6 +11,9 @@
        <div class="navbar-collapse collapse" id="collapsingNavbar3">
            
            <ul class="nav navbar-nav ml-auto w-100 justify-content-end" ng-hide="token">
+               {{#if currentUser}}  
+                  {{>notifications}}   
+               {{/if}}
                <li class="nav-item">
                    <button type="button" class="btn btn-outline-light button_white text-button">{{> loginButtons }}</button>
                </li>
@@ -82,7 +85,6 @@
 
 
 <template name="profile">
-
 {{#if loggingIn}}
   <p>Loggin in...</p>
 {{else}}
@@ -108,6 +110,43 @@
   {{/if}}
 {{/if}}
 
-   
-   
 </template>
+
+
+<template name="notifications">
+   <nav class="navbar navbar-default">
+       <!-- Collect the nav links, forms, and other content for toggling -->
+       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+         <ul class="nav navbar-nav navbar-right">
+           <li class="dropdown notopspace">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-envelope-o fa-2x text-white"><span class="badge badge-danger">{{getAlerts.length}}</span></i></a>
+             <ul class="dropdown-menu notify-drop">
+               <div class="notify-drop-title">
+                  <div class="row">
+                     <div class="col-md-6 col-sm-6 col-xs-6">Notificaciones</div>
+                     <div class="col-md-6 col-sm-6 col-xs-6 text-right"><a href="" class="rIcon allRead" data-tooltip="tooltip" data-placement="bottom" title="Ver"><i class="fa fa-dot-circle-o"></i></a></div>
+                  </div>
+               </div>
+               <!-- end notify title -->
+               <!-- notify content -->
+               <div class="drop-content">
+                  {{#each value in getAlerts}}
+                     <li>
+                        <div class="col-md-9 col-sm-9 col-xs-9">
+                           <a href="/profilePage/{{value.ownerID}}">{{value.owner}}</a> ha indicado que participaste en <a href="/projectPage/{{value.projectID}}">{{value.title}}</a> como {{value.role}} <a href="" class="rIcon"><i class="fa fa-dot-circle-o"></i></a>
+                        <p>¿Eres tú?</p>
+                        <p class="time"><a href="">Si participé</a> | <a href="">No participé</a></p>
+                        </div>
+                     </li>
+                  {{/each}}
+               </div>
+               <div class="notify-drop-footer text-center">
+                  <a href=""><i class="fa fa-eye"></i> Ver todas las notificaciones</a>
+               </div>
+             </ul>
+           </li>
+         </ul>
+       </div><!-- /.navbar-collapse -->
+   </nav>   
+</template>
+

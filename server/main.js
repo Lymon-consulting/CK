@@ -1,12 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { Project } from '../imports/api/project.js';
+
 import '../imports/api/ocupations.js';
-//import '../imports/api/project.js';
 import '../imports/startup/server/on-create-user.js';
-
-
-
-
+import './projectMethods.js';
 
 Meteor.startup(() => {
   process.env.MAIL_URL ="smtp://ljimenez%40lymon.com.mx:ico2000a_B@mail.lymon.com.mx:587?tls.rejectUnauthorized=false";
@@ -181,33 +178,4 @@ PersonalCover = new FS.Collection("personalcover", {
         }
       })
     ]
-});
-
-
-
-// Server: Define a method that the client can call.
-Meteor.methods({
-  sendEmail(to, from, subject, text) {
-    // Make sure that all arguments are strings.
-    //check([to, from, subject, text], [String]);
-
-    // Let other method calls from the same client start running, without
-    // waiting for the email sending to complete.
-    this.unblock();
-
-    SSR.compileTemplate('htmlEmail', Assets.getText('collaboration-template.html'));
-
-   var emailData = {
-     name: "Luis",
-     favoriteRestaurant: "Toks",
-     bestFriend: "Tomás",
-   };
-
-    Email.send({
-     to: to,
-     from: from,
-     subject: subject,
-     html: SSR.render('htmlEmail', emailData),
-   });
-  }
 });
