@@ -39,8 +39,10 @@ Template.notifications.helpers({
                         "projectID": item._id,
                         "owner": owner.profile.fullname, 
                         "ownerID": owner._id, 
+                        "ownerEmail": owner.emails[0].address,
                         "role": item.project_staff[i].role,
-                        "collabID": item.project_staff[i]._id
+                        "collabID": item.project_staff[i]._id,
+                        "collabEmail": item.project_staff[i].email
                      };
                      
                      //console.log(alert);
@@ -69,6 +71,51 @@ Template.notifications.events({
          id,
          true
        );
+
+       Bert.alert({message: 'Has confirmado tu participación en el proyecto', type: 'info'});
+   },
+   'click .denyColaboration' : function(e, template, doc){
+      e.preventDefault();
+
+      if(confirm("Estás a punto de eliminar tu participación en este proyecto, ¿estas seguro?")){
+         var proj = $(e.target).attr('data-proj');
+         var id = $(e.target).attr('data-id');
+         var ownerEmail = $(e.target).attr('data-ownerEmail');
+         var collabEmail = $(e.target).attr('data-collabEmail');
+         var title = $(e.target).attr('data-title');
+         var collabRole = $(e.target).attr('data-collabRole');
+
+         console.log("En el cliente eliminando a: "+ id +", " + collabEmail +", " +  collabRole );
+
+         Meteor.call(
+            'deleteCollaboration',
+            proj,
+            id,
+            collabEmail,
+            collabRole
+         );
+
+
+         Bert.alert({message: 'Has eliminado tu participación en el proyecto', type: 'info'});
+
+         var emailData = {
+           title: title,
+           collabEmail: collabEmail,
+           collabRole: collabRole
+         };
+
+         console.log("Enviando correo a " + ownerEmail);
+         
+         Meteor.call(
+           'sendEmail',
+           ownerEmail,
+           'Carlos <lcjimenez@gmail.com>',
+           'Un colaborador ha rechazado su participación en tu proyecto de Cinekomuna',
+           'deny-collaboration-template.html',
+           emailData
+         );
+      }
+
    }
 });
 

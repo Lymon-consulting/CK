@@ -9,10 +9,11 @@ Meteor.methods({
       *  - from: El correo desde el cual se hace el envío
       *  - subject: Asunto del correo
       *  - templateFile : Nombre del archivo HTML que contiene la plantilla de correo, incluir la extensión del archivo
+      *  - emailData: Objeto JSON con las variables que se renderizarán en la plantilla html correspondiente
       *  El archivo HTML se encuentra en /private/
       * @author Luis Carlos Jiménez
    */
-   sendEmail(to, from, subject, templateFile) {
+   sendEmail(to, from, subject, templateFile, emailData) {
     
     //Si el método se llama desde los datos de un formulario, validar que sean texto
     //check([to, from, subject, text], [String]);
@@ -22,12 +23,6 @@ Meteor.methods({
     this.unblock();
 
     SSR.compileTemplate('htmlEmail', Assets.getText(templateFile));
-
-   var emailData = {
-     name: "Luis",
-     favoriteRestaurant: "Toks",
-     bestFriend: "Tomás",
-   };
 
     Email.send({
      to: to,
@@ -65,6 +60,14 @@ Meteor.methods({
   updateInvitationStatusForAll(projectID, collabs, status){
     Project.update({"_id": projectID}, {$set: {"project_staff": collabs}});
   },
+  /** 
+      * Método para actualizar el estatus de una colaboración del proyecto
+      * Los parámetros que recibe son: 
+      *  - projectID: ID del proyecto 
+      *  - collabID: ID del colaborador 
+      *  - status: valor que va a tomar el campo confirmed
+      * @author Luis Carlos Jiménez
+   */
   updateConfirmation(projectID, collabID, status){
    //console.log("Llamada a updateInvitationStatusForOne desde el server");
     Project.update(
@@ -75,4 +78,28 @@ Meteor.methods({
          }
       });
   },
+  /** 
+      * Método para eliminar a un colaborador de un proyecto
+      * Los parámetros que recibe son: 
+      *  - projectID: ID del proyecto 
+      *  - collaborator: Objeto JSON con los datos del colaborador
+      * @author Luis Carlos Jiménez
+   */
+  deleteCollaboration(projectID, collabID, collabEmail, collabRole){
+
+   var collaborator = {
+      "_id": collabID,
+      "email": collabEmail,
+      "role": collabRole
+   };
+
+   console.log("En el server eliminando a: " + collabID + ", " + collabEmail + ", " +  collabRole);
+
+   Project.upsert(
+      {'_id': projectID},
+      { $pull: { project_staff: collaborator }
+   });
+  }
+
+
 });

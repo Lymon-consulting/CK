@@ -3,66 +3,55 @@
       <div class="spacer40"></div>
       <div class="row">
          <div class="col-md-3 vdivide">
-            <div class="dropdown">
-              <span class="btn-borderless"> <i class="fa fa-users fa-sm text-purple"></i> </span>
-              <a class="btn-borderless dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Personas <i class="fa fa-chevron-down fa-md"></i>
-              </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="#"><span class="text-gray"> <i class="fa fa-film fa-lg"></i> Proyectos</span></a>
-                <a class="dropdown-item" href="#"><span class="text-gray"> <i class="fa fa-video-camera fa-lg"></i> Industrias</span></a>
-                <a class="dropdown-item" href="#"><span class="text-gray"> <i class="fa fa-television fa-lg"></i> Casting</span></a>
-              </div>
-            </div>
+            <select class="form-control fa" id="tipoPersona">
+               <option value="Personas">&#xf0c0;&nbsp; <font class="agreements">Personas</font></option>
+               <option value="Proyectos">&#xf008;&nbsp; Proyectos</option>
+               <option value="Industrias" disabled>&#xf03d;&nbsp; Industrias</option>
+               <option value="Casting" disabled>&#xf26c;&nbsp; Casting</option>
+            </select>
          </div>
-         
          <div class="col-md-3 vdivide">
-            <div class="dropdown">
-              <a class="btn-borderless dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Ordenar por <i class="fa fa-chevron-down fa-md"></i>
-              </a>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#"><span class="text-gray">1er Asistente de Dirección</span></a>
-                <a class="dropdown-item" href="#"><span class="text-gray">2do Asistente de Dirección</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Asitente de Escenografía</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Actor</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Asitente de Dirección de Arte</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Asistente de Post Producción</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Asistente de Cámara</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Asistente de Dirección</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Asistente de Producción</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Asistente Director de Casting</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Camarógrafo</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Carpintero</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Chofer</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Cinematógrafo</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Colorista</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Constructor</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Contador</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Continuista</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Coordinador de Producción</span></a>
-                <a href="#" class="dropdown-item"><span class="text-gray">Copywriter</span></a>
-
-
-              </div>
-            </div>
+            <select class="form-control fa agreements" id="criterioOrden">
+                <option value="1er Asistente de Dirección">1er Asistente de Dirección</option>
+                <option value="2do Asistente de Dirección">2do Asistente de Dirección</option>
+                <option value="Asitente de Escenografía">Asitente de Escenografía</option>
+                <option value="Actor">Actor</option>
+                <option value="Actirz">Actirz</option>
+                <option value="Asitente de Dirección de Arte">Asitente de Dirección de Arte</option>
+                <option value="Asistente de Post Producción">Asistente de Post Producción</option>
+                <option value="Asistente de Cámara">Asistente de Cámara</option>
+                <option value="Asistente de Dirección">Asistente de Dirección</option>
+                <option value="Asistente de Producción">Asistente de Producción</option>
+                <option value="Asistente Director de Casting">Asistente Director de Casting</option>
+                <option value="Camarógrafo">Camarógrafo</option>
+                <option value="Carpintero">Carpintero</option>
+                <option value="Chofer">Chofer</option>
+                <option value="Cinematógrafo">Cinematógrafo</option>
+                <option value="Colorista">Colorista</option>
+                <option value="Constructor">Constructor</option>
+                <option value="Contador">Contador</option>
+                <option value="Continuista">Continuista</option>
+                <option value="Coordinador de Producción">Coordinador de Producción</option>
+                <option value="Copywriter">Copywriter</option>
+                <option value="Director">Director</option>
+                <option value="Productor">Productor</option>
+                <option value="Tramoyista">Tramoyista</option>
+            </select>
          </div>
-        
          <div class="col-md-3 vdivide">
-            <div class="dropdown">
-              <a class="btn-borderless" href="#" role="modal" id="dropdownMenuLink" data-toggle="modal" data-target="#exampleModal">
-                Ubicación <i class="fa fa-chevron-down fa-md"></i>
-              </a>
-              
-            </div>
+            <select class="form-control fa agreements" id="location">
+                <option value="Aguascalientes">Aguascalientes</option>
+                <option value="Campeche">Campeche</option>
+                <option value="Ciudad de México">Ciudad de México</option>
+            </select>
          </div>
          
          <div class="col-md-3">
             <div class="input-group">
                <span class="btn-borderless"><strong class="text-purple">Ir</strong>&nbsp;</span>
-               <input type="text" class="form-control" placeholder="Buscar...">
+               <input type="text" class="form-control" placeholder="Buscar..." id="buscarTexto">
                <span class="input-group-btn">
-                 <button class="btn btn-secondary" type="button">
+                 <button class="btn btn-secondary" type="button" id="buscarBtn">
                      <i class="fa fa-search fa-sm"></i>
                  </button>
                </span>

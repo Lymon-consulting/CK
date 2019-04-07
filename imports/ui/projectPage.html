@@ -148,35 +148,7 @@
    <div class="spacer40"></div>
 
 
-   <div class="d-flex justify-content-around">
-      <div class="p-2">
-         <img src="../images/griffith.jpg" class="rounded-circle center-block" data-toggle="popover" title="Lee Grifith M." data-content="DIRECTOR, GUIONISTA" data-trigger="hover" data-placement="bottom" height="100px" width="100px">
-               <br><span class="people-name-text-circle">Nino Cozzi</span> <br><span class="people-role-text-circle">DIRECCIÓN</span> 
-      </div>
-      <div class="p-2">
-         <img src="../images/profile2.jpg" class="rounded-circle center-block" data-toggle="popover" title="Dinorah Méndez" data-content="CASTING" data-trigger="hover" data-placement="bottom" height="100px" width="100px">
-               <br><span class="people-name-text-circle">Nino Cozzi</span> <br><span class="people-role-text-circle">DIRECCIÓN</span>
-      </div>
-      <div class="p-2">
-         <img src="../images/profile4.jpg" class="rounded-circle center-block" data-toggle="popover" title="Regina Orozco" data-content="ACTRIZ" data-trigger="hover" data-placement="bottom" height="100px" width="100px">
-               <br><span class="people-name-text-circle">Nino Cozzi</span> <br><span class="people-role-text-circle">DIRECCIÓN</span>
-      </div>
-   </div>
-
-   <div class="d-flex justify-content-around">
-      <div class="p-2">
-         <img src="../images/griffith.jpg" class="rounded-circle center-block" data-toggle="popover" title="Lee Grifith M." data-content="DIRECTOR, GUIONISTA" data-trigger="hover" data-placement="bottom" height="100px" width="100px">
-               <br><span class="people-name-text-circle">Nino Cozzi</span> <br><span class="people-role-text-circle">DIRECCIÓN</span> 
-      </div>
-      <div class="p-2">
-         <img src="../images/profile2.jpg" class="rounded-circle center-block" data-toggle="popover" title="Dinorah Méndez" data-content="CASTING" data-trigger="hover" data-placement="bottom" height="100px" width="100px">
-               <br><span class="people-name-text-circle">Nino Cozzi</span> <br><span class="people-role-text-circle">DIRECCIÓN</span>
-      </div>
-      <div class="p-2">
-         <img src="../images/profile4.jpg" class="rounded-circle center-block" data-toggle="popover" title="Regina Orozco" data-content="ACTRIZ" data-trigger="hover" data-placement="bottom" height="100px" width="100px">
-               <br><span class="people-name-text-circle">Nino Cozzi</span> <br><span class="people-role-text-circle">DIRECCIÓN</span>
-      </div>
-   </div>
+   {{>crew}}  
 
 
    <div class="spacer40"></div>
@@ -468,5 +440,24 @@
             </tbody>
          {{/if}}
       </table>
+   </div>
+</template>
+
+
+<template name="crew">
+   <div class="d-flex justify-content-around">
+      
+      {{#each getCrew.project_staff}}
+         {{#if this.confirmed}}
+      <div class="p-2">
+         {{#each profilePicture this._id}}
+            <a href="/profilePage/{{this.owner}}"><img src="{{this.url store='profile'}}" border="0" class="rounded-circle" /></a>
+         {{/each}}
+               <br><span class="people-name-text-circle"><a href="/profilePage/{{this._id}}" class="text-title-gray">{{this.name}}</a></span> <br><span class="people-role-text-circle uppercase">{{this.role}}</span> 
+      </div>
+         {{/if}}
+      {{/each}}
+      
+      
    </div>
 </template>

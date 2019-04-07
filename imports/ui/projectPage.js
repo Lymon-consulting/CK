@@ -227,13 +227,20 @@ if (Meteor.isClient) {
 
                 console.log("Reenviando correo...");
 
-                /*
+                  /*
+                  var emailData = {
+                    name: "Luis",
+                    favoriteRestaurant: "Toks",
+                    bestFriend: "Tomás",
+                  };
+                
                 Meteor.call(
                     'sendEmail',
                     name + "<" + mail + ">",
                     'Carlos <lcjimenez@gmail.com>',
                     'Fulanito Te ha invitado a unirte a Cinekomuna',
-                    'Cuerpo del mensaje'
+                    'Cuerpo del mensaje',
+                    emailData
                 );*/
 
                 Bert.alert({message: 'Se ha enviado un correo a ' + mail, type: 'info'});
@@ -260,12 +267,19 @@ if (Meteor.isClient) {
         },  
         'click #sendMail' : function(){
 
+            var emailData = {
+              name: "Luis",
+              favoriteRestaurant: "Toks",
+              bestFriend: "Tomás",
+            };
+
             Meteor.call(
               'sendEmail',
               'Carlos <lcjimenez@gmail.com>',
               'Luis Carlos Jiménez <ljimenez@lymon.com.mx>',
               'Hello from Meteor!',
-              'collaboration-template.html'
+              'collaboration-template.html',
+              emailData
             );
 
             console.log("Correo enviado");
@@ -340,6 +354,23 @@ if (Meteor.isClient) {
          return collabs;
       }
    });
+
+   Template.crew.helpers({
+      getCrew(){
+         var collabs = null;
+         var proj = Project.findOne({"_id": FlowRouter.getParam('id')});
+         if(proj){
+            collabs = proj.project_staff;
+         }
+
+         
+
+         return proj;
+      },
+      profilePicture(userId){
+         return Images.find({'owner': userId});
+      }
+   });   
 
 }
 

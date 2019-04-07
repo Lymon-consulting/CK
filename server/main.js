@@ -7,10 +7,15 @@ import './projectMethods.js';
 
 Meteor.startup(() => {
   process.env.MAIL_URL ="smtp://ljimenez%40lymon.com.mx:ico2000a_B@mail.lymon.com.mx:587?tls.rejectUnauthorized=false";
+
+  Meteor.users._ensureIndex({
+      "fullname": 1
+    });
 });
 
 Meteor.publish("otherUsers", function () {
   return Meteor.users.find({},{ fields: { '_id': 1 , 'profile': 1, 'emails' : 1}});
+  //return Meteor.users.find();
 });
 
 Meteor.publish("follows", function (userId) {
@@ -51,6 +56,8 @@ Meteor.users.allow({
            return true;
     }
 });
+
+
 
 /*Meteor.publish('projects', function (dataQuery) {
    console.log("Recibiendo en el dataQuery="+dataQuery);
