@@ -140,7 +140,7 @@ if (Meteor.isClient) {
                  console.log("callback for the insert, err: ", err);
                  if (!err) {
                    console.log("inserted without error");
-                   sAlert.success('Tus foto de proyecto ha cambiado');
+                   Bert.alert({message: 'Tu foto de proyecto ha cambiado', type: 'info'});
                  }
                  else {
                    console.log("there was an error", err);

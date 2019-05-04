@@ -1,4 +1,5 @@
 import { Project } from '../imports/api/project.js';
+import { Portlet } from '../imports/api/portlet.js';
 
 
 Meteor.methods({
@@ -99,6 +100,47 @@ Meteor.methods({
       {'_id': projectID},
       { $pull: { project_staff: collaborator }
    });
+  },
+  insertPortlet(projectID, portletTitle, portletContent){
+    /*
+   var date = new Date()
+   var newID = moment(date).format("x"); 
+
+   var portlet = {
+      "_id": newID,
+      "title": portletTitle,
+      "content": portletContent,
+      "order": "100"
+   };
+   
+   Project.upsert(
+      {'_id': projectID},
+      { $push: { project_portlets: portlet }
+   });*/
+   Portlet.insert({
+            "projectID": projectID,
+            "title": portletTitle,
+            "content": portletContent,
+            "order": "100" 
+         });
+  },
+  updatePortlet(portletID, portletTitle, portletContent){
+     Portlet.update({"_id": portletID},
+        {$set:{
+          "title": portletTitle,
+          "content": portletContent
+        }
+      });
+   /*
+   Project.update(
+      {'_id': projectID, 'project_portlets._id': portletID},
+        { $set: { 
+          'project_portlets.$.content': portletContent, 
+          'project_portlets.$.title':portletTitle 
+        } 
+      }
+   );*/
+   
   }
 
 

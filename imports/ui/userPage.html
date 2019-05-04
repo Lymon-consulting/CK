@@ -64,14 +64,35 @@
 
          
          <div class="spacer20"></div>
-         <div ng-controller="getOcupationsCtrl">
-            <label for="ubicacion">Ocupación <span class="text-purple">(Requerido)</span></label>
-             <select multiple name="Ocupation" id="ocupation" class="form-control">
-               {{#each item in Ocupations}}
-                  <option value="{{item}}" {{roleSelected item}}> {{item}} </option>
-               {{/each}}
-            </select>
+         <div class="row">
+            <div class="col-md-4">
+                <label for="oc">Departamentos <span class="text-purple">(Selecciona al menos uno)</span></label>
+                 <select name="category" id="category" class="form-control">
+                   {{#each getCategories}}
+                      <option value="{{title}}"> {{title}} </option>
+                   {{/each}}
+                </select>
+            </div>
+            <div class="col-md-4">
+               <label for="Ocupation">Ocupaciones <span class="text-purple">(Selecciona con doble clic)</span></label>
+               <select multiple name="Ocupation" id="ocupation" class="form-control">
+                 {{#each getOcupationsFromCategory}}
+                    <option value="{{secondary}}" {{roleSelected secondary}}> {{secondary}} </option>
+                 {{/each}}
+              </select>  
+            </div>
+            <div class="col-md-4">
+               <label for="Ocupation">Ocupación <span class="text-purple">(Elimina con doble clic)</span></label>
+               <select name="Selection" multiple id="selection" class="form-control">
+                 {{#each item in getRolesSelected}}
+                    <option value="{{item}}" {{roleSelected item}}> {{item}} </option>
+                 {{/each}}
+              </select>  
+            </div>
+            
          </div>
+
+
          <div class="spacer20"></div>
          <div class="form-group">
             <label for="resumen">Resumen <span class="text-purple">(Requerido)</span></label>

@@ -12,13 +12,19 @@
          <br><br>
          <div class="btn-group" role="group" aria-label="...">
            <button type="button" class="btn button_white" data-toggle="modal" data-target="#collabModal"><i class="fa fa-users fa-sm"></i> <a href="#" class="text-button">COLABORADORES</a></button>
-           <button type="button" class="btn button_white" data-toggle="modal" data-target="#imageModal"><i class="fa fa-camera fa-sm"></i> <a href="#" class="text-button">IMAGEN</a></button>
-           <button type="button" class="btn button_white" data-toggle="modal" data-target="#videoModal"><i class="fa fa-video-camera fa-sm"></i> <a href="#" class="text-button">VIDEO</a></button>
-           <button type="button" class="btn button_white" data-toggle="modal" data-target="#textModal"><i class="fa fa-file-text-o fa-sm"></i> <a href="#" class="text-button">TEXTO</a></button>
-           <button type="button" class="btn button_white" data-toggle="modal" data-target="#phraseModal"><i class="fa fa-quote-right fa-sm"></i> <a href="#" class="text-button">FRASE</a></button>
-           <button type="button" class="btn button_white" data-toggle="modal" data-target="#linkModal"><i class="fa fa-link fa-sm"></i> <a href="#" class="text-button">LINK</a></button>
+           <button type="button" class="btn button_white"><i class="fa fa-file fa-sm"></i> <a href="#" class="text-button" id="add_portlet">AGREGAR SECCIÓN</a></button>
            <button type="button" class="btn button_white" id="sendMail"><i class="fa fa-link fa-sm"></i> <a href="#" class="text-button">ENVIAR CORREOS</a></button>
          </div> 
+         <div id="windowPortlet" class="hidden fixed">
+           <div class="spacer20"></div>
+           <label for="titlePortlet" class="text-white">Título de la sección: </label>
+           <input type="text" id="titlePortlet" class="form-control" placeholder="Escriba un título para la sección">
+           <input type="hidden" id="modePortlet" value="add">
+           <input type="hidden" id="idPortlet">
+           {{>editor}}
+           <button type="button" class="btn button_white" id="savePortlet"><i class="fa fa-save fa-sm"></i> <a href="#" class="text-button">Guardar</a></button>
+           
+         </div>   
       </div>
       {{/if}}
       <section>
@@ -140,9 +146,7 @@
       
       <h3 class="h1-title">CREW</h3>
       <hr>
-      <div class="float-right">
-         <button class="btn"> <i class="fa fa-arrow-down fa-sm"></i> </button>
-      </div>
+    
    </div>
 
    <div class="spacer40"></div>
@@ -151,119 +155,19 @@
    {{>crew}}  
 
 
-   <div class="spacer40"></div>
-
-   <div class="container">
-      
-      <div class="row">
-         <div class="col-md-1 vertical-align-middle">
-            <img src="../images/griffith.jpg" class="rounded-circle center-block" alt="" height="50px" width="50px">
-         </div>
-         <div class="col-md-2">
-            <table class="table borderless table-low-padding">
-               <tr>
-                  <td class="people-name-text-circle"><small>Diana Berrondo</small></td>
-               </tr>
-               <tr>
-                  <td>
-                     <small>Hace 19 horas</small>
-                  </td>
-               </tr>
-            </table>
-         </div>
-         <div class="col-md-9"> <hr> </div>
-
-      </div>
-
-      <div class="float-right">
-         <button class="btn btn-gray" >EDITAR </button>
-         <button class="btn"> <i class="fa fa-arrow-down fa-sm"></i> </button>
-      </div>
-   </div>
-
-   <div class="spacer40"></div>
-
-   <div class="container">
-      <div id="demo3">
-
-         <div class="row">
-            <div class="col text-center">
-               <h1 class="h1-title">Lorem Ipsum</h1>
-               <h2>Odorgan</h2>
-            </div>
-         </div>
-         <div class="spacer20"></div>
-         <div class="row">
-            <div class="col">
-               <p class="text-justify">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo odio, perspiciatis fugiat. Beatae veritatis ullam, in cum esse voluptas itaque doloremque. Necessitatibus delectus, maiores dolorem reprehenderit commodi officiis doloremque voluptas. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo odio, perspiciatis fugiat. Beatae veritatis ullam, in cum esse voluptas itaque doloremque. Necessitatibus delectus, maiores dolorem reprehenderit commodi officiis doloremque voluptas. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo odio, perspiciatis fugiat. Beatae veritatis ullam, in cum esse voluptas itaque doloremque. Necessitatibus delectus, maiores dolorem reprehenderit commodi officiis doloremque voluptas. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo odio, perspiciatis fugiat. Beatae veritatis ullam, in cum esse voluptas itaque doloremque. Necessitatibus delectus, maiores dolorem reprehenderit commodi officiis doloremque voluptas. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo odio, perspiciatis fugiat. Beatae veritatis ullam, in cum esse voluptas itaque doloremque. Necessitatibus delectus, maiores dolorem reprehenderit commodi officiis doloremque voluptas. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo odio, perspiciatis fugiat. Beatae veritatis ullam, in cum esse voluptas itaque doloremque. Necessitatibus delectus, maiores dolorem reprehenderit commodi officiis doloremque voluptas. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo odio, perspiciatis fugiat. Beatae veritatis ullam, in cum esse voluptas itaque doloremque. Necessitatibus delectus, maiores dolorem reprehenderit commodi officiis doloremque voluptas.
-               </p>
-            </div>
-         </div>
-          
-          
-          
-     </div>
-      <hr>
-   </div>  
-
-
-   <div class="spacer80"></div>
    
    <div class="spacer40"></div>
 
-   <div class="container">
-      
-      <div class="row">
-         <div class="col-md-1 vertical-align-middle">
-            <img src="../images/griffith.jpg" class="rounded-circle center-block" alt="" height="50px" width="50px">
-         </div>
-         <div class="col-md-2">
-            <table class="table borderless table-low-padding">
-               <tr>
-                  <td class="people-name-text-circle"><small>Diana Berrondo</small></td>
-               </tr>
-               <tr>
-                  <td>
-                     <small>Hace 19 horas</small>
-                  </td>
-               </tr>
-            </table>
-         </div>
-         <div class="col-md-9"> <hr> </div>
-
-      </div>
-
-      <div class="float-right">
-         <button class="btn btn-gray" >EDITAR </button>
-         <button class="btn"> <i class="fa fa-arrow-down fa-sm"></i> </button>
-      </div>
-   </div>
-
-   <div class="spacer40"></div>
-
-   <div class="container">
-      <div id="demo4">
-
-         <div class="row">
-            <div class="col text-center">
-               <h1 class="h1-title">Story Board</h1>
-            </div>
-         </div>
-         <div class="spacer20"></div>
-         <div class="row">
-            <div class="col">
-               <div class="spacer120"></div>
-               <div class="spacer120"></div>
-               <div class="spacer120"></div>
-            </div>
-         </div>
-          
-          
-          
-     </div>
-      <hr>
-   </div>  
+   {{> items}}
+  
+  <!--
+  <div id="drop-zone" droppable="true">
+   {{getPortlets.count}}
+   {{#each getPortlets}}
+      {{>portlet}}
+   {{/each}}
+  </div>
+-->
    
       <!-- Collab Modal -->
 <div class="modal fade" id="collabModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -457,7 +361,53 @@
       </div>
          {{/if}}
       {{/each}}
-      
-      
    </div>
 </template>
+
+<template name="items">
+  {{#if isOwner}}   
+    <div id="items">
+    {{#each items}}
+      <div class="item">
+        {{>portlet}}
+      </div>
+    {{/each}}
+    </div>
+  {{else}}
+    <div>
+    {{#each items}}
+      <div>
+        {{>portlet}}
+      </div>
+    {{/each}}
+    </div>
+  {{/if}}   
+</template>
+
+<template name="portlet">
+  <div class="container">
+      <div id="demo3">
+         <div class="row">
+            <div class="col text-center">
+               <h1 class="h1-title">{{title}}</h1>
+            </div>
+         </div>
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col">
+               {{{content}}}
+            </div>
+         </div>
+     </div>
+      {{#if isOwner}}     
+      <button type="button" class="btn btn-purple"><i class="fa fa-pencil fa-sm"></i> <a href="#" class="text-gray" id="edit_portlet" mode="edit" data-id="{{_id}}">Editar: "{{title}}"</a></button>
+      {{/if}}
+      <hr>
+   </div>  
+  <div class="spacer40"></div>
+</template>
+
+<template name="editor">
+   <textarea id="content" name="content"></textarea>
+ </template>
+

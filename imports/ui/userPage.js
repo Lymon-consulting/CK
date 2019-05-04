@@ -1,11 +1,15 @@
 import { Template } from 'meteor/templating';
+import { Ocupation } from '../api/ocupations.js';
 
 import './userPage.html';
 import '/lib/common.js';
 
 
+
 if (Meteor.isClient) {
    Meteor.subscribe("fileUploads");
+   Meteor.subscribe("getOcupations");
+   Meteor.subscribe("getCategories");
 
    Template.userPage.helpers({
      userFullName(){
@@ -88,6 +92,16 @@ if (Meteor.isClient) {
       personalCover:function(){
          Meteor.subscribe("personalcover");
          return PersonalCover.find({'owner': Meteor.userId()});
+      },
+      getCategories(){
+         var data = Ocupation.find().fetch();
+         return _.uniq(data, false, function(transaction) {return transaction.title});
+      },
+      getOcupationsFromCategory(){
+         return Ocupation.find({'title': Session.get("selected_category")}).fetch();
+      },
+      getRolesSelected: function(){
+        return Meteor.user().profile.role;
       }
 
       /*,
@@ -122,10 +136,12 @@ if (Meteor.isClient) {
          $('#personName').val("");
          $('#personLastName').val("");
          $('#personLastName2').val("");
-         sAlert.success('Tu nombre ha sido actualizado',{});
+         Bert.alert({message: 'Tu nombre ha sido actualizado', type: 'info'});
+         
       }
       else{
-         sAlert.error('Los campos no pueden estar vacíos',{});   
+         Bert.alert({message: 'Los campos no pueden estar vacíos', type: 'error'});
+         
       } 
          
         
@@ -159,7 +175,7 @@ if (Meteor.isClient) {
 
          }
          else{
-            sAlert.error('Los campos no pueden estar vacíos',{});   
+            Bert.alert({message: 'Los campos no pueden estar vacíos', type: 'error'}); 
          } 
 
 
@@ -183,7 +199,8 @@ if (Meteor.isClient) {
             
          }});
          console.log('Datos actualizados');
-         sAlert.success('Tus datos han sido actualizados');
+         Bert.alert({message: 'Tus datos han sido actualizados', type: 'info'});
+         
          FlowRouter.go('/viewProjects/' + Meteor.userId());
       },
 
@@ -229,7 +246,8 @@ if (Meteor.isClient) {
                  console.log("callback for the insert, err: ", err);
                  if (!err) {
                    console.log("inserted without error");
-                   sAlert.success('Tus foto de perfil ha cambiado');
+                   Bert.alert({message: 'Tu foto de perfil ha cambiado', type: 'info'});
+                   
                  }
                  else {
                    console.log("there was an error", err);
@@ -255,7 +273,8 @@ if (Meteor.isClient) {
                  console.log("callback for the insert, err: ", err);
                  if (!err) {
                    console.log("inserted without error");
-                   sAlert.success('Tus foto de portada ha cambiado');
+                   Bert.alert({message: 'Tu foto de portada ha cambiado', type: 'info'});
+                   
                  }
                  else {
                    console.log("there was an error", err);
@@ -263,6 +282,26 @@ if (Meteor.isClient) {
             });
 
          });
+      },
+      'change #category':function(event, template){
+         event.preventDefault();
+         Session.set("selected_category", event.currentTarget.value);
+      },
+      'dblclick #ocupation':function(event, template){
+         event.preventDefault();
+         Meteor.call(
+            'addRole',
+            Meteor.userId(),
+            event.currentTarget.value
+         );
+      },
+      'dblclick #selection':function(event, template){
+         event.preventDefault();
+         Meteor.call(
+            'removeRole',
+            Meteor.userId(),
+            event.currentTarget.value
+         );
       }
 
    });

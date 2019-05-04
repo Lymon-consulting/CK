@@ -1,3 +1,9 @@
+.item {
+  display: block;
+  padding: 5px;
+  margin: 5px;
+  cursor: move;
+}
 
 .navbar-default .dropdown-menu.notify-drop {
   min-width: 330px;

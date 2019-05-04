@@ -1,14 +1,58 @@
 import { Template } from 'meteor/templating';
 import { Project } from '../api/project.js';
+import { Portlet } from '../api/portlet.js';
 
 import './projectPage.html';
 import '/lib/common.js';
-
 
 if (Meteor.isClient) {
    Meteor.subscribe('projectData');
    Meteor.subscribe('otherUsers');
    Meteor.subscribe("images");
+   Meteor.subscribe("myPortlets");
+
+   Template.editor.rendered = function() {
+     CKEDITOR.config.dialog_startupFocusTab = true;
+     CKEDITOR.config.baseFloatZIndex = 9000;
+     CKEDITOR.replace( 'content', {
+       language: 'es',
+       uiColor: '#CCCCCC'
+     });
+  }
+
+  Template.items.rendered = function() {
+    this.$('#items').sortable({
+        stop: function(e, ui) {
+          // get the dragged html element and the one before
+          //   and after it
+          el = ui.item.get(0);
+          before = ui.item.prev().get(0);
+          after = ui.item.next().get(0);
+ 
+          // Here is the part that blew my mind!
+          //  Blaze.getData takes as a parameter an html element
+          //    and will return the data context that was bound when
+          //    that html element was rendered!
+          if(!before) {
+            //if it was dragged into the first position grab the
+            // next element's data context and subtract one from the rank
+            newRank = Blaze.getData(after).order - 1;
+          } else if(!after) {
+            //if it was dragged into the last position grab the
+            //  previous element's data context and add one to the rank
+            newRank = Blaze.getData(before).order + 1;
+          }
+          else
+            //else take the average of the two ranks of the previous
+            // and next elements
+            newRank = (Blaze.getData(after).order +
+                       Blaze.getData(before).order)/2;
+ 
+          //update the dragged Item's rank
+          Portlet.update({'_id': Blaze.getData(el)._id}, {$set: {'order': newRank}});
+        }
+    });
+  }
 
    Template.projectPage.helpers({
       projData(){
@@ -53,6 +97,11 @@ if (Meteor.isClient) {
 
          return result;
       },
+      getPortlets(){
+        return Portlet.find({'projectID': FlowRouter.getParam('id')}, {
+          sort: {'order': -1}
+        }).fetch();
+      },
       profilePicture(userId){
          
          return Images.find({'owner': userId});
@@ -87,6 +136,36 @@ if (Meteor.isClient) {
 
    });
 
+   Template.items.helpers({
+      items() {
+        return Portlet.find({'projectID': FlowRouter.getParam('id')}, {
+                  sort: {'order': 1}
+                }).fetch();
+      },
+      isOwner(){
+        project = Project.findOne({'_id': FlowRouter.getParam('id')});
+        if(project!=null && project.userId === Meteor.userId()) {
+           val = true;
+        }
+        else{
+           val = false;
+        }
+        return val;
+      }
+    });
+
+   Template.portlet.helpers({
+      isOwner(){
+        project = Project.findOne({'_id': FlowRouter.getParam('id')});
+        if(project!=null && project.userId === Meteor.userId()) {
+           val = true;
+        }
+        else{
+           val = false;
+        }
+        return val;
+      }
+   });
 
    Template.projectPage.events({
       'click #pushLike': function(event, template) {
@@ -108,7 +187,19 @@ if (Meteor.isClient) {
          );
          
          //$("#pushLike").attr("disabled", true);
-      }, 
+      },
+      'dragover #drop-zone'(e, t) {
+        e.preventDefault();
+      },
+      'dragenter #drop-zone'(e, t) {
+        e.preventDefault();
+      },
+      'drop .draggableItem'(e, t) {
+        e.preventDefault();
+        console.log("drop");
+        var id = e.dataTransfer.getData("data-id");
+        console.log(id);
+      },
       'click #add_collaborator' : function(e, template, doc){
           e.preventDefault();
 
@@ -334,6 +425,65 @@ if (Meteor.isClient) {
             $('#addByMail').val( $('#msg').val());
             $('#collabModal').modal('toggle');
             $('#inviteByMail').modal('show');
+        }, 
+        'click #add_portlet': function(event,template,doc){
+
+            $('#idPortlet').val("");
+            $('#titlePortlet').val("");
+            CKEDITOR.instances.content.setData("");
+            $('#modePortlet').val("add");
+            $('#windowPortlet').toggle(); 
+        },
+        'click #savePortlet' : function(e, template, doc){
+          e.preventDefault();
+          var data = CKEDITOR.instances.content.getData();
+          var title = $( "#titlePortlet").val();
+          var mode = $( "#modePortlet").val();
+          var id = $( "#idPortlet").val();
+          if(title === ""){
+            Bert.alert({message: 'El título de la sección no puede estar vacío', type: 'error'});
+          }
+          else if(data===""){
+            Bert.alert({message: 'El contenido de la sección no puede estar vacío', type: 'error'});
+          }
+          else{
+            if(mode==="edit"){
+              Meteor.call(
+                 'updatePortlet',
+                 id,
+                 title,
+                 data
+              );
+              $( "#modePortlet").val("add");
+            }
+            else if(mode==="add"){
+              Meteor.call(
+                 'insertPortlet',
+                 FlowRouter.getParam('id'),
+                 title,
+                 data
+              );
+            }
+             
+             $('#windowPortlet').toggle(); 
+            }
+        },
+        'click #edit_portlet' : function(e, template, doc){
+          e.preventDefault();
+          
+          var id = $(e.target).attr('data-id');
+          //var title = $(e.target).attr('data-title');
+          //var content = $(e.target).attr('data-content');
+          var mode = $(e.target).attr('mode');
+
+          var portlet = Portlet.findOne({"_id":id});
+
+          $('#titlePortlet').val(portlet.title);
+          $('#modePortlet').val(mode);
+          $('#idPortlet').val(id);
+          CKEDITOR.instances.content.setData(portlet.content);
+          $('#windowPortlet').toggle(); 
+          window.scrollTo(0, 0);
         }
    });
 
