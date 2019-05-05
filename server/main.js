@@ -3,7 +3,7 @@ import { Project } from '../imports/api/project.js';
 import { Portlet } from '../imports/api/portlet.js';
 import { Ocupation } from '../imports/api/ocupations.js';
 import { City } from '../imports/api/city.js';
-import { Index, MinimongoEngine } from 'meteor/easy:search'
+import { Index, MongoDBEngine } from 'meteor/easy:search'
 
 import '../imports/api/ocupations.js';
 import '../imports/startup/server/on-create-user.js';
@@ -19,11 +19,16 @@ Meteor.startup(() => {
     });
 });
 
+Meteor.publish("userData", function () {
+    return Meteor.users.find({_id: this.userId},
+        {fields: {'role': 1, 'resume':1, 'city':1, 'country':1, 'facebook':1, 'fullname':1, 'instagram':1, 'twitter':1, 'vimeo':1, 'webpage':1, 'youtube':1}});
+});
+
 //const Users = new Mongo.Collection('users');
 export const UsersIndex = new Index({
     collection: Meteor.users,
     fields: ['profile.name', 'profile.lastname', 'profile.lastname2', 'emails'],
-    engine: new MinimongoEngine({
+    engine: new MongoDBEngine({
 
     selectorPerField: function (field, searchString) {
       if ('emails' === field) {
@@ -39,19 +44,20 @@ export const UsersIndex = new Index({
 
       // use the default otherwise
       return this.defaultConfiguration().selectorPerField(field, searchString)
-    },/*
+    },
     selector: function (searchObject, options, aggregation) {
-      const selector = this.defaultConfiguration().selector(searchObject, options, aggregation);
+        const selector = this.defaultConfiguration().selector(searchObject, options, aggregation)
 
-      // filter for the brand if set
-      if (options.search.props.city) {
-        console.log("----->"+options.search.props.city);
-        console.log(selector);
-        selector.city = options.search.props.city;
-      }
+        // modify the selector to only match documents where region equals "New York"
+        if (options.search.props.city) {
+          selector.city = options.search.props.city;
+        }
+        if (options.search.props.role) {
+          selector.role = options.search.props.role;
+        }
 
-      return selector;
-    }*/
+        return selector;
+    }
   }),
 });
 

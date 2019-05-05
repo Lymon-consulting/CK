@@ -81,7 +81,7 @@ if (Meteor.isClient) {
          var u = Meteor.users.findOne({'_id': owner});
          var result = "";
          if(u){
-            rolesArray = u.profile.role;
+            rolesArray = u.role;
             if(rolesArray){
                var size = rolesArray.length;
                var count = 0;
@@ -124,7 +124,7 @@ if (Meteor.isClient) {
            {
              //token: '',
              collection: Meteor.users,
-             field: "profile.fullname",
+             field: "fullname",
              template: Template.userPill,
              noMatchTemplate: Template.noMatch
            }

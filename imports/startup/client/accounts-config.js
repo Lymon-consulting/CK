@@ -50,23 +50,8 @@ Accounts.ui.config({
             checked: 'checked'
         }],
         visible: true
-    }, {
-        fieldName: 'country',
-        fieldLabel: 'País',
-        inputType: 'select',
-        showFieldLabel: true,
-        empty: 'Por favor selecciona tu país',
-        data: [{
-            id: 1,
-            label: 'México',
-            value: 'mx'
-          }, {
-            id: 2,
-            label: 'Estados Unidos',
-            value: 'us',
-        }],
-        visible: true
-    }, {
+    }, 
+    {
         fieldName: 'terms',
         fieldLabel: 'Acepto los términos y condiciones',
         inputType: 'checkbox',

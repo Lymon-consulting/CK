@@ -72,7 +72,7 @@
                            <td class="low-padding text-no-wrap"><i class="fa fa-user fa-sm"></i></td>
                            <td class="low-padding text-no-wrap numbers">0</td>
                            <td class="low-padding text-no-wrap"><i class="fa fa-eye fa-sm"></i></td>
-                           <td class="low-padding text-no-wrap numbers">{{getProfile.profile.views}}</td>
+                           <td class="low-padding text-no-wrap numbers">{{getProfile.views}}</td>
                         </tr>
                      </table>
                   </div>
@@ -313,33 +313,33 @@
                      <div class="row">
                         <div class="col">
                            <p class="agreements text-justify">
-                              {{getProfile.profile.resume}}
+                              {{getProfile.resume}}
                            </p>
                         </div>
                      </div>
                      <div class="row">
                         <div class="col">
-                           <a href="{{getProfile.profile.webpage}}" target="_blank" class="text-gray"><strong class="text-gray">{{getProfile.profile.webpage}}</strong></a>
+                           <a href="{{getProfile.webpage}}" target="_blank" class="text-gray"><strong class="text-gray">{{getProfile.webpage}}</strong></a>
                         </div>
                      </div>
                      <div class="row">
                         <div class="col-md-12">
                            <table class="table table-responsive borderless">
                               <tr>
-                                 {{#if getProfile.profile.facebook}}
-                                 <td><a href="{{getProfile.profile.facebook}}" target="_blank"> <i class="fa fa-sm fa-facebook text-gray"></i></a></td>
+                                 {{#if getProfile.facebook}}
+                                 <td><a href="{{getProfile.facebook}}" target="_blank"> <i class="fa fa-sm fa-facebook text-gray"></i></a></td>
                                  {{/if}}
-                                 {{#if getProfile.profile.twitter}}
-                                 <td><a href="{{getProfile.profile.twitter}}"><i class="fa fa-sm fa-twitter text-gray"></i></a></td>
+                                 {{#if getProfile.twitter}}
+                                 <td><a href="{{getProfile.twitter}}"><i class="fa fa-sm fa-twitter text-gray"></i></a></td>
                                  {{/if}}
-                                 {{#if getProfile.profile.vimeo}}
-                                 <td><a href="{{getProfile.profile.vimeo}}"><i class="fa fa-sm fa-vimeo text-gray"></i></a></td>
+                                 {{#if getProfile.vimeo}}
+                                 <td><a href="{{getProfile.vimeo}}"><i class="fa fa-sm fa-vimeo text-gray"></i></a></td>
                                  {{/if}}
-                                 {{#if getProfile.profile.youtube}}
-                                 <td><a href="{{getProfile.profile.youtube}}"><i class="fa fa-sm fa-youtube text-gray"></i></a></td>
+                                 {{#if getProfile.youtube}}
+                                 <td><a href="{{getProfile.youtube}}"><i class="fa fa-sm fa-youtube text-gray"></i></a></td>
                                  {{/if}}
-                                 {{#if getProfile.profile.instagram}}
-                                 <td><a href="{{getProfile.profile.instagram}}"><i class="fa fa-sm fa-instagram text-gray"></i></a></td>
+                                 {{#if getProfile.instagram}}
+                                 <td><a href="{{getProfile.instagram}}"><i class="fa fa-sm fa-instagram text-gray"></i></a></td>
                                  {{/if}}
                               </tr>
                            </table>

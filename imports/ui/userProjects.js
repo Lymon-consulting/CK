@@ -92,11 +92,11 @@ if (Meteor.isClient) {
           
           var proj_main = $('#isMainProject').val();
           var proj_web_page = $('#proj_web_page').val();
-          var proj_facebook_page = $('#proj_facebook_page').val();
-          var proj_twitter_page = $('#proj_twitter_page').val();
-          var proj_vimeo_page = $('#proj_vimeo_page').val();
-          var proj_youtube_page = $('#proj_youtube_page').val();
-          var proj_instagram_page = $('#proj_instagram_page').val();
+          var proj_facebook_page = $('#facebook_page').val();
+          var proj_twitter_page = $('#twitter_page').val();
+          var proj_vimeo_page = $('#vimeo_page').val();
+          var proj_youtube_page = $('#youtube_page').val();
+          var proj_instagram_page = $('#instagram_page').val();
 
           console.log("Los valores del arreglo son "+ proj_role);
 

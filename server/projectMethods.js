@@ -185,7 +185,6 @@ Meteor.methods({
     });  
   },
   addRoleToProject(projectId, role){
-    console.log("Llamada a addRoleToProject con "+ projectId + " y " + role);
     Project.update({'_id': projectId},
       {
         $addToSet: {

@@ -14,7 +14,7 @@ Template.profilePage.helpers({
       var u = Meteor.users.findOne({'_id': FlowRouter.getParam('id')});
       var result = "";
       if(u){
-         rolesArray = u.profile.role;
+         rolesArray = u.role;
          if(rolesArray){
             var size = rolesArray.length;
             var count = 0;
@@ -87,7 +87,7 @@ Template.profilePage.helpers({
       return val;
    },
    showButtonFollow(follow){
-      var following = Meteor.users.find({$and : [ {'_id' : Meteor.userId()} , {"profile.follows": FlowRouter.getParam('id') }]});
+      var following = Meteor.users.find({$and : [ {'_id' : Meteor.userId()} , {"follows": FlowRouter.getParam('id') }]});
 
       var found = true;
       if(following.count() > 0){
@@ -97,13 +97,13 @@ Template.profilePage.helpers({
    },
    getFollowers(userId){
       Meteor.subscribe("otherUsers");
-      return Meteor.users.find({'profile.follows': FlowRouter.getParam('id')});
+      return Meteor.users.find({'follows': FlowRouter.getParam('id')});
    },
    getFollowing(){
       //find regresa un cursor que contiene los documentos encontrados
       //fetch regresa un arreglo conteniendo los documentos
       Meteor.subscribe("follows", FlowRouter.getParam('id'));
-      var docs = Meteor.users.find({'_id' : FlowRouter.getParam('id')}).map( function(u) { return u.profile.follows; } );
+      var docs = Meteor.users.find({'_id' : FlowRouter.getParam('id')}).map( function(u) { return u.follows; } );
 
       console.log(docs);
       
@@ -153,7 +153,7 @@ Template.profilePage.events({
       event.preventDefault();
       Meteor.users.update(
          {'_id': Meteor.userId()},
-         { $push: { 'profile.follows': FlowRouter.getParam('id') } }
+         { $push: { 'follows': FlowRouter.getParam('id') } }
       );
 
       $("#pushFollow").attr("disabled", true);
@@ -164,7 +164,7 @@ Template.profilePage.onRendered(function () {
    Meteor.subscribe("otherUsers");
    Meteor.users.update(
          {'_id': FlowRouter.getParam('id')},
-         { $inc:{ 'profile.views': 1}
+         { $inc:{ 'views': 1}
    });
    
 });

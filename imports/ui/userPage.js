@@ -12,6 +12,7 @@ if (Meteor.isClient) {
    Meteor.subscribe("getOcupations");
    Meteor.subscribe("getCategories");
    Meteor.subscribe("getCountries");
+   Meteor.subscribe("userData");
 
    Template.userPage.helpers({
      userFullName(){
@@ -44,42 +45,42 @@ if (Meteor.isClient) {
       },
       resume(){
          if(Meteor.user()){
-            return Meteor.user().profile.resume;
+            return Meteor.user().resume;
          }
       },
       webpage(){
          if(Meteor.user()){
-            return Meteor.user().profile.webpage;
+            return Meteor.user().webpage;
          }
       },
       facebook(){
          if(Meteor.user()){
-            return Meteor.user().profile.facebook;
+            return Meteor.user().facebook;
          }
       },
       twitter(){
          if(Meteor.user()){
-            return Meteor.user().profile.twitter;
+            return Meteor.user().twitter;
          }
       },
       vimeo(){
          if(Meteor.user()){
-            return Meteor.user().profile.vimeo;
+            return Meteor.user().vimeo;
          }
       },
       youtube(){
          if(Meteor.user()){
-            return Meteor.user().profile.youtube;
+            return Meteor.user().youtube;
          }
       },
       instagram(){
          if(Meteor.user()){
-            return Meteor.user().profile.instagram;
+            return Meteor.user().instagram;
          }
       },
       roleSelected: function(value){
         var result="";
-        var prole = Meteor.user().profile.role;
+        var prole = Meteor.user().role;
         if(prole){
            var elem = prole.indexOf(value);
            if(elem >= 0){
@@ -93,7 +94,7 @@ if (Meteor.isClient) {
       },
       citySelected: function(value){
         var result="";
-        var city = Meteor.user().profile.city;
+        var city = Meteor.user().city;
         if(city){
            var elem = city.indexOf(value);
            if(elem >= 0){
@@ -107,7 +108,7 @@ if (Meteor.isClient) {
       },
       countrySelected: function(value){
         var result="";
-        var country = Meteor.user().profile.country;
+        var country = Meteor.user().country;
         if(country){
            var elem = country.indexOf(value);
            if(elem >= 0){
@@ -137,7 +138,7 @@ if (Meteor.isClient) {
           }
       },
       getRolesSelected: function(){
-        return Meteor.user().profile.role;
+        return Meteor.user().role;
       },
       getCountries(){
          var data = City.find().fetch();

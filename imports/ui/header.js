@@ -37,7 +37,7 @@ Template.notifications.helpers({
                      var alert = {
                         "title": item.project_title, 
                         "projectID": item._id,
-                        "owner": owner.profile.fullname, 
+                        "owner": owner.fullname, 
                         "ownerID": owner._id, 
                         "ownerEmail": owner.emails[0].address,
                         "role": item.project_staff[i].role,

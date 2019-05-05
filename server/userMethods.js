@@ -9,16 +9,16 @@ Meteor.methods({
                {"profile.name": name, 
                 "profile.lastname": lastname, 
                 "profile.lastname2": lastname2,
-                "profile.city" : city,
-                "profile.country" : country,
-                "profile.resume" : resume,
-                "profile.fullname": fullname,
-                "profile.webpage": webpage, 
-	            "profile.facebook": facebook,
-	            "profile.twitter": twitter,
-	            "profile.vimeo": vimeo,
-	            "profile.youtube": youtube,
-	            "profile.instagram": instagram
+                "city" : city,
+                "country" : country,
+                "resume" : resume,
+                "fullname": fullname,
+                "webpage": webpage, 
+	            "facebook": facebook,
+	            "twitter": twitter,
+	            "vimeo": vimeo,
+	            "youtube": youtube,
+	            "instagram": instagram
                }
             });
 	},
@@ -27,7 +27,7 @@ Meteor.methods({
 		Meteor.users.update({'_id': userId}, 
 			{
 				$addToSet: {
-	            	"profile.role": role
+	            	"role": role
 	            }
          });
 	},
@@ -35,7 +35,7 @@ Meteor.methods({
 		Meteor.users.update({'_id': userId}, 
 			{
 				$pull: {
-	            	"profile.role": role
+	            	"role": role
 	            }
          });
 	}

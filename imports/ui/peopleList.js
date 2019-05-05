@@ -38,7 +38,7 @@ Template.peopleList.helpers({
       if (orderFilter !== undefined && orderFilter!="") {
          console.log("Buscando en rol: " + orderFilter);
          //selector.push({"profile.role": new RegExp(orderFilter)});
-         selectorRole.push({"profile.role": {"$in": [orderFilter]}});
+         selectorRole.push({"role": {"$in": [orderFilter]}});
       }
       if (locationFilter !== undefined && locationFilter!="") {
         //selector.push({"profile.state": new RegExp(locationFilter)});
@@ -96,7 +96,7 @@ Template.peopleList.helpers({
       return PersonalCover.find({'owner': userId});
    },
    showButtonFollow(follow){
-      var following = Meteor.users.find({$and : [ {'_id' : Meteor.userId()} , {"profile.follows": follow }]});
+      var following = Meteor.users.find({$and : [ {'_id' : Meteor.userId()} , {"follows": follow }]});
 
       var found = true;
       if(following.count() > 0){
@@ -115,7 +115,7 @@ Template.peopleList.events({
       var user = $("#thisUser").val();
       Meteor.users.update(
          {'_id': Meteor.userId()},
-         { $push: { 'profile.follows': user } }
+         { $push: { 'follows': user } }
       );
 
       $("#pushFollow").attr("disabled", true);
@@ -130,9 +130,20 @@ Template.peopleList.events({
 
    },
    'change #location': function (e) {
-    UsersIndex.getComponentMethods()
-      .addProps('city', $(e.target).val());
-    ;
+      if($(e.target).val()!="cualquier"){
+         UsersIndex.getComponentMethods().addProps('city', $(e.target).val());
+      }
+      else{
+         UsersIndex.getComponentMethods().removeProps('city');  
+      }
+  },
+  'change #role': function (e) {
+      if($(e.target).val()!="cualquier"){
+         UsersIndex.getComponentMethods().addProps('role', $(e.target).val());
+      }
+      else{
+         UsersIndex.getComponentMethods().removeProps('role');  
+      }
   }
    
 });
