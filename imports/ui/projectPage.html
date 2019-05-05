@@ -5,15 +5,16 @@
       {{#if isOwner}}
       <div class="container text-center">
          <div class="btn-group" role="group" aria-label="...">
-           <button type="button" class="btn btn-outline-light button_white"><a href="/editProject/{{projData._id}}" class="text-button">EDITAR PROYECTO</a></button>
+           <!--<button type="button" class="btn btn-outline-light button_white"><a href="/editProject/{{projData._id}}" class="text-button">EDITAR PROYECTO</a></button>
            <button type="button" class="btn btn-outline-light button_white"><a href="editar_proyecto.html" class="text-button">PUBLICAR CAMBIOS</a></button>
-           <button type="button" class="btn button_white"><i class="fa fa-trash fa-sm"></i></button>
+           <button type="button" class="btn button_white"><i class="fa fa-trash fa-sm"></i></button>-->
          </div>   
          <br><br>
          <div class="btn-group" role="group" aria-label="...">
+           <button type="button" class="btn btn-outline-light button_white"><i class="fa fa-pencil fa-sm"></i><a href="/editProject/{{projData._id}}" class="text-button">EDITAR PROYECTO</a></button>
            <button type="button" class="btn button_white" data-toggle="modal" data-target="#collabModal"><i class="fa fa-users fa-sm"></i> <a href="#" class="text-button">COLABORADORES</a></button>
            <button type="button" class="btn button_white"><i class="fa fa-file fa-sm"></i> <a href="#" class="text-button" id="add_portlet">AGREGAR SECCIÓN</a></button>
-           <button type="button" class="btn button_white" id="sendMail"><i class="fa fa-link fa-sm"></i> <a href="#" class="text-button">ENVIAR CORREOS</a></button>
+           <!--<button type="button" class="btn button_white" id="sendMail"><i class="fa fa-envelope fa-sm"></i> <a href="#" class="text-button">ENVIAR CORREOS</a></button>-->
          </div> 
          <div id="windowPortlet" class="hidden fixed">
            <div class="spacer20"></div>
@@ -64,7 +65,7 @@
                                  </div>
                                  <div class="row justify-content-start align-items-center">
                                     <div class="col-10 text-white uppercase">
-                                     {{ownerRole projData.userId}}
+                                     {{projData.project_role}}
                                     </div>
                                 </div>
                              </div>

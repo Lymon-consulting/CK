@@ -9,12 +9,13 @@ Template.mainlayout.helpers({
 
 });
 
+/*
 Template.registerHelper('Ocupations', function () {
    Alphas = ['Actor',
            'Bailarín', 'Camarógrafo', 'Director','Escenógrafo', 'Fotógrafo',
            'Gaffer', 'Iluminador','Productor','Tramoyista'];
    return Alphas;
-});
+});*/
 
 Template.registerHelper('firstName', function(){
    return Meteor.user().profile.name;

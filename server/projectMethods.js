@@ -141,6 +141,65 @@ Meteor.methods({
       }
    );*/
    
+  },
+  insertProject(userId, proj_name, proj_type, proj_genre, proj_desc, proj_year, proj_role, proj_main, proj_web_page, proj_facebook_page, proj_twitter_page, proj_vimeo_page, proj_youtube_page, proj_instagram_page){
+    Project.insert({
+      "project_title": proj_name,
+      "project_type": proj_type,
+      "project_genre": proj_genre,
+      "project_desc": proj_desc, 
+      "project_year": proj_year,
+      "project_role": proj_role,
+      "project_is_main": proj_main,
+      "project_web_page": proj_web_page,
+      "project_facebook_page": proj_facebook_page,
+      "project_twitter_page": proj_twitter_page,
+      "proj_vimeo_page": proj_vimeo_page,
+      "proj_youtube_page": proj_youtube_page,
+      "proj_instagram_page": proj_instagram_page,
+      "userId": Meteor.userId()
+     });
+  },
+  updateProject(projectId, proj_name, proj_type, proj_genre, proj_desc, proj_year, proj_main, proj_web_page, proj_facebook_page, proj_twitter_page, proj_vimeo_page, proj_youtube_page, proj_instagram_page){
+    Project.update({_id: projectId},{
+      $set:{
+        "project_title": proj_name,
+        "project_type": proj_type,
+        "project_genre": proj_genre,
+        "project_desc": proj_desc, 
+        "project_year": proj_year,
+        "project_is_main": proj_main,
+        "project_web_page": proj_web_page,
+        "project_facebook_page": proj_facebook_page,
+        "project_twitter_page": proj_twitter_page,
+        "proj_vimeo_page": proj_vimeo_page,
+        "proj_youtube_page": proj_youtube_page,
+        "proj_instagram_page": proj_instagram_page
+     }});
+  },
+  updateMain(current){
+    Project.update({'_id': current},{
+      $set:{
+        "project_is_main": "" 
+      }
+    });  
+  },
+  addRoleToProject(projectId, role){
+    console.log("Llamada a addRoleToProject con "+ projectId + " y " + role);
+    Project.update({'_id': projectId},
+      {
+        $addToSet: {
+                "project_role": role
+              }
+         });
+  },
+  removeRoleFromProject(projectId, role){
+    Project.update({'_id': projectId}, 
+      {
+        $pull: {
+                "project_role": role
+              }
+         });
   }
 
 

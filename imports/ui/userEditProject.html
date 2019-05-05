@@ -46,10 +46,23 @@
                   <div class="col">
                      <select name="proj_type" id="proj_type" class="form-control">
                         <option value="" disabled selected style='display:none;'> Seleccione </option>
-                        <option value="Cortometraje" {{ typeSelected "Cortometraje"}}> Cortometraje </option>
-                        <option value="Documental" {{ typeSelected "Documental"}}> Documental </option>
-                        <option value="Largometraje" {{ typeSelected "Largometraje"}}> Largometraje </option>
-                        <option value="Serie" {{ typeSelected "Serie"}}> Serie </option>
+                        {{#each getProjectType}}
+                        <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
+                        {{/each}}
+                        
+                     </select>
+                  </div>
+               </div>
+               <div class="spacer20"></div>
+               <div class="row">
+                  <div class="col"><label for="proj_gender">Género: <span class="text-purple">(Requerido)</span></label></div>
+                  <div class="col">
+                     <select name="proj_type" id="proj_gender" class="form-control">
+                        <option value="" disabled selected style='display:none;'> Seleccione </option>
+                        {{#each getProjectGender}}
+                        <option value="{{this}}" {{genderSelected this}}> {{this}} </option>
+                        {{/each}}
+                        
                      </select>
                   </div>
                </div>
@@ -66,26 +79,45 @@
                   <div class="col">
                      <select name="proj_year" id="proj_year" class="form-control">
                         <option value="" disabled selected style='display:none;'> Seleccione </option>
-                        <option value="2012" {{ typeSelected "2012"}}> 2012 </option>
-                        <option value="2013" {{ yearSelected "2013"}}> 2013 </option>
-                        <option value="2014" {{ yearSelected "2014"}}> 2014 </option>
-                        <option value="2015" {{ yearSelected "2015"}}> 2015 </option>
-                        <option value="2016" {{ yearSelected "2016"}}> 2016 </option>
-                        <option value="2017" {{ yearSelected "2017"}}> 2017 </option>
-                        <option value="2018" {{ yearSelected "2018"}}> 2018 </option>
+                        {{#each getAvailableYears}}
+                           <option value="{{this}}" {{yearSelected this}}> {{this}} </option>   
+                        {{/each}}
                      </select>
                   </div>
                </div>
                <div class="spacer20"></div>
                <div class="row">
-                  <div class="col"><label for="role">Rol en el proyecto: <span class="text-purple">(Requerido)</span></label></div>
-                  <div class="col">
-                     <select multiple name="Role" id="proj_role" class="form-control">
-                        {{#each item in Ocupations}}
-                           <option value="{{item}}" {{roleSelected item}}> {{item}} </option>
-                        {{/each}}
-                     </select>
+                  <div class="col-md-6">
+                      <label for="oc">Departamentos <span class="text-purple">(Selecciona al menos uno)</span></label>
+                       <select name="category" id="category" class="form-control">
+                         {{#each getCategories}}
+                            <option value="{{title}}"> {{title}} </option>
+                         {{/each}}
+                      </select>
                   </div>
+                  <div class="col-md-6">
+                     <label for="Ocupation">Rol en el proyecto <span class="text-purple">(Selecciona con doble clic)</span></label>
+                     <select multiple name="Ocupation" id="ocupation" class="form-control">
+                       {{#each getOcupationsFromCategory}}
+                          <option value="{{secondary}}" {{roleSelected secondary}}> {{secondary}} </option>
+                       {{/each}}
+                    </select>  
+                  </div>
+                  
+                  
+               </div>
+
+               <div class="spacer20"></div>
+               <div class="row">
+                  <div class="col-md-12">
+                     <label for="Ocupation">Roles seleccionados <span class="text-purple">(Elimina con doble clic)</span></label>
+                     <select name="Selection" multiple id="selection" class="form-control">
+                       {{#each item in getRolesSelected}}
+                          <option value="{{item}}" {{roleSelected item}}> {{item}} </option>
+                       {{/each}}
+                    </select>  
+                  </div>
+                  
                </div>
                <div class="spacer20"></div>
                <div class="row">
@@ -189,8 +221,12 @@
                     {{#each coverPicture}}
                     <tr>
                       <td>{{#if isUploaded}}<img src="{{this.url store='cover' uploading='/images/uploading.png' storing='/images/saving.png'}}" alt="" class="thumbnail" />{{/if}}</td>  <!-- <img src="/uploads/images-{{_id}}-{{original.name}}"> -->
-                      <td><button id="deleteFileButton">delete</button></td>
                     </tr>
+                    <tr>
+                     <td>
+                       <button id="deleteFileButton" class="btn btn-purple">Eliminar imagen de portada</button>
+                     </td>
+                   </tr>
                     {{/each}}
                     </tbody>
                   </table>

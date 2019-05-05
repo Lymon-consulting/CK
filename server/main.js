@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Project } from '../imports/api/project.js';
 import { Portlet } from '../imports/api/portlet.js';
 import { Ocupation } from '../imports/api/ocupations.js';
+import { City } from '../imports/api/city.js';
 
 import '../imports/api/ocupations.js';
 import '../imports/startup/server/on-create-user.js';
@@ -64,6 +65,10 @@ Meteor.publish('getCategories', function() {
 
 Meteor.publish('getOcupations', function(title) {
    return Ocupation.find('title':title);
+});
+
+Meteor.publish('getCountries', function() {
+   return City.find();
 });
 
 Meteor.users.allow({

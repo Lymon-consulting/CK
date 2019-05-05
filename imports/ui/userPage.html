@@ -56,7 +56,7 @@
                <input type="text" class="form-control" id="personLastName" placeholder="Apellido paterno" value="{{lastname}}">
             </div>
             <div class="col form-group">
-               <label for="nombre">Apellido Materno <span class="text-purple">(Requerido)</span></label>
+               <label for="nombre">Apellido Materno</label>
                <input type="text" class="form-control" id="personLastName2" placeholder="Apellido materno" value="{{lastname2}}">
             </div>
          </div>
@@ -65,7 +65,7 @@
          
          <div class="spacer20"></div>
          <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label for="oc">Departamentos <span class="text-purple">(Selecciona al menos uno)</span></label>
                  <select name="category" id="category" class="form-control">
                    {{#each getCategories}}
@@ -73,7 +73,7 @@
                    {{/each}}
                 </select>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                <label for="Ocupation">Ocupaciones <span class="text-purple">(Selecciona con doble clic)</span></label>
                <select multiple name="Ocupation" id="ocupation" class="form-control">
                  {{#each getOcupationsFromCategory}}
@@ -81,7 +81,13 @@
                  {{/each}}
               </select>  
             </div>
-            <div class="col-md-4">
+            
+            
+         </div>
+
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col-md-12">
                <label for="Ocupation">Ocupación <span class="text-purple">(Elimina con doble clic)</span></label>
                <select name="Selection" multiple id="selection" class="form-control">
                  {{#each item in getRolesSelected}}
@@ -89,6 +95,28 @@
                  {{/each}}
               </select>  
             </div>
+            
+         </div>
+
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col-md-6">
+                <label for="country">País <span class="text-purple">(Requerido)</span></label>
+                 <select name="country" id="country" class="form-control">
+                   {{#each getCountries}}
+                      <option value="{{country}}" {{countrySelected country}}> {{country}} </option>
+                   {{/each}}
+                </select>
+            </div>
+            <div class="col-md-6">
+               <label for="city">Ciudad <span class="text-purple">(Requerido)</span></label>
+               <select name="city" id="city" class="form-control">
+                 {{#each getCitiesFromCountries}}
+                    <option value="{{city}}" {{citySelected city}}> {{city}} </option>
+                 {{/each}}
+              </select>  
+            </div>
+            
             
          </div>
 
@@ -194,7 +222,12 @@
                         <img src="{{this.url store='personalcover' uploading='/images/uploading.png' storing='/images/saving.png'}}" alt="" class="thumbnail" />
                       {{/if}}
                     </td>  <!-- <img src="/uploads/images-{{_id}}-{{original.name}}"> -->
-                   <!--<td><button id="deleteFileButton">delete</button></td>-->
+                    
+                 </tr>
+                 <tr>
+                   <td>
+                     <button id="deleteFileButton" class="btn btn-purple">Eliminar imagen de portada</button>
+                   </td>
                  </tr>
                  {{/each}}
                  </tbody>
