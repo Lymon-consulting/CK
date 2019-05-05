@@ -12,44 +12,25 @@
          </div>
          <div class="col-md-3 vdivide">
             <select class="form-control fa agreements" id="criterioOrden">
-                <option value="1er Asistente de Dirección">1er Asistente de Dirección</option>
-                <option value="2do Asistente de Dirección">2do Asistente de Dirección</option>
-                <option value="Asitente de Escenografía">Asitente de Escenografía</option>
-                <option value="Actor">Actor</option>
-                <option value="Actirz">Actirz</option>
-                <option value="Asitente de Dirección de Arte">Asitente de Dirección de Arte</option>
-                <option value="Asistente de Post Producción">Asistente de Post Producción</option>
-                <option value="Asistente de Cámara">Asistente de Cámara</option>
-                <option value="Asistente de Dirección">Asistente de Dirección</option>
-                <option value="Asistente de Producción">Asistente de Producción</option>
-                <option value="Asistente Director de Casting">Asistente Director de Casting</option>
-                <option value="Camarógrafo">Camarógrafo</option>
-                <option value="Carpintero">Carpintero</option>
-                <option value="Chofer">Chofer</option>
-                <option value="Cinematógrafo">Cinematógrafo</option>
-                <option value="Colorista">Colorista</option>
-                <option value="Constructor">Constructor</option>
-                <option value="Contador">Contador</option>
-                <option value="Continuista">Continuista</option>
-                <option value="Coordinador de Producción">Coordinador de Producción</option>
-                <option value="Copywriter">Copywriter</option>
-                <option value="Director">Director</option>
-                <option value="Productor">Productor</option>
-                <option value="Tramoyista">Tramoyista</option>
+                  <option value="cualquier"> Cualquier ocupación </option>
+               {{#each getAllOcupations}}
+                  <option value="{{secondary}}"> {{secondary}} </option>
+               {{/each}}
             </select>
          </div>
          <div class="col-md-3 vdivide">
             <select class="form-control fa agreements" id="location">
-                <option value="Aguascalientes">Aguascalientes</option>
-                <option value="Campeche">Campeche</option>
-                <option value="Ciudad de México">Ciudad de México</option>
+                    <option value="cualquier"> Cualquier estado </option>
+                {{#each getCitiesFromCountries}}
+                    <option value="{{city}}"> {{city}} </option>
+                 {{/each}}
             </select>
          </div>
          
          <div class="col-md-3">
             <div class="input-group">
                <span class="btn-borderless"><strong class="text-purple">Ir</strong>&nbsp;</span>
-               <input type="text" class="form-control" placeholder="Buscar..." id="buscarTexto">
+               {{> EasySearch.Input index=usersIndex event="enter" attributes=inputAttributes}}
                <span class="input-group-btn">
                  <button class="btn btn-secondary" type="button" id="buscarBtn">
                      <i class="fa fa-search fa-sm"></i>
@@ -83,7 +64,7 @@
                <div class="row">
                   <div class="col-md-12"><hr></div>
                </div>
-               {{#each people}}
+               {{#EasySearch.Each index=usersIndex}}
                <div class="row">
                   <div class="col-md-2 vertical-align-middle">
                      {{#each profilePicture this._id}}
@@ -152,7 +133,13 @@
                <div class="row">
                   <div class="col-md-12"><hr></div>
                </div>
-               {{/each}}
+               {{/EasySearch.Each}}
+
+               {{> EasySearch.LoadMore index=usersIndex}}
+
+                {{#EasySearch.IfNoResults index=usersIndex}}
+                  <div class="no-results">No se encontraron resultados</div>
+                {{/EasySearch.IfNoResults}}
             </div>
          </div>
          <!-- Fin contenido -->
@@ -224,3 +211,19 @@
    <div class="spacer80"></div>
 </template>
 
+<template name="search">
+
+  {{> EasySearch.Input index=usersIndex}}
+
+  <ul>
+    {{#EasySearch.Each index=usersIndex}}
+      <li>{{profile.fullname}}</li>
+    {{/EasySearch.Each}}
+  </ul>
+
+  {{> EasySearch.LoadMore index=usersIndex}}
+
+  {{#EasySearch.IfNoResults index=usersIndex}}
+    <div class="no-results">No results found!</div>
+  {{/EasySearch.IfNoResults}}
+</template>

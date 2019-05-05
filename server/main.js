@@ -3,6 +3,7 @@ import { Project } from '../imports/api/project.js';
 import { Portlet } from '../imports/api/portlet.js';
 import { Ocupation } from '../imports/api/ocupations.js';
 import { City } from '../imports/api/city.js';
+import { Index, MinimongoEngine } from 'meteor/easy:search'
 
 import '../imports/api/ocupations.js';
 import '../imports/startup/server/on-create-user.js';
@@ -16,6 +17,42 @@ Meteor.startup(() => {
   Meteor.users._ensureIndex({
       "fullname": 1
     });
+});
+
+//const Users = new Mongo.Collection('users');
+export const UsersIndex = new Index({
+    collection: Meteor.users,
+    fields: ['profile.name', 'profile.lastname', 'profile.lastname2', 'emails'],
+    engine: new MinimongoEngine({
+
+    selectorPerField: function (field, searchString) {
+      if ('emails' === field) {
+        // return this selector if the email field is being searched
+        return {
+          emails: {
+            $elemMatch: {
+              address: { '$regex' : '.*' + searchString + '.*', '$options' : 'i' }
+            },
+          },
+        }
+      }
+
+      // use the default otherwise
+      return this.defaultConfiguration().selectorPerField(field, searchString)
+    },/*
+    selector: function (searchObject, options, aggregation) {
+      const selector = this.defaultConfiguration().selector(searchObject, options, aggregation);
+
+      // filter for the brand if set
+      if (options.search.props.city) {
+        console.log("----->"+options.search.props.city);
+        console.log(selector);
+        selector.city = options.search.props.city;
+      }
+
+      return selector;
+    }*/
+  }),
 });
 
 Meteor.publish("otherUsers", function () {

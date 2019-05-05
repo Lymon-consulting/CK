@@ -94,7 +94,6 @@ if (Meteor.isClient) {
                });
             }
          }
-
          return result;
       },
       getPortlets(){
@@ -103,7 +102,6 @@ if (Meteor.isClient) {
         }).fetch();
       },
       profilePicture(userId){
-         
          return Images.find({'owner': userId});
       },
       ownerEmail(owner){

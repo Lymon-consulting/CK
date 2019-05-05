@@ -1,10 +1,21 @@
 import { Template } from 'meteor/templating';
+import { Ocupation } from '../api/ocupations.js';
+import { City } from '../api/city.js';
+import { UsersIndex } from '/lib/common.js';
 
 import './peopleList.html';
+import '/lib/common.js';
 
 
 
 Template.peopleList.helpers({
+   usersIndex: () => UsersIndex, // instanceof EasySearch.Index
+   inputAttributes: function () {
+     return { 
+         placeholder: 'Buscar', 
+         id: 'searchBox'
+      }; 
+   },
    people(){
 
       var textFilter = Session.get('textFilter');
@@ -56,6 +67,20 @@ Template.peopleList.helpers({
       return result;
       */
    },
+   getAllOcupations(){
+      return Ocupation.find({},{sort:{"secondary":1}}).fetch();
+   },
+   getAvailableYears(){
+     var years = new Array();
+
+     for(i=2018; i>1970; i--){
+       years.push(i);
+     }
+     return years;
+  },
+  getCitiesFromCountries(){
+      return City.find({'country': 'México'}).fetch(); 
+   },
    profilePicture(userId){
       return Images.find({'owner': userId});
    },
@@ -83,7 +108,6 @@ Template.peopleList.helpers({
    
 });
 
-
 Template.peopleList.events({
    'click #pushFollow': function(event, template) {
       event.preventDefault();
@@ -99,18 +123,17 @@ Template.peopleList.events({
 
    'click #buscarBtn': function(event, template) {
       //event.preventDefault();
+      console.log("Si entra");
+      var e = jQuery.Event("keyup");
+      e.keyCode = $.ui.keyCode.ENTER;
+      $("#searchBox").trigger(e);
 
-      var textoABuscar = $( "#buscarTexto").val();
-      var tipoPersona = $( "select#tipoPersona option:checked" ).val();
-      var criterioOrden = $( "select#criterioOrden option:checked" ).val();
-      var location = $( "select#location option:checked" ).val();
-
-      Session.set("textFilter", textoABuscar);
-      Session.set("typeFilter", tipoPersona);
-      Session.set("orderFilter", criterioOrden);
-      Session.set("locationFilter", location);
-
-   }
+   },
+   'change #location': function (e) {
+    UsersIndex.getComponentMethods()
+      .addProps('city', $(e.target).val());
+    ;
+  }
    
 });
 
