@@ -308,6 +308,57 @@ if (Meteor.isClient) {
                   { $pull: { project_staff: collaborator }
                });
            },
+      
+      'autocompleteselect input': function(event, template, doc) {
+          console.log("selected ", doc);
+          if(doc!=null){
+             $( "#userId").val(doc._id);
+             $( "#userMail").val(doc.emails[0].address);
+          }
+          else{
+             $( "#userId").val(""); 
+          }
+        }, 
+        'click #sendNotification' : function(){
+            if(confirm("Se enviará una notificación a todas las personas de tu lista que aún no la reciben, ¿deseas continuar?")){
+               var collabs = null;
+               var proj = Project.findOne({'_id': FlowRouter.getParam('id')});
+               var sender = Meteor.users.findOne({'_id': Meteor.userId()});
+               if(proj){
+                  collabs = proj.project_staff;
+                  for(var k in collabs){
+                     if(!collabs[k].confirmed && !collabs[k].invite_sent){
+                        var emailData = {
+                          name: collabs[k].name,
+                          sender: sender.fullname,
+                          sender_id: sender._id,
+                          production: proj.project_title,
+                          production_id : proj._id,
+                          role: collabs[k].role,
+                          domain : Meteor.settings.public.domain
+                        };
+                        Meteor.call(
+                          'sendEmail',
+                          collabs[k].name + "<" + collabs[k].email + ">",
+                          Meteor.settings.public.global_mail_sender,
+                          'Has recibido una invitación de '+ sender.fullname +' para ingresar a Cinekomuna',
+                          'collaboration-template.html',
+                          emailData
+                        );
+                        collabs[k].invite_sent = true;
+                     }
+                  }
+                  Meteor.call(
+                     'updateInvitationStatusForAll',
+                     FlowRouter.getParam('id'),
+                     collabs,
+                     true
+                  );
+
+               }
+               Bert.alert({message: 'Mensaje enviado', type: 'info'});
+            }
+        },
            'click .sendIndividualInvite' : function(e, template, doc){
              e.preventDefault();
 
@@ -315,26 +366,29 @@ if (Meteor.isClient) {
              var name = $(e.target).attr('data-name');
              var mail = $(e.target).attr('data-email');
              var role =  $(e.target).attr('data-role');
-             
+             var sender = Meteor.users.findOne({'_id': Meteor.userId()});
+             var proj = Project.findOne({'_id': FlowRouter.getParam('id')});
              if(confirm("Se va enviar un correo a " + mail +", ¿Deseas continuar?")){
 
                 console.log("Reenviando correo...");
 
-                  /*
-                  var emailData = {
-                    name: "Luis",
-                    favoriteRestaurant: "Toks",
-                    bestFriend: "Tomás",
-                  };
-                
+                var emailData = {
+                  name: name,
+                  sender: sender.fullname,
+                  sender_id: sender._id,
+                  production: proj.project_title,
+                  production_id : proj._id,
+                  role: role,
+                  domain : Meteor.settings.public.domain
+                };
                 Meteor.call(
-                    'sendEmail',
-                    name + "<" + mail + ">",
-                    'Carlos <lcjimenez@gmail.com>',
-                    'Fulanito Te ha invitado a unirte a Cinekomuna',
-                    'Cuerpo del mensaje',
-                    emailData
-                );*/
+                  'sendEmail',
+                  name + "<" + mail + ">",
+                  Meteor.settings.public.global_mail_sender,
+                  'Has recibido una invitación de '+ sender.fullname +' para ingresar a Cinekomuna',
+                  'collaboration-template.html',
+                  emailData
+                );
 
                 Bert.alert({message: 'Se ha enviado un correo a ' + mail, type: 'info'});
 
@@ -347,82 +401,6 @@ if (Meteor.isClient) {
              }
              
            },
-      
-      'autocompleteselect input': function(event, template, doc) {
-          console.log("selected ", doc);
-          if(doc!=null){
-             $( "#userId").val(doc._id);
-             $( "#userMail").val(doc.emails[0].address);
-          }
-          else{
-             $( "#userId").val(""); 
-          }
-        },  
-        'click #sendMail' : function(){
-
-            var emailData = {
-              name: "Luis",
-              favoriteRestaurant: "Toks",
-              bestFriend: "Tomás",
-            };
-
-            Meteor.call(
-              'sendEmail',
-              'Carlos <lcjimenez@gmail.com>',
-              'Luis Carlos Jiménez <ljimenez@lymon.com.mx>',
-              'Hello from Meteor!',
-              'collaboration-template.html',
-              emailData
-            );
-
-            console.log("Correo enviado");
-
-        },
-        'click #sendNotification' : function(){
-            
-            
-            if(confirm("Se enviará una notificación a todas las personas de tu lista que aún no la reciben, ¿deseas continuar?")){
-               var collabs = null;
-               var proj = Project.findOne({'_id': FlowRouter.getParam('id')});
-               if(proj){
-                  collabs = proj.project_staff;
-                  for(var k in collabs){
-                     if(!collabs[k].confirmed && !collabs[k].invite_sent){
-                        /*
-                        Meteor.call(
-                          'sendEmail',
-                          collabs[k].name + "<" + collabs[k].email + ">",
-                          'Carlos <lcjimenez@gmail.com>',
-                          'Fulanito Te ha invitado a unirte a Cinekomuna',
-                          'collaboration-template.html'
-                        );*/
-                        
-                        //console.log("Actualizando registro " + collabs[k]._id + ", " + collabs[k].email + ", "+ collabs[k].role);
-
-                        collabs[k].invite_sent = true;
-
-                     }
-                  }
-                  /** 
-                     * Se actualiza el estatus de enviado a true para todos los colaboradores del proyecto
-                     * El método updateInvitationStatusForAll se encuentra en /server/main.js
-                     * Los parámetros que recibe son: 
-                     *  - ID del proyecto 
-                     *  - JSon con estructura de colaboradores 
-                     *  - valor que va a tomar el campo invite_sent
-                     * @author Luis Carlos Jiménez
-                  */
-                  Meteor.call(
-                     'updateInvitationStatusForAll',
-                     FlowRouter.getParam('id'),
-                     collabs,
-                     true
-                  );
-
-               }
-               Bert.alert({message: 'Mensaje enviado', type: 'info'});
-            }
-        },
         'click #manageModal' : function(){
             $('#addByMail').val( $('#msg').val());
             $('#collabModal').modal('toggle');

@@ -17,6 +17,8 @@ Meteor.startup(() => {
   Meteor.users._ensureIndex({
       "fullname": 1
     });
+  console.log(Meteor.settings.public.global_mail_sender);
+  console.log(Meteor.settings.public.domain);
 });
 
 Meteor.publish("userData", function () {

@@ -2,3 +2,5 @@ node_modules/
 .meteor/
 startup/client/cloudinary-settings.js
 startup/server/cloudinary-settings.js
+settings-production.json
+settings-development.json
