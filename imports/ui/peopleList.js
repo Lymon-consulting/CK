@@ -79,7 +79,7 @@ Template.peopleList.helpers({
      return years;
   },
   getCitiesFromCountries(){
-      return City.find({'country': 'México'}).fetch(); 
+      return City.find({'country': 'México'},{sort:{'city':1}}).fetch(); 
    },
    profilePicture(userId){
       return Images.find({'owner': userId});

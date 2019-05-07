@@ -62,7 +62,24 @@ export const UsersIndex = new Index({
 });
 
 Meteor.publish("otherUsers", function () {
-  return Meteor.users.find({},{ fields: { '_id': 1 , 'profile': 1, 'emails' : 1}});
+  return Meteor.users.find({},{ 
+    fields: { 
+      '_id': 1 , 
+      'profile': 1, 
+      'emails' : 1, 
+      'city':1, 
+      'country':1, 
+      'likes':1, 
+      'views':1, 
+      'resume':1,
+      'webpage':1,
+      'facebook':1,
+      'twitter':1,
+      'youtube':1,
+      'vimeo':1,
+      'instagram':1
+    }
+  });
   //return Meteor.users.find();
 });
 

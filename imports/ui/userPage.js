@@ -255,7 +255,7 @@ if (Meteor.isClient) {
          event.preventDefault();
          if(confirm("Se va a eliminar esta imagen de portada ¿estás seguro?")){
            console.log("deleteFile button ", this);
-           Images.remove({_id:this._id});
+           PersonalCover.remove({_id:this._id});
          }
       },
       'change .your-upload-class': function (event, template) {

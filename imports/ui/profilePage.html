@@ -34,7 +34,7 @@
                            </tr>
                            <tr>
                               <td class="no-padding text-no-wrap">
-                                 <i class="fa fa-map-marker fa-sm"></i> <small>Campeche, México</small>
+                                 <i class="fa fa-map-marker fa-sm"></i> <small>{{getProfile.city}}, {{getProfile.country}}</small>
                               </td>
                            </tr>
                            {{#if currentUser}}
@@ -58,7 +58,7 @@
                         <tr>
                            <td class="low-padding text-no-wrap" rowspan="2"><div class="vertical-line" style="height: 55px;"></div></td>
                            <td class="low-padding text-no-wrap"><a href="mailto:{{getEmail}}"><i class="fa fa-envelope fa-sm text-black"></i></a></td>
-                           <td class="low-padding text-no-wrap numbers"><a href="mailto:{{getEmail}}" class="text-black">Contactar</a></td>
+                           <td class="low-padding text-no-wrap numbers"><a href="mailto:{{getEmail}}" class="text-black"><small>Contactar</small></a></td>
                            <td class="low-padding text-no-wrap" rowspan="2"><div class="vertical-line" style="height: 55px;"></div></td>
                            <td class="low-padding text-no-wrap"><i class="fa fa-user fa-sm"></i></td>
                            <td class="low-padding text-no-wrap numbers">0</td>
@@ -68,11 +68,11 @@
                         </tr>
                         <tr>
                            <td class="low-padding text-no-wrap"><i class="fa fa-share-alt-square fa-sm"></i></td>
-                           <td class="low-padding text-no-wrap numbers">Compartir</td>
+                           <td class="low-padding text-no-wrap numbers"><small>Compartir</small></td>
                            <td class="low-padding text-no-wrap"><i class="fa fa-user fa-sm"></i></td>
-                           <td class="low-padding text-no-wrap numbers">0</td>
+                           <td class="low-padding text-no-wrap numbers"><small>{{getProfile.likes}}</small></td>
                            <td class="low-padding text-no-wrap"><i class="fa fa-eye fa-sm"></i></td>
-                           <td class="low-padding text-no-wrap numbers">{{getProfile.views}}</td>
+                           <td class="low-padding text-no-wrap numbers"><small>{{getProfile.views}}</small></td>
                         </tr>
                      </table>
                   </div>
@@ -119,9 +119,9 @@
                         <div class="col-md-12">
                               {{#each getProjectImages getMainProject._id}}
                                  {{#if this.isUploaded}}
-                                 <img src="{{this.url store='cover'}}" class="img-fluid cover-large" alt="">
+                                 <a href="/projectPage/{{getMainProject._id}}" class="h2-title"><img src="{{this.url store='cover'}}" class="img-fluid cover-large" alt=""></a>
                                  {{else}}
-                                 <img src="../images/largometraje1.jpg" class="img-fluid" alt="">
+                                 <a href="/projectPage/{{getMainProject._id}}" class="h2-title"><img src="../images/largometraje1.jpg" class="img-fluid" alt=""></a>
                                  {{/if}}
                               {{/each}}
                            <!--<img src="../images/largometraje1.jpg" alt="Largometraje">-->
@@ -319,7 +319,7 @@
                      </div>
                      <div class="row">
                         <div class="col">
-                           <a href="{{getProfile.webpage}}" target="_blank" class="text-gray"><strong class="text-gray">{{getProfile.webpage}}</strong></a>
+                           <a href="{{getProfile.webpage}}" target="_blank" class="text-gray"><strong class="text-gray"><small>{{getProfile.webpage}}</small></strong></a>
                         </div>
                      </div>
                      <div class="row">
