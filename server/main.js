@@ -61,6 +61,26 @@ export const UsersIndex = new Index({
   }),
 });
 
+export const ProjectIndex = new Index({
+    collection: Project,
+    fields: ['project_title', 'project_desc', 'project_genre', 'project_type'],
+    
+    engine: new MongoDBEngine({
+      selector: function (searchObject, options, aggregation) {
+      const selector = this.defaultConfiguration().selector(searchObject, options, aggregation)
+
+        if (options.search.props.project_type) {
+          selector.project_type = options.search.props.project_type;
+        }
+        if (options.search.props.project_genre) {
+          selector.project_genre = options.search.props.project_genre;
+        }
+
+        return selector;
+      }
+    }),
+});
+
 Meteor.publish("otherUsers", function () {
   return Meteor.users.find({},{ 
     fields: { 
@@ -77,7 +97,9 @@ Meteor.publish("otherUsers", function () {
       'twitter':1,
       'youtube':1,
       'vimeo':1,
-      'instagram':1
+      'instagram':1,
+      'follows' : 1,
+      'fullname':1
     }
   });
   //return Meteor.users.find();

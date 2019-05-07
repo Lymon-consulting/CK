@@ -40,12 +40,13 @@
                            {{#if currentUser}}
                            <tr>
                               <td class="no-padding">
-                                 {{#if notSameUser}}
-                                    {{#if showButtonFollow}}
-                                       <button class="btn btn-gray text-button" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> Seguir</button>
+                                 {{#if notSameUser getProfile._id}}
+                                    {{#if showButtonFollow getProfile._id}}
+                                    <input type="hidden" id="thisUser" value="{{getProfile._id}}">
+                                    <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
                                     {{else}}
-                                       <button class="btn button-follow disabled"> <i class="fa fa-plus-circle fa-sm"></i> SIGUIENDO</button>
-                                    {{/if}}
+                                    <button class="btn button-follow disabled"> <i class="fa fa-plus-circle fa-sm"></i> SIGUIENDO</button>
+                                    {{/if}}      
                                  {{/if}}
                               </td>
                            </tr>
@@ -61,16 +62,16 @@
                            <td class="low-padding text-no-wrap numbers"><a href="mailto:{{getEmail}}" class="text-black"><small>Contactar</small></a></td>
                            <td class="low-padding text-no-wrap" rowspan="2"><div class="vertical-line" style="height: 55px;"></div></td>
                            <td class="low-padding text-no-wrap"><i class="fa fa-user fa-sm"></i></td>
-                           <td class="low-padding text-no-wrap numbers">0</td>
+                           <td class="low-padding text-no-wrap numbers">{{getProfile.follows.length}}</td>
                            <td class="low-padding text-no-wrap" rowspan="2"><div class="vertical-line" style="height: 55px;"></div></td>
                            <td class="low-padding text-no-wrap"><i class="fa fa-thumbs-up fa-sm"></i></td>
-                           <td class="low-padding text-no-wrap numbers">0</td>
+                           <td class="low-padding text-no-wrap numbers">{{getProfile.likes}}</td>
                         </tr>
                         <tr>
                            <td class="low-padding text-no-wrap"><i class="fa fa-share-alt-square fa-sm"></i></td>
                            <td class="low-padding text-no-wrap numbers"><small>Compartir</small></td>
                            <td class="low-padding text-no-wrap"><i class="fa fa-user fa-sm"></i></td>
-                           <td class="low-padding text-no-wrap numbers"><small>{{getProfile.likes}}</small></td>
+                           <td class="low-padding text-no-wrap numbers"><small>{{getFollowers.count}}</small></td>
                            <td class="low-padding text-no-wrap"><i class="fa fa-eye fa-sm"></i></td>
                            <td class="low-padding text-no-wrap numbers"><small>{{getProfile.views}}</small></td>
                         </tr>

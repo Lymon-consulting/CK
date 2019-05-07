@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Project } from '../api/project.js';
 import { Portlet } from '../api/portlet.js';
+import { Ocupation } from '../api/ocupations.js';
 
 import './projectPage.html';
 import '/lib/common.js';
@@ -116,6 +117,9 @@ if (Meteor.isClient) {
          }
          return email;
       },
+      getAllOcupations(){
+        return Ocupation.find({},{sort:{"secondary":1}}).fetch();
+     },
       settings: function() {
        return {
          position: "bottom",

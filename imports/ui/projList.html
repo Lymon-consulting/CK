@@ -1,0 +1,165 @@
+<template name="projList">
+<div class="container">
+      <div class="spacer40"></div>
+      <div class="row">
+         <div class="col-md-3 vdivide">
+            <select class="form-control fa" id="tipoPersona">
+               <option value="Personas">&#xf0c0;&nbsp; Personas</option>
+               <option value="Proyectos" selected>&#xf008;&nbsp; Proyectos</option>
+               <option value="Industrias" disabled>&#xf03d;&nbsp; Industrias</option>
+               <option value="Casting" disabled>&#xf26c;&nbsp; Casting</option>
+            </select>
+         </div>
+         
+         <div class="col-md-3 vdivide">
+            <select class="form-control fa agreements" id="type">
+                  <option value="cualquier"> Cualquier tipo </option>
+               {{#each getProjectType}}
+                  <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
+               {{/each}}
+            </select>
+         </div>
+         <div class="col-md-3 vdivide">
+            <select class="form-control fa agreements" id="genre">
+                    <option value="cualquier"> Cualquier género </option>
+                {{#each getProjectGender}}
+                    <option value="{{this}}" {{genreSelected this}}> {{this}} </option>
+                 {{/each}}
+            </select>
+         </div>
+         
+         <div class="col-md-3">
+            <div class="input-group">
+               <span class="btn-borderless"><strong class="text-purple">Ir</strong>&nbsp;</span>
+               {{> EasySearch.Input index=projectIndex event="enter" attributes=inputAttributes}}
+               <span class="input-group-btn">
+                 <button class="btn btn-secondary" type="button" id="buscarBtn">
+                     <i class="fa fa-search fa-sm"></i>
+                 </button>
+               </span>
+             </div>
+         </div>
+      </div>
+
+      <div class="spacer40"></div>
+      
+      <div class="row">
+         <div class="col-md-12 agreements">
+            Page 1 -  results
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-12">
+            <hr>
+         </div>
+      </div>
+   </div>
+      
+
+
+   <div class="container">
+      <div class="row">
+         <!-- Inicia contenido -->
+         <div class="col-md-9">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-md-12"><hr></div>
+               </div>
+               {{#EasySearch.Each index=projectIndex}}
+               <div class="row">
+                  <div class="col-md-2 vertical-align-top">
+                     {{#each coverPicture this.__originalId}}
+                        <a href="/projectPage/{{this.__originalId}}"><img src="{{this.url store='cover' uploading='/images/uploading.png' storing='/images/saving.png'}}" alt="" class="larger_thumbs" /></a>
+                     {{/each}}
+                  </div>
+                  <div class="col-md-7">
+                     <div class="container-fluid">
+                        <div class="row">
+                           <div class="col">
+                              <table class="table table-responsive borderless">
+                                 <tbody>
+                                    <tr>
+                                       <td class="no-padding text-no-wrap">
+                                          <a href="/projectPage/{{this.__originalId}}"><h5 class="h5-name">{{this.project_title}}</h5></a>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td class="no-padding text-no-wrap subtitle-underline">
+                                          {{this.project_type}}
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td class="no-padding text-no-wrap location-underline">
+                                          {{this.project_genre}}
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td class="text-no-wrap">
+                                          <div class="row">
+                                             <div class="col-md-6 numbers">
+                                                <i class="fa fa-thumbs-up fa-sm"></i> <small>{{this.likes}}</small>
+                                             </div>
+                                             <div class="col-md-6 numbers">
+                                                <i class="fa fa-eye fa-sm"></i> <small>{{this.views}}</small>
+                                             </div>
+                                          </div>
+                                          
+                                       </td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <a href="/profilePage/{{this.userId}}">
+                     {{#each profilePicture this.userId}}
+                     <img src="{{this.url store='profile'}}" border="0" class="rounded-circle thumbs" />
+                     {{/each}}
+                     </a>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-12"><hr></div>
+               </div>
+               {{/EasySearch.Each}}
+
+               {{> EasySearch.LoadMore index=projectIndex}}
+
+                {{#EasySearch.IfNoResults index=projectIndex}}
+                  <div class="no-results">No se encontraron resultados</div>
+                {{/EasySearch.IfNoResults}}
+            </div>
+         </div>
+         <!-- Fin contenido -->
+         <!-- Inicia banners -->
+         <div class="col-md-3">
+            <div class="container">
+               <div class="spacer20"></div>
+               <div class="row">
+                  <div class="col">
+                     <img src="../images/banner-section.jpg" alt="" class="img-responsive">
+                  </div>
+               </div>
+               <div class="spacer60"></div>
+               <div class="row">
+                  <div class="col">
+                     <img src="../images/banner-section.jpg" alt="" class="img-responsive">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- Fin banners -->
+      </div>
+
+      <div class="row">
+         <div class="col-md-12">
+            <hr>
+         </div>
+      </div>
+
+   </div>
+   
+   <div class="spacer80"></div>
+</template>

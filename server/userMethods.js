@@ -38,7 +38,14 @@ Meteor.methods({
 	            	"role": role
 	            }
          });
+	},
+	addFollowTo(followerId, followsToId){
+		Meteor.users.update(
+         {'_id': followerId},
+         { $addToSet: { 'follows': followsToId } }
+      );
 	}
+	
 
 
 });

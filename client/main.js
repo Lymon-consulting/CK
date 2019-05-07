@@ -17,6 +17,7 @@ import '../imports/ui/userProjects.js';
 import '../imports/ui/userEditProject.js';
 import '../imports/ui/viewProjects.js';
 import '../imports/ui/peopleList.js';
+import '../imports/ui/projList.js';
 import '../imports/ui/profilePage.js';
 import '../imports/ui/projectPage.js';
 

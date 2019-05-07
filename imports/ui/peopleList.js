@@ -16,57 +16,6 @@ Template.peopleList.helpers({
          id: 'searchBox'
       }; 
    },
-   people(){
-
-      var textFilter = Session.get('textFilter');
-      var typeFilter = Session.get("typeFilter");
-      var orderFilter = Session.get("orderFilter");
-      var locationFilter = Session.get("locationFilter");
-
-      var selectorText = [];
-      var selectorRole = [];
-      
-      if (textFilter !== undefined && textFilter!="") {
-         console.log("Buscando en nombres y apellidos: " + textFilter);
-         selectorText.push({"profile.name": new RegExp(textFilter)});
-         selectorText.push({"profile.lastname": new RegExp(textFilter)});
-         selectorText.push({"profile.lastname2": new RegExp(textFilter)});
-      }
-      if (typeFilter !== undefined && typeFilter!="") {
-        //selector.number = typeFilter;
-      }
-      if (orderFilter !== undefined && orderFilter!="") {
-         console.log("Buscando en rol: " + orderFilter);
-         //selector.push({"profile.role": new RegExp(orderFilter)});
-         selectorRole.push({"role": {"$in": [orderFilter]}});
-      }
-      if (locationFilter !== undefined && locationFilter!="") {
-        //selector.push({"profile.state": new RegExp(locationFilter)});
-      }
-      
-      /*Código de prueba*/
-      //Meteor.subscribe("search", Session.get("textFilter"));
-      if (Session.get("textFilter")) {
-         Meteor.subscribe('otherUsers');
-         //return Meteor.users.find("fullname":textFilter, {fields:{selector:1}});      
-        //return Meteor.users.find({"fullname":textFilter}, { sort: [["fullname", "asc"]] });
-         return Meteor.users.find({ "$and":[ selectorRole,  {"$or": [selectorText] }]});
-      } 
-      else {
-        return Meteor.users.find({});
-      }
-      /*Termina código de prueba*/
-
-      /*
-      console.log("-->"+JSON.stringify(selector)+"<--");
-
-      Meteor.subscribe("otherUsers");
-      var result = Meteor.users.find(selector); 
-
-      console.log("Encontró: " + result.count());
-      return result;
-      */
-   },
    getAllOcupations(){
       return Ocupation.find({},{sort:{"secondary":1}}).fetch();
    },
@@ -104,6 +53,26 @@ Template.peopleList.helpers({
       }
       return found;
    },
+   getRoleSelected: function(value){
+      var prole = "";
+      if(Session.get("role_selected")!=null){
+        prole = Session.get("role_selected");
+      }
+      else{
+        prole = "cualquier";
+      }
+      return (prole === value) ? 'selected' : '' ;
+    },
+    getLocationSelected: function(value){
+      var plocation = "";
+      if(Session.get("location_selected")!=null){
+        plocation = Session.get("location_selected");
+      }
+      else{
+        plocation = "cualquier";
+      }
+      return (plocation === value) ? 'selected' : '' ;
+    }
 
    
 });
@@ -132,19 +101,27 @@ Template.peopleList.events({
    'change #location': function (e) {
       if($(e.target).val()!="cualquier"){
          UsersIndex.getComponentMethods().addProps('city', $(e.target).val());
+         Session.set("location_selected",$(e.target).val());
       }
       else{
          UsersIndex.getComponentMethods().removeProps('city');  
+         Session.set("role_selected",null);
       }
   },
   'change #role': function (e) {
       if($(e.target).val()!="cualquier"){
          UsersIndex.getComponentMethods().addProps('role', $(e.target).val());
+         Session.set("role_selected",$(e.target).val());
       }
       else{
          UsersIndex.getComponentMethods().removeProps('role');  
+         Session.set("role_selected",null);
       }
-  }
+  },
+   'click #tipoPersona': function(event,template){
+      event.preventDefault();
+      FlowRouter.go('/projList');
+   }
    
 });
 

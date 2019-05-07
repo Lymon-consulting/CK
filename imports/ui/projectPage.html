@@ -204,10 +204,9 @@
             <div class="col">
                Rol:
                <select id="oficio" class="form-control form-control-sm">
-                  <option value="Actor">Actor</option>
-                  <option value="Director">Director</option>
-                  <option value="Guionista">Guionista</option>
-                  <option value="Productor">Productor</option>
+                  {{#each getAllOcupations}}
+                  <option value="{{secondary}}"> {{secondary}} </option>
+               {{/each}}
                </select>
             </div>
             
@@ -266,10 +265,9 @@
             </div>
             <div class="col">
                <select id="oficioByMail" class="form-control form-control-sm">
-                  <option value="Actor">Actor</option>
-                  <option value="Director">Director</option>
-                  <option value="Guionista">Guionista</option>
-                  <option value="Productor">Productor</option>
+                  {{#each getAllOcupations}}
+                      <option value="{{secondary}}"> {{secondary}} </option>
+                   {{/each}}
                </select>
             </div>
             
@@ -296,7 +294,7 @@
 </template> 
 
 <template name="userPill">
-    <span class="label">{{profile.fullname}}</span>
+    <span class="label">{{fullname}}</span>
 </template>
 
 <template name="noMatch">

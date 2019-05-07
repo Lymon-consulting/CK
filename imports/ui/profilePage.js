@@ -3,10 +3,10 @@ import { Project } from '../api/project.js';
 
 
 import './profilePage.html';
-
+Meteor.subscribe("otherUsers");
 Template.profilePage.helpers({
    getProfile(){
-      Meteor.subscribe("otherUsers");
+      
       //console.log(FlowRouter.getParam('id'));
       return Meteor.users.findOne({_id : FlowRouter.getParam('id')});
    },
@@ -87,7 +87,7 @@ Template.profilePage.helpers({
       return val;
    },
    showButtonFollow(follow){
-      var following = Meteor.users.find({$and : [ {'_id' : Meteor.userId()} , {"follows": FlowRouter.getParam('id') }]});
+      var following = Meteor.users.find({$and : [ {'_id' : Meteor.userId()} , {"follows": follow }]});
 
       var found = true;
       if(following.count() > 0){
@@ -114,34 +114,6 @@ Template.profilePage.helpers({
          }
       }
       
-      //var ids = new Array();
-      /*
-      var profile = docs.map(function(docs){
-         return docs.profile;
-      });
-      docs.rewind();
-      
-      var follows = docs.map(function(docs){
-         return docs.profile.follows;
-      });
-      */
-      /*
-      var contador = 0;
-      var ids = new Array();
-      _.forEach(follows, function(item){
-         console.log("Entra al forEach " + contador+1 + " veces");
-         contador++;
-         
-         ids.push(item.follows[contador])
-        */ 
-         /*for(var i=0; i<=0; i++){
-
-            //console.log("Entra al for ---->"+ i+1 +" veces");   
-            ids.push(follows.profile.follows[i]);
-         }*/
-         
-      //});
-
       return ids;
       
    }
@@ -151,10 +123,14 @@ Template.profilePage.helpers({
 Template.profilePage.events({
    'click #pushFollow': function(event, template) {
       event.preventDefault();
-      Meteor.users.update(
-         {'_id': Meteor.userId()},
-         { $push: { 'follows': FlowRouter.getParam('id') } }
+
+      Meteor.call(
+         'addFollowTo',
+         Meteor.userId(),
+         FlowRouter.getParam('id')
       );
+
+      
 
       $("#pushFollow").attr("disabled", true);
    }
