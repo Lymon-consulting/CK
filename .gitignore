@@ -1,5 +1,6 @@
 node_modules/
 .meteor/
+.deploy-stag/
 startup/client/cloudinary-settings.js
 startup/server/cloudinary-settings.js
 settings-production.json

@@ -41,4 +41,3 @@ Template.registerHelper('profilePicture', function () {
     Meteor.subscribe("images");
     return Images.find({'owner': Meteor.userId()});
 });
-
