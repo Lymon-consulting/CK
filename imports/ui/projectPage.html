@@ -52,9 +52,15 @@
                   <div class="container">
                      <div class="row justify-content-start align-items-center">
                           <div class="col-2">
-                             {{#each profilePicture projData.userId}}
-                                <a href="/profilePage/{{projData.userId}}"><img src="{{this.url store='profile'}}" border="0" class="rounded-circle" /></a>
-                             {{/each}}
+                             <a href="/profilePage/{{projData.userId}}">
+                             {{#if getProfilePicture projData.userId}}
+                                <img src="{{getProfilePicture projData.userId}}" border="0" class="rounded-circle" />
+                             {{else}}
+                                <div id="profileImageLarge">{{getInitials projData.userId}}</div>
+                             {{/if}}
+                             </a>
+                            
+                            
                           </div>
                           <div class="col-10">
                               <div class="container">
@@ -140,21 +146,10 @@
      </div>
       
    </div>      
-   <div class="spacer40"></div>
-
-
-   <div class="container text-center">
-      
-      <h3 class="h1-title">CREW</h3>
-      <hr>
-    
-   </div>
-
-   <div class="spacer40"></div>
+   <div class="spacer40"></div>   
 
 
    {{>crew}}  
-
 
    
    <div class="spacer40"></div>
@@ -348,19 +343,29 @@
 
 
 <template name="crew">
-   <div class="d-flex justify-content-around">
-      
-      {{#each getCrew.project_staff}}
-         {{#if this.confirmed}}
-      <div class="p-2">
-         {{#each profilePicture this._id}}
-            <a href="/profilePage/{{this.owner}}"><img src="{{this.url store='profile'}}" border="0" class="rounded-circle" /></a>
-         {{/each}}
-               <br><span class="people-name-text-circle"><a href="/profilePage/{{this._id}}" class="text-title-gray">{{this.name}}</a></span> <br><span class="people-role-text-circle uppercase">{{this.role}}</span> 
-      </div>
-         {{/if}}
-      {{/each}}
-   </div>
+  {{#if getCrew.project_staff}}
+     <div class="container text-center">
+        <h3 class="h1-title">CREW</h3>
+        <hr>
+     </div>
+     <div class="spacer40"></div>
+     <div class="d-flex justify-content-around text-center">
+        {{#each getCrew.project_staff}}
+           {{#if this.confirmed}}
+              <div class="p-2">
+                <a href="/profilePage/{{this._id}}">
+                 {{#if getProfilePicture this._id}}
+                    <img src="{{getProfilePicture this._id}}" border="0" class="rounded-circle" /><br/>
+                 {{else}}
+                    <div id="profileImageLarge">{{getInitials this._id}}</div>
+                 {{/if}}
+                 </a>
+                  <span class="people-name-text-circle"><a href="/profilePage/{{this._id}}" class="text-title-gray">{{this.name}}</a></span> <br><span class="people-role-text-circle uppercase">{{this.role}}</span> 
+              </div>
+           {{/if}}
+        {{/each}}
+     </div>
+   {{/if}}
 </template>
 
 <template name="items">

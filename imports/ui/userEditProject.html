@@ -215,21 +215,23 @@
             </div>
             <div class="row">
                <div class="col">
-                  <input class="your-upload-class" type="file">
-                  <table class="table table-condensed">
-                    <tbody>
-                    {{#each coverPicture}}
-                    <tr>
-                      <td>{{#if isUploaded}}<img src="{{this.url store='cover' uploading='/images/uploading.png' storing='/images/saving.png'}}" alt="" class="thumbnail" />{{/if}}</td>  <!-- <img src="/uploads/images-{{_id}}-{{original.name}}"> -->
-                    </tr>
-                    <tr>
-                     <td>
-                       <button id="deleteFileButton" class="btn btn-purple">Eliminar imagen de portada</button>
-                     </td>
-                   </tr>
-                    {{/each}}
-                    </tbody>
-                  </table>
+                  <input id="cover-upload" type="file">
+                   {{#if getProjectPicture}}
+                   <table class="table table-condensed">
+                     <tbody>
+                     <tr>
+                        <td>
+                          <img src="{{getProjectPicture}}"/>
+                        </td>
+                     </tr>
+                     <tr>
+                       <td>
+                         <button id="deleteFileButton" data-id="{{getPublicID}}" class="btn btn-purple">Eliminar imagen de portada</button>
+                       </td>
+                     </tr>
+                     </tbody>
+                   </table>
+                   {{/if}}
                </div>
             </div>
             <div class="row">

@@ -40,10 +40,10 @@ Template.peopleList.helpers({
       }
       return val;
    },
-   personalCover(userId){
+/*   personalCover(userId){
       Meteor.subscribe("personalcover");
       return PersonalCover.find({'owner': userId});
-   },
+   },*/
    showButtonFollow(follow){
       var following = Meteor.users.find({$and : [ {'_id' : Meteor.userId()} , {"follows": follow }]});
 
@@ -93,11 +93,11 @@ Template.peopleList.helpers({
       }
       return initials;
     },
-    getCoverPicture(userId) {
+    getCoverPicture(userId, size) {
        var url = "";
        var user = Meteor.users.findOne({'_id':userId});
        if(user.profileCoverID!=null && user.profileCoverID!=""){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_250,c_scale/" + Meteor.user().profileCoverID;
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_scale/" + Meteor.user().profileCoverID;
        }
        return url;
     }

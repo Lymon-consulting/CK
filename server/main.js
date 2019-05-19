@@ -89,6 +89,15 @@ export const ProjectIndex = new Index({
     }),
 });
 
+Meteor.publish("allProjects", function(){
+  return Project.find({},{
+    fields: {
+      '_id':1,
+      'projectPictureID':1
+    }
+  });
+});
+
 Meteor.publish("otherUsers", function () {
   return Meteor.users.find({},{ 
     fields: { 
@@ -118,19 +127,19 @@ Meteor.publish("follows", function (userId) {
    var cuantos = Meteor.users.find({'_id' : userId} , { fields: {'_id': 1 , 'profile': 1}});
    return cuantos;
 });
-
+/*
 Meteor.publish('images', function() {
   return Images.find();
 });
 
 Meteor.publish('cover', function() {
   return Cover.find();
-});
-
+});*/
+/*
 Meteor.publish('personalcover', function() {
   return PersonalCover.find();
 });
-
+*/
 Meteor.publish('myProjects', function(userId) {
    //
    //return Project.find({'userId' : userId, 'project_is_main' : ''});
@@ -174,6 +183,8 @@ Meteor.users.allow({
    console.log("Recibiendo en el dataQuery="+dataQuery);
   return Project.find(dataQuery);
 });*/
+
+/*
 
 Images = new FS.Collection("images", {
     filter: {
@@ -296,4 +307,4 @@ PersonalCover = new FS.Collection("personalcover", {
         }
       })
     ]
-});
+});*/

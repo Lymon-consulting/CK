@@ -41,10 +41,9 @@
             <tr>
                <td><input type="radio" name="selectMain" id="proj_main" {{ isMainProject this._id }} value="{{this._id}}"></td>
                <td>
-                  {{#each coverPicture this._id}}
-                     {{#if isUploaded}}<img src="{{this.url store='cover' uploading='/images/uploading.png' storing='/images/saving.png'}}" alt="" class="thumbs" />
-                     {{/if}}
-                  {{/each}}
+                  {{#if getProjectPicture this._id 100}}
+                     <img src="{{getProjectPicture this._id 100}}" />
+                  {{/if}}
                </td>
                <td class="col agreements">{{this.project_title}}</td>
                <td class="col agreements">{{this.project_type}}</td>

@@ -199,6 +199,22 @@ Meteor.methods({
                 "project_role": role
               }
          });
+  },
+  saveProjectPictureID(projectId, projectPictureID){
+    Project.update({'_id': projectId}, {
+      $set:
+        {
+          "projectPictureID": projectPictureID
+        }
+    });
+  },
+  deleteProjectPicture(projectId, projectPictureID){
+    Project.update({'_id': projectId}, {
+      $set:
+        {
+          "projectPictureID": null
+        }
+    }); 
   }
 
 

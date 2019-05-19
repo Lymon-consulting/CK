@@ -17,8 +17,10 @@
       </div>
       <div class="row">
          <div class="col-md-2 vertical-align-middle">
-            {{#if getProfilePicture getProfile._id}}
-            <img src="{{getProfilePicture getProfile._id}}"/>
+            {{#if getProfilePicture getProfile._id 100}}
+            <img src="{{getProfilePicture getProfile._id 100}}"/>
+            {{else}}
+            <div id="profileImageLarge">{{getInitials getProfile._id}}</div>
             {{/if}}
          </div>
          <div class="col-md-10">
@@ -151,14 +153,13 @@
                      </div>
                      <div class="row">
                         <div class="col-md-12">
-                              {{#each getProjectImages getMainProject._id}}
-                                 {{#if this.isUploaded}}
-                                 <a href="/projectPage/{{getMainProject._id}}" class="h2-title"><img src="{{this.url store='cover'}}" class="img-fluid cover-large" alt=""></a>
-                                 {{else}}
-                                 <a href="/projectPage/{{getMainProject._id}}" class="h2-title"><img src="../images/largometraje1.jpg" class="img-fluid" alt=""></a>
-                                 {{/if}}
-                              {{/each}}
-                           <!--<img src="../images/largometraje1.jpg" alt="Largometraje">-->
+                           <a href="/projectPage/{{getMainProject._id}}" class="h2-title">
+                           {{#if getProjectImages getMainProject._id 250}}
+                              <img src="{{getProjectImages getMainProject._id 500}}">
+                           {{else}}
+                              <img src="../images/largometraje1.jpg" class="img-fluid" alt="">
+                           {{/if}}
+                           </a>
                         </div>
                      </div>
                      <div class="row">
@@ -213,132 +214,44 @@
 
                      {{#if getProjects}}
 
-                     <!--Sección de recuadros de proyectos-->
                      <div class="row">
-                        <div class="col-md-12 text-center">
-                           <div class="container-fluid text-center">
-                              <div class="row">
-                                 {{#each getProjects}}
-                                 <div class="col-md-4 text-center">
-                                    <div class="container-fluid border-exterior text-center">
-                                       <div class="row">
-                                          <div class="col text-center">
-                                             {{#each getProjectImages this._id}}
-                                             <a href="/projectPage/{{this.project_id}}"><img src="{{this.url store='cover'}}" alt="" class="img-fluid thumbnail-cover"></a>
-                                             {{/each}}
-                                          </div>
-                                       </div>
-                                       <div class="row">
-                                          <div class="col text-center">
-                                             <strong><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a></strong>
-                                          </div>
-                                       </div>
-                                       <div class="row">
-                                          <div class="col spacer20">
-                                             
-                                          </div>
-                                       </div>
-                                       
-                                       <div class="row">
-                                          <div class="col">
-                                             <div class="container-fluid">
-                                                <div class="row background-lightgray">
-                                                   <div class="col text-center">
-                                                      <small>por <strong>{{getProfile.profile.name}} {{getProfile.profile.lastname}}</strong></small>
-                                                   </div>
-                                                </div>
-                                                <div class="row background-lightgray">
-                                                   <div class="col text-center">
-                                                      <hr class="hr_width_80">
-                                                   </div>
-                                                </div>
-                                                <div class="row background-lightgray">
-                                                   <div class="col spacer20"></div>
-                                                </div>
-                                                <div class="row background-lightgray">
-                                                   <div class="col text-center">
-                                                      <small class="uppercase">{{projectRole this._id}}</small>
-                                                   </div>
-                                                </div>
-                                                <div class="row background-lightgray">
-                                                   <div class="col spacer20"></div>
-                                                </div>
-                                                <div class="row background-lightgray">
-                                                   <div class="col text-center">
-                                                      <hr class="hr_width_80">
-                                                   </div>
-                                                </div>
-                                                <div class="row background-lightgray">
-                                                   <div class="col text-center">
-                                                      <i class="fa fa-thumbs-up fa-sm"></i><small>{{this.likes}}</small>
-                                                      <i class="fa fa-eye fa-sm"></i><small>{{this.views}}</small>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                          </div>
-                                       </div>
-                                             
-                                    </div>
-                                 </div>
-
-                                 {{/each}}
-                                 
-                              </div>
-
-                              <div class="row">
-                                 <div class="col spacer40"></div>
-                              </div>
-
-                              <div class="row">
-                                 <div class="col-md-12">
-                                    <hr>
-                                 </div>
-                              </div>
-                              <!--Paginación-->
-                              <!--
-                              <div class="row">
-                                 <div class="col-md-12">
-                                    <nav aria-label="..." class="mx-auto">
-                                      <ul class="pagination pagination-sm justify-content-center">
-                                        <li class="page-item disabled">
-                                          <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                            <span class="sr-only">Previous</span>
-                                          </a>
-                                        </li>
-                                        <li class="page-item active">
-                                             <span class="page-link">1<span class="sr-only">(current)</span></span>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">6</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">7</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">8</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">9</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">+</a></li>
-                                        <li class="page-item">
-                                          <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                            <span class="sr-only">Next</span>
-                                          </a>
-                                        </li>
-                                      </ul>
-                                    </nav>
-                                 </div>
-                              </div>-->
-                              <!--Fin de Paginación-->
-
-                              <div class="row">
-                                 <div class="col spacer40"></div>
-                              </div>
-
-
-                           </div>
+                        {{#each getProjects}}
+                        <div class="col-md-4 text-center">
+                           <table class="border-exterior" cellpadding="0" cellspacing="0">
+                              <tr>
+                                 <td colspan="2">
+                                    <a href="/projectPage/{{this._id}}">
+                                    {{#if getProjectImages this._id 100}}
+                                       <img src="{{getProjectImages this._id 210}}">
+                                    {{else}}
+                                       <img src="../images/largometraje1.jpg" class="img-fluid" alt="">
+                                    {{/if}}
+                                    </a>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td colspan="2"><br/><strong><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a></strong><br/><br/></td>
+                              </tr>
+                              <tr>
+                                 <td colspan="2" class="background-lightgray"><small>por <strong>{{getProfile.profile.name}} {{getProfile.profile.lastname}}</strong></small></td>
+                              </tr>
+                              <tr>
+                                 <td colspan="2" class="background-lightgray"><hr class="hr_width_80"></td>
+                              </tr>
+                              <tr>
+                                 <td colspan="2" class="background-lightgray"><small class="uppercase">{{projectRole this._id}}</small></td>
+                              </tr>
+                              <tr>
+                                 <td colspan="2" class="background-lightgray"><hr class="hr_width_80"></td>
+                              </tr>
+                              <tr>
+                                 <td class="background-lightgray"><i class="fa fa-thumbs-up fa-sm"></i><small>{{this.likes}}</small></td>
+                                 <td class="background-lightgray"><i class="fa fa-eye fa-sm"></i><small>{{this.views}}</small></td>
+                              </tr>
+                           </table>
                         </div>
+                        {{/each}}
                      </div>
-                     <!--Termina sección de recuadros de proyectos-->
 
                      {{else}}
                      <div class="row">
@@ -421,10 +334,10 @@
                         <div class="col"><hr></div>
                      </div>
                      <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                            <strong>SEGUIDORES</strong>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                            <small>
                            {{#if getFollowers.count getProfile._id}}
                               {{getFollowers.count getProfile._id}}
@@ -444,9 +357,14 @@
                               <div class="row">
                                  {{#each getFollowers}}
                                  <div class="col-md-4">
-                                    {{#each profilePicture this._id}}
-                                       <a href="/profilePage/{{this.owner}}"><img src="{{this.url store='thumbs'}}" border="0" class="rounded-circle center-block"></a>
-                                    {{/each}}
+                                    <a href="/profilePage/{{this._id}}">
+                                    {{#if getProfilePicture this._id 40}}
+                                    <img src="{{getProfilePicture this._id 40}}">
+                                    {{else}}
+                                    <div id="profileImage">{{getInitials this._id}}</div>
+                                    {{/if}}
+                                    </a>
+
                                  </div>
                                  {{/each}}
 

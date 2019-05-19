@@ -63,13 +63,13 @@ if (Meteor.isClient) {
           result = "";
         } 
         return result;
-      },
+      },/*
       coverPicture: function () {
          if(Meteor.user()){
             Meteor.subscribe("cover");
             return Cover.find({'project_id': FlowRouter.getParam('id')});
          }
-      },
+      },*/
       getProjectType(){
         var type = new Array();
         type.push("Cortometraje");
@@ -195,6 +195,24 @@ if (Meteor.isClient) {
            } 
         }
         return result;
+      },
+      getProjectPicture() {
+          var url = "";
+          var data = Project.findOne({'_id' : FlowRouter.getParam('id')});
+          if(data!=null && data.projectPictureID!=null){
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_250,c_scale/" + data.projectPictureID;
+          }
+         return url;
+      },
+      getPublicID(){
+        var projectPictureID="";
+        var data = Project.findOne({'_id' : FlowRouter.getParam('id')});
+        if(data!=null){
+          projectPictureID = data.projectPictureID;
+        }
+
+        return projectPictureID;
+        
       }
    });
 
@@ -279,10 +297,21 @@ if (Meteor.isClient) {
          //console.log("deleteFile button ", this);
          event.preventDefault();
          if(confirm("¿Eliminar imagen de portada?")){
-            Cover.remove({_id:this._id}); 
+            //Cover.remove({_id:this._id}); 
+             var public_id = $(event.target).attr('data-id');
+             console.log("Borrando "+ public_id);
+             console.log(Cloudinary);
+             Cloudinary.delete(public_id,function(res){
+               console.log(res);
+             });
+             Meteor.call(
+              'deleteProjectPicture',
+              FlowRouter.getParam('id'),
+              public_id
+              );
          }
          
-      },
+      },/*
       'change .your-upload-class': function (event, template) {
          console.log("uploading...")
          FS.Utility.eachFile(event, function (file) {
@@ -308,7 +337,7 @@ if (Meteor.isClient) {
             });
 
          });
-      },
+      },*/
       'change #category':function(event, template){
          event.preventDefault();
          Session.set("selected_category", event.currentTarget.value);
@@ -330,11 +359,35 @@ if (Meteor.isClient) {
             FlowRouter.getParam('id'),
             event.currentTarget.value
          );
+      },
+      'change #cover-upload': function(event, template){
+        var file = event.target.files[0];
+
+        $.cloudinary.config({
+          cloud_name:"drhowtsxb"
+        });
+
+        var options = {
+          folder: Meteor.userId()
+        };
+
+        Cloudinary.upload(file, options, function(err,res){
+          if(!err){
+            Meteor.call(
+              'saveProjectPictureID',
+              FlowRouter.getParam('id'),
+              res.public_id
+            );
+          }
+          else{
+            console.log("Upload Error:"  + err); //no output on console
+          }
+        });
       }
    });
 
 }
-
+/*
 
 if (Meteor.isServer) {
   Cover.allow({
@@ -349,4 +402,4 @@ if (Meteor.isServer) {
        return true;
      }
    });
-}
+}*/

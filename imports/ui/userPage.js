@@ -27,9 +27,9 @@ if (Meteor.isClient) {
 
 
    Template.user.helpers({
-      images() {
+/*      images() {
           return ImageData.find();
-      },
+      },*/
       name(){
          if(Meteor.user()){
             return Meteor.user().profile.name;
@@ -121,11 +121,11 @@ if (Meteor.isClient) {
            } 
         }
         return result;
-      },
+      },/*
       personalCover:function(){
          Meteor.subscribe("personalcover");
          return PersonalCover.find({'owner': Meteor.userId()});
-      },
+      },*/
       getCategories(){
          var data = Ocupation.find().fetch();
          return _.uniq(data, false, function(transaction) {return transaction.title});
@@ -175,6 +175,15 @@ if (Meteor.isClient) {
             url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_250,c_scale/" + Meteor.user().profileCoverID;
          }
          return url;
+      },
+      getPublicID(type){
+        if(type==='profile'){
+          return Meteor.user().profilePictureID;
+        }
+        else if(type==='cover'){
+          return Meteor.user().profileCoverID;  
+        }
+        
       }
    });
 
@@ -235,10 +244,21 @@ if (Meteor.isClient) {
       'click #deleteFileButton ': function (event) {
          event.preventDefault();
          if(confirm("Se va a eliminar esta imagen de portada ¿estás seguro?")){
-           console.log("deleteFile button ", this);
-           PersonalCover.remove({_id:this._id});
+           //console.log("deleteFile button ", this);
+           //PersonalCover.remove({_id:this._id});
+           var public_id = $(event.target).attr('data-id');
+           console.log("Borrando "+ public_id);
+           console.log(Cloudinary);
+           Cloudinary.delete(public_id,function(res){
+             console.log(res);
+           });
+           Meteor.call(
+            'deleteCover',
+            Meteor.userId(),
+            public_id
+            );
          }
-      },
+      },/*
       'change .your-upload-class': function (event, template) {
          console.log("uploading...")
          FS.Utility.eachFile(event, function (file) {
@@ -251,14 +271,14 @@ if (Meteor.isClient) {
             var verifyOnlyOne = Images.find({'owner': Meteor.userId()}).forEach( function(myDoc) {
                console.log("Va a borrar " + myDoc._id);
                Images.remove({'_id': myDoc._id});
-            });
+            });*/
 
             /*for (var k in verifyOnlyOne) {
                console.log("Va a borrar " + verifyOnlyOne[k]);
                Images.remove({'_id': verifyOnlyOne[k]['_id']});               
             }*/
 
-            
+            /*
             Images.insert(yourFile, function (err, fileObj) {
                  console.log("callback for the insert, err: ", err);
                  if (!err) {
@@ -299,7 +319,7 @@ if (Meteor.isClient) {
             });
 
          });
-      },
+      },*/
       'change #category':function(event, template){
          event.preventDefault();
          Session.set("selected_category", event.currentTarget.value);
@@ -331,7 +351,11 @@ if (Meteor.isClient) {
           cloud_name:"drhowtsxb"
         });
 
-        Cloudinary.upload(file,function(err,res){
+        var options = {
+          folder: Meteor.userId()
+        };
+
+        Cloudinary.upload(file, options, function(err,res){
           if(!err){
             Meteor.call(
               'saveProfilePictureID',
@@ -351,7 +375,11 @@ if (Meteor.isClient) {
           cloud_name:"drhowtsxb"
         });
 
-        Cloudinary.upload(file,function(err,res){
+        var options = {
+          folder: Meteor.userId()
+        };
+
+        Cloudinary.upload(file, options, function(err,res){
           if(!err){
             Meteor.call(
               'saveProfileCoverID',
@@ -367,7 +395,7 @@ if (Meteor.isClient) {
    });
 }
 
-
+/*
 if (Meteor.isServer) {
   Images.allow({
      'insert': function (userId, doc) {
@@ -394,7 +422,7 @@ if (Meteor.isServer) {
      }
    });
 }
-
+*/
 /*
 ,
    'click #deleteFileButton ': function (event) {

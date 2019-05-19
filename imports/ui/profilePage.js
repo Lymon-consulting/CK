@@ -43,10 +43,10 @@ Template.profilePage.helpers({
       Meteor.subscribe("images");
       return Images.find({'owner': userId});
    },
-   personalCover(userId){
+/*   personalCover(userId){
       Meteor.subscribe("personalcover");
       return PersonalCover.find({'owner': userId});
-   },
+   },*/
    getProjects(){
       Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
       return Project.find({$and : [ {'userId' : FlowRouter.getParam('id')} , {"project_is_main": '' }]});
@@ -55,9 +55,13 @@ Template.profilePage.helpers({
       Meteor.subscribe("myMainProject", FlowRouter.getParam('id'));
       return Project.findOne({'userId': FlowRouter.getParam('id'), 'project_is_main' : 'true'});
    },
-   getProjectImages(projId){
-      Meteor.subscribe("cover");
-      return Cover.find({'project_id': projId});
+   getProjectImages(projId, size){
+      var url = "";
+      var data = Project.findOne({'_id' : projId});
+      if(data!=null && data.projectPictureID!=null){
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_scale/" + data.projectPictureID;
+      }
+     return url;
    },
    projectRole(projId){
       var u = Project.findOne({'_id': projId});
@@ -117,11 +121,11 @@ Template.profilePage.helpers({
       return ids;
       
    },
-   getProfilePicture(userId) {
+   getProfilePicture(userId, size) {
        var url = "";
        var user = Meteor.users.findOne({'_id':userId});
-       if(user.profilePictureID!=null && user.profilePictureID!=""){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_100,h_100,c_thumb,r_max/" + user.profilePictureID;
+       if(user!=null && user.profilePictureID!=null && user.profilePictureID!=""){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",h_"+size+",c_thumb,r_max/" + user.profilePictureID;
        }
        return url;
     },
@@ -140,7 +144,7 @@ Template.profilePage.helpers({
     getCoverPicture(userId) {
        var url = "";
        var user = Meteor.users.findOne({'_id':userId});
-       if(user.profileCoverID!=null && user.profileCoverID!=""){
+       if(user!=null && user.profileCoverID!=null && user.profileCoverID!=""){
           url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_1200,h_250,c_fill/" + Meteor.user().profileCoverID;
        }
        return url;

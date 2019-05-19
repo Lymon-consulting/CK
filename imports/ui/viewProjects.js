@@ -5,7 +5,7 @@ import './viewProjects.html';
 
 
 Meteor.subscribe('myProjects');
-Meteor.subscribe("cover");
+//Meteor.subscribe("cover");
 
 if (Meteor.isClient) {
 
@@ -30,10 +30,13 @@ if (Meteor.isClient) {
         var main = Project.findOne({'_id': value}).project_is_main;
         return (main === 'true') ? 'checked' : '' ; 
       },
-      coverPicture(projID) {
-         if(Meteor.user()){
-            return Cover.find({'project_id': projID});
-         }
+      getProjectPicture(projectId, size) {
+          var url = "";
+          var data = Project.findOne({'_id' : projectId});
+          if(data!=null && data.projectPictureID!=null){
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_limit/" + data.projectPictureID;
+          }
+         return url;
       }
    });
 

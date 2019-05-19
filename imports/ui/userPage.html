@@ -191,7 +191,6 @@
          <div class="row">
             <div class="col">
                <input id="file-upload" type="file">
-               <!--<input class="your-upload-class" type="file">-->
                <table class="table table-condensed">
                  <tbody>
                  <tr>
@@ -217,22 +216,22 @@
          <div class="row">
             <div class="col">
                <input id="cover-upload" type="file">
+               {{#if getCoverPicture}}
                <table class="table table-condensed">
                  <tbody>
                  <tr>
                     <td>
-                      {{#if getCoverPicture}}
                       <img src="{{getCoverPicture}}"/>
-                      {{/if}}
-                    </td>  <!-- <img src="/uploads/images-{{_id}}-{{original.name}}"> -->
+                    </td>
                  </tr>
                  <tr>
                    <td>
-                     <button id="deleteFileButton" class="btn btn-purple">Eliminar imagen de portada</button>
+                     <button id="deleteFileButton" data-id="{{getPublicID 'cover'}}" class="btn btn-purple">Eliminar imagen de portada</button>
                    </td>
                  </tr>
                  </tbody>
                </table>
+               {{/if}}
             </div>
          </div>
          <div class="row">

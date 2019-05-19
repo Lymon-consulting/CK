@@ -68,10 +68,13 @@
                {{#EasySearch.Each index=projectIndex}}
                <div class="row">
                   <div class="col-md-2 vertical-align-top">
-                     {{#each coverPicture this.__originalId}}
-                        <a href="/projectPage/{{this.__originalId}}"><img src="{{this.url store='cover' uploading='/images/uploading.png' storing='/images/saving.png'}}" alt="" class="larger_thumbs" /></a>
-
-                     {{/each}}
+                     <a href="/projectPage/{{this.__originalId}}">
+                     {{#if coverPicture this.__originalId 100}}
+                        <img src="{{coverPicture this.__originalId 80}}"/>
+                     {{else}}
+                        <img src="../images/largometraje1.jpg" class="img-fluid" alt="">
+                     {{/if}}
+                     </a>
                   </div>
                   <div class="col-md-7">
                      <div class="container-fluid">
@@ -115,10 +118,11 @@
                   </div>
                   <div class="col-md-3">
                      <a href="/profilePage/{{this.userId}}">
-                     {{#each profilePicture this.userId}}
-                     <img src="{{this.url store='profile'}}" border="0" class="rounded-circle thumbs" />
-                     
-                     {{/each}}
+                     {{#if getProfilePicture this.userId 40}}
+                        <img src="{{getProfilePicture this.userId 40}}" />
+                     {{else}}
+                        <div id="profileImage">{{getInitials this.userId}}</div>
+                     {{/if}}
                      </a>
                   </div>
                </div>

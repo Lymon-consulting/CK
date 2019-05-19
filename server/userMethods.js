@@ -39,6 +39,14 @@ Meteor.methods({
 				}
 		});
 	},
+	deleteCover(userId, profileCoverID){
+		Meteor.users.update({'_id': userId}, {
+			$set:
+				{
+					"profileCoverID": null
+				}
+		});	
+	},
 
 	addRole(userId, role){
 		Meteor.users.update({'_id': userId}, 

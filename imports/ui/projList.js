@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { Project } from '../api/project.js';
 import { ProjectIndex } from '/lib/common.js';
 
 import './projList.html';
@@ -12,13 +13,35 @@ Template.projList.helpers({
          id: 'searchBox'
       }; 
    },
-   coverPicture: function (id) {
-      Meteor.subscribe("cover");
-      return Cover.find({'project_id': id});
+   coverPicture: function (projectId, size) {
+    Meteor.subscribe("allProjects");
+      var url = "";
+      var data = Project.findOne({'_id' : projectId});
+      if(data!=null && data.projectPictureID!=null){
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_limit/" + data.projectPictureID;
+      }
+     return url;
     },
-    profilePicture(userId){
-      return Images.find({'owner': userId});
-   },
+    getProfilePicture(userId, size) {
+       var url = "";
+       var user = Meteor.users.findOne({'_id':userId});
+       if(user!=null && user.profilePictureID!=null && user.profilePictureID!=""){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",h_"+size+",c_thumb,r_max/" + user.profilePictureID;
+       }
+       return url;
+    },
+    getInitials(userId){
+      var name = "";
+      var lastname = "";
+      var initials = "";      
+      var user = Meteor.users.findOne({'_id':userId});
+      if(user){
+        name = user.profile.name;
+        lastname = user.profile.lastname;
+        initials = name.charAt(0) + lastname.charAt(0);  
+      }
+      return initials;
+    },
    getProjectType(){
         var type = new Array();
         type.push("Cortometraje");

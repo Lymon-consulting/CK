@@ -134,7 +134,27 @@ if (Meteor.isClient) {
            }
          ]
        };
-     }
+     },
+     getProfilePicture(userId) {
+         var url = "";
+         var user = Meteor.users.findOne({'_id':userId});
+         if(user!=null && user.profilePictureID!=null && user.profilePictureID!=""){
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_100,h_100,c_thumb,r_max/" + user.profilePictureID;
+         }
+         return url;
+      },
+      getInitials(userId){
+        var name = "";
+        var lastname = "";
+        var initials = "";      
+        var user = Meteor.users.findOne({'_id':userId});
+        if(user){
+          name = user.profile.name;
+          lastname = user.profile.lastname;
+          initials = name.charAt(0) + lastname.charAt(0);  
+        }
+        return initials;
+      }
 
    });
 
@@ -499,6 +519,26 @@ if (Meteor.isClient) {
       },
       profilePicture(userId){
          return Images.find({'owner': userId});
+      },
+      getProfilePicture(userId) {
+       var url = "";
+       var user = Meteor.users.findOne({'_id':userId});
+       if(user!=null && user.profilePictureID!=null && user.profilePictureID!=""){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_100,h_100,c_thumb,r_max/" + user.profilePictureID;
+       }
+       return url;
+      },
+      getInitials(userId){
+        var name = "";
+        var lastname = "";
+        var initials = "";      
+        var user = Meteor.users.findOne({'_id':userId});
+        if(user){
+          name = user.profile.name;
+          lastname = user.profile.lastname;
+          initials = name.charAt(0) + lastname.charAt(0);  
+        }
+        return initials;
       }
    });   
 

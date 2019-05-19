@@ -10,6 +10,7 @@ import '../imports/ui/footer.html';
 
 /*Imports for pages*/
 import '../imports/ui/home.html';
+//import '../imports/ui/contact.js';
 /*import '../imports/ui/userPage.html';*/
 import '../imports/ui/header.js';
 import '../imports/ui/userPage.js';
@@ -20,6 +21,12 @@ import '../imports/ui/peopleList.js';
 import '../imports/ui/projList.js';
 import '../imports/ui/profilePage.js';
 import '../imports/ui/projectPage.js';
+import '../imports/ui/contact.js';
+import '../imports/ui/blog.js';
+import '../imports/ui/job.js';
+import '../imports/ui/faq.js';
+import '../imports/ui/ads.js';
+import '../imports/ui/terms.js';
 
 
 /*Imports for routing*/

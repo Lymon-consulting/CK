@@ -17,7 +17,7 @@ Template.profile.helpers({
   getProfilePicture() {
      var url = "";
      if(Meteor.user().profilePictureID!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_40,h_40,c_thumb,r_max/" + Meteor.user().profilePictureID;
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_40,h_40,c_thumb,f_auto,r_max/" + Meteor.user().profilePictureID;
      }
      return url;
   },
