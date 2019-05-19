@@ -89,21 +89,13 @@
   <p>Loggin in...</p>
 {{else}}
   {{#if currentUser}}  
-    {{#if profilePicture.count}}   
-      {{#each profilePicture}}
-         {{#if this.hasStored 'thumbs'}}
-            <li class="nav-item vcenter">
-              <a href="/editProfile/{{currentUser._id}}" class="text-button"><img src="{{this.url store='thumbs' uploading='/images/uploading.png' storing='/images/saving.png'}}" border="0" class="rounded-circle" /></a>
-            </li>
-         {{else}}
-            <li class="nav-item vcenter">
-              <a href="/editProfile/{{currentUser._id}}" class="text-button"><img src="/images/profile-icon.png" border="0" class="rounded-circle" /></a>
-            </li>      
-         {{/if}}
-      {{/each}}
+    {{#if getProfilePicture}}   
+      <li class="nav-item vcenter">
+        <a href="/editProfile/{{currentUser._id}}" class="text-button"><img src="{{getProfilePicture}}"/></a>
+      </li>
    {{else}}
       <li class="nav-item vcenter">
-        <a href="/editProfile/{{currentUser._id}}" class="text-button"><img src="/images/profile-icon.png" border="0" class="rounded-circle" /></a>
+        <a href="/editProfile/{{currentUser._id}}" class="text-button"><div id="profileImage">{{getInitials}}</div></a>
       </li>      
    {{/if}}
   

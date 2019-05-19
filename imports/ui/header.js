@@ -10,8 +10,24 @@ Template.header.helpers({
   user(){
       return Meteor.user();
   }
+
 });
 
+Template.profile.helpers({
+  getProfilePicture() {
+     var url = "";
+     if(Meteor.user().profilePictureID!=null){
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_40,h_40,c_thumb,r_max/" + Meteor.user().profilePictureID;
+     }
+     return url;
+  },
+  getInitials(){
+    var name = Meteor.user().profile.name;
+    var lastname = Meteor.user().profile.lastname;
+    var initials = name.charAt(0) + lastname.charAt(0);
+    return initials;
+  }
+});
 
 Template.notifications.helpers({
    getAlerts(){
@@ -57,6 +73,7 @@ Template.notifications.helpers({
       }
       return alertsFound;
    }
+
 });
 
 Template.notifications.events({

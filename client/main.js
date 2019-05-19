@@ -22,7 +22,6 @@ import '../imports/ui/profilePage.js';
 import '../imports/ui/projectPage.js';
 
 
-
 /*Imports for routing*/
 import '/lib/router.js';
 

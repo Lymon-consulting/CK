@@ -70,6 +70,7 @@
                   <div class="col-md-2 vertical-align-top">
                      {{#each coverPicture this.__originalId}}
                         <a href="/projectPage/{{this.__originalId}}"><img src="{{this.url store='cover' uploading='/images/uploading.png' storing='/images/saving.png'}}" alt="" class="larger_thumbs" /></a>
+
                      {{/each}}
                   </div>
                   <div class="col-md-7">
@@ -116,6 +117,7 @@
                      <a href="/profilePage/{{this.userId}}">
                      {{#each profilePicture this.userId}}
                      <img src="{{this.url store='profile'}}" border="0" class="rounded-circle thumbs" />
+                     
                      {{/each}}
                      </a>
                   </div>

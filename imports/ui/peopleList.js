@@ -7,7 +7,7 @@ import './peopleList.html';
 import '/lib/common.js';
 
 
-
+Meteor.subscribe("otherUsers");
 Template.peopleList.helpers({
    usersIndex: () => UsersIndex, // instanceof EasySearch.Index
    inputAttributes: function () {
@@ -72,6 +72,34 @@ Template.peopleList.helpers({
         plocation = "cualquier";
       }
       return (plocation === value) ? 'selected' : '' ;
+    },
+    getProfilePicture(userId) {
+       var url = "";
+       var user = Meteor.users.findOne({'_id':userId});
+       if(user.profilePictureID!=null && user.profilePictureID!=""){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_100,h_100,c_thumb,r_max/" + user.profilePictureID;
+       }
+       return url;
+    },
+    getInitials(userId){
+      var name = "";
+      var lastname = "";
+      var initials = "";      
+      var user = Meteor.users.findOne({'_id':userId});
+      if(user){
+        name = user.profile.name;
+        lastname = user.profile.lastname;
+        initials = name.charAt(0) + lastname.charAt(0);  
+      }
+      return initials;
+    },
+    getCoverPicture(userId) {
+       var url = "";
+       var user = Meteor.users.findOne({'_id':userId});
+       if(user.profileCoverID!=null && user.profileCoverID!=""){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_250,c_scale/" + Meteor.user().profileCoverID;
+       }
+       return url;
     }
 
    

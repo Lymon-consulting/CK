@@ -190,15 +190,19 @@
          </div>
          <div class="row">
             <div class="col">
-               <input class="your-upload-class" type="file">
+               <input id="file-upload" type="file">
+               <!--<input class="your-upload-class" type="file">-->
                <table class="table table-condensed">
                  <tbody>
-                 {{#each profilePicture}}
                  <tr>
-                   <td>{{#if isUploaded}}<img src="{{this.url store='thumbs' uploading='/images/uploading.png' storing='/images/saving.png'}}" alt="" class="thumbnail" />{{/if}}</td>  <!-- <img src="/uploads/images-{{_id}}-{{original.name}}"> -->
-                   <!--<td><button id="deleteFileButton">delete</button></td>-->
+                   <td>
+                    {{#if getProfilePicture}}
+                    <img src="{{getProfilePicture}}"/>
+                    {{else}}
+                    <div id="profileImageLarge">{{getInitials}}</div>
+                    {{/if}}
+                   </td>  
                  </tr>
-                 {{/each}}
                  </tbody>
                </table>
             </div>
@@ -212,24 +216,21 @@
          </div>
          <div class="row">
             <div class="col">
-               <input class="your-cover-class" type="file">
+               <input id="cover-upload" type="file">
                <table class="table table-condensed">
                  <tbody>
-                 {{#each personalCover}}
                  <tr>
                     <td>
-                      {{#if isUploaded}}
-                        <img src="{{this.url store='personalcover' uploading='/images/uploading.png' storing='/images/saving.png'}}" alt="" class="thumbnail" />
+                      {{#if getCoverPicture}}
+                      <img src="{{getCoverPicture}}"/>
                       {{/if}}
                     </td>  <!-- <img src="/uploads/images-{{_id}}-{{original.name}}"> -->
-                    
                  </tr>
                  <tr>
                    <td>
                      <button id="deleteFileButton" class="btn btn-purple">Eliminar imagen de portada</button>
                    </td>
                  </tr>
-                 {{/each}}
                  </tbody>
                </table>
             </div>

@@ -1,8 +1,8 @@
 <template name="profilePage">
-   <div class="container-fluid">
-      {{#each personalCover getProfile._id}}
-         <img src="{{this.url store='personalcover'}}" class="cover-large" border="0" />
-      {{/each}}
+   <div class="container-fluid text-center">
+      {{#if getCoverPicture getProfile._id}}
+         <img src="{{getCoverPicture getProfile._id}}"/>
+      {{/if}}
    </div> 
 
    <!-- Content starts here -->
@@ -17,9 +17,9 @@
       </div>
       <div class="row">
          <div class="col-md-2 vertical-align-middle">
-            {{#each profilePicture getProfile._id}}
-            <img src="{{this.url store='profile'}}" border="0" class="rounded-circle" />
-            {{/each}}
+            {{#if getProfilePicture getProfile._id}}
+            <img src="{{getProfilePicture getProfile._id}}"/>
+            {{/if}}
          </div>
          <div class="col-md-10">
             <div class="container">
@@ -29,12 +29,19 @@
                         <tbody>
                            <tr>
                               <td class="no-padding text-no-wrap">
-                                 <small class="uppercase">{{ownerRole}}</small>
+                                 <small class="uppercase">
+                                 {{#if ownerRole}}
+                                    {{ownerRole}}
+                                 {{/if}}
+                                 </small>
                               </td>
                            </tr>
                            <tr>
                               <td class="no-padding text-no-wrap">
+                                 {{#if getProfile.city}}
                                  <i class="fa fa-map-marker fa-sm"></i> <small>{{getProfile.city}}, {{getProfile.country}}</small>
+                                 {{/if}}
+                                 
                               </td>
                            </tr>
                            {{#if currentUser}}
@@ -62,18 +69,43 @@
                            <td class="low-padding text-no-wrap numbers"><a href="mailto:{{getEmail}}" class="text-black"><small>Contactar</small></a></td>
                            <td class="low-padding text-no-wrap" rowspan="2"><div class="vertical-line" style="height: 55px;"></div></td>
                            <td class="low-padding text-no-wrap"><i class="fa fa-user fa-sm"></i></td>
-                           <td class="low-padding text-no-wrap numbers">{{getProfile.follows.length}}</td>
+                           <td class="low-padding text-no-wrap numbers">
+                              {{#if getProfile.follows.length}}
+                                 {{getProfile.follows.length}}
+                              {{else}}
+                                 0
+                              {{/if}}
+                           </td>
                            <td class="low-padding text-no-wrap" rowspan="2"><div class="vertical-line" style="height: 55px;"></div></td>
                            <td class="low-padding text-no-wrap"><i class="fa fa-thumbs-up fa-sm"></i></td>
-                           <td class="low-padding text-no-wrap numbers">{{getProfile.likes}}</td>
+                           <td class="low-padding text-no-wrap numbers">
+                              {{#if getProfile.likes}}
+                                 {{getProfile.likes}}
+                              {{else}}
+                                 0
+                              {{/if}}
+                              
+                           </td>
                         </tr>
                         <tr>
                            <td class="low-padding text-no-wrap"><i class="fa fa-share-alt-square fa-sm"></i></td>
                            <td class="low-padding text-no-wrap numbers"><small>Compartir</small></td>
                            <td class="low-padding text-no-wrap"><i class="fa fa-user fa-sm"></i></td>
-                           <td class="low-padding text-no-wrap numbers"><small>{{getFollowers.count}}</small></td>
+                           <td class="low-padding text-no-wrap numbers"><small>
+                           {{#if getFollowers.count}}
+                              {{getFollowers.count}}
+                           {{else}}
+                              0
+                           {{/if}}
+                           </small></td>
                            <td class="low-padding text-no-wrap"><i class="fa fa-eye fa-sm"></i></td>
-                           <td class="low-padding text-no-wrap numbers"><small>{{getProfile.views}}</small></td>
+                           <td class="low-padding text-no-wrap numbers"><small>
+                           {{#if getProfile.views}}
+                              {{getProfile.views}}
+                           {{else}}
+                              0
+                           {{/if}}
+                           </small></td>
                         </tr>
                      </table>
                   </div>
@@ -99,7 +131,7 @@
          </div>
       </div>
    </div>
-
+   
    <div class="container">
       <div class="row">
          <div class="col-md-12">
@@ -111,6 +143,7 @@
                            <hr>
                         </div>
                      </div>
+                     {{#if getMainProject}}
                      <div class="row">
                         <div class="col-md-12 h2-title">
                            <a href="/projectPage/{{getMainProject._id}}" class="h2-title">{{getMainProject.project_title}}</a>
@@ -139,11 +172,23 @@
                               </tr>
                               <tr>
                                  <td class="no-padding"><i class="fa fa-thumbs-up fa-sm"></i></td>
-                                 <td class="no-padding numbers">{{getMainProject.likes}}</td>
+                                 <td class="no-padding numbers">
+                                    {{#if getMainProject.likes}}
+                                       {{getMainProject.likes}}
+                                    {{else}}
+                                       0
+                                    {{/if}}
+                                 </td>
                               </tr>
                               <tr>
                                  <td class="no-padding"><i class="fa fa-eye fa-sm"></i></td>
-                                 <td class="no-padding numbers">{{getMainProject.views}}</td>
+                                 <td class="no-padding numbers">
+                                    {{#if getMainProject.views}}
+                                       {{getMainProject.views}}
+                                    {{else}}
+                                       0
+                                    {{/if}}
+                                 </td>
                               </tr>
                            </table>
                         </div>
@@ -160,6 +205,14 @@
                      <div class="row">
                         <div class="spacer20"></div>
                      </div>
+                     {{else}}
+                     <div class="row">
+                        <div class="col agreements text-justify">Esta persona aún no tiene un proyecto principal</div>
+                     </div>  
+                     {{/if}}
+
+                     {{#if getProjects}}
+
                      <!--Sección de recuadros de proyectos-->
                      <div class="row">
                         <div class="col-md-12 text-center">
@@ -287,6 +340,14 @@
                      </div>
                      <!--Termina sección de recuadros de proyectos-->
 
+                     {{else}}
+                     <div class="row">
+                        <div class="col agreements">
+                           Esta persona no tiene proyectos aún
+                        </div>
+                     </div>
+                     {{/if}}
+
 
 
                   </div>
@@ -314,7 +375,12 @@
                      <div class="row">
                         <div class="col">
                            <p class="agreements text-justify">
-                              {{getProfile.resume}}
+                              {{#if getProfile.resume}}
+                                 {{getProfile.resume}}
+                              {{else}}
+                                 Sin descripción
+                              {{/if}}
+                              
                            </p>
                         </div>
                      </div>
@@ -350,7 +416,7 @@
                      <div class="row">
                         <div class="col spacer120"></div>
                      </div>
-
+                     {{#if getFollowers.count}}
                      <div class="row">
                         <div class="col"><hr></div>
                      </div>
@@ -359,12 +425,19 @@
                            <strong>SEGUIDORES</strong>
                         </div>
                         <div class="col-md-6">
-                           <small>{{getFollowers.count getProfile._id}}</small>
+                           <small>
+                           {{#if getFollowers.count getProfile._id}}
+                              {{getFollowers.count getProfile._id}}
+                           {{else}}
+                              0
+                           {{/if}}
+                           </small>
                         </div>
                      </div>
                      <div class="row">
                         <div class="col"><hr></div>
                      </div>
+           
                      <div class="row">
                         <div class="col">
                            <div class="container">
@@ -381,6 +454,7 @@
                            </div>
                         </div>
                      </div>
+                     {{/if}}
                      <div class="row">
                         <div class="col spacer80"></div>
                      </div>

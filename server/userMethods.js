@@ -23,6 +23,23 @@ Meteor.methods({
             });
 	},
 
+	saveProfilePictureID(userId, profilePictureID){
+		Meteor.users.update({'_id': userId}, {
+			$set:
+				{
+					"profilePictureID": profilePictureID
+				}
+		});
+	},
+	saveProfileCoverID(userId, profileCoverID){
+		Meteor.users.update({'_id': userId}, {
+			$set:
+				{
+					"profileCoverID": profileCoverID
+				}
+		});
+	},
+
 	addRole(userId, role){
 		Meteor.users.update({'_id': userId}, 
 			{

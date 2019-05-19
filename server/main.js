@@ -10,20 +10,26 @@ import '../imports/startup/server/on-create-user.js';
 import './projectMethods.js';
 import './userMethods.js';
 
-
 Meteor.startup(() => {
-  process.env.MAIL_URL ="smtp://ljimenez%40lymon.com.mx:ico2000a_B@mail.lymon.com.mx:587?tls.rejectUnauthorized=false";
+  
+  Cloudinary.config({
+      cloud_name: Meteor.settings.private.CLOUDINARY_URL,
+      api_key: Meteor.settings.private.API_KEY,
+      api_secret: Meteor.settings.private.API_SECRET
+  });
+
+  process.env.MAIL_URL = Meteor.settings.private.MAIL_URL;
 
   Meteor.users._ensureIndex({
       "fullname": 1
     });
-  console.log(Meteor.settings.public.global_mail_sender);
-  console.log(Meteor.settings.public.domain);
+  
 });
+
 
 Meteor.publish("userData", function () {
     return Meteor.users.find({_id: this.userId},
-        {fields: {'role': 1, 'resume':1, 'city':1, 'country':1, 'facebook':1, 'fullname':1, 'instagram':1, 'twitter':1, 'vimeo':1, 'webpage':1, 'youtube':1}});
+        {fields: {'role': 1, 'resume':1, 'city':1, 'country':1, 'facebook':1, 'fullname':1, 'instagram':1, 'twitter':1, 'vimeo':1, 'webpage':1, 'youtube':1, 'profilePictureID':1, 'profileCoverID':1}});
 });
 
 //const Users = new Mongo.Collection('users');
@@ -101,7 +107,8 @@ Meteor.publish("otherUsers", function () {
       'vimeo':1,
       'instagram':1,
       'follows' : 1,
-      'fullname':1
+      'fullname':1,
+      'profilePictureID': 1
     }
   });
   //return Meteor.users.find();

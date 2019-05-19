@@ -5,8 +5,6 @@ import { City } from '../api/city.js';
 import './userPage.html';
 import '/lib/common.js';
 
-
-
 if (Meteor.isClient) {
    Meteor.subscribe("fileUploads");
    Meteor.subscribe("getOcupations");
@@ -15,6 +13,7 @@ if (Meteor.isClient) {
    Meteor.subscribe("userData");
 
    Template.userPage.helpers({
+    
      userFullName(){
        if (Meteor.user()){
          return Meteor.user().profile.name + " " + Meteor.user().profile.lastname + " " +Meteor.user().profile.lastname2;
@@ -28,6 +27,9 @@ if (Meteor.isClient) {
 
 
    Template.user.helpers({
+      images() {
+          return ImageData.find();
+      },
       name(){
          if(Meteor.user()){
             return Meteor.user().profile.name;
@@ -153,52 +155,31 @@ if (Meteor.isClient) {
          return City.find({'country': 'México'}).fetch(); 
         }
 
-      }
-
-
-      /*,
-      profilePicture: function () {
-         if(Meteor.user()){
-            return Images.find({'owner': Meteor.userId()}); //, 'use': 'profile'
+      },
+      getProfilePicture() {
+         var url = "";
+         if(Meteor.user().profilePictureID!=null){
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_80,h_80,c_thumb,r_max/" + Meteor.user().profilePictureID;
          }
-      }*/
+         return url;
+      },
+      getInitials(){
+        var name = Meteor.user().profile.name;
+        var lastname = Meteor.user().profile.lastname;
+        var initials = name.charAt(0) + lastname.charAt(0);
+        return initials;
+      },
+      getCoverPicture() {
+         var url = "";
+         if(Meteor.user().profileCoverID!=null){
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_250,c_scale/" + Meteor.user().profileCoverID;
+         }
+         return url;
+      }
    });
 
    Template.user.events({
-    /*
-     'click #updateName': function(event, template) {
-      event.preventDefault();
-      var name, lastname, lastname2;
      
-      name = $('#personName').val();
-      lastname = $('#personLastName').val();
-      lastname2 = $('#personLastName2').val();
-
-      if(name!="" || lastname!="" || lastname2!=""){
-         console.log('Actualizando nombre del usuario ' + name + " " + lastname + " " + lastname2);
-         
-         Meteor.users.update({_id: Meteor.userId()}, {$set: 
-            {"profile.name": name, 
-             "profile.lastname": lastname, 
-             "profile.lastname2": lastname2,
-             "profile.fullname": name + " " + lastname + " " + lastname2
-            }
-         });
-
-         
-         $('#personName').val("");
-         $('#personLastName').val("");
-         $('#personLastName2').val("");
-         Bert.alert({message: 'Tu nombre ha sido actualizado', type: 'info'});
-         
-      }
-      else{
-         Bert.alert({message: 'Los campos no pueden estar vacíos', type: 'error'});
-         
-      } 
-         
-        
-     },*/
      'click #guardar_set1': function(event, template){
          event.preventDefault();
 
@@ -342,8 +323,47 @@ if (Meteor.isClient) {
       'change #country':function(event, template){
          event.preventDefault();
          Session.set("selected_country", event.currentTarget.value);
-      }
+      },
+     'change #file-upload': function(event, template){
+        var file = event.target.files[0];
 
+        $.cloudinary.config({
+          cloud_name:"drhowtsxb"
+        });
+
+        Cloudinary.upload(file,function(err,res){
+          if(!err){
+            Meteor.call(
+              'saveProfilePictureID',
+              Meteor.userId(),
+              res.public_id
+            );
+          }
+          else{
+            console.log("Upload Error:"  + err); //no output on console
+          }
+        });
+      },
+      'change #cover-upload': function(event, template){
+        var file = event.target.files[0];
+
+        $.cloudinary.config({
+          cloud_name:"drhowtsxb"
+        });
+
+        Cloudinary.upload(file,function(err,res){
+          if(!err){
+            Meteor.call(
+              'saveProfileCoverID',
+              Meteor.userId(),
+              res.public_id
+            );
+          }
+          else{
+            console.log("Upload Error:"  + err); //no output on console
+          }
+        });
+      }
    });
 }
 
