@@ -108,7 +108,7 @@ if (Meteor.isClient) {
         return years;
      },
      getCategories(){
-         var data = Ocupation.find().fetch();
+         var data = Ocupation.find({},{sort:{'title':1}}).fetch();
          return _.uniq(data, false, function(transaction) {return transaction.title});
       },
       getOcupationsFromCategory(){
@@ -117,7 +117,7 @@ if (Meteor.isClient) {
             return Ocupation.find({'title': Session.get("selected_category")}).fetch();
           }
           else{
-            return Ocupation.find({'title': "Animacion y arte digital"}).fetch();
+            return Ocupation.find({'title': "Actor"}).fetch();
           }
       },
       roleSelected: function(value){
@@ -213,7 +213,14 @@ if (Meteor.isClient) {
 
         return projectPictureID;
         
-      }
+      },
+      resumeCount(data){
+          var result = 0;
+          if(data!=null && data.length!=null){
+            result = (450 - data.length);
+          }
+          return result;
+         }
    });
 
 
@@ -225,73 +232,61 @@ if (Meteor.isClient) {
        },
       'click #guardar_proyecto': function(event, template) {
           event.preventDefault();
-          var proj_name = $('#proj_name').val();
+          var proj_name = trimInput($('#proj_name').val());
           var proj_type = $('#proj_type').val();
           var proj_genre = $('#proj_gender').val();
-          var proj_desc = $('#proj_desc').val();
+          var proj_desc = trimInput($('#proj_desc').val());
           var proj_year = $('#proj_year').val();
           var proj_role = $('#selection').val();
           var proj_main = $('#isMainProject').val();
-          var proj_web_page = $('#proj_web_page').val();
-          var proj_facebook_page = $('#proj_facebook_page').val();
-          var proj_twitter_page = $('#proj_twitter_page').val();
-          var proj_vimeo_page = $('#proj_vimeo_page').val();
-          var proj_youtube_page = $('#proj_youtube_page').val();
-          var proj_instagram_page = $('#proj_instagram_page').val();
+          var proj_web_page = trimInput($('#proj_web_page').val());
+          var proj_facebook_page = trimInput($('#proj_facebook_page').val());
+          var proj_twitter_page = trimInput($('#proj_twitter_page').val());
+          var proj_vimeo_page = trimInput($('#proj_vimeo_page').val());
+          var proj_youtube_page = trimInput($('#proj_youtube_page').val());
+          var proj_instagram_page = trimInput($('#proj_instagram_page').val());
+
+          if(isNotEmpty(proj_name) && 
+              isNotEmpty(proj_type) && 
+              isNotEmpty(proj_genre) && 
+              isNotEmpty(proj_desc) &&
+              isNotEmpty(proj_year) &&
+              isNotEmpty(proj_role)){
+                if(proj_main==='true'){
+                  otherProjects = Project.find({userId: Meteor.userId()}).fetch();
+                  otherProjects.forEach(function(current_value) {
+                      //Project.update({_id: current_value._id},{$set:{"project_is_main": "" }});   
+                      Meteor.call(
+                        'updateMain',
+                        current_value._id
+                        );    
+                  });
+                }
+                Meteor.call(
+                   'updateProject',
+                   FlowRouter.getParam('id'),
+                   proj_name,
+                   proj_type,
+                   proj_genre,
+                   proj_desc, 
+                   proj_year,
+                   proj_main,
+                   proj_web_page,
+                   proj_facebook_page,
+                   proj_twitter_page,
+                   proj_vimeo_page,
+                   proj_youtube_page,
+                   proj_instagram_page
+                );
+                
+                Bert.alert({message: 'El proyecto ha sido modificado con éxito', type: 'success', icon: 'fa fa-check'});
+                FlowRouter.go('/viewProjects/' + Meteor.userId());
+
+          }
+          return false;
 
 
-          if(proj_name===""){
-            Bert.alert({message: 'El nombre del proyecto no puede estar vacío', type: 'error'});
-          }
-          else if(proj_type===""){
-            Bert.alert({message: 'El tipo de proyecto no puede estar vacío', type: 'error'});
-          }
-          else if(proj_genre===""){
-            Bert.alert({message: 'El género del proyecto no puede estar vacío', type: 'error'});
-          }
-          else if(proj_desc===""){
-            Bert.alert({message: 'La descripción del proyecto no puede estar vacía', type: 'error'});
-          }
-          else if(proj_year===""){
-            Bert.alert({message: 'El año del proyecto no puede estar vacío', type: 'error'});
-          }
-          else if(proj_role===""){
-            Bert.alert({message: 'El rol del proyecto no puede estar vacío', type: 'error'});
-          }
-          else{
-     
-
-            if(proj_main==='true'){
-              otherProjects = Project.find({userId: Meteor.userId()}).fetch();
-              otherProjects.forEach(function(current_value) {
-                  //Project.update({_id: current_value._id},{$set:{"project_is_main": "" }});   
-                  Meteor.call(
-                    'updateMain',
-                    current_value._id
-                    );    
-              });
-            }
-            Meteor.call(
-               'updateProject',
-               FlowRouter.getParam('id'),
-               proj_name,
-               proj_type,
-               proj_genre,
-               proj_desc, 
-               proj_year,
-               proj_main,
-               proj_web_page,
-               proj_facebook_page,
-               proj_twitter_page,
-               proj_vimeo_page,
-               proj_youtube_page,
-               proj_instagram_page
-            );
-            
-            Bert.alert({message: 'El proyecto ha sido actualizado', type: 'info'});
-            //Session.set("projID", null);
-            FlowRouter.go('/viewProjects/' + Meteor.userId());
-         }
+          
       },
       'click #deleteFileButton ': function (event) {
          //console.log("deleteFile button ", this);
@@ -383,9 +378,36 @@ if (Meteor.isClient) {
             console.log("Upload Error:"  + err); //no output on console
           }
         });
+      },
+      'keyup #proj_desc' : function(event){
+         event.preventDefault();
+         
+         var len = $('#proj_desc').val().length;
+         if(len > 450){
+            val.value= val.value.substring(0,450);
+         }
+         else{
+            $('#max').text(450-len);
+         }
       }
    });
 
+}
+
+var trimInput= function(val){
+  if(val!=null){
+    return val.replace(/^\s*|\s*$/g, "");  
+  }
+  return false;
+}
+
+var isNotEmpty=function(val){
+  if(val && val!== ""){
+    return true;
+  }
+//  Bert.alert("", "danger", "growl-top-right");
+  Bert.alert({message: 'Por favor completa todos los campos obligatorios', type: 'danger', icon: 'fa fa-exclamation'});
+  return false;
 }
 /*
 

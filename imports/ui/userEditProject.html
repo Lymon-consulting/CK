@@ -37,7 +37,7 @@
                      <label for="proj_name">Título del proyecto: <span class="text-purple">(Requerido)</span></label>
                   </div>
                   <div class="col">
-                     <input type="text" id="proj_name" class="form-control" placeholder="Proyecto" value="{{projData.project_title}}">
+                     <input type="text" id="proj_name" class="form-control" placeholder="Proyecto" value="{{projData.project_title}}" maxlength="150">
                   </div>
                </div>
                <div class="spacer20"></div>
@@ -70,7 +70,7 @@
                <div class="row">
                   <div class="col"><label for="proj_desc">Descripción del proyecto: <span class="text-purple">(Requerido)</span></label></div>
                   <div class="col">
-                     <textarea class="form-control" rows="5" id="proj_desc" value="" placeholder="Descripción del proyecto (450 caracteres máx).">{{projData.project_desc}}</textarea>
+                     <textarea class="form-control" rows="5" id="proj_desc" value="" placeholder="Descripción del proyecto (450 caracteres máx)." maxlength="450">{{projData.project_desc}}</textarea><small>Caracteres restantes:</small> <div id="max">{{resumeCount projData.project_desc}}</div>
                   </div>
                </div>
                <div class="spacer20"></div>
@@ -143,7 +143,7 @@
                         <div class="input-group-prepend">
                           <div class="input-group-text"><i class="fa fa-globe fa-lg"></i></div>
                        </div>
-                        <input type="text" class="form-control" id="proj_web_page" value="{{projData.project_web_page}}" placeholder="Ej: www.cinekomuna.com">
+                        <input type="text" class="form-control" id="proj_web_page" value="{{projData.project_web_page}}" placeholder="Ej: www.cinekomuna.com" maxlength="120">
                      </div>
                   </div>
                </div>
@@ -158,7 +158,7 @@
                      <div class="input-group-prepend">
                        <div class="input-group-text"><i class="fa fa-facebook fa-lg"></i></div>
                     </div>
-                     <input  type="text" class="form-control" id="proj_facebook_page" value="{{projData.project_facebook_page}}" placeholder="Ej. www.facebook.com/cinekomuna">
+                     <input  type="text" class="form-control" id="proj_facebook_page" value="{{projData.project_facebook_page}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120">
                   </div>
                </div>
             </div>
@@ -169,7 +169,7 @@
                      <div class="input-group-prepend">
                        <div class="input-group-text"><i class="fa fa-twitter fa-lg"></i></div>
                     </div>
-                     <input type="text" class="form-control" id="proj_twitter_page" value="{{projData.project_twitter_page}}" placeholder="Ej. www.twitter.com/cinekomuna">
+                     <input type="text" class="form-control" id="proj_twitter_page" value="{{projData.project_twitter_page}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
                   </div>
                </div>
             </div>
@@ -180,7 +180,7 @@
                      <div class="input-group-prepend">
                        <div class="input-group-text"><i class="fa fa-vimeo fa-lg"></i></div>
                     </div>
-                     <input type="text" class="form-control" id="proj_vimeo_page" value="{{projData.proj_vimeo_page}}" placeholder="Ej. www.vimeo.com/cinekomuna">
+                     <input type="text" class="form-control" id="proj_vimeo_page" value="{{projData.proj_vimeo_page}}" placeholder="Ej. www.vimeo.com/cinekomuna" maxlength="120">
                   </div>
                </div>
             </div>
@@ -191,7 +191,7 @@
                      <div class="input-group-prepend">
                        <div class="input-group-text"><i class="fa fa-youtube fa-lg"></i></div>
                     </div>
-                     <input  type="text" class="form-control" id="proj_youtube_page" value="{{projData.proj_youtube_page}}" placeholder="Ej. www.youtube.com/cinekomuna">
+                     <input  type="text" class="form-control" id="proj_youtube_page" value="{{projData.proj_youtube_page}}" placeholder="Ej. www.youtube.com/cinekomuna" maxlength="120">
                   </div>
                </div>
             </div>
@@ -202,7 +202,7 @@
                      <div class="input-group-prepend">
                        <div class="input-group-text"><i class="fa fa-instagram fa-lg"></i></div>
                     </div>
-                     <input type="text" class="form-control" id="proj_instagram_page" value="{{projData.proj_instagram_page}}" placeholder="Ej. www.instagram.com/cinekomuna">
+                     <input type="text" class="form-control" id="proj_instagram_page" value="{{projData.proj_instagram_page}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120">
                   </div>
                </div>
             </div>

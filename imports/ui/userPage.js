@@ -12,6 +12,9 @@ if (Meteor.isClient) {
    Meteor.subscribe("getCountries");
    Meteor.subscribe("userData");
 
+
+
+
    Template.userPage.helpers({
     
      userFullName(){
@@ -48,6 +51,16 @@ if (Meteor.isClient) {
       resume(){
          if(Meteor.user()){
             return Meteor.user().resume;
+         }
+      },
+      resumeCount(){
+        if(Meteor.user()){
+          var rest = Meteor.user().resume;
+          var result = 0;
+          if(rest!=null && rest.length!=null){
+            result = (450 - rest.length);
+          }
+          return result;
          }
       },
       webpage(){
@@ -127,7 +140,7 @@ if (Meteor.isClient) {
          return PersonalCover.find({'owner': Meteor.userId()});
       },*/
       getCategories(){
-         var data = Ocupation.find().fetch();
+         var data = Ocupation.find({},{sort:{'title':1}}).fetch();
          return _.uniq(data, false, function(transaction) {return transaction.title});
       },
       getOcupationsFromCategory(){
@@ -136,7 +149,7 @@ if (Meteor.isClient) {
             return Ocupation.find({'title': Session.get("selected_category")}).fetch();
           }
           else{
-            return Ocupation.find({'title': "Animacion y arte digital"}).fetch();
+            return Ocupation.find({'title': "Actor"}).fetch();
           }
       },
       getRolesSelected: function(){
@@ -185,6 +198,7 @@ if (Meteor.isClient) {
         }
         
       }
+      
    });
 
    Template.user.events({
@@ -192,31 +206,22 @@ if (Meteor.isClient) {
      'click #guardar_set1': function(event, template){
          event.preventDefault();
 
-         var name = $('#personName').val();
-         var lastname = $('#personLastName').val();
-         var lastname2 = $('#personLastName2').val();
-         var city = $('#city').val(); 
-         var country = $('#country').val(); 
-         var resume = $('#resume').val();
-         var webpage = $('#web_page').val();
-         var facebook = $('#facebook_page').val();
-         var twitter = $('#twitter_page').val();
-         var vimeo = $('#vimeo_page').val();
-         var youtube = $('#youtube_page').val();
-         var instagram = $('#instagram_page').val();
+         var name = trimInput($('#personName').val());
+         var lastname = trimInput($('#personLastName').val());
+         var lastname2 = trimInput($('#personLastName2').val());
+         var city = trimInput($('#city').val()); 
+         var country = trimInput($('#country').val()); 
+         var resume = trimInput($('#resume').val());
+         var webpage = trimInput($('#web_page').val());
+         var facebook = trimInput($('#facebook_page').val());
+         var twitter = trimInput($('#twitter_page').val());
+         var vimeo = trimInput($('#vimeo_page').val());
+         var youtube = trimInput($('#youtube_page').val());
+         var instagram = trimInput($('#instagram_page').val());
          var userId = Meteor.userId();
          var fullname = name + " " + lastname + " " + lastname2;
 
-         if(name===""){
-            Bert.alert({message: 'El nombre no puede estar vacío', type: 'error'}); 
-         }
-         else if(lastname===""){
-            Bert.alert({message: 'El apellido paterno no puede estar vacío', type: 'error'}); 
-         }
-         else if(resume===""){
-            Bert.alert({message: 'El resumen no puede estar vacío', type: 'error'}); 
-         }
-         else{
+         if(isNotEmpty(name) && isNotEmpty(lastname) && isNotEmpty(resume)){
             Meteor.call(
               'updateUser',
               userId,
@@ -238,7 +243,19 @@ if (Meteor.isClient) {
             Bert.alert({message: 'Tus datos han sido actualizados', type: 'info'});
             FlowRouter.go('/viewProjects/' + Meteor.userId());
          }
+         return false
+      },
+
+      'keyup #resume' : function(event){
+         event.preventDefault();
          
+         var len = $('#resume').val().length;
+         if(len > 450){
+            val.value= val.value.substring(0,450);
+         }
+         else{
+            $('#max').text(450-len);
+         }
       },
 
       'click #deleteFileButton ': function (event) {
@@ -394,6 +411,21 @@ if (Meteor.isClient) {
       }
    });
 }
+
+
+var trimInput= function(val){
+  return val.replace(/^\s*|\s*$/g, "");
+}
+
+var isNotEmpty=function(val){
+  if(val && val!== ""){
+    return true;
+  }
+//  Bert.alert("", "danger", "growl-top-right");
+  Bert.alert({message: 'Por favor completa todos los campos obligatorios', type: 'danger', icon: 'fa fa-exclamation'});
+  return false;
+}
+
 
 /*
 if (Meteor.isServer) {

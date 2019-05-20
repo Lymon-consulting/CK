@@ -38,7 +38,7 @@ Bert.defaults = {
   style: 'growl-top-right',
   // Accepts: fixed-top, fixed-bottom, growl-top-left,   growl-top-right,
   // growl-bottom-left, growl-bottom-right.
-  type: 'default',
+  type: 'info',
   // Accepts: default, success, info, warning, danger.
   title: 'Mensaje de Cinekomuna'
 };

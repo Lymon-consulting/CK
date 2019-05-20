@@ -164,7 +164,7 @@ Meteor.publish('getCategories', function() {
 });
 
 Meteor.publish('getOcupations', function(title) {
-   return Ocupation.find('title':title);
+   return Ocupation.find();
 });
 
 Meteor.publish('getCountries', function() {
