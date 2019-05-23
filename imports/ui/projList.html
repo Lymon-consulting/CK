@@ -101,10 +101,22 @@
                                        <td class="text-no-wrap">
                                           <div class="row">
                                              <div class="col-md-6 numbers">
-                                                <i class="fa fa-thumbs-up fa-sm"></i> <small>{{this.likes}}</small>
+                                                <i class="fa fa-thumbs-up fa-sm"></i> <small>
+                                                {{#if this.likes}}
+                                                    {{this.likes}}
+                                                {{else}}
+                                                   0
+                                                {{/if}}
+                                             </small>
                                              </div>
                                              <div class="col-md-6 numbers">
-                                                <i class="fa fa-eye fa-sm"></i> <small>{{this.views}}</small>
+                                                <i class="fa fa-eye fa-sm"></i> <small>
+                                                {{#if this.views}}
+                                                   {{this.views}}
+                                                {{else}}
+                                                   0
+                                                {{/if}}
+                                             </small>
                                              </div>
                                           </div>
                                           

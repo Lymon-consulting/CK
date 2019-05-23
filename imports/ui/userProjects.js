@@ -83,11 +83,11 @@ if (Meteor.isClient) {
       'click #guardar_proyecto': function(event, template) {
           event.preventDefault();
           var proj_name = trimInput($('#proj_name').val());
-          var proj_type = trimInput($('#proj_type').val());
-          var proj_genre = trimInput($('#proj_genre').val());
+          var proj_type = $('#proj_type').val();
+          var proj_genre = $('#proj_genre').val();
           var proj_desc = trimInput($('#proj_desc').val());
-          var proj_year = trimInput($('#proj_year').val());
-          var proj_role = trimInput(Session.get("ocupation_temp"));
+          var proj_year = $('#proj_year').val();
+          var proj_role = Session.get("ocupation_temp");
           
           
           var proj_main = $('#isMainProject').val();
@@ -215,7 +215,7 @@ if (Meteor.isClient) {
 }
 
 var trimInput= function(val){
-  if(val!=null){
+  if(val!=null && val!=""){
     return val.replace(/^\s*|\s*$/g, "");  
   }
   return false;
