@@ -9,10 +9,16 @@
    
    <div class="spacer60"></div>
 
+
    <div class="container">
       <div class="row">
          <div class="col">
-            <h1 class="h1-title">{{getProfile.profile.name}} {{getProfile.profile.lastname}} {{getProfile.profile.lastname2}}</h1>
+            <h1 class="h1-title">{{getProfile.profile.name}} {{getProfile.profile.lastname}} {{getProfile.profile.lastname2}}
+            {{#if notSameUser}}
+            {{else}}
+            <button class="btn btn-purple"><a href="/editProfile/{{getProfile._id}}">EDITAR PERFIL</a></button>
+            {{/if}}
+            </h1>
          </div>
       </div>
       <div class="row">
@@ -145,6 +151,8 @@
                            <hr>
                         </div>
                      </div>
+                     <div class="container black_border">
+
                      {{#if getMainProject}}
                      <div class="row">
                         <div class="col-md-12 h2-title">
@@ -166,7 +174,7 @@
                         <div class="spacer40"></div>
                      </div>
                      <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                            <table class="table table-responsive borderless">
                               <tr>
                                  <td class="no-padding text-title-gray uppercase" colspan="2">{{projectRole getMainProject._id}}</td>
@@ -193,16 +201,14 @@
                               </tr>
                            </table>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                            <p class="agreements text-justify">
                               {{getMainProject.project_desc}}
                            </p>
                         </div>
 
                      </div>
-                     <div class="row">
-                        <div class="col-md-12"><hr></div>
-                     </div>
+                     
                      <div class="row">
                         <div class="spacer20"></div>
                      </div>
@@ -211,20 +217,24 @@
                         <div class="col agreements text-justify">Esta persona aún no tiene un proyecto principal</div>
                      </div>  
                      {{/if}}
+                     </div>
+
+                     <div class="spacer40"></div>
 
                      {{#if getProjects}}
 
                      <div class="row">
+                        
                         {{#each getProjects}}
                         <div class="col-md-4 text-center">
-                           <table class="border-exterior" cellpadding="0" cellspacing="0">
+                           <table class="table table-responsive black_border" cellspacing="0" cellpadding="0">
                               <tr>
                                  <td colspan="2">
                                     <a href="/projectPage/{{this._id}}">
-                                    {{#if getProjectImages this._id 100}}
-                                       <img src="{{getProjectImages this._id 210}}">
+                                    {{#if getProjectImages this._id 175}}
+                                       <img src="{{getProjectImages this._id 175}}" class="">
                                     {{else}}
-                                       <img src="../images/largometraje1.jpg" class="img-fluid" alt="">
+                                       <img src="../images/largometraje1.jpg" class="" alt="">
                                     {{/if}}
                                     </a>
                                  </td>

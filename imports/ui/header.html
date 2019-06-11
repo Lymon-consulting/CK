@@ -52,7 +52,7 @@
          <div class="menu-list">
             <ul id="menu-content" ng-hide="token">
                 
-                <li><a href="/job"><i class="fa fa-suitcase fa-lg">&nbsp;</i> EMPLEOS</a></li>
+                <li><a href="/job"><i class="fa fa-suitcase fa-lg">&nbsp;</i> BOLSA DE TRABAJO</a></li>
                 <li><hr></li>
                 <li><a href="/blog"><i class="fa fa-newspaper-o fa-lg">&nbsp;</i> BLOG</a></li>  
                 <li><a href="/contact"><i class="fa fa-envelope fa-lg">&nbsp;</i> CONTACTO</a></li>
@@ -91,11 +91,11 @@
   {{#if currentUser}}  
     {{#if getProfilePicture}}   
       <li class="nav-item vcenter">
-        <a href="/editProfile/{{currentUser._id}}" class="text-button"><img src="{{getProfilePicture}}"/></a>
+        <a href="/profilePage/{{currentUser._id}}" class="text-button"><img src="{{getProfilePicture}}"/></a>
       </li>
    {{else}}
       <li class="nav-item vcenter">
-        <a href="/editProfile/{{currentUser._id}}" class="text-button"><div id="profileImage">{{getInitials}}</div></a>
+        <a href="/profilePage/{{currentUser._id}}" class="text-button"><div id="profileImage">{{getInitials}}</div></a>
       </li>      
    {{/if}}
   
@@ -111,7 +111,7 @@
        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
          <ul class="nav navbar-nav navbar-right">
            <li class="dropdown notopspace">
-             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-envelope-o fa-2x text-white">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell-o fa-2x text-white">
                {{#if getAlerts.length}}
                <span class="badge badge-danger">{{getAlerts.length}}</span>
                {{/if}}

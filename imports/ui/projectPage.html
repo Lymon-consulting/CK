@@ -48,37 +48,29 @@
                </div>
             </div>
             <div class="row">
-               <div class="col-md-12">
-                  <div class="container">
-                     <div class="row justify-content-start align-items-center">
-                          <div class="col-2">
-                             <a href="/profilePage/{{projData.userId}}">
-                             {{#if getProfilePicture projData.userId}}
-                                <img src="{{getProfilePicture projData.userId}}" border="0" class="rounded-circle" />
-                             {{else}}
-                                <div id="profileImageLarge">{{getInitials projData.userId}}</div>
-                             {{/if}}
-                             </a>
-                            
-                            
+                <div class="col-1">
+                   <a href="/profilePage/{{projData.userId}}">
+                   {{#if getProfilePicture projData.userId}}
+                      <img src="{{getProfilePicture projData.userId}}" border="0" class="rounded-circle" />
+                   {{else}}
+                      <div id="profileImageLarge">{{getInitials projData.userId}}</div>
+                   {{/if}}
+                   </a>
+                </div>
+                <div class="col-11">
+                    <div class="container">
+                       <div class="row justify-content-start align-items-center">
+                          <div class="col-10 people-name-text">
+                             <a href="/profilePage/{{projData.userId}}" class="text-white">{{ownerName projData.userId}}</a>
                           </div>
-                          <div class="col-10">
-                              <div class="container">
-                                 <div class="row justify-content-start align-items-center">
-                                    <div class="col-10 people-name-text">
-                                       <a href="/profilePage/{{projData.userId}}" class="text-white">{{ownerName projData.userId}}</a>
-                                    </div>
-                                 </div>
-                                 <div class="row justify-content-start align-items-center">
-                                    <div class="col-10 text-white uppercase">
-                                     {{projData.project_role}}
-                                    </div>
-                                </div>
-                             </div>
+                       </div>
+                       <div class="row justify-content-start align-items-center">
+                          <div class="col-10 text-white uppercase">
+                           {{projData.project_role}}
                           </div>
                       </div>
-                  </div>
-               </div>
+                   </div>
+                </div>
             </div>
             
          </div>

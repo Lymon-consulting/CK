@@ -296,6 +296,10 @@
 }
 {
     "title" : "Producción",
+    "secondary": "Fixer"
+}
+{
+    "title" : "Producción",
     "secondary": "Gerente de producción"
 }
 {
@@ -333,10 +337,6 @@
 {
     "title" : "Post-producción Imagen",
     "secondary": "Supervisor de VFX"
-}
-{
-    "title" : "Post-producción Imagen",
-    "secondary": "Supervisor musical"
 }
 {
     "title" : "Post-producción Imagen",
@@ -395,6 +395,10 @@
     "secondary": "Operador THX"
 }
 {
+    "title" : "Post-producción Sonido",
+    "secondary": "Supervisor musical"
+}
+{
     "title" : "Sonido",
     "secondary": "Sonidista"
 }
@@ -433,6 +437,10 @@
 {
     "title" : "Otra",
     "secondary": "Broker Cine"
+}
+{
+    "title" : "Otra",
+    "secondary": "Catering"
 }
 {
     "title" : "Otra",

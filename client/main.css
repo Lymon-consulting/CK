@@ -390,6 +390,41 @@ footer{
   margin-left: auto;
 }
 
+.card {
+  float: left;
+  width: 33.333%;
+  padding: .75rem;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  margin-right: 2rem;
+  border: 0;
+}
+
+.card > img {
+  margin-bottom: .75rem;
+}
+
+.card-text {
+  font-size: 85%;
+}
+
+.black_border{
+  outline: 1px solid black !important;
+   padding: 0px; 
+   margin: 0px;
+}
+
+.table th, .table td {
+    padding: 8px;
+    vertical-align: top;
+    border-top: 0;
+}
+
+.table-responsive{
+   padding: 0px; 
+   margin: 0px;
+}
+
 .table-low-padding>tbody>tr>td, .table-low-padding>tbody>tr>th, .table-low-padding>tfoot>tr>td, .table-low-padding>tfoot>tr>th, .table-low-padding>thead>tr>td, .table-low-padding>thead>tr>th {
     padding: 0;
     margin: 0;
@@ -638,11 +673,11 @@ a.text-black{
 }
 .border-exterior{
    outline: 1px solid black;
-   padding: 2px 4px 2px 10px; /*top right bottom left*/
+   padding: 0px; /*top right bottom left*/
 }
 
 .borderless td, .borderless th, .borderless table {
-    border: none;
+    border: none !important;
 }
 
 .btn {
@@ -858,7 +893,7 @@ a.text-black{
         height: 230px;
         background-image: url("/images/banner-david.jpg");
         background-repeat: no-repeat;
-        background-size: contain;
+        background-size: cover;
     }
 }
 

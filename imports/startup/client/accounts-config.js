@@ -69,8 +69,14 @@ Accounts.ui.config({
 });
 
 accountsUIBootstrap3.logoutCallback = function(error) {
-  if(error) console.log("Error:" + error);
-  FlowRouter.go('home');
+  if(error) {
+    console.log("Error:" + error);
+    Bert.alert({message: 'Se produjo un error durante el registro, contacte al administrador', type: 'error', icon: 'fa fa-times'});
+  }
+  else{
+    FlowRouter.go('home');   
+    Bert.alert({message: 'El usuario ha sido creado de forma exitosa', type: 'success', icon: 'fa fa-check'});
+  }
 }
 
 /*
