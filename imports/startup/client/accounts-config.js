@@ -8,6 +8,10 @@ Accounts.ui.config({
 
 accountsUIBootstrap3.setLanguage('es'); // for Spanish
 
+
+
+/*
+
 Accounts.ui.config({
     requestPermissions: {},
     extraSignupFields: [{
@@ -75,10 +79,10 @@ accountsUIBootstrap3.logoutCallback = function(error) {
   }
   else{
     FlowRouter.go('home');   
-    Bert.alert({message: 'El usuario ha sido creado de forma exitosa', type: 'success', icon: 'fa fa-check'});
+    //Bert.alert({message: 'El usuario ha sido creado de forma exitosa', type: 'success', icon: 'fa fa-check'});
   }
 }
-
+*/
 /*
 Accounts.ui.config({
   requestPermissions: {

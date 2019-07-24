@@ -1,4 +1,6 @@
 accounts-base@1.4.3
+accounts-facebook@1.3.2
+accounts-oauth@1.1.16
 accounts-password@1.5.1
 aldeed:collection2@3.0.2
 alexwine:bootstrap-4@4.1.0
@@ -55,6 +57,8 @@ ecmascript-runtime-server@0.7.1
 ejson@1.1.0
 email@1.2.3
 es5-shim@4.8.0
+facebook-config-ui@1.0.2
+facebook-oauth@1.5.0
 fetch@0.1.0
 fortawesome:fontawesome@4.7.0
 fourseven:scss@4.10.0
@@ -96,6 +100,8 @@ mongo-livedata@1.0.12
 mrt:jquery-ui@1.9.2
 npm-bcrypt@0.9.3
 npm-mongo@3.1.1
+oauth@1.2.8
+oauth2@1.2.1
 observe-sequence@1.0.16
 ordered-dict@1.1.0
 peerlibrary:assert@0.2.5

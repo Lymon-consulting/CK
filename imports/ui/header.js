@@ -6,6 +6,15 @@ import './header.html';
 import './projectPage.html';
 import '/lib/common.js';
 
+Template.header.rendered = function(){
+/*
+  FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+
+      console.log(response);
+  });*/
+};
+
 Template.header.helpers({
   user(){
       return Meteor.user();
