@@ -15,11 +15,20 @@
                   {{>notifications}}   
                {{/if}}
                <li class="nav-item">
-                   <button type="button" class="btn btn-outline-light button_white text-button">{{> loginButtons }}</button>
-               </li>
-               <li class="nav-item">
                    <button type="button" class="btn btn-outline-light button_white btn-fixed-width"><a href="/peopleList" class="text-button">DESCUBRE</a></button>
                </li>
+               
+               
+               
+               {{#if currentUser}}  
+               <li class="nav-item">
+                   <button type="button" class="btn btn-outline-light button_white btn-fixed-width"><a href="#" class="logout">SALIR</a></button>
+               </li>
+               {{else}}
+               <li class="nav-item">
+                   <button type="button" class="btn btn-outline-light button_white btn-fixed-width"><a href="/login" class="text-button">ENTRAR</a></button>
+               </li>
+               {{/if}}
                {{>profile}}
            </ul>
 

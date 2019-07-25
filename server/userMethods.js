@@ -2,7 +2,7 @@ import { Ocupation } from '../imports/api/ocupations.js';
 
 Meteor.methods({
 
-	updateUser(userId, name, lastname, lastname2, city, country, resume, fullname, webpage, facebook, twitter, vimeo, youtube, instagram){
+	updateUser(userId, name, lastname, lastname2, city, state, country, resume, fullname, webpage, facebook, twitter, vimeo, youtube, instagram){
 		
 		Meteor.users.update({'_id': userId}, {
 			$set: 
@@ -10,6 +10,7 @@ Meteor.methods({
                 "profile.lastname": lastname, 
                 "profile.lastname2": lastname2,
                 "city" : city,
+                "state" : state,
                 "country" : country,
                 "resume" : resume,
                 "fullname": fullname,

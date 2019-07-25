@@ -145,3 +145,10 @@ Template.notifications.events({
    }
 });
 
+Template.header.events({
+    'click .logout': function(event){
+        event.preventDefault();
+        Meteor.logout();
+        FlowRouter.go('/');
+    }
+});

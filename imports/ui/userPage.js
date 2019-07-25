@@ -121,6 +121,20 @@ if (Meteor.isClient) {
         }
         return result;
       },
+      stateSelected: function(value){
+        var result="";
+        var state = Meteor.user().city;
+        if(state){
+           var elem = state.indexOf(value);
+           if(elem >= 0){
+             result = 'selected';
+           }
+           else{
+             result = "";
+           } 
+        }
+        return result;
+      },
       countrySelected: function(value){
         var result="";
         var country = Meteor.user().country;
@@ -159,13 +173,25 @@ if (Meteor.isClient) {
          var data = City.find().fetch();
          return _.uniq(data, false, function(transaction) {return transaction.country});
       },
-      getCitiesFromCountries(){
-        
+      getStatesFromCountries(){
+        var country;
         if(Session.get("selected_country")!=null){
-          return City.find({'country': Session.get("selected_country")}).fetch();
+          country = City.find({'country': Session.get("selected_country")}).fetch();
+          return _.uniq(country, false, function(transaction) {return transaction.state});
         }
         else{
-         return City.find({'country': 'México'}).fetch(); 
+         country = City.find({'country': 'México'}).fetch(); 
+         return _.uniq(country, false, function(transaction) {return transaction.state});
+        }
+
+      },
+      getCitiesFromStates(){
+        
+        if(Session.get("selected_state")!=null){
+          return City.find({'state': Session.get("selected_state")}).fetch();
+        }
+        else{
+         return City.find({'state': 'Baja California Sur'}).fetch(); 
         }
 
       },
@@ -210,6 +236,7 @@ if (Meteor.isClient) {
          var lastname = trimInput($('#personLastName').val());
          var lastname2 = trimInput($('#personLastName2').val());
          var city = trimInput($('#city').val()); 
+         var state = trimInput($('#state').val()); 
          var country = trimInput($('#country').val()); 
          var resume = trimInput($('#resume').val());
          var webpage = trimInput($('#web_page').val());
@@ -229,6 +256,7 @@ if (Meteor.isClient) {
               lastname, 
               lastname2,
               city,
+              state,
               country,
               resume,
               fullname,
@@ -360,6 +388,10 @@ if (Meteor.isClient) {
       'change #country':function(event, template){
          event.preventDefault();
          Session.set("selected_country", event.currentTarget.value);
+      },
+      'change #state':function(event, template){
+         event.preventDefault();
+         Session.set("selected_state", event.currentTarget.value);
       },
      'change #file-upload': function(event, template){
         var file = event.target.files[0];

@@ -13,6 +13,8 @@ import '../imports/ui/home.html';
 //import '../imports/ui/contact.js';
 /*import '../imports/ui/userPage.html';*/
 import '../imports/ui/header.js';
+import '../imports/ui/login.js';
+import '../imports/ui/join.js';
 import '../imports/ui/userPage.js';
 import '../imports/ui/userProjects.js';
 import '../imports/ui/userEditProject.js';
@@ -31,6 +33,7 @@ import '../imports/ui/terms.js';
 
 /*Imports for routing*/
 import '/lib/router.js';
+
 
 Bert.defaults = {
   hideDelay: 2500,

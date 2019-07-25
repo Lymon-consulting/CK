@@ -1,32 +1,80 @@
-{"country":"México","city":"Aguascalientes"}
-{"country":"México","city":"Baja California"}
-{"country":"México","city":"Baja California Sur"}
-{"country":"México","city":"Campeche"}
-{"country":"México","city":"Coahuila de Zaragoza"}
-{"country":"México","city":"Colima"}
-{"country":"México","city":"Chiapas"}
-{"country":"México","city":"Chihuahua"}
-{"country":"México","city":"Distrito Federal"}
-{"country":"México","city":"Durango"}
-{"country":"México","city":"Guanajuato"}
-{"country":"México","city":"Guerrero"}
-{"country":"México","city":"Hidalgo"}
-{"country":"México","city":"Jalisco"}
-{"country":"México","city":"México"}
-{"country":"México","city":"Michoacán de Ocampo"}
-{"country":"México","city":"Morelos"}
-{"country":"México","city":"Nayarit"}
-{"country":"México","city":"Nuevo León"}
-{"country":"México","city":"Oaxaca"}
-{"country":"México","city":"Puebla"}
-{"country":"México","city":"Querétaro"}
-{"country":"México","city":"Quintana Roo"}
-{"country":"México","city":"San Luis Potosí"}
-{"country":"México","city":"Sinaloa"}
-{"country":"México","city":"Sonora"}
-{"country":"México","city":"Tabasco"}
-{"country":"México","city":"Tamaulipas"}
-{"country":"México","city":"Tlaxcala"}
-{"country":"México","city":"Veracruz de Ignacio de la Llave"}
-{"country":"México","city":"Yucatán"}
-{"country":"México","city":"Zacatecas"}
+{"country":"México","state":"Aguascalientes","city":"Aguascalientes"}
+{"country":"México","state":"Baja California","city":"Ensenada"}
+{"country":"México","state":"Baja California","city":"Mexicali"}
+{"country":"México","state":"Baja California","city":"Tijuana"}
+{"country":"México","state":"Baja California Sur","city":"La paz"}
+{"country":"México","state":"Baja California Sur","city":"Los cabos"}
+{"country":"México","state":"Campeche","city":"Campeche"}
+{"country":"México","state":"Campeche","city":"Ciudad del Carmen"}
+{"country":"México","state":"Chiapas","city":"San Cristóbal de las Casas"}
+{"country":"México","state":"Chiapas","city":"Tapachula"}
+{"country":"México","state":"Chiapas","city":"Tuxtla Gutiérrez"}
+{"country":"México","state":"Chihuahua","city":"Ciudad Juárez"}
+{"country":"México","state":"Chihuahua","city":"Chihuahua"}
+{"country":"México","state":"Ciudad de México","city":"Ciudad de México"}
+{"country":"México","state":"Coahuila","city":"Monclova"}
+{"country":"México","state":"Coahuila","city":"Piedras Negras"}
+{"country":"México","state":"Coahuila","city":"Saltillo"}
+{"country":"México","state":"Coahuila","city":"Torreón"}
+{"country":"México","state":"Colima","city":"Colima"}
+{"country":"México","state":"Colima","city":"Manzanillo"}
+{"country":"México","state":"Colima","city":"Tecomán"}
+{"country":"México","state":"Durango","city":"Durango"}
+{"country":"México","state":"Durango","city":"Gómez Palacio"}
+{"country":"México","state":"Estado de México","city":"Chimalhuacán"}
+{"country":"México","state":"Estado de México","city":"Ciudad Nezahualcóyotl"}
+{"country":"México","state":"Estado de México","city":"Ecatepec"}
+{"country":"México","state":"Estado de México","city":"Naucalpan"}
+{"country":"México","state":"Estado de México","city":"Toluca"}
+{"country":"México","state":"Estado de México","city":"Tlalnepantla"}
+{"country":"México","state":"Guanajuato","city":"Celaya"}
+{"country":"México","state":"Guanajuato","city":"Dolores Hidalgo"}
+{"country":"México","state":"Guanajuato","city":"Guanajuato"}
+{"country":"México","state":"Guanajuato","city":"Irapuato"}
+{"country":"México","state":"Guanajuato","city":"León"}
+{"country":"México","state":"Guanajuato","city":"San Miguel de Allende"}
+{"country":"México","state":"Guerrero","city":"Acapulco"}
+{"country":"México","state":"Guerrero","city":"Chilpancingo"}
+{"country":"México","state":"Guerrero","city":"Taxco"}
+{"country":"México","state":"Guerrero","city":"Zihuatanejo"}
+{"country":"México","state":"Hidalgo","city":"Pachuca"}
+{"country":"México","state":"Jalisco","city":"Guadalajara/Zapopan"}
+{"country":"México","state":"Jalisco","city":"Puerto Vallarta"}
+{"country":"México","state":"Jalisco","city":"Tlaquepaque"}
+{"country":"México","state":"Michoacán","city":"Morelia"}
+{"country":"México","state":"Michoacán","city":"Pátzcuaro"}
+{"country":"México","state":"Michoacán","city":"Uruapan"}
+{"country":"México","state":"Michoacán","city":"Zamora"}
+{"country":"México","state":"Morelos","city":"Cuernavaca"}
+{"country":"México","state":"Morelos","city":"Tepoztlán"}
+{"country":"México","state":"Nayarit","city":"Nuevo Vallarta"}
+{"country":"México","state":"Nayarit","city":"Tepic"}
+{"country":"México","state":"Nuevo León","city":"Monterrey"}
+{"country":"México","state":"Oaxaca","city":"Oaxaca"}
+{"country":"México","state":"Oaxaca","city":"Puerto Escondido"}
+{"country":"México","state":"Puebla","city":"Cholula"}
+{"country":"México","state":"Puebla","city":"Puebla"}
+{"country":"México","state":"Querétaro","city":"Querétaro"}
+{"country":"México","state":"Quintana Roo","city":"Cancún"}
+{"country":"México","state":"Quintana Roo","city":"Chetumal"}
+{"country":"México","state":"Quintana Roo","city":"Cozumel"}
+{"country":"México","state":"Quintana Roo","city":"Playa del Carmen"}
+{"country":"México","state":"San Luis Potosí","city":"San Luis Potosí"}
+{"country":"México","state":"Sinaloa","city":"Culiacán"}
+{"country":"México","state":"Sinaloa","city":"Mazatlán"}
+{"country":"México","state":"Sinaloa","city":"Los Mochis"}
+{"country":"México","state":"Sonora","city":"Ciudad Obregón"}
+{"country":"México","state":"Sonora","city":"Hermosillo"}
+{"country":"México","state":"Sonora","city":"Nogales"}
+{"country":"México","state":"Tabasco","city":"Villahermosa"}
+{"country":"México","state":"Tamaulipas","city":"Ciudad Victoria"}
+{"country":"México","state":"Tamaulipas","city":"Matamoros"}
+{"country":"México","state":"Tamaulipas","city":"Nuevo Laredo"}
+{"country":"México","state":"Tamaulipas","city":"Reynosa"}
+{"country":"México","state":"Tamaulipas","city":"Tampico"}
+{"country":"México","state":"Tlaxcala","city":"Tlaxcala"}
+{"country":"México","state":"Veracruz","city":"Veracruz"}
+{"country":"México","state":"Veracruz","city":"Xalapa"}
+{"country":"México","state":"Yucatán","city":"Mérida"}
+{"country":"México","state":"Zacatecas","city":"Fresnillo"}
+{"country":"México","state":"Zacatecas","city":"Zacatecas"}

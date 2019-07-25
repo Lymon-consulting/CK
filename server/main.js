@@ -105,6 +105,7 @@ Meteor.publish("otherUsers", function () {
       'profile': 1, 
       'emails' : 1, 
       'city':1, 
+      'state':1,
       'country':1, 
       'likes':1, 
       'views':1, 

@@ -114,7 +114,7 @@
 
          <div class="spacer20"></div>
          <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label for="country">País <span class="text-purple">(Requerido)</span></label>
                  <select name="country" id="country" class="form-control">
                    {{#each getCountries}}
@@ -122,10 +122,18 @@
                    {{/each}}
                 </select>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
+               <label for="state">Estado <span class="text-purple">(Requerido)</span></label>
+               <select name="state" id="state" class="form-control">
+                 {{#each getStatesFromCountries}}
+                    <option value="{{state}}" {{stateSelected state}}> {{state}} </option>
+                 {{/each}}
+              </select>  
+            </div>
+            <div class="col-md-4">
                <label for="city">Ciudad <span class="text-purple">(Requerido)</span></label>
                <select name="city" id="city" class="form-control">
-                 {{#each getCitiesFromCountries}}
+                 {{#each getCitiesFromStates}}
                     <option value="{{city}}" {{citySelected city}}> {{city}} </option>
                  {{/each}}
               </select>  
