@@ -33,7 +33,6 @@ alexwine:bootstrap-4
 stylus@=2.513.14
 ian:accounts-ui-bootstrap-3
 mizzao:autocomplete
-email
 meteorhacks:ssr
 themeteorchef:bert
 momentjs:moment
@@ -42,3 +41,4 @@ easy:search
 aldeed:collection2@3.0.0
 accounts-facebook
 facebook-config-ui
+email

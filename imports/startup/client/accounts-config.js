@@ -6,7 +6,7 @@ Accounts.ui.config({
 });
 */
 
-accountsUIBootstrap3.setLanguage('es'); // for Spanish
+//accountsUIBootstrap3.setLanguage('es'); // for Spanish
 
 
 

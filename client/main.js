@@ -15,6 +15,8 @@ import '../imports/ui/home.html';
 import '../imports/ui/header.js';
 import '../imports/ui/login.js';
 import '../imports/ui/join.js';
+import '../imports/ui/thanksRegister.js';
+import '../imports/ui/recover.js';
 import '../imports/ui/userPage.js';
 import '../imports/ui/userProjects.js';
 import '../imports/ui/userEditProject.js';
@@ -34,6 +36,28 @@ import '../imports/ui/terms.js';
 /*Imports for routing*/
 import '/lib/router.js';
 
+Meteor.startup(() => {
+
+});
+
+Accounts.config({
+        sendVerificationEmail: true
+    });
+
+/*
+Accounts.onResetPasswordLink(
+  function(token, done){
+      console.log("passwordToken", token);
+      //Session.set("passwordToken", token);
+      //Accounts.resetPassword(token, "password");
+      done();
+      //FlowRouter.go('/changePassword', {_id: 1}, {query: 'token=' + token});
+      //Router.go('appCreatePassword',{query: 'token=' + token});
+      //Router.go('appCreatePassword',{_id: 1}, {query: 'token=' + token});
+
+
+  });
+*/
 
 Bert.defaults = {
   hideDelay: 2500,

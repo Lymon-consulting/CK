@@ -1,6 +1,50 @@
 import { Ocupation } from '../imports/api/ocupations.js';
 
 Meteor.methods({
+  sendVerificationLink() {
+    let userId = Meteor.userId();
+    if ( userId ) {
+    	console.log("Enviando correo");
+      return Accounts.sendVerificationEmail( userId );
+    }
+  },
+  sendResetPasswordEmail(userId) {
+    //let userId = Meteor.userId();
+    if ( userId!=null ) {
+      return Accounts.sendResetPasswordEmail( userId );
+    }
+  }
+});
+
+
+
+/*
+Meteor.methods({
+  sendVerificationLink() {
+    let userId = Meteor.userId();
+    if ( userId ) {
+      console.log("Email has been sent");
+      Meteor.setTimeout(function() {
+          return Accounts.sendVerificationEmail(user._id);
+      }, 2 * 4000);
+      
+    }
+  }
+});*/
+
+/*
+Accounts.onCreateUser(function(options, user) {
+      user.profile = {};
+
+      // we wait for Meteor to create the user before sending an email
+      Meteor.setTimeout(function() {
+          Accounts.sendVerificationEmail(user._id);
+      }, 2 * 1000);
+
+      return user;
+  });
+*/
+Meteor.methods({
 
 	updateUser(userId, name, lastname, lastname2, city, state, country, resume, fullname, webpage, facebook, twitter, vimeo, youtube, instagram){
 		

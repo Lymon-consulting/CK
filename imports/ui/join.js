@@ -11,6 +11,31 @@ Template.join.events({
         var lastName = $('[name=lastName]').val();
         
         if(isNotEmpty(email) && isNotEmpty(password) && isNotEmpty(firstName) && isNotEmpty(lastName)){
+
+          let user = {
+            email: email,
+            password: password,
+            profile: {
+              name: firstName,
+              lastname: lastName
+            }
+          };
+
+          Accounts.createUser( user, ( error ) => {
+            if ( error ) {
+              Bert.alert( error.reason, 'danger' );
+            } else {
+              Meteor.call( 'sendVerificationLink', ( error, response ) => {
+                if ( error ) {
+                  console.log(error.reason);
+                } else {
+                  FlowRouter.go('/thanksRegister');
+                }
+              });
+            }
+          });
+
+        /*
           Accounts.createUser({
             email: email,
             password: password,
@@ -27,10 +52,19 @@ Template.join.events({
                       Bert.alert({message: 'La cuenta con el correo '+email+' ya existe', type: 'danger', icon: 'fa fa-times'});
                     }
                 } else {
-                  Meteor.loginWithPassword(email, password);
+
+                  
+                  Meteor.call( 'sendVerificationLink', ( error, response ) => {
+                    if ( error ) {
+                      console.log(error);
+                    } else {
+                      console.log("Mail sent");
+                    }
+                  });
+                  //Meteor.loginWithPassword(email, password);
                   FlowRouter.go('/');
                 }
-          });  
+          });  */
         }
         else{
           Bert.alert({message: 'Los datos no pueden estar vacíos', type: 'danger', icon: 'fa fa-times'});

@@ -10,9 +10,9 @@ import '../imports/startup/server/on-create-user.js';
 import './projectMethods.js';
 import './userMethods.js';
 
+
 Meteor.startup(() => {
-  
-  Cloudinary.config({
+Cloudinary.config({
       cloud_name: Meteor.settings.private.CLOUDINARY_URL,
       api_key: Meteor.settings.private.API_KEY,
       api_secret: Meteor.settings.private.API_SECRET
@@ -20,17 +20,54 @@ Meteor.startup(() => {
 
   process.env.MAIL_URL = Meteor.settings.private.MAIL_URL;
 
+
   Meteor.users._ensureIndex({
       "fullname": 1
     });
-  
+
+  Accounts.config({
+        sendVerificationEmail: true
+    });
+  Accounts.emailTemplates.siteName = "Cinekomuna";
+  Accounts.emailTemplates.from     = process.env.global_mail_sender;
+
+  Accounts.emailTemplates.verifyEmail = {
+    subject() {
+      return "[Cinekomuna] Verifica tu cuenta de correo";
+    },
+    text( user, url ) {
+      let emailAddress   = user.emails[0].address;
+      let urlWithoutHash = url.replace( '#/', '' );
+      let supportEmail   = "soporte@cinekomuna.com";
+      emailBody      = `Para verificar tu cuenta (${emailAddress}) visita el siguiente enlace:\n\n${urlWithoutHash}\n\n Si tú no solicitaste esta verificación, por favor ignora este correo. Si crees que algo está mal, por favor contacta a nuestro equipo de soporte: ${supportEmail}.`;
+
+      return emailBody;
+    }
+  };
+
+  Accounts.emailTemplates.resetPassword = {
+    subject() {
+      return "[Cinekomuna] Enlace para cambiar tu contraseña";
+    },
+    text( user, url ) {
+      let emailAddress   = user.emails[0].address;
+      //let urlWithoutHash = url.replace( '#/', '' );
+      let urlWithoutHash = url;
+      let supportEmail   = "soporte@cinekomuna.com";
+      emailBody      = `Para cambiar tu contraseña visita el siguiente enlace:\n\n${urlWithoutHash}\n\n Si tú no solicitaste esta operación, por favor ignora este correo. Si crees que algo está mal, por favor contacta a nuestro equipo de soporte: ${supportEmail}.`;
+
+      return emailBody;
+    }
+  };
+
 });
 
-
+ 
 Meteor.publish("userData", function () {
     return Meteor.users.find({_id: this.userId},
         {fields: {'role': 1, 'resume':1, 'city':1, 'country':1, 'facebook':1, 'fullname':1, 'instagram':1, 'twitter':1, 'vimeo':1, 'webpage':1, 'youtube':1, 'profilePictureID':1, 'profileCoverID':1}});
 });
+
 
 //const Users = new Mongo.Collection('users');
 export const UsersIndex = new Index({
@@ -121,30 +158,14 @@ Meteor.publish("otherUsers", function () {
       'profilePictureID': 1
     }
   });
-  //return Meteor.users.find();
 });
 
 Meteor.publish("follows", function (userId) {
    var cuantos = Meteor.users.find({'_id' : userId} , { fields: {'_id': 1 , 'profile': 1}});
    return cuantos;
 });
-/*
-Meteor.publish('images', function() {
-  return Images.find();
-});
 
-Meteor.publish('cover', function() {
-  return Cover.find();
-});*/
-/*
-Meteor.publish('personalcover', function() {
-  return PersonalCover.find();
-});
-*/
 Meteor.publish('myProjects', function(userId) {
-   //
-   //return Project.find({'userId' : userId, 'project_is_main' : ''});
-   //return Project.find({$and : [ {'userId' : userId} , {"project_is_main": '' }]});
    return Project.find();
 });
 
@@ -173,139 +194,7 @@ Meteor.publish('getCountries', function() {
 });
 
 Meteor.users.allow({
-    update: function () {
-           return true;
-    }
-});
-
-
-
-/*Meteor.publish('projects', function (dataQuery) {
-   console.log("Recibiendo en el dataQuery="+dataQuery);
-  return Project.find(dataQuery);
-});*/
-
-/*
-
-Images = new FS.Collection("images", {
-    filter: {
-       maxSize: 5 * 1024 * 1024, //in bytes
-       allow: {
-         contentTypes: ['image/*']
-       },
-       onInvalid: function (message) {
-         if (Meteor.isClient) {
-           alert(message);
-         } else {
-           console.log(message);
-         }
-       }
-    },
-    stores: [
-      new FS.Store.FileSystem("images"), //,{path: "C:\\workspace\\cinekomuna\\ck_v0.1\\public\\uploads\\"}
-      new FS.Store.FileSystem("thumbs", {
-        beforeWrite: function(fileObj) {
-          // We return an object, which will change the
-          // filename extension and type for this store only.
-
-          return {
-            extension: 'png',
-            type: 'image/png'
-          };
-        },
-        transformWrite: function(fileObj, readStream, writeStream) {
-            // Transform the image into a 40x40px PNG thumbnail
-            var size = "40";
-            gm(readStream).autoOrient().resize(size, size + '^').gravity('Center').extent(size, size).stream('PNG').pipe(writeStream);
-          // The new file size will be automatically detected and set for this store
-        }
-      }),
-      new FS.Store.FileSystem("profile", {
-        beforeWrite: function(fileObj) {
-          // We return an object, which will change the
-          // filename extension and type for this store only.
-          return {
-            extension: 'png',
-            type: 'image/png'
-          };
-        },
-        transformWrite: function(fileObj, readStream, writeStream) {
-            // Transform the image into a 40x40px PNG thumbnail
-            var size = "100";
-            gm(readStream).autoOrient().resize(size, size + '^').gravity('Center').extent(size, size).stream('PNG').pipe(writeStream);
-          // The new file size will be automatically detected and set for this store
-        }
-      })
-    ],
-    
-});
-
-Cover = new FS.Collection("cover", {
-   filter: {
-       maxSize: 5 * 1024 * 1024, //in bytes
-       allow: {
-         contentTypes: ['image/*']
-       },
-       onInvalid: function (message) {
-         if (Meteor.isClient) {
-           alert(message);
-         } else {
-           console.log(message);
-         }
-       }
-    },
-    stores: [
-      new FS.Store.FileSystem("cover"), // , {path: "C:\\workspace\\cinekomuna\\ck_v0.1\\public\\uploads\\"}
-      new FS.Store.FileSystem("cover_min", {
-        beforeWrite: function(fileObj) {
-          // We return an object, which will change the
-          // filename extension and type for this store only.
-          return {
-            extension: 'png',
-            type: 'image/png'
-          };
-        },
-        transformWrite: function(fileObj, readStream, writeStream) {
-            // Transform the image into a 40x40px PNG thumbnail
-            var size = "40";
-            //gm(readStream).autoOrient().resize(size, size + '^').gravity('Center').extent(size, size).stream('PNG').pipe(writeStream);
-          // The new file size will be automatically detected and set for this store
-        }
-      })
-    ]
-});
-
-PersonalCover = new FS.Collection("personalcover", {
-   filter: {
-       maxSize: 5 * 1024 * 1024, //in bytes
-       allow: {
-         contentTypes: ['image/*']
-       },
-       onInvalid: function (message) {
-         if (Meteor.isClient) {
-           alert(message);
-         } else {
-           console.log(message);
-         }
-       }
-    },
-    stores: [
-      new FS.Store.FileSystem("personalcover"), // , {path: "C:\\workspace\\cinekomuna\\ck_v0.1\\public\\uploads\\"}
-      new FS.Store.FileSystem("personalcover_min", {
-        beforeWrite: function(fileObj) {
-          // We return an object, which will change the
-          // filename extension and type for this store only.
-          return {
-            extension: 'png',
-            type: 'image/png'
-          };
-        },
-        transformWrite: function(fileObj, readStream, writeStream) {
-            // Transform the image into a 40x40px PNG thumbnail
-            var size = "100";
-            //gm(readStream).autoOrient().resize(size, size + '^').gravity('Center').extent(size, size).stream('PNG').pipe(writeStream);
-          // The new file size will be automatically detected and set for this store
-        }
-      })
-    ]
-});*/
+  update: function () {
+    return true;
+  }
+});  
