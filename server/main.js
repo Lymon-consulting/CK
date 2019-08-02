@@ -65,7 +65,22 @@ Cloudinary.config({
  
 Meteor.publish("userData", function () {
     return Meteor.users.find({_id: this.userId},
-        {fields: {'role': 1, 'resume':1, 'city':1, 'country':1, 'facebook':1, 'fullname':1, 'instagram':1, 'twitter':1, 'vimeo':1, 'webpage':1, 'youtube':1, 'profilePictureID':1, 'profileCoverID':1}});
+        {fields: {
+          'role': 1, 
+          'resume':1, 
+          'city':1, 
+          'country':1, 
+          'facebook':1, 
+          'fullname':1, 
+          'instagram':1, 
+          'twitter':1, 
+          'vimeo':1, 
+          'webpage':1, 
+          'youtube':1, 
+          'profilePictureID':1, 
+          'profileCoverID':1,
+          'wizard' : 1
+        }});
 });
 
 
@@ -155,7 +170,8 @@ Meteor.publish("otherUsers", function () {
       'instagram':1,
       'follows' : 1,
       'fullname':1,
-      'profilePictureID': 1
+      'profilePictureID': 1,
+      'wizard' : 1
     }
   });
 });

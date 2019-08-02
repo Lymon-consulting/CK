@@ -49,7 +49,9 @@
                 <li><a href="/profilePage/{{currentUser._id}}" onclick="openNav();"><i class="fa fa-search fa-lg">&nbsp;</i>MI PERFIL</a></li>
                 <li><a href="/viewProjects/{{currentUser._id}}" onclick="openNav();"><i class="fa fa-search fa-lg">&nbsp;</i>MIS PROYECTOS</a></li>
                 <li><hr></li>
+                {{#if isVerified}}
                 <li><a href="/editProfile/{{currentUser._id}}" onclick="openNav();"><i class="fa fa-search fa-lg">&nbsp;</i>EDITAR PERFIL</a></li>
+                {{/if}}
             </ul>
          </div>
       </div>

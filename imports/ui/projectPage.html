@@ -10,12 +10,30 @@
            <button type="button" class="btn button_white"><i class="fa fa-trash fa-sm"></i></button>-->
          </div>   
          <br><br>
+<!--
          <div class="btn-group" role="group" aria-label="...">
            <button type="button" class="btn btn-outline-light button_white"><i class="fa fa-pencil fa-sm"></i><a href="/editProject/{{projData._id}}" class="text-button">EDITAR PROYECTO</a></button>
            <button type="button" class="btn button_white" data-toggle="modal" data-target="#collabModal"><i class="fa fa-users fa-sm"></i> <a href="#" class="text-button">COLABORADORES</a></button>
-           <button type="button" class="btn button_white"><i class="fa fa-file fa-sm"></i> <a href="#" class="text-button" id="add_portlet">AGREGAR SECCIÓN</a></button>
-           <!--<button type="button" class="btn button_white" id="sendMail"><i class="fa fa-envelope fa-sm"></i> <a href="#" class="text-button">ENVIAR CORREOS</a></button>-->
+           <button type="button" class="btn button_white"><i class="fa fa-file fa-sm"></i> <a href="#" class="text-button" id="add_portlet">AGREGAR SECCIÓN</a></button>           
          </div> 
+       -->
+         <div class="container text-center">
+         <div class="btn-group" role="group" aria-label="...">
+           <button type="button" class="btn btn-outline-light button_white"><a href="/editProject/{{projData._id}}" class="text-button">EDITAR PROYECTO</a></button>
+           <button type="button" class="btn btn-outline-light button_white"><a href="#" class="text-button">PUBLICAR CAMBIOS</a></button>
+           <button type="button" class="btn button_white"><i class="fa fa-trash fa-sm"></i></button>
+         </div>   
+         <br><br>
+         <div class="btn-group" role="group" aria-label="...">
+           <button type="button" class="btn button_white" data-toggle="modal" data-target="#collabModal"><i class="fa fa-users fa-sm"></i> <a href="#" class="text-button">COLABORADORES</a></button>
+           <button type="button" class="btn button_white" data-toggle="modal" data-target="#imageModal"><i class="fa fa-camera fa-sm"></i> <a href="#" class="text-button" id="#">IMAGEN</a></button>
+           <button type="button" class="btn button_white" data-toggle="modal" data-target="#videoModal"><i class="fa fa-video-camera fa-sm"></i> <a href="#" class="text-button">VIDEO</a></button>
+           <button type="button" class="btn button_white"><i class="fa fa-file-text-o fa-sm"></i> <a href="#" class="text-button" id="add_portlet">TEXTO</a></button>
+           <button type="button" class="btn button_white" data-toggle="modal" data-target="#phraseModal"><i class="fa fa-quote-right fa-sm"></i> <a href="#" class="text-button">FRASE</a></button>
+           <button type="button" class="btn button_white" data-toggle="modal" data-target="#linkModal"><i class="fa fa-link fa-sm"></i> <a href="#" class="text-button">LINK</a></button>
+         </div> 
+      </div>
+
          <div id="windowPortlet" class="hidden fixed">
            <div class="spacer20"></div>
            <label for="titlePortlet" class="text-white">Título de la sección: </label>
@@ -271,6 +289,86 @@
       </div>
       <div class="modal-footer">
         
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal modal-backdrop" tabindex="-1" id="myModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Asistente de Cinekomuna</h5>
+        <button type="button" class="closeModal" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><i class="fa fa-check"></i>&nbsp;Agrega tu primer proyecto haciendo clic en el botón <img class="" src="/images/wizard/addProject.png"></p>
+        <hr>
+        <p><i class="fa fa-check"></i>&nbsp;Posteriormente llena los datos de tu proyecto.</p>
+        <hr>
+        <p><i class="fa fa-check"></i>&nbsp;Una vez que lo hayas creado no olvides editarlo para agregar una foto para destacar tu proyecto.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="hideWizard">No volver a mostrar</button>&nbsp;
+        <button type="button" class="btn btn-secondary closeModal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  {{#if wizard}}
+    <script>
+      $('#myModal').show();
+    </script>
+  {{/if}}
+
+
+<!-- Text Modal -->
+<div class="modal" tabindex="-1" id="textModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="closeModal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        
+      </div>
+      <div class="modal-body">
+         <div class="row">
+            <div class="col">
+               <h4 class="modal-title">TEXTO</h4>          
+            </div>
+            <div class="col text-no-wrap">
+               <button type="button" class="btn btn-gray" data-dismiss="modal">Guardar</button>
+               <button type="button" class="btn btn-gray closeModal" data-dismiss="modal">Cancelar</button>      
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <hr>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <div class="input-group">
+                  <input type="text" class="form-control" id="titlePortlet" placeholder="Título">
+                  <span class="input-group-addon"><i class="fa fa-sm fa-check"></i></span>
+               </div>
+            </div>
+         </div>
+         <div class="spacer40"></div>
+         <div class="row">
+            <div class="col-md-10 border-exterior mx-auto" style="padding: 10px;">
+               <textarea class="form-control" rows="5" id="comment"></textarea>
+
+            </div>
+         </div>
+      </div>
+      <div class="modal-footer text-center">
+         Quedan 119 caracteres
 
       </div>
     </div>

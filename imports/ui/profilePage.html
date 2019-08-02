@@ -16,7 +16,9 @@
             <h1 class="h1-title">{{getProfile.profile.name}} {{getProfile.profile.lastname}} {{getProfile.profile.lastname2}}
             {{#if notSameUser}}
             {{else}}
-            <button class="btn btn-purple"><a href="/editProfile/{{getProfile._id}}">EDITAR PERFIL</a></button>
+               {{#if isVerified}}
+                  <button class="btn btn-purple"><a href="/editProfile/{{getProfile._id}}">EDITAR PERFIL</a></button>
+               {{/if}}
             {{/if}}
             </h1>
          </div>
@@ -58,7 +60,9 @@
                                  {{#if notSameUser getProfile._id}}
                                     {{#if showButtonFollow getProfile._id}}
                                     <input type="hidden" id="thisUser" value="{{getProfile._id}}">
+                                    {{#if isVerified}}
                                     <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
+                                    {{/if}}
                                     {{else}}
                                     <button class="btn button-follow disabled"> <i class="fa fa-plus-circle fa-sm"></i> SIGUIENDO</button>
                                     {{/if}}      

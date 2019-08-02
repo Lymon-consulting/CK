@@ -12,14 +12,30 @@ if (Meteor.isClient) {
    Meteor.subscribe("getCountries");
    Meteor.subscribe("userData");
 
+/*
+Template.userPage.rendered = function(){
+  
+  //if(Meteor.user()){
+    let wizard = Meteor.user().wizard;
+    if(wizard){
+      $('#myModal').show();
+    }
+  //}
+
+};*/
 
 
 
    Template.userPage.helpers({
     
      userFullName(){
+      var fullname = "";
        if (Meteor.user()){
-         return Meteor.user().profile.name + " " + Meteor.user().profile.lastname + " " +Meteor.user().profile.lastname2;
+         fullname = Meteor.user().profile.name + " " + Meteor.user().profile.lastname; 
+         if(Meteor.user().profile.lastname2!=null){
+           fullname = fullname + " " +Meteor.user().profile.lastname2;
+         }
+         return fullname;
        }
        else{
          return "Nada";
@@ -93,6 +109,9 @@ if (Meteor.isClient) {
             return Meteor.user().instagram;
          }
       },
+     wizard(){
+       return Meteor.user().wizard;
+     },
       roleSelected: function(value){
         var result="";
         var prole = Meteor.user().role;
@@ -303,7 +322,19 @@ if (Meteor.isClient) {
             public_id
             );
          }
-      },/*
+      },
+      'click .closeModal ': function (event){
+        event.preventDefault();
+        $('#myModal').hide();
+      },
+      'click #hideWizard' : function(event){
+        event.preventDefault();
+        
+        Meteor.call('hideWizard');
+
+        $('#myModal').hide();
+      },
+      /*
       'change .your-upload-class': function (event, template) {
          console.log("uploading...")
          FS.Utility.eachFile(event, function (file) {

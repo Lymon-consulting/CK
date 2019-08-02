@@ -112,8 +112,12 @@
                                                 {{#if notSameUser this.__originalId}}
                                                    {{#if showButtonFollow this.__originalId}}
                                                    <input type="hidden" id="thisUser" value="{{this.__originalId}}">
+                                                   {{#if isVerified}}
+
                                                    <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
+                                                   {{/if}}
                                                    {{else}}
+                                                   
                                                    <button class="btn button-follow disabled"> <i class="fa fa-plus-circle fa-sm"></i> SIGUIENDO</button>
                                                    {{/if}}      
                                                 {{/if}}

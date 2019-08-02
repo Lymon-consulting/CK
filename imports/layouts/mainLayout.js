@@ -4,9 +4,11 @@ import './mainLayout.html';
 Template.mainlayout.helpers({
   currentUser: function() {
     return Meteor.userId();
-  },
-  isVerified(){
-    let result = false;
+  }
+});
+
+Template.registerHelper('isVerified', function(){
+  let result = false;
     user = Meteor.user();
     
     
@@ -14,9 +16,8 @@ Template.mainlayout.helpers({
       result = true;
     }
     return result;
-  }
-
 });
+
 
 Template.registerHelper('firstName', function(){
    return Meteor.user().profile.name;

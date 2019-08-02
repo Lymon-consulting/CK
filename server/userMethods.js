@@ -13,6 +13,14 @@ Meteor.methods({
     if ( userId!=null ) {
       return Accounts.sendResetPasswordEmail( userId );
     }
+  },
+  hideWizard(){
+  	Meteor.users.update({'_id': Meteor.userId()}, {
+			$set:
+				{
+					"wizard": false
+				}
+		});
   }
 });
 

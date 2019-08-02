@@ -270,6 +270,41 @@
       </form>
 
 
+<div class="modal modal-backdrop" tabindex="-1" id="myModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Asistente de Cinekomuna</h5>
+        <button type="button" class="closeModal" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><i class="fa fa-check"></i>&nbsp;Para comenzar llena los datos de tu perfil, así las personas podrán encontrarte.</p>
+        <hr>
+        <p><i class="fa fa-check"></i>&nbsp;Al final del formulario encontrarás un botón para añadir tu foto de perfil y tu foto de portada.</p>
+        <div class="clearfix">
+          <img class="float-left mw-50" src="/images/wizard/addProfilePicture.png">
+        </div>
+        <hr>
+        <p><i class="fa fa-check"></i>&nbsp;Siempre podrás regresar a esta pantalla desde el menú principal.</p>
+        <div class="clearfix">
+          <img class="float-left mw-50" src="/images/wizard/editProfileMenu.png">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="hideWizard">No volver a mostrar</button>&nbsp;
+        <button type="button" class="btn btn-secondary closeModal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  {{#if wizard}}
+    <script>
+      $('#myModal').show();
+    </script>
+  {{/if}}
 
 </template> 
 
