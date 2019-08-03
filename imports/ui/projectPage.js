@@ -11,6 +11,7 @@ if (Meteor.isClient) {
    Meteor.subscribe('otherUsers');
    Meteor.subscribe("images");
    Meteor.subscribe("myPortlets");
+   Meteor.subscribe("userData");
 
    Template.editor.rendered = function() {
      CKEDITOR.config.dialog_startupFocusTab = true;
@@ -101,8 +102,13 @@ if (Meteor.isClient) {
          return result;
       },
       wizard(){
-        Meteor.subscribe("userData");
-       return Meteor.user().wizard;
+        var wizard = false;
+        if(Meteor.user()){
+          if(Meteor.user().wizard){
+            wizard = Meteor.user().wizard;
+          }
+       }
+       return wizard;
      },
       getPortlets(){
         return Portlet.find({'projectID': FlowRouter.getParam('id')}, {
@@ -161,6 +167,21 @@ if (Meteor.isClient) {
           initials = name.charAt(0) + lastname.charAt(0);  
         }
         return initials;
+      },
+      commentCount(){
+        var idPortlet = $("#idPortlet").val();
+        var portlet = Portlet.findOne({'_id': idPortlet});
+        if(portlet){
+          var rest = portlet.content;
+          var result = 0;
+          if(rest!=null && rest.length!=null){
+            result = (450 - rest.length);
+          }
+          return result;
+         }
+         else{
+          return 450;
+         }
       }
 
    });
@@ -216,7 +237,13 @@ if (Meteor.isClient) {
          );
          
          //$("#pushLike").attr("disabled", true);
-      },
+      }, /*$('#comment').on('keyup', function(event) {
+           var len = $(this).val().length;
+           if (len >= 40) {
+              $(this).val($(this).val().substring(0, len-1));
+           }
+        });*/
+      
       'dragover #drop-zone'(e, t) {
         e.preventDefault();
       },
@@ -228,6 +255,17 @@ if (Meteor.isClient) {
         console.log("drop");
         var id = e.dataTransfer.getData("data-id");
         console.log(id);
+      },
+      'keyup #comment' : function(event){
+         event.preventDefault();
+         
+         var len = $('#comment').val().length;
+         if(len > 450){
+            val.value= val.value.substring(0,450);
+         }
+         else{
+            $('#max').text(450-len);
+         }
       },
       'click #add_collaborator' : function(e, template, doc){
           e.preventDefault();
@@ -443,17 +481,23 @@ if (Meteor.isClient) {
             console.log("Dentro de la fucnión");
             $('#titlePortlet').val("");
             $('#comment').val("");
+            $('#idPortlet').val("");
+            $('#modePortlet').val("add");
             $('#textModal').show();           
         },
         'click #savePortlet' : function(e, template, doc){
           e.preventDefault();
           /*
           var data = CKEDITOR.instances.content.getData();
-          var title = $( "#titlePortlet").val();
+          var title = $( "#titlePortlet").val();*/
           var mode = $( "#modePortlet").val();
-          var id = $( "#idPortlet").val();*/
+          var id = $( "#idPortlet").val();
           var title = $( "#titlePortlet").val();
-          var data = $('#msg').val();
+          var data = $('#comment').val();
+          var type = $('#type').val();
+
+
+          console.log("Va a guardar: title=" + title+", msg="+msg+", mode="+mode+", type=" + type + ", id="+id);
 
           if(title === ""){
             Bert.alert({message: 'El título de la sección no puede estar vacío', type: 'error'});
@@ -476,11 +520,12 @@ if (Meteor.isClient) {
                  'insertPortlet',
                  FlowRouter.getParam('id'),
                  title,
-                 data
+                 data,
+                 type
               );
             }
              
-             $('#windowPortlet').toggle(); 
+             $('#textModal').hide();
             }
         },
         'click #edit_portlet' : function(e, template, doc){
@@ -496,8 +541,14 @@ if (Meteor.isClient) {
           $('#titlePortlet').val(portlet.title);
           $('#modePortlet').val(mode);
           $('#idPortlet').val(id);
-          CKEDITOR.instances.content.setData(portlet.content);
-          $('#windowPortlet').toggle(); 
+          $('#comment').val(portlet.content);
+          //CKEDITOR.instances.content.setData(portlet.content);
+
+          var type = portlet.type;
+          if(type==='text'){
+            $('#textModal').show();     
+          }
+          //$('#windowPortlet').toggle(); 
           window.scrollTo(0, 0);
         },
       'click .closeModal ': function (event){

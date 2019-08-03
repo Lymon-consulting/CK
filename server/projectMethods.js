@@ -101,7 +101,7 @@ Meteor.methods({
       { $pull: { project_staff: collaborator }
    });
   },
-  insertPortlet(projectID, portletTitle, portletContent){
+  insertPortlet(projectID, portletTitle, portletContent, portletType){
     /*
    var date = new Date()
    var newID = moment(date).format("x"); 
@@ -121,6 +121,7 @@ Meteor.methods({
             "projectID": projectID,
             "title": portletTitle,
             "content": portletContent,
+            "type" : portletType,
             "order": "100" 
          });
   },

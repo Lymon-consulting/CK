@@ -34,6 +34,7 @@
          </div> 
       </div>
 
+         <!--
          <div id="windowPortlet" class="hidden fixed">
            <div class="spacer20"></div>
            <label for="titlePortlet" class="text-white">Título de la sección: </label>
@@ -43,7 +44,7 @@
            {{>editor}}
            <button type="button" class="btn button_white" id="savePortlet"><i class="fa fa-save fa-sm"></i> <a href="#" class="text-button">Guardar</a></button>
            
-         </div>   
+         </div>   -->
       </div>
       {{/if}}
       <section>
@@ -342,8 +343,9 @@
                <h4 class="modal-title">TEXTO</h4>          
             </div>
             <div class="col text-no-wrap">
-               <button type="button" class="btn btn-gray" data-dismiss="modal">Guardar</button>
-               <button type="button" class="btn btn-gray closeModal" data-dismiss="modal">Cancelar</button>      
+               <!--<button type="button" class="btn btn-gray" data-dismiss="modal">Guardar</button>-->
+               <button type="button" class="btn btn-gray" id="savePortlet"><i class="fa fa-save fa-sm"></i> <a href="#" class="text-button">Guardar</a></button>
+               <button type="button" class="btn btn-gray closeModal" data-dismiss="modal">Cancelar</button>    
             </div>
          </div>
          <div class="row">
@@ -362,14 +364,15 @@
          <div class="spacer40"></div>
          <div class="row">
             <div class="col-md-10 border-exterior mx-auto" style="padding: 10px;">
-               <textarea class="form-control" rows="5" id="comment"></textarea>
-
+               <textarea class="form-control" rows="5" id="comment" maxlength="450"></textarea>
+               <input type="hidden" id="modePortlet" value="add">
+               <input type="hidden" id="idPortlet">
+               <input type="hidden" id="type" value="text">
             </div>
          </div>
       </div>
       <div class="modal-footer text-center">
-         Quedan 119 caracteres
-
+         Quedan &nbsp;<div id="max">{{commentCount}}</div>&nbsp; caracteres
       </div>
     </div>
   </div>

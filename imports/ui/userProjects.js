@@ -11,8 +11,14 @@ if (Meteor.isClient) {
 
    Template.userProjects.helpers({
      userFullName(){
+       var fullname = "";
        if (Meteor.user()){
-         return Meteor.user().profile.name + " " + Meteor.user().profile.lastname + " " +Meteor.user().profile.lastname2;
+         fullname = Meteor.user().profile.name + " " + Meteor.user().profile.lastname;
+         if(Meteor.user().profile.lastname2!=null){
+            fullname = fullname + Meteor.user().profile.lastname2;
+         }
+         return fullname;
+
        }
        else{
          return "Nada";
