@@ -25,12 +25,4 @@ Accounts.onCreateUser(function(options, user) {
    //throw new Meteor.Error('500', 'Proporcione un email válido');
 });
 
-/*
-Accounts.onEmailVerificationLink(function (token, done) {
-  Accounts.verifyEmail(token, function (error) {
-    if (error) {
-      console.log(error);
-    }
-    done();
-  });
-});*/
+

@@ -104,9 +104,12 @@ Template.projList.events({
       $("#searchBox").trigger(e);
 
    },
-   'click #tipoPersona': function(event,template){
+   'change #tipoPersona': function(event,template){
       event.preventDefault();
-      FlowRouter.go('/peopleList');
+      var newValue = $(event.target).val();
+      if(newValue==="Personas"){
+        FlowRouter.go('/peopleList');
+      }
    },
    'change #type': function (e) {
       if($(e.target).val()!="cualquier"){

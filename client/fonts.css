@@ -1,0 +1,174 @@
+@font-face {
+ font-family: "Avenir-Black";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/Avenir-Black.ttf") format("truetype") , url("/fonts/Avenir-Black.eot");
+}
+
+@font-face {
+ font-family: "Avenir-BlackOblique";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/Avenir-BlackOblique.ttf") format("truetype") , url("/fonts/Avenir-BlackOblique.eot");
+}
+
+@font-face {
+ font-family: "Avenir-Book";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/Avenir-Book.ttf") format("truetype") , url("/fonts/Avenir-Book.eot");
+}
+
+@font-face {
+ font-family: "Avenir-BookOblique";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/Avenir-BookOblique.ttf") format("truetype") , url("/fonts/Avenir-BookOblique.eot");
+}
+
+@font-face {
+ font-family: "Avenir-Heavy";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/Avenir-Heavy.ttf") format("truetype") , url("/fonts/Avenir-Heavy.eot");
+}
+
+@font-face {
+ font-family: "Avenir-HeavyOblique";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/Avenir-HeavyOblique.ttf") format("truetype") , url("/fonts/Avenir-HeavyOblique.eot");
+}
+
+@font-face {
+ font-family: "Avenir-Light";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/Avenir-Light.ttf") format("truetype") , url("/fonts/Avenir-Light.eot");
+}
+
+@font-face {
+ font-family: "Avenir-LightOblique";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/Avenir-LightOblique.ttf") format("truetype") , url("/fonts/Avenir-LightOblique.eot");
+}
+
+@font-face {
+ font-family: "Avenir-Medium";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/Avenir-Medium.ttf") format("truetype") , url("/fonts/Avenir-Medium.eot");
+}
+
+@font-face {
+ font-family: "Avenir-MediumOblique";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/Avenir-MediumOblique.ttf") format("truetype") , url("/fonts/Avenir-MediumOblique.eot");
+}
+
+@font-face {
+ font-family: "AvenirNext-Bold";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/AvenirNext-Bold.ttf") format("truetype") , url("/fonts/AvenirNext-Bold.eot");
+}
+
+@font-face {
+ font-family: "AvenirNext-BoldItalic";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/AvenirNext-BoldItalic.ttf") format("truetype") , url("/fonts/AvenirNext-BoldItalic.eot");
+}
+
+@font-face {
+ font-family: "AvenirNext-DemiBold";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/AvenirNext-DemiBold.ttf") format("truetype") , url("/fonts/AvenirNext-DemiBold.eot");
+}
+
+@font-face {
+ font-family: "AvenirNext-DemiBoldItalic";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/AvenirNext-DemiBoldItalic.ttf") format("truetype") , url("/fonts/AvenirNext-DemiBoldItalic.eot");
+}
+
+@font-face {
+ font-family: "AvenirNext-Heavy";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/AvenirNext-Heavy.ttf") format("truetype") , url("/fonts/AvenirNext-Heavy.eot");
+}
+
+@font-face {
+ font-family: "AvenirNext-HeavyItalic";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/AvenirNext-HeavyItalic.ttf") format("truetype") , url("/fonts/AvenirNext-HeavyItalic.eot");
+}
+
+@font-face {
+ font-family: "AvenirNext-Italic";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/AvenirNext-Italic.ttf") format("truetype") , url("/fonts/AvenirNext-Italic.eot");
+}
+
+@font-face {
+ font-family: "AvenirNext-Medium";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/AvenirNext-Medium.ttf") format("truetype") , url("/fonts/AvenirNext-Medium.eot");
+}
+
+@font-face {
+ font-family: "AvenirNext-MediumItalic";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/AvenirNext-MediumItalic.ttf") format("truetype") , url("/fonts/AvenirNext-MediumItalic.eot");
+}
+
+@font-face {
+ font-family: "AvenirNext-Regular";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/AvenirNext-Regular.ttf") format("truetype") , url("/fonts/AvenirNext-Regular.eot");
+}
+
+@font-face {
+ font-family: "AvenirNext-UltraLight";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/AvenirNext-UltraLight.ttf") format("truetype") , url("/fonts/AvenirNext-UltraLight.eot");
+}
+
+@font-face {
+ font-family: "AvenirNext-UltraLightItalic";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/AvenirNext-UltraLightItalic.ttf") format("truetype") , url("/fonts/AvenirNext-UltraLightItalic.eot");
+}
+
+@font-face {
+ font-family: "Avenir-Oblique";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/Avenir-Oblique.ttf") format("truetype") , url("/fonts/Avenir-Oblique.eot");
+}
+
+@font-face {
+ font-family: "Avenir-Roman";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/Avenir-Roman.ttf") format("truetype") , url("/fonts/Avenir-Roman.eot");
+}
+
+@font-face {
+ font-family: "Bembo";
+ font-style: normal;
+ font-weight: normal;
+ src: url("/fonts/Bembo.ttf") format("truetype") , url("/fonts/Bembo.eot");
+}

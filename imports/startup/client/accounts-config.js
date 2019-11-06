@@ -1,5 +1,7 @@
 import { Accounts } from 'meteor/accounts-base';
 
+
+
 /*
 Accounts.ui.config({
   passwordSignupFields: 'EMAIL_ONLY', //Soporta USERNAME_AND_EMAIL, USERNAME_AND_OPTIONAL_EMAIL, USERNAME_ONLY y EMAIL_ONLY

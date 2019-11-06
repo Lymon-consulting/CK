@@ -49,7 +49,8 @@ Template.profilePage.helpers({
    },*/
    getProjects(){
       Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
-      return Project.find({$and : [ {'userId' : FlowRouter.getParam('id')} , {"project_is_main": '' }]});
+      //return Project.find({$and : [ {'userId' : FlowRouter.getParam('id')} , {"project_is_main": '' }]});
+      return Project.find({'userId' : FlowRouter.getParam('id')});
    },
    getMainProject(){
       Meteor.subscribe("myMainProject", FlowRouter.getParam('id'));

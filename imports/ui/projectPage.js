@@ -13,15 +13,6 @@ if (Meteor.isClient) {
    Meteor.subscribe("myPortlets");
    Meteor.subscribe("userData");
 
-   Template.editor.rendered = function() {
-     CKEDITOR.config.dialog_startupFocusTab = true;
-     CKEDITOR.config.baseFloatZIndex = 9000;
-     CKEDITOR.replace( 'content', {
-       language: 'es',
-       uiColor: '#CCCCCC'
-     });
-  }
-
   Template.items.rendered = function() {
     this.$('#items').sortable({
         stop: function(e, ui) {
@@ -59,6 +50,14 @@ if (Meteor.isClient) {
    Template.projectPage.helpers({
       projData(){
          return Project.findOne({'_id': FlowRouter.getParam('id')});
+      },
+      getProjectPicture(size) {
+          var url = "";
+          var data = Project.findOne({'_id' : FlowRouter.getParam('id')});
+          if(data!=null && data.projectPictureID!=null){
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_limit/" + data.projectPictureID;
+          }
+         return url;
       },
       isOwner(){
         project = Project.findOne({'_id': FlowRouter.getParam('id')});
@@ -168,7 +167,7 @@ if (Meteor.isClient) {
         }
         return initials;
       },
-      commentCount(){
+      contentCount(){
         var idPortlet = $("#idPortlet").val();
         var portlet = Portlet.findOne({'_id': idPortlet});
         if(portlet){
@@ -182,6 +181,18 @@ if (Meteor.isClient) {
          else{
           return 450;
          }
+      },
+      showCounter(){
+        if(Session.get("modalType")!= null && Session.get("modalType")==="text"){
+          return true;
+        }
+        else{
+          return false;
+        }
+
+      },
+      modalType(){
+        return Session.get("modalType");
       }
 
    });
@@ -214,6 +225,49 @@ if (Meteor.isClient) {
            val = false;
         }
         return val;
+      },
+      isText(type){
+        if(type==="text"){
+          return true;
+        }
+        else{
+          return false;
+        }
+      },
+      isImage(type){
+        if(type==="image"){
+          return true;
+        }
+        else{
+          return false;
+        }
+      },
+      isVideo(type){
+        if(type==="video"){
+          return true;
+        }
+        else{
+          return false;
+        }
+      },
+      isQuote(type){
+        if(type==="quote"){
+          return true;
+        }
+        else{
+          return false;
+        }
+      },
+      isLink(type){
+        if(type==="link"){
+          return true;
+        }
+        else{
+          return false;
+        }
+      },
+      cloudURL(){
+        return Meteor.settings.public.CLOUDINARY_RES_URL + "/";
       }
    });
 
@@ -256,15 +310,48 @@ if (Meteor.isClient) {
         var id = e.dataTransfer.getData("data-id");
         console.log(id);
       },
-      'keyup #comment' : function(event){
+      'keyup #content' : function(event){
          event.preventDefault();
          
-         var len = $('#comment').val().length;
+         var len = $('#content').val().length;
          if(len > 450){
             val.value= val.value.substring(0,450);
          }
          else{
             $('#max').text(450-len);
+         }
+      },
+      'keyup #descImg' : function(event){
+         event.preventDefault();
+         
+         var len = $('#descImg').val().length;
+         if(len > 450){
+            val.value= val.value.substring(0,450);
+         }
+         else{
+            $('#maxImg').text(450-len);
+         }
+      },
+      'keyup #descVid' : function(event){
+         event.preventDefault();
+         
+         var len = $('#descVid').val().length;
+         if(len > 450){
+            val.value= val.value.substring(0,450);
+         }
+         else{
+            $('#maxVid').text(450-len);
+         }
+      },
+      'keyup #quote' : function(event){
+         event.preventDefault();
+         
+         var len = $('#quote').val().length;
+         if(len > 450){
+            val.value= val.value.substring(0,450);
+         }
+         else{
+            $('#maxQuote').text(450-len);
          }
       },
       'click #add_collaborator' : function(e, template, doc){
@@ -471,39 +558,151 @@ if (Meteor.isClient) {
             $('#collabModal').modal('toggle');
             $('#inviteByMail').modal('show');
         }, 
-        'click #add_portlet': function(event,template,doc){
-            /*
-            $('#idPortlet').val("");
-            $('#titlePortlet').val("");
-            CKEDITOR.instances.content.setData("");
-            $('#modePortlet').val("add");
-            $('#windowPortlet').toggle(); */
-            console.log("Dentro de la fucnión");
-            $('#titlePortlet').val("");
-            $('#comment').val("");
-            $('#idPortlet').val("");
-            $('#modePortlet').val("add");
-            $('#textModal').show();           
+        'click .clear_portlet': function(event,template,doc){
+            var type = $(event.target).attr('data-type');
+            Session.set("showCounter",null);
+            //console.log(type);
+            $('#title').val("");
+            $('#content').val("");
+            $('#type').val(type);
+            $('#author').val("");
+            $('#url').val("");
+            
+            if(type==="text"){
+              $('#modePortlet').val("add");
+              $('#modalPortletText').show();  
+            }
+            else if(type==="image"){
+              $('#modePortletImg').val("add");
+              $('#imageModal').show();   
+            }
+            else if(type==="video"){
+              $('#modePortletVid').val("add");
+              $('#videoModal').show();   
+            }
+            else if(type==="quote"){
+              $('#modePortletQuote').val("add");
+              $('#quoteModal').show();  
+            }
+            else if(type==="link"){
+              $('#modePortletLink').val("add");
+              $('#linkModal').show();  
+            }
         },
-        'click #savePortlet' : function(e, template, doc){
+        'click #edit_portlet' : function(e, template, doc){
           e.preventDefault();
-          /*
-          var data = CKEDITOR.instances.content.getData();
-          var title = $( "#titlePortlet").val();*/
-          var mode = $( "#modePortlet").val();
-          var id = $( "#idPortlet").val();
-          var title = $( "#titlePortlet").val();
-          var data = $('#comment').val();
-          var type = $('#type').val();
+          
+          var id = $(e.target).attr('data-id');
+          var mode = $(e.target).attr('mode');
+          var portlet = Portlet.findOne({"_id":id});
+          var type = portlet.type;
+          var title = portlet.title;
+          var url = portlet.url;
 
+          if(type==='text'){
+            Session.set("modalType","text");
+            $('#modePortlet').val(mode);
+            $('#idPortlet').val(id);
+            $('#title').val(portlet.title);
+            $('#content').val(portlet.content);
+            $('#modalPortletText').show();
+            window.scrollTo(0, 0);
+          }
+          else if(type==='image'){
+            Session.set("modalType","image");
+            $('#modePortletImg').val(mode);
+            $('#idPortletImg').val(id);
+            $('#titleImg').val(portlet.title);
+            $('#descImg').val(portlet.content);
+            $('#maxImg').text(450-portlet.content.length);
+            $('#urlImg').val(portlet.url);
+            $('#imageModal').show();
+            window.scrollTo(0, 0);
+          }
+          else if(type==='video'){
+            Session.set("modalType","video");
+            $('#modePortletVid').val(mode);
+            $('#idPortletVid').val(id);
+            $('#titleVid').val(portlet.title);
+            $('#urlVid').val(portlet.url);
+            $('#descVid').val(portlet.content);
+            $('#maxVid').text(450-portlet.content.length);
+            $('#videoModal').show();
+            window.scrollTo(0, 0);
+          }
+          else if(type==='quote'){
+            Session.set("modalType","quote");
+            $('#modePortletQuote').val(mode);
+            $('#idPortletQuote').val(id);
+            /*$('#titleQuote').val(portlet.title);*/
+            $('#quote').val(portlet.content);
+            $('#maxQuote').text(450-portlet.content.length);
+            $('#quoteModal').show();
+            window.scrollTo(0, 0);
+          }
+          else if(type==='link'){
+            Session.set("modalType","link");
+            $('#modePortletLink').val(mode);
+            $('#idPortletLink').val(id);
+            /*$('#titleVid').val(portlet.title);*/
+            $('#urlLink').val(portlet.url);
+            $('#contentLink').val(portlet.content);
+            $('#linkModal').show();
+            window.scrollTo(0, 0);
+          }
+          
+          
+        },/*
+        'click .add_portlet': function(event,template,doc){
+            
+            var type = $(event.target).attr('data-type');
 
-          console.log("Va a guardar: title=" + title+", msg="+msg+", mode="+mode+", type=" + type + ", id="+id);
+            Session.set("showCounter",null);
+            
+            console.log(type);
+            
+            $('#titlePortlet').val("");
+            $('#content').val("");
+            $('#idPortlet').val("");
+            $('#modePortlet').val("add");
+            if(type==="text"){
+              Session.set("modalType","text");
+              $("#modalTitle").text("TEXTO");
+            }
+            else if (type==="image"){
+              Session.set("modalType","image");
+              $("#modalTitle").text("IMAGEN");
+              
+            }
+            $('#textModal').show();
+        },*/
+        'click #saveTextPortlet' : function(e, template, doc){
+          e.preventDefault();
+          
+          var mode = $( "#modePortlet").val(); //add o edit para agregar o modificar
+          var id = $( "#idPortlet").val(); //solo cuando es edición
+          var type = "text"; //text, image, video, quote, link
+          var title = $("#title").val();
+          var content = $('#content').val();
+          var author = $('#author').val();//only used for quote type
+          var url = $('#url').val();//image, video and link
+
+          /*console.log("Va a guardar: title=" + title+
+            ", mode="+mode+
+            ", type=" + type + 
+            ", title="+title+ 
+            ", content="+content+
+            ", author="+author+
+            ", url="+url);*/
 
           if(title === ""){
-            Bert.alert({message: 'El título de la sección no puede estar vacío', type: 'error'});
+            Bert.alert({message: 'El título no puede estar vacío', type: 'danger', icon: 'fa fa-exclamation'});
           }
-          else if(data===""){
-            Bert.alert({message: 'El contenido de la sección no puede estar vacío', type: 'error'});
+          else if(type="text" && content===""){
+            Bert.alert({message: 'El contenido no puede estar vacío', type: 'danger', icon: 'fa fa-exclamation'});
+          }
+          else if(type="video" && url===""){
+            Bert.alert({message: 'La URL no puede estar vacía', type: 'danger', icon: 'fa fa-exclamation'});
           }
           else{
             if(mode==="edit"){
@@ -511,7 +710,9 @@ if (Meteor.isClient) {
                  'updatePortlet',
                  id,
                  title,
-                 data
+                 content,
+                 author,
+                 url
               );
               $( "#modePortlet").val("add");
             }
@@ -519,42 +720,282 @@ if (Meteor.isClient) {
               Meteor.call(
                  'insertPortlet',
                  FlowRouter.getParam('id'),
+                 type,
                  title,
-                 data,
-                 type
+                 content,
+                 author,
+                 url
               );
-            }
-             
-             $('#textModal').hide();
-            }
-        },
-        'click #edit_portlet' : function(e, template, doc){
+          }
+          $('#modalPortletText').hide();
+        }
+      },
+      'click #saveImagePortlet' : function(e, template, doc){
           e.preventDefault();
           
-          var id = $(e.target).attr('data-id');
-          //var title = $(e.target).attr('data-title');
-          //var content = $(e.target).attr('data-content');
-          var mode = $(e.target).attr('mode');
+          var mode = $( "#modePortletImg").val(); //add o edit para agregar o modificar
+          var id = $( "#idPortletImg").val(); //solo cuando es edición
+          var type = "image";
+          var title = $("#titleImg").val();
+          var url = $("#urlImg").val();//contiene el public_id de Cloudinary
+          var content = $("#descImg").val();//contiene la descripción de la imagen
+          var porID = null;
+          /*
+          console.log("Va a guardar: title=" + title+
+            ", mode="+mode+
+            ", type=" + type + 
+            ", title="+title+ 
+            ", content="+content+
+            ", author="+author+
+            ", url="+url);*/
 
-          var portlet = Portlet.findOne({"_id":id});
-
-          $('#titlePortlet').val(portlet.title);
-          $('#modePortlet').val(mode);
-          $('#idPortlet').val(id);
-          $('#comment').val(portlet.content);
-          //CKEDITOR.instances.content.setData(portlet.content);
-
-          var type = portlet.type;
-          if(type==='text'){
-            $('#textModal').show();     
+          if(title === ""){
+            Bert.alert({message: 'El título no puede estar vacío', type: 'danger', icon: 'fa fa-exclamation'});
           }
-          //$('#windowPortlet').toggle(); 
-          window.scrollTo(0, 0);
+          else{
+            if(mode==="edit"){
+              Meteor.call(
+                 'updatePortlet',
+                 id,
+                 title,
+                 content,
+                 null,
+                 null, 
+                 function(error, result){
+                    if(!error){
+                      $.cloudinary.config({
+                        cloud_name:"drhowtsxb"
+                      });
+
+                      var options = {
+                        folder: Meteor.userId()
+                      };
+                      Cloudinary.delete(content, function(err,res){
+                         console.log(result);
+                      });
+                      var file = document.getElementById('portlet-img-upload').files[0];
+
+                      Cloudinary.upload(file, options, function(err,res){
+                        if(!err){
+                          Meteor.call(
+                             'savePortletPictureID',
+                             id,
+                             res.public_id,
+                          );
+                        }
+                        else{
+                          console.log("Upload Error:"  + err); //no output on console
+                        }
+                      });
+                    }
+                 }
+              );
+              
+              
+            }
+            else if(mode==="add"){
+              Meteor.call(
+                 'insertPortlet',
+                 FlowRouter.getParam('id'),
+                 type,
+                 title,
+                 content,
+                 null,
+                 null, function(error, result){
+                   if(!error){
+                      $.cloudinary.config({
+                        cloud_name:"drhowtsxb"
+                      });
+
+                      var options = {
+                        folder: Meteor.userId()
+                      };
+
+                      var file = document.getElementById('portlet-img-upload').files[0];
+
+                      Cloudinary.upload(file, options, function(err,res){
+                        if(!err){
+                          Meteor.call(
+                             'savePortletPictureID',
+                             result,
+                             res.public_id,
+                          );
+                        }
+                        else{
+                          console.log("Upload Error:"  + err); //no output on console
+                        }
+                      });
+                   }
+                 }
+              );
+            }
+            //$('#modalPortletImage').hide();
+            //$("#imageModal").hide();
+            $('#imageModal').hide();
+          }
         },
+        'click #saveVideoPortlet' : function(e, template, doc){
+          e.preventDefault();
+          
+          var mode = $( "#modePortletVid").val(); //add o edit para agregar o modificar
+          var id = $( "#idPortletVid").val(); //solo cuando es edición
+          var type = "video"; //text, image, video, quote, link
+          var title = $("#titleVid").val();
+          var content = $('#descVid').val();
+          var author = $('#authorVid').val();//only used for quote type
+          var url = $('#urlVid').val();//only used for image, video and link type
+          
+          if(url.indexOf("youtube.com/watch?v=")>1){/*Parseo de la URL para extraer el ID del video en youtube*/
+            var youtubeVideoID = url.substring(url.indexOf("?v=")+3, url.length);
+            url = "https://www.youtube.com/embed/" + youtubeVideoID;
+          }
+          else if(url.indexOf("//vimeo.com")>1){/*Parseo de la URL para extraer el ID del video en vimeo*/
+            var vimeoVideoID = url.substring(url.indexOf(".com/")+5, url.length);
+            url = "https://player.vimeo.com/video/" + vimeoVideoID+"?portrait=0";
+          }
+
+          if(title === ""){
+            Bert.alert({message: 'El título no puede estar vacío', type: 'danger', icon: 'fa fa-exclamation'});
+          }
+          else if(url===""){
+            Bert.alert({message: 'La URL no puede estar vacía', type: 'danger', icon: 'fa fa-exclamation'});
+          }
+          else{
+            if(mode==="edit"){
+              Meteor.call(
+                 'updatePortlet',
+                 id,
+                 title,
+                 content,
+                 author,
+                 url
+              );
+              $( "#modePortletVid").val("add");
+            }
+            else if(mode==="add"){
+              Meteor.call(
+                 'insertPortlet',
+                 FlowRouter.getParam('id'),
+                 type,
+                 title,
+                 content,
+                 author,
+                 url
+              );
+          }
+          $('#videoModal').hide();
+        }
+      },
+        'click #saveQuotePortlet' : function(e, template, doc){
+          e.preventDefault();
+          
+          var mode = $( "#modePortletQuote").val(); //add o edit para agregar o modificar
+          var id = $( "#idPortletQuote").val(); //solo cuando es edición
+          var type = "quote"; //text, image, video, quote, link
+          var title = null; // $("#titleQuote").val();
+          var content = $('#quote').val();
+          var author = $('#authorQuote').val();//only used for quote type
+          /*
+          if(title === ""){
+            Bert.alert({message: 'El título no puede estar vacío', type: 'danger', icon: 'fa fa-exclamation'});
+          }*/
+          if(content===""){
+            Bert.alert({message: 'La Frase no puede estar vacía', type: 'danger', icon: 'fa fa-exclamation'});
+          }
+          else{
+            if(mode==="edit"){
+              Meteor.call(
+                 'updatePortlet',
+                 id,
+                 title,
+                 content,
+                 author,
+                 null
+              );
+              $( "#modePortletQuote").val("add");
+            }
+            else if(mode==="add"){
+              Meteor.call(
+                 'insertPortlet',
+                 FlowRouter.getParam('id'),
+                 type,
+                 title,
+                 content,
+                 author,
+                 null
+              );
+          }
+          $('#quoteModal').hide();
+        }
+      },
+        'click #saveLinkPortlet' : function(e, template, doc){
+          e.preventDefault();
+          
+          var mode = $( "#modePortletLink").val(); //add o edit para agregar o modificar
+          var id = $( "#idPortletLink").val(); //solo cuando es edición
+          var type = "link"; //text, image, video, quote, link
+          var title = null;
+          var content = $('#contentLink').val();
+          var author = null;//only used for quote type
+          var url = $('#urlLink').val();//only used for image, video and link type
+          var protocol = $('#protocol').val();
+          
+          if(content === ""){
+            Bert.alert({message: 'El texto del enlace no puede estar vacío', type: 'danger', icon: 'fa fa-exclamation'});
+          }
+          else if(url===""){
+            Bert.alert({message: 'La URL no puede estar vacía', type: 'danger', icon: 'fa fa-exclamation'});
+          }
+          else{
+
+            var position = url.indexOf("http://");
+            if(position>-1){
+              url = url.substring(position+"http://".length,url.length);
+            }
+            else {
+              position = url.indexOf("https://");
+              if(position>-1){
+                url = url.substring(position+"https://".length,url.length);
+              }
+            }
+
+            url = protocol + url;
+
+            if(mode==="edit"){
+              Meteor.call(
+                 'updatePortlet',
+                 id,
+                 title,
+                 content,
+                 author,
+                 url
+              );
+              $( "#modePortletLink").val("add");
+            }
+            else if(mode==="add"){
+              Meteor.call(
+                 'insertPortlet',
+                 FlowRouter.getParam('id'),
+                 type,
+                 title,
+                 content,
+                 author,
+                 url
+              );
+          }
+          $('#linkModal').hide();
+        }
+      },
+        
       'click .closeModal ': function (event){
         event.preventDefault();
         $('#myModal').hide();
         $('#textModal').hide();
+        $('#imageModal').hide();
+        $('#videoModal').hide();
+        $('#quoteModal').hide();
+        $('#linkModal').hide();
+        $('#modalPortletText').hide();
         
       },
       'click #hideWizard' : function(event){
@@ -563,6 +1004,24 @@ if (Meteor.isClient) {
         Meteor.call('hideWizard');
 
         $('#myModal').hide();
+      },
+      'click #upload_widget' : function(){
+
+          //$.cloudinary.cloudinary_upload_widget();
+
+          $('#upload_widget').cloudinary_upload_widget({ cloudName: "drhowtsxb", uploadPreset: "ehg0n0xs" });
+
+/*
+          var myWidget = $.cloudinary.createUploadWidget({
+            cloudName: 'drhowtsxb', 
+            uploadPreset: 'ehg0n0xs'}, (error, rupload_widgetesult) => { 
+              if (!error && result && result.event === "success") { 
+                console.log('Done! Here is the image info: ', result.info); 
+              }
+            }
+          )
+
+         myWidget.open();*/
       }
    });
 

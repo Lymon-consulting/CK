@@ -194,7 +194,17 @@ Meteor.publish('myMainProject', function(userId) {
 });
 
 Meteor.publish('myPortlets', function() {
-   return Portlet.find();
+   return Portlet.find({},{
+    fields: {
+      '_id':1,
+      'projectID':1,
+      'type':1,
+      'title':1,
+      'content':1,
+      'author':1,
+      'url':1
+    }
+  });
 });
 
 Meteor.publish('getCategories', function() {

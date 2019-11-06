@@ -101,47 +101,30 @@ Meteor.methods({
       { $pull: { project_staff: collaborator }
    });
   },
-  insertPortlet(projectID, portletTitle, portletContent, portletType){
-    /*
-   var date = new Date()
-   var newID = moment(date).format("x"); 
-
-   var portlet = {
-      "_id": newID,
-      "title": portletTitle,
-      "content": portletContent,
-      "order": "100"
-   };
-   
-   Project.upsert(
-      {'_id': projectID},
-      { $push: { project_portlets: portlet }
-   });*/
-   Portlet.insert({
+  insertPortlet(projectID, portletType, portletTitle, portletContent, portletAuthor, portletUrl){
+   return Portlet.insert({
             "projectID": projectID,
+            "type" : portletType, //text, image, video, quote, link
             "title": portletTitle,
             "content": portletContent,
-            "type" : portletType,
+            "author": portletAuthor,//only used for quote type
+            "url": portletUrl,//only used for link type
             "order": "100" 
+         }, function(error,result){
+            console.log("desde el server el id es "+result);
+            return result;
          });
+   //return newPortlet;
   },
-  updatePortlet(portletID, portletTitle, portletContent){
+  updatePortlet(portletID, portletTitle, portletContent, portletAuthor, portletUrl){
      Portlet.update({"_id": portletID},
         {$set:{
           "title": portletTitle,
-          "content": portletContent
+          "content": portletContent,
+          "author": portletAuthor,
+          "url": portletUrl
         }
       });
-   /*
-   Project.update(
-      {'_id': projectID, 'project_portlets._id': portletID},
-        { $set: { 
-          'project_portlets.$.content': portletContent, 
-          'project_portlets.$.title':portletTitle 
-        } 
-      }
-   );*/
-   
   },
   insertProject(userId, proj_name, proj_type, proj_genre, proj_desc, proj_year, proj_role, proj_main, proj_web_page, proj_facebook_page, proj_twitter_page, proj_vimeo_page, proj_youtube_page, proj_instagram_page){
     Project.insert({
@@ -202,10 +185,20 @@ Meteor.methods({
          });
   },
   saveProjectPictureID(projectId, projectPictureID){
+    //console.log("Guardando "+ projectPictureID + " en proyecto "+projectId);
     Project.update({'_id': projectId}, {
       $set:
         {
           "projectPictureID": projectPictureID
+        }
+    });
+  },
+  savePortletPictureID(portletId, portletPictureID){
+    //console.log("Guardando "+ projectPictureID + " en proyecto "+projectId);
+    Portlet.update({'_id': portletId}, {
+      $set:
+        {
+          "url": portletPictureID
         }
     });
   },

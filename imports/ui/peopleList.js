@@ -146,9 +146,12 @@ Template.peopleList.events({
          Session.set("role_selected",null);
       }
   },
-   'click #tipoPersona': function(event,template){
+   'change #tipoPersona': function(event,template){
       event.preventDefault();
-      FlowRouter.go('/projList');
+      var newValue = $(event.target).val();
+      if(newValue==="Proyectos"){
+        FlowRouter.go('/projList');
+      }
    }
    
 });

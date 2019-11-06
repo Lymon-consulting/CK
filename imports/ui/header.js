@@ -18,7 +18,23 @@ Template.header.rendered = function(){
 Template.header.helpers({
   user(){
       return Meteor.user();
-  }
+  },
+  hasTopRole(){
+    var array = new Array();
+    var result = false;
+    if(Meteor.user().role!=null){
+      array = Meteor.user().role;
+      for (var i = array.length - 1; i >= 0; i--) {
+        if(array[i]==="Director"){
+          result = true;  
+        }
+        if(array[i]==="Productor"){
+          result = true;  
+        }
+      }
+    }
+    return result;
+}
 
 });
 

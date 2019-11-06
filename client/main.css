@@ -1,3 +1,186 @@
+h3{
+  color:#666;
+}
+
+hr{
+  border-color:#333;
+}
+
+footer{
+  color:#666;
+  font-weight: bold;
+}
+
+a:link, a.text-purple:hover
+{
+  color: #ED1567;
+}
+
+a.text-button{
+  font-family: "Avenir-Heavy";
+}
+
+a.text-gray{
+   color: #999;
+}
+
+a.text-black{
+   color: #000;
+}
+
+input,
+input::-webkit-input-placeholder {
+  font-size: 12px;
+  line-height: 1;
+}
+
+div.vertical-line{
+  width: 1px; 
+  background-color: black;
+}
+
+div.vertical-line-white{
+  width: 1px; 
+  background-color: white;
+}
+
+td.low-padding{
+  margin: 0 !important;  
+  padding: 5px !important;
+}
+
+blockquote{
+  font-size: 30px;
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: .5em 10px;
+  padding: 0 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+  padding: 10px 20px;
+  line-height: 1.4;
+}
+
+blockquote:before {
+  content: open-quote;
+  display: inline;
+  height: 0;
+  line-height: 0;
+  left: -10px;
+  position: relative;
+  top: 30px;
+  color: #ccc;
+  font-size: 3em;
+}
+
+p{
+  margin: 0;
+}
+
+footer{
+  margin:0;
+  text-align: right;
+  font-size: 1em;
+  font-style: italic;
+}
+
+/***Estilos base para todos los dispositivos***/
+.text-description{
+   font-family: "Avenir-Book";
+   font-size: 20px;
+}
+.h1-title{
+   font-family: "AvenirNext-Bold";  
+   font-size: 46px;
+   color:#333;
+}
+.h3-title{
+   font-family: "Sans-serif";
+   font-size: 36px;
+   color:#333;
+
+}
+.bgText{
+  height: 360px;
+  background-image: url("/images/text-bg-slogan-536.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.imageDivHeight{
+    width: 100%;
+    max-width: 100%;
+    height:500px;
+    background-position: center;
+    background-image: url("/images/intro-bg3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.nine-columns {
+    margin: 20px;
+    margin: 2rem;
+    -webkit-column-count: 9; /* Chrome, Safari, Opera */
+      -moz-column-count: 9; /* Firefox */
+      column-count: 9;
+}
+
+.four-columns {
+    margin: 20px;
+    margin: 2rem;
+    -webkit-column-count: 4; /* Chrome, Safari, Opera */
+      -moz-column-count: 4; /* Firefox */
+      column-count: 4;
+}
+
+
+/*** Inician estilos para pantallas de tablets */
+@media (max-width: 900px){
+  .nine-columns{
+      -webkit-column-count: 3; /* Chrome, Safari, Opera */
+      -moz-column-count: 3; /* Firefox */
+      column-count: 3;
+  }
+  .four-columns{
+      -webkit-column-count: 3; /* Chrome, Safari, Opera */
+      -moz-column-count: 3; /* Firefox */
+      column-count: 3; 
+  }
+}
+/***Terminan estilos para dispositivos móviles*/
+
+/*** Inician estilos para pantallas de dispositivos móviles */
+@media (max-width: 600px){
+  .text-description{
+    font-size: 12px;
+  }
+  .h1-title{
+    font-size: 30px;
+  }
+  .h3-title{
+    font-size: 24px;
+  }
+  .bgText{
+    height: 240px;
+  }
+  .imageDivHeight{
+    height:300px;
+  }
+  .nine-columns{
+      -webkit-column-count: 1; /* Chrome, Safari, Opera */
+      -moz-column-count: 1; /* Firefox */
+      column-count: 1;
+  }
+  .four-columns{
+      -webkit-column-count: 1; /* Chrome, Safari, Opera */
+      -moz-column-count: 1; /* Firefox */
+      column-count: 1;
+  }
+}
+/***Terminan estilos para dispositivos móviles*/
+
+
+
+
+
 .item {
   display: block;
   padding: 5px;
@@ -39,15 +222,6 @@
   opacity:0.9 !important;
 }
 
-.card {
-  background: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
-}
-
 .file-upload-container {
     width: 100%;
     height: 50px;
@@ -67,147 +241,19 @@
     background: #3949AB;
 }
 
-.navbar-default .dropdown-menu.notify-drop {
-  min-width: 330px;
-  background-color: #fff;
-  min-height: 360px;
-  max-height: 360px;
-}
-.navbar-default .dropdown-menu.notify-drop .notify-drop-title {
-  border-bottom: 1px solid #e2e2e2;
-  padding: 5px 15px 10px 15px;
-}
-.navbar-default .dropdown-menu.notify-drop .drop-content {
-  min-height: 280px;
-  max-height: 280px;
-  overflow-y: scroll;
-}
-.navbar-default .dropdown-menu.notify-drop .drop-content::-webkit-scrollbar-track
-{
-  background-color: #F5F5F5;
-}
-
-.navbar-default .dropdown-menu.notify-drop .drop-content::-webkit-scrollbar
-{
-  width: 8px;
-  background-color: #F5F5F5;
-}
-
-.navbar-default .dropdown-menu.notify-drop .drop-content::-webkit-scrollbar-thumb
-{
-  background-color: #ccc;
-}
-.navbar-default .dropdown-menu.notify-drop .drop-content > li {
-  border-bottom: 1px solid #e2e2e2;
-  padding: 10px 0px 5px 0px;
-}
-.navbar-default .dropdown-menu.notify-drop .drop-content > li:nth-child(2n+0) {
-  background-color: #fafafa;
-}
-.navbar-default .dropdown-menu.notify-drop .drop-content > li:after {
-  content: "";
-  clear: both;
-  display: block;
-}
-.navbar-default .dropdown-menu.notify-drop .drop-content > li:hover {
-  background-color: #fcfcfc;
-}
-.navbar-default .dropdown-menu.notify-drop .drop-content > li:last-child {
-  border-bottom: none;
-}
-.navbar-default .dropdown-menu.notify-drop .drop-content > li .notify-img {
-  float: right;
-  display: inline-block;
-  width: 45px;
-  height: 45px;
-  margin: 0px 0px 8px 0px;
-}
-.navbar-default .dropdown-menu.notify-drop .allRead {
-  margin-right: 7px;
-}
-.navbar-default .dropdown-menu.notify-drop .rIcon {
-  float: right;
-  color: #999;
-}
-.navbar-default .dropdown-menu.notify-drop .rIcon:hover {
-  color: #333;
-}
-.navbar-default .dropdown-menu.notify-drop .drop-content > li a {
-  font-size: 12px;
-  font-weight: normal;
-}
-.navbar-default .dropdown-menu.notify-drop .drop-content > li {
-  font-weight: bold;
-  font-size: 11px;
-}
-.navbar-default .dropdown-menu.notify-drop .drop-content > li hr {
-  margin: 5px 0;
-  width: 70%;
-  border-color: #e2e2e2;
-}
-.navbar-default .dropdown-menu.notify-drop .drop-content .pd-l0 {
-  padding-left: 0;
-}
-.navbar-default .dropdown-menu.notify-drop .drop-content > li p {
-  font-size: 11px;
-  color: #666;
-  font-weight: normal;
-  margin: 3px 0;
-}
-.navbar-default .dropdown-menu.notify-drop .drop-content > li p.time {
-  font-size: 10px;
-  font-weight: 600;
-  top: -6px;
-  margin: 8px 0px 0px 0px;
-  padding: 0px 3px;
-  border: 1px solid #e2e2e2;
-  position: relative;
-  background-image: linear-gradient(#fff,#f2f2f2);
-  display: inline-block;
-  border-radius: 2px;
-  color: #B97745;
-}
-.navbar-default .dropdown-menu.notify-drop .drop-content > li p.time:hover {
-  background-image: linear-gradient(#fff,#fff);
-}
-.navbar-default .dropdown-menu.notify-drop .notify-drop-footer {
-  border-top: 1px solid #e2e2e2;
-  bottom: 0;
-  position: relative;
-  padding: 8px 15px;
-}
-.navbar-default .dropdown-menu.notify-drop .notify-drop-footer a {
-  color: #777;
-  text-decoration: none;
-}
-.navbar-default .dropdown-menu.notify-drop .notify-drop-footer a:hover {
-  color: #333;
-}
-
-
-
 .badge{
    font-size: 12px;
    font-family: verdana;
 }
 
-
+.hr_white{
+  border-color: #fff;
+  border-width: 2px;
+}
 
 .col{
    width: 0%;
 }
-
-.navbar-nav{
-
-   margin-top: 8px;
-}
-
-/*
-.modal{
-    display: block !important; 
-}*/
-
-/* Important part */
 
 .modal-dialog{
     overflow-y: initial !important
@@ -234,22 +280,6 @@
    color: #666;
 }
 
-/*Posiciona el sobre de alertas*/
-.notopspace{
-   top: -13px;
-}
-
-.dropdown-toggle{
-   border-width: 1px;
-   border-color: #fff;
-   background: transparent;
-   color: #fff;
-}
-
-.navbar-nav > li > a {
-    padding-top: 0px;
-}
-
 .thumbnail{
    background: transparent;
 }
@@ -264,41 +294,16 @@
    width: 120px;
    height: 80px;
 }
-hr{
-   border-color:#333;
-}
 
-h3{
-   color:#666;
-}
 
-footer{
-   color:#666;
-   font-weight: bold;
-}
 
-.navbar {
-    margin-bottom: 0px;
-}
-
-@media (min-width: 992px){
-    .navbar li {
-        padding-left : 10px;
-        padding-right : 10px;
-    }
-}
 
 .btn-fixed-width {
-    width: 150px !important;
+  width: 150px !important;
 }
 
 .btn-fixed-width-big {
     width: 300px !important;
-}
-
-.text-description{
-   font-family: "Avenir-Book";
-   font-size: 20px;
 }
 
 .text-title-gray{
@@ -313,11 +318,7 @@ footer{
    color:#999;
 }
 
-.h1-title{
-   font-family: "AvenirNext-Bold";  
-   font-size: 46px;
-   color:#333;
-}
+
 
 .h2-title{
    font-family: "AvenirNext-Bold";  
@@ -325,12 +326,7 @@ footer{
    color:#666;
 }
 
-.h3-title{
-   font-family: "Sans-serif";
-   font-size: 36px;
-   color:#333;
 
-}
 
 .h5-name{
    font-family: "Avenir-Medium";
@@ -400,6 +396,7 @@ footer{
   margin-left: auto;
 }
 
+/*
 .card {
   float: left;
   width: 33.333%;
@@ -416,6 +413,53 @@ footer{
 
 .card-text {
   font-size: 85%;
+}*/
+
+.card{
+  padding: 10px;
+  margin: 0px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+}
+.card > img {
+  width: 100%;
+  height: 175px;
+}
+.hr-gray {
+  border-color: #fff;
+}
+
+/**Inician estilos para los recuadros de proyectos en la página de perfil de un usuario*/
+.card-title{
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 90%;
+  font-weight: bolder;
+  margin-top: 20px;
+}
+.card-body {
+  background-color: #eee;
+  width: 100%;
+  height: 100px;
+}
+.card-footer {
+  background-color: #eee;
+  width: 100%;
+  height: 50px;
+}
+.card-text {
+  font-size: 85%;
+  text-align: center;
+}
+/**Terminan estilos para los recuadros de proyectos en la página de perfil de un usuario*/
+
+.project.border{
+  padding: 2rem;
+
 }
 
 .black_border{
@@ -448,13 +492,6 @@ footer{
 .input-width-80{
    width:80px;
 }
-
-input,
-input::-webkit-input-placeholder {
-    font-size: 12px;
-    line-height: 1;
-}
-
 
 .input-purple{
    border-color: #ED1567;
@@ -499,38 +536,14 @@ input::-webkit-input-placeholder {
    margin: 20px;
 }
 
-/*
-.navbar-toggler{
-   border: 0; 
-}*/
-
-.navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-}
-
 .fa-bars{
    font-size: 30px;
    color:#fff;
 }
 
-div.vertical-line{
-      width: 1px; 
-      background-color: black;
-    }
-
-div.vertical-line-white{
-      width: 1px; 
-      background-color: white;
-    }    
-
 .no-padding{
    padding: 0 !important;
    margin: 0 !important;
-}
-
-td.low-padding{
-  margin: 0 !important;  
-  padding: 5px !important;
 }
 
 .go-bottom{
@@ -559,15 +572,6 @@ td.low-padding{
    font-family: "Avenir-Roman";
 }
 
-a:link, a.text-purple:hover
-{
-  color: #ED1567;
-}
-
-
-a.text-button{
-   font-family: "Avenir-Heavy";
-}
 
 .title-banner{
    font-size: 36px;
@@ -592,11 +596,6 @@ a.text-button{
    font-style: italic;
 }
 
-
-a.text-gray{
-   color: #999;
-}
-
 .text-gray{
    color: #999;
 }
@@ -613,9 +612,7 @@ a.text-gray{
    color: #000;
 }
 
-a.text-black{
-   color: #000;
-}
+
 
 .button_white{
    border-width: 1px;
@@ -802,6 +799,12 @@ a.text-black{
    height:5px; 
 }
 
+.spacer10 { 
+   margin:0; 
+   padding:0; 
+   height:10px; 
+}
+
 .spacer20 { 
    margin:0; 
    padding:0; 
@@ -837,6 +840,11 @@ a.text-black{
    padding:0; 
    height:120px; 
 }
+.spacer280 { 
+   margin:0; 
+   padding:0; 
+   height:280px; 
+}
 .bootstrap-select.btn-group .dropdown-toggle .caret {
   width: 10px;
   height: 10px;
@@ -851,13 +859,7 @@ a.text-black{
 }
 
 @media screen and (min-width: 100px) {
-    #imageDivHeight{
-        width: 100%;
-        height:500px;
-        background-image: url("/images/intro-bg3.jpg");
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
+    
 
     #bannerBack{
       width: 100%;
@@ -866,13 +868,14 @@ a.text-black{
         background-repeat: no-repeat;
         background-size: cover;
    }
+   /*
    #bannerProject{
       width: 100%;
         height:670px;
         background-image: url("/images/background-dark.jpg");
         background-repeat: no-repeat;
         background-size: cover;
-   }
+   }*/
 }
 
 @media screen and (min-width: 100px) {
@@ -895,104 +898,25 @@ a.text-black{
     margin: 0;
 }
 
+.responsive {
+  width: 100%;
+  height: auto;
+}
+
 @media screen and (min-width: 100px) {
     #imageBanner{
-        max-width:100%; 
-        max-height:100%;
+        /*max-width:100%; */
+        /*max-height:100%;*/
         display:block;
-        height: 230px;
+        /*height: 230px;*/
         background-image: url("/images/banner-david.jpg");
         background-repeat: no-repeat;
         background-size: cover;
     }
 }
 
-
-/*The tabs of the profile register*/
-ul#Navigation .active{
-    border-color: white;
-    color: white; 
-    background-color: #ED1567;
-    font-family: "Avenir-Heavy";
-}
-
-ul#Navigation{
-    border-color: white;
-    color: white; 
-    background-color: #999;
-    font-family: "Avenir-Heavy";
-}
-
-
-
-
 .border-cell {
    border: 1px solid #000000;
-}
-
-
-
-
-/* The side navigation menu */
-.sidenav {
-    height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
-    top: 0;
-    left: 0;
-    background-color: #343a40;
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-}
-
-/* The navigation menu links */
-.sidenav a {
-    padding: 8px 8px 8px 22px;
-    text-decoration: none;
-    font-size: 16px;
-    color: #818181;
-    display: block;
-    transition: 0.3s
-}
-
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover, .offcanvas a:focus{
-    color: #f1f1f1;
-}
-
-/* Position and style the close button (top right corner) */
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-#main {
-    transition: margin-left .5s;
-    padding: 20px;
-}
-
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-}
-
-
-
-.nav-side-menu ul,
-.nav-side-menu li {
-  list-style: none;
-  padding: 0px;
-  margin: 0px;
-  line-height: 35px;
-  cursor: pointer;
-  
 }
 
 .purple-background{
@@ -1000,182 +924,3 @@ ul#Navigation{
    color:#fff;
    font-family: Avenir-Black;
 }
-
-
-@font-face {
- font-family: "Avenir-Black";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/Avenir-Black.ttf") format("truetype") , url("/fonts/Avenir-Black.eot");
-}
-
-@font-face {
- font-family: "Avenir-BlackOblique";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/Avenir-BlackOblique.ttf") format("truetype") , url("/fonts/Avenir-BlackOblique.eot");
-}
-
-@font-face {
- font-family: "Avenir-Book";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/Avenir-Book.ttf") format("truetype") , url("/fonts/Avenir-Book.eot");
-}
-
-@font-face {
- font-family: "Avenir-BookOblique";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/Avenir-BookOblique.ttf") format("truetype") , url("/fonts/Avenir-BookOblique.eot");
-}
-
-@font-face {
- font-family: "Avenir-Heavy";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/Avenir-Heavy.ttf") format("truetype") , url("/fonts/Avenir-Heavy.eot");
-}
-
-@font-face {
- font-family: "Avenir-HeavyOblique";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/Avenir-HeavyOblique.ttf") format("truetype") , url("/fonts/Avenir-HeavyOblique.eot");
-}
-
-@font-face {
- font-family: "Avenir-Light";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/Avenir-Light.ttf") format("truetype") , url("/fonts/Avenir-Light.eot");
-}
-
-@font-face {
- font-family: "Avenir-LightOblique";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/Avenir-LightOblique.ttf") format("truetype") , url("/fonts/Avenir-LightOblique.eot");
-}
-
-@font-face {
- font-family: "Avenir-Medium";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/Avenir-Medium.ttf") format("truetype") , url("/fonts/Avenir-Medium.eot");
-}
-
-@font-face {
- font-family: "Avenir-MediumOblique";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/Avenir-MediumOblique.ttf") format("truetype") , url("/fonts/Avenir-MediumOblique.eot");
-}
-
-@font-face {
- font-family: "AvenirNext-Bold";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/AvenirNext-Bold.ttf") format("truetype") , url("/fonts/AvenirNext-Bold.eot");
-}
-
-@font-face {
- font-family: "AvenirNext-BoldItalic";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/AvenirNext-BoldItalic.ttf") format("truetype") , url("/fonts/AvenirNext-BoldItalic.eot");
-}
-
-@font-face {
- font-family: "AvenirNext-DemiBold";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/AvenirNext-DemiBold.ttf") format("truetype") , url("/fonts/AvenirNext-DemiBold.eot");
-}
-
-@font-face {
- font-family: "AvenirNext-DemiBoldItalic";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/AvenirNext-DemiBoldItalic.ttf") format("truetype") , url("/fonts/AvenirNext-DemiBoldItalic.eot");
-}
-
-@font-face {
- font-family: "AvenirNext-Heavy";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/AvenirNext-Heavy.ttf") format("truetype") , url("/fonts/AvenirNext-Heavy.eot");
-}
-
-@font-face {
- font-family: "AvenirNext-HeavyItalic";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/AvenirNext-HeavyItalic.ttf") format("truetype") , url("/fonts/AvenirNext-HeavyItalic.eot");
-}
-
-@font-face {
- font-family: "AvenirNext-Italic";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/AvenirNext-Italic.ttf") format("truetype") , url("/fonts/AvenirNext-Italic.eot");
-}
-
-@font-face {
- font-family: "AvenirNext-Medium";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/AvenirNext-Medium.ttf") format("truetype") , url("/fonts/AvenirNext-Medium.eot");
-}
-
-@font-face {
- font-family: "AvenirNext-MediumItalic";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/AvenirNext-MediumItalic.ttf") format("truetype") , url("/fonts/AvenirNext-MediumItalic.eot");
-}
-
-@font-face {
- font-family: "AvenirNext-Regular";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/AvenirNext-Regular.ttf") format("truetype") , url("/fonts/AvenirNext-Regular.eot");
-}
-
-@font-face {
- font-family: "AvenirNext-UltraLight";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/AvenirNext-UltraLight.ttf") format("truetype") , url("/fonts/AvenirNext-UltraLight.eot");
-}
-
-@font-face {
- font-family: "AvenirNext-UltraLightItalic";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/AvenirNext-UltraLightItalic.ttf") format("truetype") , url("/fonts/AvenirNext-UltraLightItalic.eot");
-}
-
-@font-face {
- font-family: "Avenir-Oblique";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/Avenir-Oblique.ttf") format("truetype") , url("/fonts/Avenir-Oblique.eot");
-}
-
-@font-face {
- font-family: "Avenir-Roman";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/Avenir-Roman.ttf") format("truetype") , url("/fonts/Avenir-Roman.eot");
-}
-
-@font-face {
- font-family: "Bembo";
- font-style: normal;
- font-weight: normal;
- src: url("/fonts/Bembo.ttf") format("truetype") , url("/fonts/Bembo.eot");
-}
-
-
-

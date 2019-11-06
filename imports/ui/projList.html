@@ -2,25 +2,25 @@
 <div class="container">
       <div class="spacer40"></div>
       <div class="row">
-         <div class="col-md-3 vdivide">
-            <select class="form-control fa" id="tipoPersona">
-               <option value="Personas">&#xf0c0;&nbsp; Personas</option>
-               <option value="Proyectos" selected>&#xf008;&nbsp; Proyectos</option>
-               <option value="Industrias" disabled>&#xf03d;&nbsp; Industrias</option>
-               <option value="Casting" disabled>&#xf26c;&nbsp; Casting</option>
+         <div class="col-lg-3 col-md-6">
+            <select class="form-control agreements" id="tipoPersona">
+               <option value="Personas">Crew</option>
+               <option value="Proyectos" selected>Proyectos</option>
+               <option value="Industrias" disabled>Industrias</option>
+               <option value="Casting" disabled>Casting</option>
             </select>
          </div>
          
-         <div class="col-md-3 vdivide">
-            <select class="form-control fa agreements" id="type">
+         <div class="col-lg-3 col-md-6">
+            <select class="form-control agreements" id="type">
                   <option value="cualquier"> Cualquier tipo </option>
                {{#each getProjectType}}
                   <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
                {{/each}}
             </select>
          </div>
-         <div class="col-md-3 vdivide">
-            <select class="form-control fa agreements" id="genre">
+         <div class="col-lg-3 col-md-6">
+            <select class="form-control agreements" id="genre">
                     <option value="cualquier"> Cualquier género </option>
                 {{#each getProjectGender}}
                     <option value="{{this}}" {{genreSelected this}}> {{this}} </option>
@@ -28,9 +28,8 @@
             </select>
          </div>
          
-         <div class="col-md-3">
+         <div class="col-lg-3 col-md-6">
             <div class="input-group">
-               <span class="btn-borderless"><strong class="text-purple">Ir</strong>&nbsp;</span>
                {{> EasySearch.Input index=projectIndex event="enter" attributes=inputAttributes}}
                <span class="input-group-btn">
                  <button class="btn btn-secondary" type="button" id="buscarBtn">
@@ -48,11 +47,7 @@
             Page 1 -  results
          </div>
       </div>
-      <div class="row">
-         <div class="col-md-12">
-            <hr>
-         </div>
-      </div>
+      
    </div>
       
 
@@ -60,7 +55,7 @@
    <div class="container">
       <div class="row">
          <!-- Inicia contenido -->
-         <div class="col-md-9">
+         <div class="col-md-12">
             <div class="container-fluid">
                <div class="row">
                   <div class="col-md-12"><hr></div>
@@ -152,6 +147,7 @@
          </div>
          <!-- Fin contenido -->
          <!-- Inicia banners -->
+         <!--
          <div class="col-md-3">
             <div class="container">
                <div class="spacer20"></div>
@@ -168,14 +164,11 @@
                </div>
             </div>
          </div>
+      -->
          <!-- Fin banners -->
       </div>
 
-      <div class="row">
-         <div class="col-md-12">
-            <hr>
-         </div>
-      </div>
+     
 
    </div>
    

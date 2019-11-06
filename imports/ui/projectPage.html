@@ -1,8 +1,32 @@
 <template name="projectPage">
 
-   <div class="container-fluid" id="bannerProject">
-      <div class="spacer20"></div>
+   <style>
+     .bannerProject{
+        width: 100%;
+        height:100%;
+        background-image: url({{getProjectPicture 800}});
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+        z-index: 1;
+        /*filter:brightness(0.2);*/
+      }
+      .bannerProject::after {
+        content:"";
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.8);
+        z-index:-1;
+      }
+   </style>
+   <div class="container-fluid bannerProject">
       {{#if isOwner}}
+      <div class="container-fluid text-white">
+        <a href="/editProject/{{projData._id}}" class="text-white"><i class="fa fa-2x fa-pencil-square" aria-hidden="true"></i>&nbsp;Editar información</a>
+      </div>
       <div class="container text-center">
          <div class="btn-group" role="group" aria-label="...">
            <!--<button type="button" class="btn btn-outline-light button_white"><a href="/editProject/{{projData._id}}" class="text-button">EDITAR PROYECTO</a></button>
@@ -19,18 +43,27 @@
        -->
          <div class="container text-center">
          <div class="btn-group" role="group" aria-label="...">
-           <button type="button" class="btn btn-outline-light button_white"><a href="/editProject/{{projData._id}}" class="text-button">EDITAR PROYECTO</a></button>
+           <!--
            <button type="button" class="btn btn-outline-light button_white"><a href="#" class="text-button">PUBLICAR CAMBIOS</a></button>
            <button type="button" class="btn button_white"><i class="fa fa-trash fa-sm"></i></button>
+            -->
          </div>   
          <br><br>
          <div class="btn-group" role="group" aria-label="...">
+           <!--
            <button type="button" class="btn button_white" data-toggle="modal" data-target="#collabModal"><i class="fa fa-users fa-sm"></i> <a href="#" class="text-button">COLABORADORES</a></button>
-           <button type="button" class="btn button_white" data-toggle="modal" data-target="#imageModal"><i class="fa fa-camera fa-sm"></i> <a href="#" class="text-button" id="#">IMAGEN</a></button>
+         
+           <button type="button" class="btn button_white" data-toggle="modal"><i class="fa fa-camera fa-sm"></i> <a href="#" class="text-button add_portlet" data-type="image">IMAGEN</a></button>
+-->
+          <!--
+          <button id="upload_widget" class="cloudinary-button">Upload files</button>
+        
+
            <button type="button" class="btn button_white" data-toggle="modal" data-target="#videoModal"><i class="fa fa-video-camera fa-sm"></i> <a href="#" class="text-button">VIDEO</a></button>
-           <button type="button" class="btn button_white"><i class="fa fa-file-text-o fa-sm"></i> <a href="#" class="text-button" id="add_portlet">TEXTO</a></button>
+           <button type="button" class="btn button_white"><i class="fa fa-file-text-o fa-sm"></i> <a href="#" class="text-button add_portlet" data-type="text">TEXTO</a></button>
+           
            <button type="button" class="btn button_white" data-toggle="modal" data-target="#phraseModal"><i class="fa fa-quote-right fa-sm"></i> <a href="#" class="text-button">FRASE</a></button>
-           <button type="button" class="btn button_white" data-toggle="modal" data-target="#linkModal"><i class="fa fa-link fa-sm"></i> <a href="#" class="text-button">LINK</a></button>
+           <button type="button" class="btn button_white" data-toggle="modal" data-target="#linkModal"><i class="fa fa-link fa-sm"></i> <a href="#" class="text-button">LINK</a></button> -->
          </div> 
       </div>
 
@@ -57,17 +90,27 @@
                </div>
             </div>
             <div class="row">
-               <div class="col-md-12 col-lg-12 project-title-text h1-title">
+               <div class="col-md-10 col-lg-10 project-title-text h1-title">
                   {{projData.project_title}}
                </div>
+               <div  class="col-lg-2">
+                  <div class="row justify-content-end align-items-center">
+                      <div class="col-12 text-white">
+                        <small>{{projData.likes}}</small> <i class="fa fa-thumbs-up fa-sm"></i> 
+                      </div>
+                      <div class="col-12 text-white">
+                        <small>{{projData.views}}</small> <i class="fa fa-eye fa-sm"></i> 
+                      </div>
+                  </div>
+                </div>
             </div>
             <div class="row">
-               <div class="col-md-12 col-lg-12">
-                  <hr align="left" width="50%">
+               <div class="col-12">
+                  <hr class="hr_white">
                </div>
             </div>
             <div class="row">
-                <div class="col-1">
+                <div class="col-lg-2 col-md-6 col-sm-12">
                    <a href="/profilePage/{{projData.userId}}">
                    {{#if getProfilePicture projData.userId}}
                       <img src="{{getProfilePicture projData.userId}}" border="0" class="rounded-circle" />
@@ -76,25 +119,47 @@
                    {{/if}}
                    </a>
                 </div>
-                <div class="col-11">
-                    <div class="container">
+                <div class="col-lg-10 col-sm-6 col-sm-12">
+                    <div class="container-fluid">
                        <div class="row justify-content-start align-items-center">
-                          <div class="col-10 people-name-text">
+                          <div class="col-12 people-name-text">
                              <a href="/profilePage/{{projData.userId}}" class="text-white">{{ownerName projData.userId}}</a>
                           </div>
                        </div>
                        <div class="row justify-content-start align-items-center">
-                          <div class="col-10 text-white uppercase">
+                          <div class="col-12 text-white uppercase">
                            {{projData.project_role}}
                           </div>
                       </div>
                    </div>
                 </div>
+                
             </div>
-            
          </div>
-
       </section>
+   </div>
+   <div class="container-fluid background-lightgray">
+     <div class="spacer10"></div>
+     <div class="row">
+       <div class="col-lg-2">
+          <div class="dropdown show">
+            <a class="text-black dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-plus text-purple" aria-hidden="true"></i> Agregar Sección
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item clear_portlet" href="#" data-type="text">Texto</a>
+              <a class="dropdown-item clear_portlet" href="#" data-type="image">Imagen</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item clear_portlet" href="#" data-type="video">Video</a>
+              <a class="dropdown-item clear_portlet" href="#" data-type="quote">Frase</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item clear_portlet" href="#" data-type="link">Link</a>
+            </div>
+          </div>
+       </div>
+       <div class="col-lg-2"><a href="#" class="text-black" data-toggle="modal" data-target="#collabModal"><i class="fa fa-user-circle text-purple" aria-hidden="true"></i> Colaboradores</a></div>
+     </div>
+     <div class="spacer10"></div>
    </div>
 
    <div class="container-fluid background-verydarkgray">
@@ -122,8 +187,7 @@
                      <td class="low-padding text-no-wrap text-white"><a href="mailto:{{ownerEmail projData.userId}}"><i class="fa fa-envelope fa-sm text-white"></i></a></td>
                      <td class="low-padding text-no-wrap text-white numbers"><small>Contactar</small></td>
                      <td class="low-padding text-no-wrap text-white" rowspan="2"><div class="vertical-line-white" style="height: 55px;" ></div></td>
-                     <td class="low-padding text-no-wrap text-white"><i class="fa fa-thumbs-up fa-sm"></i></td>
-                     <td class="low-padding text-no-wrap text-white numbers"><small>{{projData.likes}}</small></td>
+                     
                   </tr>
                   <tr>
 
@@ -131,8 +195,7 @@
                      <td class="low-padding text-no-wrap text-white numbers"><a href="#" id="pushLike"><small class="text-white">Me gusta</small></a></td>
                      <td class="low-padding text-no-wrap text-white"><i class="fa fa-share-alt-square fa-sm"></i></td>
                      <td class="low-padding text-no-wrap text-white numbers"><small>Compartir</small></td>
-                     <td class="low-padding text-no-wrap text-white"><i class="fa fa-eye fa-sm"></i></td>
-                     <td class="low-padding text-no-wrap text-white numbers"><small>{{projData.views}}</small></td>
+                     
                   </tr>
                </table>
             </div>
@@ -141,6 +204,8 @@
       </div>
 
       <div class="spacer80"></div>
+      {{>crew}}  
+      <div class="spacer40"></div>
 
    <div class="container text-center">
       
@@ -158,12 +223,6 @@
       
    </div>      
    <div class="spacer40"></div>   
-
-
-   {{>crew}}  
-
-   
-   <div class="spacer40"></div>
 
    {{> items}}
   
@@ -329,22 +388,22 @@
   {{/if}}
 
 
+
+
 <!-- Text Modal -->
-<div class="modal" tabindex="-1" id="textModal" role="dialog">
+<div class="modal" tabindex="-1" id="modalPortletText" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="closeModal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        
       </div>
       <div class="modal-body">
          <div class="row">
             <div class="col">
-               <h4 class="modal-title">TEXTO</h4>          
+               <h4 class="modal-title">TEXTO</h4>
             </div>
             <div class="col text-no-wrap">
-               <!--<button type="button" class="btn btn-gray" data-dismiss="modal">Guardar</button>-->
-               <button type="button" class="btn btn-gray" id="savePortlet"><i class="fa fa-save fa-sm"></i> <a href="#" class="text-button">Guardar</a></button>
+               <button type="button" class="btn btn-gray" id="saveTextPortlet"><i class="fa fa-save fa-sm"></i> <a href="#" class="text-button">Guardar</a></button>
                <button type="button" class="btn btn-gray closeModal" data-dismiss="modal">Cancelar</button>    
             </div>
          </div>
@@ -355,8 +414,13 @@
          </div>
          <div class="row">
             <div class="col">
+               Introduce un Título y el Texto que deseas agregar a tu proyecto. Una vez creado puedes arrastrarlo para establecer el orden en el que quieres que aparezca.
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
                <div class="input-group">
-                  <input type="text" class="form-control" id="titlePortlet" placeholder="Título">
+                  <input type="text" class="form-control" id="title" placeholder="Título">
                   <span class="input-group-addon"><i class="fa fa-sm fa-check"></i></span>
                </div>
             </div>
@@ -364,20 +428,311 @@
          <div class="spacer40"></div>
          <div class="row">
             <div class="col-md-10 border-exterior mx-auto" style="padding: 10px;">
-               <textarea class="form-control" rows="5" id="comment" maxlength="450"></textarea>
-               <input type="hidden" id="modePortlet" value="add">
+               <textarea class="form-control" rows="5" id="content" maxlength="450"></textarea>
+               <input type="hidden" id="modePortlet">
                <input type="hidden" id="idPortlet">
-               <input type="hidden" id="type" value="text">
+               <input type="hidden" id="type" vale="text">
+               
             </div>
          </div>
       </div>
       <div class="modal-footer text-center">
-         Quedan &nbsp;<div id="max">{{commentCount}}</div>&nbsp; caracteres
+         Quedan &nbsp;<div id="max">{{contentCount}}</div>&nbsp; caracteres
       </div>
     </div>
   </div>
 </div>
+<!--Text modal ends-->
 
+
+<!-- Image Modal -->
+<div class="modal" tabindex="-1" id="imageModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="closeModal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        
+      </div>
+      <div class="modal-body">
+         <div class="row">
+            <div class="col">
+               <h4 class="modal-title modalTitle">IMAGEN</h4>
+            </div>
+            <div class="col text-no-wrap">
+               <button type="button" class="btn btn-gray" id="saveImagePortlet"><i class="fa fa-save fa-sm"></i> <a href="#" class="text-button">Guardar</a></button>
+               <button type="button" class="btn btn-gray closeModal" data-dismiss="modal">Cancelar</button>    
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <hr>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               Introduce un Título y selecciona la imágen que quieres agregar. Una vez agregada la nueva sección puedes arrastrarla para establecer el orden en el que quieres que aparezca.
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <div class="input-group">
+                  <input type="text" class="form-control" id="titleImg" placeholder="Título">
+               </div>
+            </div>
+         </div>
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col">
+               <div class="input-group">
+                  Descripción:
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-12">
+               <div class="input-group">
+                  <textarea class="form-control" rows="3" id="descImg" maxlength="450"></textarea>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <div class="input-group agreements">
+                  Quedan &nbsp;<div id="maxImg">{{contentCount}}</div>&nbsp; caracteres
+               </div>
+            </div>
+         </div>
+         <div class="spacer40"></div>
+         <div class="row">
+            <div class="col-md-10 border-exterior mx-auto" style="padding: 10px;">
+               <input id="portlet-img-upload" type="file">
+               <input type="hidden" id="modePortletImg">
+               <input type="hidden" id="idPortletImg">
+               <input type="hidden" id="contentImg">
+               <input type="hidden" id="urlImg">
+            </div>
+         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Image modal ends-->
+<!-- Video Modal -->
+<div class="modal" tabindex="-1" id="videoModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="closeModal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        
+      </div>
+      <div class="modal-body">
+         <div class="row">
+            <div class="col">
+               <h4 class="modal-title modalTitle">VIDEO</h4>
+            </div>
+            <div class="col text-no-wrap">
+               <button type="button" class="btn btn-gray" id="saveVideoPortlet"><i class="fa fa-save fa-sm"></i> <a href="#" class="text-button">Guardar</a></button>
+               <button type="button" class="btn btn-gray closeModal" data-dismiss="modal">Cancelar</button>    
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <hr>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               Introduce un Título y la URL del video de vimeo o youtube que quieres agregar. Una vez agregada la nueva sección puedes arrastrarla para establecer el orden en el que quieres que aparezca.
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <div class="input-group">
+                  <input type="text" class="form-control" id="titleVid" placeholder="Título">
+                  <span class="input-group-addon"><i class="fa fa-sm fa-check"></i></span>
+               </div>
+            </div>
+         </div>
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col">
+               <div class="input-group">
+                  Descripción:
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-12">
+               <div class="input-group">
+                  <textarea class="form-control" rows="3" id="descVid" maxlength="450"></textarea>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <div class="input-group agreements">
+                  Quedan &nbsp;<div id="maxVid">{{contentCount}}</div>&nbsp; caracteres
+               </div>
+            </div>
+         </div>
+         <div class="spacer40"></div>
+         <div class="row">
+            <div class="col-md-10 border-exterior mx-auto" style="padding: 10px;">
+              <input type="text" class="form-control" id="urlVid" placeholder="URL de youtube o vimeo">
+               <input type="hidden" id="modePortletVid">
+               <input type="hidden" id="idPortletVid">
+               <input type="hidden" id="contentVid">
+            </div>
+         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Video modal ends-->
+<!-- Quote Modal -->
+<div class="modal" tabindex="-1" id="quoteModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="closeModal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+         <div class="row">
+            <div class="col">
+               <h4 class="modal-title">FRASE</h4>
+            </div>
+            <div class="col text-no-wrap">
+               <button type="button" class="btn btn-gray" id="saveQuotePortlet"><i class="fa fa-save fa-sm"></i> <a href="#" class="text-button">Guardar</a></button>
+               <button type="button" class="btn btn-gray closeModal" data-dismiss="modal">Cancelar</button>    
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <hr>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               Introduce una frase y un autor. Una vez creado puedes arrastrarlo para establecer el orden en el que quieres que aparezca.
+            </div>
+         </div>
+         <!--
+         <div class="row">
+            <div class="col">
+               <div class="input-group">
+                  <input type="text" class="form-control" id="titleQuote" placeholder="Título">
+               </div>
+            </div>
+         </div>
+       -->
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col-10 border-exterior mx-auto" style="padding: 10px;">
+               <textarea class="form-control" rows="5" id="quote" maxlength="450"></textarea>
+               <input type="hidden" id="modePortletQuote">
+               <input type="hidden" id="idPortletQuote">
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <div class="input-group agreements">
+                  Quedan &nbsp;<div id="maxQuote">{{contentCount}}</div>&nbsp; caracteres
+               </div>
+            </div>
+         </div>
+         
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col">
+               <div class="input-group">
+                  <input type="text" class="form-control" id="authorQuote" placeholder="Autor">
+               </div>
+            </div>
+         </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!--Quote modal ends-->
+<!-- Link Modal -->
+<div class="modal" tabindex="-1" id="linkModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="closeModal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        
+      </div>
+      <div class="modal-body">
+         <div class="row">
+            <div class="col">
+               <h4 class="modal-title modalTitle">ENLACE</h4>
+            </div>
+            <div class="col text-no-wrap">
+               <button type="button" class="btn btn-gray" id="saveLinkPortlet"><i class="fa fa-save fa-sm"></i> <a href="#" class="text-button">Guardar</a></button>
+               <button type="button" class="btn btn-gray closeModal" data-dismiss="modal">Cancelar</button>    
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <hr>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               Introduce un texto para tu enlace y la URL correspondiente. Una vez agregada la nueva sección puedes arrastrarla para establecer el orden en el que quieres que aparezca.
+            </div>
+         </div>
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col">
+               <div class="input-group">
+                  Texto del enlace:
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-12">
+               <div class="input-group">
+                  <input type="text" class="form-control" id="contentLink" placeholder="Texto">
+               </div>
+            </div>
+         </div>
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col">
+               <div class="input-group">
+                  Protocolo:
+                  <select class="input-group" id="protocol">
+                    <option value="http://">http:</option>
+                    <option value="https://">https:</option>
+                  </select>
+               </div>
+            </div>
+         </div>
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col">
+               <div class="input-group">
+                  URL del enlace:
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-12">
+              <div class="input-group">
+                <input type="text" class="form-control" id="urlLink" placeholder="URL">
+                 <input type="hidden" id="modePortletLink">
+                 <input type="hidden" id="idPortletLink">
+                 <input type="hidden" id="contentLink">
+              </div>
+            </div>
+         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Link modal ends-->
 
 </template> 
 
@@ -410,7 +765,7 @@
             </thead>
             <tbody>
                {{#each getCollabs}}
-               <tr>
+              <tr>
                   <td class="col agreements">{{this.email}}</td>
                   <td class="col agreements">{{this.name}}</td>
                   <td class="col agreements">{{this.role}}</td>
@@ -438,7 +793,7 @@
 <template name="crew">
   {{#if getCrew.project_staff}}
      <div class="container text-center">
-        <h3 class="h1-title">CREW</h3>
+        <h3 class="h1-title">COLABORADORES</h3>
         <hr>
      </div>
      <div class="spacer40"></div>
@@ -490,12 +845,65 @@
             </div>
          </div>
          <div class="spacer20"></div>
+         {{#if isText type}}
          <div class="row">
             <div class="col">
                {{{content}}}
             </div>
          </div>
+         {{else}}
+           {{#if isImage type}}
+         <div class="row">
+            <div class="col">
+               {{content}}
+            </div>
+         </div>
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col">
+               <img src="{{cloudURL}}{{url}}">
+            </div>
+         </div>
+           {{else}}
+             {{#if isVideo type}}
+         <div class="row">
+            <div class="col">
+               {{content}}
+            </div>
+         </div>
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col">
+              <iframe src="{{url}}" width="320" height="240" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            </div>
+         </div>
+             {{else}}
+                {{#if isQuote type}}
+         <div class="row">
+            <div class="col quote">
+               <blockquote>
+                <p class="quotation"> 
+                  {{content}}
+                </p>
+                <footer>— {{author}}</footer>
+              </blockquote> 
+               
+            </div>
+         </div>
+                {{else}}
+                    {{#if isLink type}}
+        <div class="row">
+            <div class="col">
+               <a href="{{url}}" target="_blank">{{content}}</a>
+            </div>
+         </div>
+                    {{/if}}
+                {{/if}}
+             {{/if}}
+           {{/if}}
+         {{/if}}
      </div>
+     <div class="spacer20"></div>
       {{#if isOwner}}     
       <button type="button" class="btn btn-purple"><i class="fa fa-pencil fa-sm"></i> <a href="#" class="text-gray" id="edit_portlet" mode="edit" data-id="{{_id}}">Editar: "{{title}}"</a></button>
       {{/if}}

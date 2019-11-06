@@ -1,4 +1,4 @@
-<template name="userEditProject">
+<template name="editProject">
 
 
    <div class="container text-center">
@@ -15,7 +15,7 @@
          <div class="tab-content" ng-controller="loginCtrl">
            <div role="tabpanel" class="tab-pane active" id="persona_panel">    
              {{#if currentUser}}
-                {{> editProject }}
+                {{> userEditProject }}
              {{/if}}
            </div>       
          </div>
@@ -26,7 +26,7 @@
 
 
 
-<template name="editProject">
+<template name="userEditProject">
    <form>
 
       <!--Sección de recuadros de proyectos-->

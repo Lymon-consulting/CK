@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import { Project } from '../api/project.js';
 import { Ocupation } from '../api/ocupations.js';
 
-import './userEditProject.html';
+import './editProject.html';
 import '/lib/common.js';
 
 
@@ -20,7 +20,7 @@ if (Meteor.isClient) {
      }
    });
 
-   Template.editProject.helpers({
+   Template.userEditProject.helpers({
       projData(){
          return Project.findOne({'_id': FlowRouter.getParam('id')});
       },
@@ -224,7 +224,7 @@ if (Meteor.isClient) {
    });
 
 
-   Template.editProject.events({
+   Template.userEditProject.events({
       'change #proj_main': function(event) {
         var x = event.target.checked;
         $('#isMainProject').val(x);

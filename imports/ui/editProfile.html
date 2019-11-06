@@ -263,7 +263,9 @@
          <div class="form-group row">
             <div class="col text-center">
                <button class="btn btn-purple" id="guardar_set1" type="button" role="button">GUARDAR PERFIL</button>
+               {{#if hasTopRole}}
                <a href="/viewProjects/{{currentUser._id}}" class="btn btn-purple" id="mis_proyectos" type="button" role="button">MIS PROYECTOS</a>
+               {{/if}}
             </div>
          </div>
 

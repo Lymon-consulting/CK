@@ -16,10 +16,11 @@ import '../imports/ui/header.js';
 import '../imports/ui/login.js';
 import '../imports/ui/join.js';
 import '../imports/ui/thanksRegister.js';
+import '../imports/ui/confirmProfile.js';
 import '../imports/ui/recover.js';
-import '../imports/ui/userPage.js';
+import '../imports/ui/editProfile.js';
 import '../imports/ui/userProjects.js';
-import '../imports/ui/userEditProject.js';
+import '../imports/ui/editProject.js';
 import '../imports/ui/viewProjects.js';
 import '../imports/ui/peopleList.js';
 import '../imports/ui/projList.js';
@@ -38,11 +39,13 @@ import '/lib/router.js';
 
 Meteor.startup(() => {
 
+  //cloudinary.setCloudName("my-cloud");
+
 });
 
 Accounts.config({
-        sendVerificationEmail: true
-    });
+  sendVerificationEmail: true
+});
 
 /*
 Accounts.onResetPasswordLink(
