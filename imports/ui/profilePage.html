@@ -23,7 +23,7 @@
    <div class="container-fluid bg-overlay">
       <div class="spacer280"></div>
       {{#if getProfilePicture getProfile._id 100}}
-      <img src="{{getProfilePicture getProfile._id 100}}"/>
+      <img src="{{getProfilePicture getProfile._id 100}}"  id="profileImageLarge"/>
       {{else}}
       <div id="profileImageLarge">{{getInitials getProfile._id}}</div>
       {{/if}}
