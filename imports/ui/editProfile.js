@@ -26,7 +26,7 @@ Template.userPage.rendered = function(){
 
 
 
-   Template.userPage.helpers({
+   Template.editProfile.helpers({
     
      userFullName(){
       var fullname = "";

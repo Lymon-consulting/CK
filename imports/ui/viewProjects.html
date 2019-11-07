@@ -53,6 +53,8 @@
                   <td>
                      {{#if getProjectPicture this._id 100}}
                         <img src="{{getProjectPicture this._id 100}}" />
+                     {{else}}
+                        <img src="/images/background-dark.jpg" style="width: 100px" alt="">
                      {{/if}}
                   </td>
                   <td class="col agreements"><a href="/projectPage/{{this._id}}">{{this.project_title}}</a></td>
