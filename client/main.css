@@ -79,8 +79,10 @@ p{
 footer{
   margin:0;
   text-align: right;
+  vertical-align: bottom;
   font-size: 1em;
   font-style: italic;
+
 }
 
 
@@ -117,11 +119,13 @@ footer{
     background-size: cover;
 }
 .nine-columns {
+    vertical-align: middle;
     margin: 20px;
     margin: 2rem;
-    -webkit-column-count: 9; /* Chrome, Safari, Opera */
-      -moz-column-count: 9; /* Firefox */
-      column-count: 9;
+    width: 100%;
+    -webkit-column-count: 10; /* Chrome, Safari, Opera */
+    -moz-column-count: 10; /* Firefox */
+    column-count: 10;
 }
 
 .four-columns {
