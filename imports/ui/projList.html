@@ -65,9 +65,9 @@
                   <div class="col-md-2 vertical-align-top">
                      <a href="/projectPage/{{this.__originalId}}">
                      {{#if coverPicture this.__originalId 100}}
-                        <img src="{{coverPicture this.__originalId 80}}"/>
+                        <img src="{{coverPicture this.__originalId 150}}"/>
                      {{else}}
-                        <img src="../images/largometraje1.jpg" class="img-fluid" alt="">
+                        <img src="/images/background-dark.jpg" style="width: 150px;" alt="">
                      {{/if}}
                      </a>
                   </div>
@@ -125,10 +125,10 @@
                   </div>
                   <div class="col-md-3">
                      <a href="/profilePage/{{this.userId}}">
-                     {{#if getProfilePicture this.userId 40}}
-                        <img src="{{getProfilePicture this.userId 40}}" />
+                     {{#if getProfilePicture this.userId 100}}
+                        <img src="{{getProfilePicture this.userId 100}}" />
                      {{else}}
-                        <div id="profileImage">{{getInitials this.userId}}</div>
+                        <div id="profileImageLarge">{{getInitials this.userId}}</div>
                      {{/if}}
                      </a>
                   </div>

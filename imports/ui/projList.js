@@ -5,6 +5,7 @@ import { ProjectIndex } from '/lib/common.js';
 import './projList.html';
 import '/lib/common.js';
 
+Meteor.subscribe("otherUsers");
 Template.projList.helpers({
    projectIndex: () => ProjectIndex, // instanceof EasySearch.Index
    inputAttributes: function () {
