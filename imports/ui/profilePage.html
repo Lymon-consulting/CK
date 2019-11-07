@@ -32,15 +32,16 @@
    
    <!-- Inicia bloque con los datos personales y de contacto del perfil -->
    <div class="container-fluid">
-      <div class="spacer20"></div>
+      <div class="spacer40"></div>
       <div class="row">
-         <div class="col-lg-2">
+         <div class="col-md-2 col-sm-1">
+            &nbsp;
          </div>
-         <div class="col-lg-8">
+         <div class="col-md-9 col-sm-10 text-left">
             <h1 class="h3-title">{{getProfile.profile.name}} {{getProfile.profile.lastname}} {{getProfile.profile.lastname2}}
             </h1>
          </div>
-         <div class="col-lg-2 text-right">
+         <div class="col-md-1 col-sm-1 text-right">
             {{#if notSameUser}}
             {{else}}
                {{#if isVerified}}
@@ -49,76 +50,67 @@
             {{/if}}
          </div>
       </div>
-   </div>
-   <div class="container">
+      
       <div class="row">
-         <div class="col-lg-2">
+         <div class="col">
             <div class="row">
-               <div class="col-lg-3">
-                  <i class="fa fa-thumbs-up fa-sm"></i>
-               </div>
-               <div class="col-lg-9 numbers">
-                  {{#if getProfile.likes}}
+               <div class="col text-nowrap"><i class="fa fa-thumbs-up fa-sm"></i>
+                  <span class="numbers">{{#if getProfile.likes}}
                      {{getProfile.likes}}
                   {{else}}
                      0
-                  {{/if}}
+                  {{/if}}</span>
                </div>
             </div>
             <div class="row">
-               <div class="col-lg-3">
-                  <i class="fa fa-eye fa-sm"></i>
-               </div>
-               <div class="col-lg-9 numbers">
-                  {{#if getProfile.views}}
+               <div class="col text-nowrap"><i class="fa fa-eye fa-sm"></i>
+                  <span class="numbers">{{#if getProfile.views}}
                      {{getProfile.views}}
                   {{else}}
                      0
-                  {{/if}}
+                  {{/if}}</span>
                </div>
             </div>
             <div class="row">
-               <div class="col-lg-3">
-                  <i class="fa fa-user fa-sm"></i>&nbsp;<i class="fa fa-angle-left fa-sm"></i>
-               </div>
-               <div class="col-lg-9 numbers text-left">
-                  {{#if getFollowers.count}}
+               <div class="col text-nowrap"><i class="fa fa-user fa-sm"></i>&nbsp;<i class="fa fa-angle-left fa-sm"></i>
+                  <span class="numbers">
+                     {{#if getFollowers.count}}
                      {{getFollowers.count}}
                   {{else}}
                      0
-                  {{/if}}
+                  {{/if}}</span>
                </div>
             </div>
             <div class="row">
-               <div class="col-lg-3">
-                  <i class="fa fa-user fa-sm"></i>&nbsp;<i class="fa fa-angle-right fa-sm"></i>
-               </div>
-               <div class="col-lg-9 numbers text-left">
-                  {{#if getProfile.follows.length}}
+               <div class="col text-nowrap"><i class="fa fa-user fa-sm"></i>&nbsp;<i class="fa fa-angle-right fa-sm"></i>
+                  <span class="numbers">
+                     {{#if getProfile.follows.length}}
                      {{getProfile.follows.length}}
                   {{else}}
                      0
-                  {{/if}}
+                  {{/if}}</span>
                </div>
             </div>
+
+
          </div>
-         <div class="col-lg-8">
+         <div class="col-md-9 col-sm-10 text-left">
             <div class="row">
-               <div class="col-lg-12 uppercase">
+               <div class="col uppercase text-left">
                   {{#if ownerRole}}
                      {{ownerRole}}
                   {{/if}}      
                </div>
             </div>
             <div class="row">
-               <div class="col-lg-12">
+               <div class="col">
                   {{#if getProfile.city}}
                      <i class="fa fa-map-marker fa-sm"></i> <small>{{getProfile.city}}, {{getProfile.state}}</small>
                   {{/if}}
                </div>
             </div>
             <div class="row">
-               <div class="col-lg-12">
+               <div class="col">
                   {{#if notSameUser getProfile._id}}
                      {{#if showButtonFollow getProfile._id}}
                      <input type="hidden" id="thisUser" value="{{getProfile._id}}">
@@ -132,11 +124,12 @@
                </div>
             </div>
          </div>
-         <div class="col-lg-2 text-right">
-            
+         <div class="col-md-1 col-sm-1 text-right">
+            &nbsp;
          </div>
       </div>
    </div>
+   
    <!-- Termina bloque con los datos personales y de contacto del perfil -->
    <div class="spacer40"></div>
    <!-- Inicia grid de proyectos-->
@@ -145,13 +138,13 @@
       {{#if getProjects}}
          {{#each getProjects}}
          <!-- Inicia cada recuadro de cada proyecto -->
-         
-            <div class="col">
+            <div class="col-lg-3 col-md-6 col-sm-12">
+               <div class="spacer20"></div>
                <div class="card w-100">
                   {{#if getProjectImages this._id 175}}
-                     <img class="card-img-top" src="{{getProjectImages this._id 175}}" alt="Card image cap">
+                     <a href="/projectPage/{{this._id}}" class="card-img-top"><img class="card-img-top w-100" src="{{getProjectImages this._id 175}}" alt="Card image cap"></a>
                   {{else}}
-                     <img src="../images/largometraje1.jpg" class="" alt="">
+                     <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/background-dark.jpg" class="card-img-top w-100" alt=""></a>
                   {{/if}}  
 
                  <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a>{{#if ownerRole}}&nbsp;<a href="/editProject/{{this._id}}"><i class="fa fa-pencil fa-sm text-purple"></i></a>{{/if}}</div>
@@ -171,16 +164,12 @@
          <!-- Termina cada recuadro de cada proyecto -->
          {{/each}}
       {{/if}}
-         <!--Inicia columna de la derecha para el ACERCA DE y los COLABORADORES-->
-         <div class="col text-right">
+         <!--Inicia columna de la derecha para el ACERCA DE y los SEGUIDORES-->
+         <div class="col-lg-3 col-md-12 col-sm-12 text-right">
             <div class="container">
+               <div class="spacer20"></div>
                <div class="row">
-                  <div class="col-md-12">
-                     <hr>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-12 text-left">
                      <strong class="uppercase">ACERCA DE {{getProfile.profile.name}}</strong>
                   </div>
                </div>
@@ -202,7 +191,7 @@
                   </div>
                </div>
                <div class="row">
-                  <div class="col">
+                  <div class="col text-left">
                      <a href="{{getProfile.webpage}}" target="_blank" class="text-gray"><strong class="text-gray"><small>{{getProfile.webpage}}</small></strong></a>
                   </div>
                </div>
@@ -234,11 +223,9 @@
                   <div class="col spacer120"></div>
                </div>
                {{#if getFollowers.count}}
+               
                <div class="row">
-                  <div class="col"><hr></div>
-               </div>
-               <div class="row">
-                  <div class="col-md-8">
+                  <div class="col-md-8 text-left">
                      <strong>SEGUIDORES</strong>
                   </div>
                   <div class="col-md-4">
@@ -282,7 +269,7 @@
                </div>
             </div>
          </div>
-         <!--Termina columna de la derecha para el ACERCA DE y los COLABORADORES-->
+         <!--Termina columna de la derecha para el ACERCA DE y los SEGUIDORES-->
       </div>
    </div>
    <!-- Termina grid de proyectos-->
