@@ -62,6 +62,9 @@ Cloudinary.config({
 
 });
 
+Meteor.publish( 'books', function() {
+  return Portlet.find( {}, { sort: { order: 1 } } );
+});
  
 Meteor.publish("userData", function () {
     return Meteor.users.find({_id: this.userId},
@@ -202,7 +205,8 @@ Meteor.publish('myPortlets', function() {
       'title':1,
       'content':1,
       'author':1,
-      'url':1
+      'url':1,
+      'order':1
     }
   });
 });

@@ -125,12 +125,42 @@ if (Meteor.isClient) {
                    proj_twitter_page,
                    proj_vimeo_page,
                    proj_youtube_page,
-                   proj_instagram_page
+                   proj_instagram_page,
+                   function(err,result){
+                     if(!err){
+                      $.cloudinary.config({
+                        cloud_name:"drhowtsxb"
+                      });
+
+                      var options = {
+                        folder: Meteor.userId()
+                      };
+
+                      var file = document.getElementById('project-img-upload').files[0];
+
+                      Cloudinary.upload(file, options, function(err,res){
+                        if(!err){
+                          Meteor.call(
+                            'saveProjectPictureID',
+                            result,
+                            res.public_id
+                          );
+                        }
+                        else{
+                          console.log("Upload Error:"  + err); //no output on console
+                        }
+                      });
+                       Bert.alert({message: 'El proyecto ha sido agregado', type: 'success', icon: 'fa fa-check'});
+                       Session.set("ocupation_temp",null);
+                       Session.set("selected_category",null);
+                       FlowRouter.go('/projectPage/' + result);       
+                     }
+                     else{
+                       console.log("Ocurrió el siguiente error: " +err);
+                     }
+                   }
                 );
-                Bert.alert({message: 'El proyecto ha sido agregado', type: 'success', icon: 'fa fa-check'});
-                Session.set("ocupation_temp",null);
-                Session.set("selected_category",null);
-                FlowRouter.go('/viewProjects/' + Meteor.userId());
+                
 
           }
           return false;

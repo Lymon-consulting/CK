@@ -82,7 +82,6 @@ if (Meteor.isClient) {
      },
      getProjectGender(){
         var type = new Array();
-        type.push("Cortometraje");
         type.push("Animacion");
         type.push("Comedia");
         type.push("Documental");
@@ -280,7 +279,7 @@ if (Meteor.isClient) {
                 );
                 
                 Bert.alert({message: 'El proyecto ha sido modificado con éxito', type: 'success', icon: 'fa fa-check'});
-                FlowRouter.go('/viewProjects/' + Meteor.userId());
+                FlowRouter.go('/projectPage/' + FlowRouter.getParam('id'));
 
           }
           return false;

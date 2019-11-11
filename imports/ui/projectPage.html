@@ -236,7 +236,7 @@
    <div class="spacer40"></div>   
 
    {{> items}}
-  
+
   <!--
   <div id="drop-zone" droppable="true">
    {{getPortlets.count}}
@@ -831,17 +831,38 @@
   {{#if isOwner}}   
     <div id="items">
     {{#each items}}
-      <div class="item">
-        {{>portlet}}
-      </div>
+      <li data-id="{{_id}}" class="list-group-item clearfix">
+        <div class="row">
+            <div class="col-lg-10 col-md-8 col-sm-12 text-center">
+               <h1 class="h1-title">{{title}}</h1>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-12">
+              {{#if isNotTheLast order}}
+              <i class="fa fa-arrow-down pull-right text-purple"  data-id="{{_id}}" id="down"></i>
+              {{/if}}
+              {{#if isNotTheFirst order}}
+              <i class="fa fa-arrow-up pull-right text-purple" data-id="{{_id}}" id="up"></i>
+              {{/if}}
+              <span class="pull-right">
+                <a href="#" class="text-purple" id="edit_portlet"><i class="fa fa-pencil fa-sm" mode="edit" data-id="{{_id}}"></i></a>
+                <!-- {{order}}-->
+              </span>
+            </div>
+         </div>
+         <div class="row">
+           <div class="col">
+              {{>portlet}}     
+           </div>
+         </div>
+      </li>
     {{/each}}
     </div>
   {{else}}
     <div>
     {{#each items}}
-      <div>
+      <li data-id="{{_id}}" class="list-group-item clearfix">
         {{>portlet}}
-      </div>
+      </li>
     {{/each}}
     </div>
   {{/if}}   
@@ -850,12 +871,7 @@
 <template name="portlet">
   <div class="container">
       <div id="demo3">
-         <div class="row">
-            <div class="col text-center">
-               <h1 class="h1-title">{{title}}</h1>
-            </div>
-         </div>
-         <div class="spacer20"></div>
+        <div class="spacer20"></div>
          {{#if isText type}}
          <div class="row">
             <div class="col">
@@ -884,8 +900,8 @@
          </div>
          <div class="spacer20"></div>
          <div class="row">
-            <div class="col">
-              <iframe src="{{url}}" width="320" height="240" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            <div class="col text-center">
+              <iframe src="{{url}}" width="800" height="500" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
             </div>
          </div>
              {{else}}
@@ -912,13 +928,10 @@
                 {{/if}}
              {{/if}}
            {{/if}}
-         {{/if}}
+         {{/if}}         
+         
      </div>
      <div class="spacer20"></div>
-      {{#if isOwner}}     
-      <button type="button" class="btn btn-purple"><i class="fa fa-pencil fa-sm"></i> <a href="#" class="text-gray" id="edit_portlet" mode="edit" data-id="{{_id}}">Editar: "{{title}}"</a></button>
-      {{/if}}
-      <hr>
    </div>  
   <div class="spacer40"></div>
 </template>
@@ -926,4 +939,3 @@
 <template name="editor">
    <textarea id="content" name="content"></textarea>
  </template>
-

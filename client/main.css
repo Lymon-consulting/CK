@@ -218,6 +218,13 @@ footer{
   margin: 10px 0;
 }
 
+.selectedElement{
+  background-color: aqua;
+}
+.notSelectedElement{
+  background-color: white;
+}
+
 .modal-backdrop{
   background-color: #000 !important;
   opacity:0.9 !important;

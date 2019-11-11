@@ -13,40 +13,6 @@ if (Meteor.isClient) {
    Meteor.subscribe("myPortlets");
    Meteor.subscribe("userData");
 
-  Template.items.rendered = function() {
-    this.$('#items').sortable({
-        stop: function(e, ui) {
-          // get the dragged html element and the one before
-          //   and after it
-          el = ui.item.get(0);
-          before = ui.item.prev().get(0);
-          after = ui.item.next().get(0);
- 
-          // Here is the part that blew my mind!
-          //  Blaze.getData takes as a parameter an html element
-          //    and will return the data context that was bound when
-          //    that html element was rendered!
-          if(!before) {
-            //if it was dragged into the first position grab the
-            // next element's data context and subtract one from the rank
-            newRank = Blaze.getData(after).order - 1;
-          } else if(!after) {
-            //if it was dragged into the last position grab the
-            //  previous element's data context and add one to the rank
-            newRank = Blaze.getData(before).order + 1;
-          }
-          else
-            //else take the average of the two ranks of the previous
-            // and next elements
-            newRank = (Blaze.getData(after).order +
-                       Blaze.getData(before).order)/2;
- 
-          //update the dragged Item's rank
-          Portlet.update({'_id': Blaze.getData(el)._id}, {$set: {'order': newRank}});
-        }
-    });
-  }
-
    Template.projectPage.helpers({
       projData(){
          return Project.findOne({'_id': FlowRouter.getParam('id')});
@@ -109,11 +75,6 @@ if (Meteor.isClient) {
        }
        return wizard;
      },
-      getPortlets(){
-        return Portlet.find({'projectID': FlowRouter.getParam('id')}, {
-          sort: {'order': -1}
-        }).fetch();
-      },
       profilePicture(userId){
          return Images.find({'owner': userId});
       },
@@ -199,9 +160,9 @@ if (Meteor.isClient) {
 
    Template.items.helpers({
       items() {
-        return Portlet.find({'projectID': FlowRouter.getParam('id')}, {
-                  sort: {'order': 1}
-                }).fetch();
+        Meteor.subscribe("myPortlets");
+        var portlets = Portlet.find({'projectID': FlowRouter.getParam('id')}, {sort: {'order': 1}}).fetch(); //Portlet.find({'projectID': FlowRouter.getParam('id')}).fetch();
+        return portlets;
       },
       isOwner(){
         project = Project.findOne({'_id': FlowRouter.getParam('id')});
@@ -212,8 +173,130 @@ if (Meteor.isClient) {
            val = false;
         }
         return val;
+      },
+      isNotTheFirst(order){
+        if(order>1){
+          return  true;
+        }
+        else{
+          return false;
+        }
+      },
+      isNotTheLast(order){
+        var portlets = Portlet.find({'projectID': FlowRouter.getParam('id')}, {sort: {'order': 1}}).fetch();
+        if(portlets!=null && order<portlets.length){
+          return  true;
+        }
+        else{
+          return false;
+        }
       }
     });
+
+   Template.items.events({
+      'click #up': function(event){
+        event.preventDefault();
+        var id = $(event.target).data('id');
+        var portlet = Portlet.findOne({'_id':id});
+        if(portlet!=null){
+          var order = portlet.order;
+          order = order - 1;
+          var upperPortlet = Portlet.findOne({$and:[{'projectID': FlowRouter.getParam('id')},{'order':order}]});
+          if(upperPortlet!=null){
+            //console.log("Ya hay otro portlet con ese orden y es "+upperPortlet._id);
+            portlet.order = upperPortlet.order;
+            Meteor.call('updatePortletOrder',portlet);  
+            upperPortlet.order = portlet.order + 1;
+            Meteor.call('updatePortletOrder',upperPortlet);  
+          }
+        }
+      },
+        'click #down': function(event){
+        event.preventDefault();
+        var id = $(event.target).data('id');
+        var portlet = Portlet.findOne({'_id':id});
+        if(portlet!=null){
+          var order = portlet.order;
+          order = order + 1;
+          var downPortlet = Portlet.findOne({$and:[{'projectID': FlowRouter.getParam('id')},{'order':order}]});
+          if(downPortlet!=null){
+            //console.log("Ya hay otro portlet con ese orden y es "+downPortlet._id);
+            portlet.order = downPortlet.order;
+            Meteor.call('updatePortletOrder',portlet);  
+            downPortlet.order = portlet.order - 1;
+            Meteor.call('updatePortletOrder',downPortlet);  
+          } 
+          
+        }
+      },
+      'click #edit_portlet' : function(e, template, doc){
+          e.preventDefault();
+          //console.log("Aquí dentro");
+
+          var id = $(e.target).attr('data-id');
+          //console.log(id);
+          var mode = $(e.target).attr('mode');
+          //console.log(mode);
+          var portlet = Portlet.findOne({"_id":id});
+
+          //console.log(portlet);
+          var type = portlet.type;
+          var title = portlet.title;
+          var url = portlet.url;
+
+          if(type==='text'){
+            Session.set("modalType","text");
+            $('#modePortlet').val(mode);
+            $('#idPortlet').val(id);
+            $('#title').val(portlet.title);
+            $('#content').val(portlet.content);
+            $('#modalPortletText').show();
+            window.scrollTo(0, 0);
+          }
+          else if(type==='image'){
+            Session.set("modalType","image");
+            $('#modePortletImg').val(mode);
+            $('#idPortletImg').val(id);
+            $('#titleImg').val(portlet.title);
+            $('#descImg').val(portlet.content);
+            $('#maxImg').text(450-portlet.content.length);
+            $('#urlImg').val(portlet.url);
+            $('#imageModal').show();
+            window.scrollTo(0, 0);
+          }
+          else if(type==='video'){
+            Session.set("modalType","video");
+            $('#modePortletVid').val(mode);
+            $('#idPortletVid').val(id);
+            $('#titleVid').val(portlet.title);
+            $('#urlVid').val(portlet.url);
+            $('#descVid').val(portlet.content);
+            $('#maxVid').text(450-portlet.content.length);
+            $('#videoModal').show();
+            window.scrollTo(0, 0);
+          }
+          else if(type==='quote'){
+            Session.set("modalType","quote");
+            $('#modePortletQuote').val(mode);
+            $('#idPortletQuote').val(id);
+            /*$('#titleQuote').val(portlet.title);*/
+            $('#quote').val(portlet.content);
+            $('#maxQuote').text(450-portlet.content.length);
+            $('#quoteModal').show();
+            window.scrollTo(0, 0);
+          }
+          else if(type==='link'){
+            Session.set("modalType","link");
+            $('#modePortletLink').val(mode);
+            $('#idPortletLink').val(id);
+            /*$('#titleVid').val(portlet.title);*/
+            $('#urlLink').val(portlet.url);
+            $('#contentLink').val(portlet.content);
+            $('#linkModal').show();
+            window.scrollTo(0, 0);
+          }
+        }
+   });
 
    Template.portlet.helpers({
       isOwner(){
@@ -698,10 +781,10 @@ if (Meteor.isClient) {
           if(title === ""){
             Bert.alert({message: 'El título no puede estar vacío', type: 'danger', icon: 'fa fa-exclamation'});
           }
-          else if(type="text" && content===""){
+          else if(type==="text" && content===""){
             Bert.alert({message: 'El contenido no puede estar vacío', type: 'danger', icon: 'fa fa-exclamation'});
           }
-          else if(type="video" && url===""){
+          else if(type==="video" && url===""){
             Bert.alert({message: 'La URL no puede estar vacía', type: 'danger', icon: 'fa fa-exclamation'});
           }
           else{
@@ -717,6 +800,16 @@ if (Meteor.isClient) {
               $( "#modePortlet").val("add");
             }
             else if(mode==="add"){
+
+              var portlet = Portlet.findOne({"projectID" : FlowRouter.getParam('id')},{sort: {'order': -1}});
+              var order;
+              if(portlet!=null){
+                order = portlet.order + 1;
+              }
+              else{
+                order = 1;
+              }
+
               Meteor.call(
                  'insertPortlet',
                  FlowRouter.getParam('id'),
@@ -724,7 +817,8 @@ if (Meteor.isClient) {
                  title,
                  content,
                  author,
-                 url
+                 url,
+                 order
               );
           }
           $('#modalPortletText').hide();
@@ -794,6 +888,15 @@ if (Meteor.isClient) {
               
             }
             else if(mode==="add"){
+              var portlet = Portlet.findOne({"projectID" : FlowRouter.getParam('id')},{sort: {'order': -1}});
+              var order;
+              if(portlet!=null){
+                order = portlet.order + 1;
+              }
+              else{
+                order = 1;
+              }
+
               Meteor.call(
                  'insertPortlet',
                  FlowRouter.getParam('id'),
@@ -801,7 +904,8 @@ if (Meteor.isClient) {
                  title,
                  content,
                  null,
-                 null, function(error, result){
+                 null,
+                 order, function(error, result){
                    if(!error){
                       $.cloudinary.config({
                         cloud_name:"drhowtsxb"
@@ -873,6 +977,15 @@ if (Meteor.isClient) {
               $( "#modePortletVid").val("add");
             }
             else if(mode==="add"){
+              var portlet = Portlet.findOne({"projectID" : FlowRouter.getParam('id')},{sort: {'order': -1}});
+              var order;
+              if(portlet!=null){
+                order = portlet.order + 1;
+              }
+              else{
+                order = 1;
+              }
+
               Meteor.call(
                  'insertPortlet',
                  FlowRouter.getParam('id'),
@@ -880,7 +993,8 @@ if (Meteor.isClient) {
                  title,
                  content,
                  author,
-                 url
+                 url,
+                 order
               );
           }
           $('#videoModal').hide();
@@ -915,6 +1029,14 @@ if (Meteor.isClient) {
               $( "#modePortletQuote").val("add");
             }
             else if(mode==="add"){
+              var portlet = Portlet.findOne({"projectID" : FlowRouter.getParam('id')},{sort: {'order': -1}});
+              var order;
+              if(portlet!=null){
+                order = portlet.order + 1;
+              }
+              else{
+                order = 1;
+              }
               Meteor.call(
                  'insertPortlet',
                  FlowRouter.getParam('id'),
@@ -922,7 +1044,8 @@ if (Meteor.isClient) {
                  title,
                  content,
                  author,
-                 null
+                 null,
+                 order
               );
           }
           $('#quoteModal').hide();
@@ -973,6 +1096,14 @@ if (Meteor.isClient) {
               $( "#modePortletLink").val("add");
             }
             else if(mode==="add"){
+              var portlet = Portlet.findOne({"projectID" : FlowRouter.getParam('id')},{sort: {'order': -1}});
+              var order;
+              if(portlet!=null){
+                order = portlet.order + 1;
+              }
+              else{
+                order = 1;
+              }
               Meteor.call(
                  'insertPortlet',
                  FlowRouter.getParam('id'),
@@ -980,7 +1111,8 @@ if (Meteor.isClient) {
                  title,
                  content,
                  author,
-                 url
+                 url,
+                 order
               );
           }
           $('#linkModal').hide();
@@ -1081,5 +1213,3 @@ if (Meteor.isClient) {
    });   
 
 }
-
-

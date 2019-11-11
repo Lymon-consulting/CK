@@ -101,7 +101,9 @@ Meteor.methods({
       { $pull: { project_staff: collaborator }
    });
   },
-  insertPortlet(projectID, portletType, portletTitle, portletContent, portletAuthor, portletUrl){
+  insertPortlet(projectID, portletType, portletTitle, portletContent, portletAuthor, portletUrl, portletOrder){
+    //console.log("En el server el tipo de portlet es "+portletType);
+
    return Portlet.insert({
             "projectID": projectID,
             "type" : portletType, //text, image, video, quote, link
@@ -109,9 +111,9 @@ Meteor.methods({
             "content": portletContent,
             "author": portletAuthor,//only used for quote type
             "url": portletUrl,//only used for link type
-            "order": "100" 
+            "order": portletOrder
          }, function(error,result){
-            console.log("desde el server el id es "+result);
+            //console.log("desde el server el id es "+result);
             return result;
          });
    //return newPortlet;
@@ -126,8 +128,15 @@ Meteor.methods({
         }
       });
   },
+  updatePortletOrder(portlet){
+     Portlet.update({"_id": portlet._id},
+        {$set:{
+          "order": portlet.order,
+        }
+      });
+  },
   insertProject(userId, proj_name, proj_type, proj_genre, proj_desc, proj_year, proj_role, proj_main, proj_web_page, proj_facebook_page, proj_twitter_page, proj_vimeo_page, proj_youtube_page, proj_instagram_page){
-    Project.insert({
+    return Project.insert({
       "project_title": proj_name,
       "project_type": proj_type,
       "project_genre": proj_genre,
@@ -142,6 +151,8 @@ Meteor.methods({
       "proj_youtube_page": proj_youtube_page,
       "proj_instagram_page": proj_instagram_page,
       "userId": Meteor.userId()
+     },function(error,result){
+        return result;
      });
   },
   updateProject(projectId, proj_name, proj_type, proj_genre, proj_desc, proj_year, proj_main, proj_web_page, proj_facebook_page, proj_twitter_page, proj_vimeo_page, proj_youtube_page, proj_instagram_page){
@@ -209,7 +220,16 @@ Meteor.methods({
           "projectPictureID": null
         }
     }); 
+  },
+  updateBookOrder( books ) {
+    check( books, [{
+      _id: String,
+      order: Number
+    }]);
+
+    for ( let book of books ) {
+      Potlet.update( { _id: book._id }, { $set: { order: book.order } } );
+    }
   }
-
-
+  
 });
