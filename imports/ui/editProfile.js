@@ -303,8 +303,8 @@ Template.userPage.rendered = function(){
               instagram
             );
 
-            Bert.alert({message: 'Tus datos han sido actualizados', type: 'info'});
-            FlowRouter.go('/viewProjects/' + Meteor.userId());
+            Bert.alert({message: 'Se ha actualizado tu perfil', type: 'success', icon: 'fa fa-check'});
+            FlowRouter.go('/profilePage/' + Meteor.userId());
          }
          return false
       },
