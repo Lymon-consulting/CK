@@ -1,7 +1,7 @@
 <template name="viewProjects">
    <div class="container text-center">
       <h1 class="h1-title">TUS PROYECTOS</h1>
-      <h2>{{userFullName}}</h2>
+      <h2>{{fullName}}</h2>
       <hr class="hr_width_600">
    </div>
    <div class="container">
@@ -32,42 +32,49 @@
                <li>Editar un proyecto, haciendo clic sobre el ícono <i class="fa fa-edit">&nbsp;</i></li>
             </ul>
          </small>
-         <table class="table">
-            <thead>
-               <tr>
-                  <th class="col agreements"><strong>Principal</strong></th>
-                  <th class="col agreements"><strong>Portada</strong></th>
-                  <th class="col agreements"><strong>Título</strong></th>
-                  <th class="col agreements"><strong>Tipo</strong></th>
-                  <th class="col agreements"><strong>Género</strong></th>
-                  <th class="col agreements"><strong>Año</strong></th>
-                  <th class="col agreements"><strong>Rol</strong></th>
-                  <th class="col agreements"><strong>Ver</strong></th>
-                  <th class="col agreements"><strong>Editar</strong></th>
-               </tr>        
-            </thead>
-            <tbody>
-               {{#each myProjects}}
-               <tr>
-                  <td><input type="radio" name="selectMain" id="proj_main" {{ isMainProject this._id }} value="{{this._id}}"></td>
-                  <td>
-                     {{#if getProjectPicture this._id 100}}
-                        <img src="{{getProjectPicture this._id 100}}" />
-                     {{else}}
-                        <img src="/images/background-dark.jpg" style="width: 100px" alt="">
-                     {{/if}}
-                  </td>
-                  <td class="col agreements"><a href="/projectPage/{{this._id}}">{{this.project_title}}</a></td>
-                  <td class="col agreements">{{this.project_type}}</td>
-                  <td class="col agreements">{{this.project_genre}}</td>
-                  <td class="col agreements">{{this.project_year}}</td>
-                  <td class="col agreements">{{this.project_role}}</td>
-                  <td class="col agreements"><a href="/projectPage/{{this._id}}"><i class="fa fa-search">&nbsp;</i></a></td>
-                  <td class="col agreements"><a href="/editProject/{{this._id}}"><i class="fa fa-edit">&nbsp;</i></a></td>
-               </tr>
-               {{/each}}
-            </tbody>
-         </table>
+         
+         <main role="main">
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row">
+        {{#each myProjects}}
+        <div class="col-md-4">
+          <div class="card h-1500">
+           {{#if getProjectPicture this._id 500}}
+              <img class="card-img-top" src="{{getProjectPicture this._id 500}}" alt="Card image cap">
+           {{else}}
+              <img class="card-img-top" src="/images/background-dark.jpg" style="width: 500px">
+           {{/if}}
+            <div class="card-body">
+              <h5 class="card-title"><a href="/projectPage/{{this._id}}">{{this.project_title}}</a></h5>
+              <p class="card-text">{{this.project_type}}</p>
+              <p class="card-text">{{this.project_genre}}</p>
+              <p class="card-text">{{this.project_year}}</p>
+              <p class="card-text">{{this.project_role}}</p>
+            </div>
+            <div class="card-footer">
+               <div class="row">
+                  <div class="col"><a href="/projectPage/{{this._id}}"><i class="fa fa-search">&nbsp;</i></a></div>
+                  <div class="col text-right"><a href="/editProject/{{this._id}}"><i class="fa fa-edit">&nbsp;</i></a></div>
+               </div>
+             </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+
+    </div>
+  </div>
+
+</main>
+         
+               
+               
+               
+            
+         
       {{else}}
          <table class="table">
             <tr>

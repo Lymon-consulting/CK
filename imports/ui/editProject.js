@@ -227,7 +227,7 @@ if (Meteor.isClient) {
       'change #proj_main': function(event) {
         var x = event.target.checked;
         $('#isMainProject').val(x);
-        console.log($('#isMainProject').val());
+        //console.log($('#isMainProject').val());
        },
       'click #guardar_proyecto': function(event, template) {
           event.preventDefault();
@@ -338,7 +338,7 @@ if (Meteor.isClient) {
       },
       'dblclick #ocupation':function(event, template){
          event.preventDefault();
-         console.log("detectó doble click " + FlowRouter.getParam('id') + ","+ event.currentTarget.value);
+         //console.log("detectó doble click " + FlowRouter.getParam('id') + ","+ event.currentTarget.value);
          Meteor.call(
             'addRoleToProject',
             FlowRouter.getParam('id'),
@@ -362,7 +362,8 @@ if (Meteor.isClient) {
         });
 
         var options = {
-          folder: Meteor.userId()
+          folder: Meteor.userId(),
+          transformation:"limit"
         };
 
         Cloudinary.upload(file, options, function(err,res){
@@ -378,6 +379,36 @@ if (Meteor.isClient) {
           }
         });
       },
+      'click #cloudinary-upload-widget': function click(event) {
+      event.preventDefault();
+      cloudinary.openUploadWidget(
+        {
+          cloud_name: 'drhowtsxb',
+          upload_preset: 'limit',
+          sources: ['local', 'url', 'camera'],
+          cropping: 'server',
+          cropping_aspect_ratio: 1,
+          max_file_size: '500000',
+          max_image_width: '500',
+          max_image_height: '500',
+          min_image_width: '300',
+          min_image_height: '300',
+        },
+        (error, result) => {
+          if (error) {
+            console.log('Error during Cloudinary upload: ', error);
+            return;
+          }
+          // Otherwise get the form elements
+          // console.log('Cloudinary results: ', result);
+          const fileName = result[0].original_filename;
+          const thumbnail = result[0].thumbnail_url;
+          const url = result[0].url;
+          $("input[name='cloudinaryFileName']").val(fileName);
+          $("input[name='cloudinaryUrl']").val(url);
+          $("input[name='cloudinaryThumbnail']").val(thumbnail);
+      });
+  },
       'keyup #proj_desc' : function(event){
          event.preventDefault();
          

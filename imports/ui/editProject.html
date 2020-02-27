@@ -239,7 +239,21 @@
             </div>
             <div class="row">
                <div class="col">
-                  <button class="btn btn-purple" id="guardar_proyecto" type="button" role="button">GUARDAR PROYECTO</button>   
+                  <button class="btn btn-purple" id="guardar_proyecto" type="button" role="button">GUARDAR PROYECTO</button>
+                  
+    <div class="fields">
+      <div class="twelve wide field">
+        <input type="text"   name="cloudinaryFileName" placeholder="Please upload image">
+        <input type="hidden" name="cloudinaryUrl" disabled="true">
+        <input type="hidden" name="cloudinaryThumbnail" disabled="true">
+      </div>
+      <div class="four wide field">
+        <button class="ui button" id="cloudinary-upload-widget">
+          Upload image file
+        </button>
+      </div>
+    </div>
+                    
                </div>
             </div>
                

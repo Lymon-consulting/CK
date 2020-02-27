@@ -162,10 +162,15 @@ Template.profilePage.events({
          Meteor.userId(),
          FlowRouter.getParam('id')
       );
-
-      
-
-      $("#pushFollow").attr("disabled", true);
+      //$("#pushFollow").attr("disabled", true);
+   },
+   'click #pushUnfollow': function(event, template){
+      event.preventDefault();
+      Meteor.call(
+         'removeFollowTo',
+         Meteor.userId(),
+         FlowRouter.getParam('id')
+      );
    }
 });
 

@@ -31,6 +31,11 @@ Template.registerHelper('lastName2', function(){
    return Meteor.user().profile.lastname2;
 });
 
+Template.registerHelper('fullName', function(){
+   var fullName = Meteor.user().profile.name + " " + Meteor.user().profile.lastname + " " + Meteor.user().profile.lastname2;
+   return fullName;
+});
+
 Template.mainlayout.events({
   'click .resend-verification-link' ( event, template ) {
     Meteor.call( 'sendVerificationLink', ( error, response ) => {

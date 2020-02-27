@@ -38,7 +38,7 @@
             &nbsp;
          </div>
          <div class="col-md-9 col-sm-10 text-left">
-            <h1 class="h3-title">{{getProfile.profile.name}} {{getProfile.profile.lastname}} {{getProfile.profile.lastname2}}
+            <h1 class="h3-title">{{fullName}}
             </h1>
          </div>
          <div class="col-md-1 col-sm-1 text-right">
@@ -115,11 +115,11 @@
                   {{#if notSameUser getProfile._id}}
                      {{#if showButtonFollow getProfile._id}}
                      <input type="hidden" id="thisUser" value="{{getProfile._id}}">
-                     {{#if isVerified}}
-                     <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
-                     {{/if}}
+                        {{#if isVerified}}
+                        <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
+                        {{/if}}
                      {{else}}
-                     <button class="btn button-follow disabled"> <i class="fa fa-plus-circle fa-sm"></i> SIGUIENDO</button>
+                        <button class="btn button-unfollow" id="pushUnfollow"> <i class="fa fa-minus-circle fa-sm"></i> DEJAR DE SEGUIR</button>
                      {{/if}}      
                   {{/if}}
                </div>
@@ -201,19 +201,19 @@
                      <table class="table table-responsive borderless">
                         <tr>
                            {{#if getProfile.facebook}}
-                           <td><a href="{{getProfile.facebook}}" target="_blank"> <i class="fa fa-sm fa-facebook text-gray"></i></a></td>
+                           <td><a href="{{getProfile.facebook}}" target="_blank"> <i class="fa fa-sm fa-facebook text-purple"></i></a></td>
                            {{/if}}
                            {{#if getProfile.twitter}}
-                           <td><a href="{{getProfile.twitter}}"><i class="fa fa-sm fa-twitter text-gray"></i></a></td>
+                           <td><a href="{{getProfile.twitter}}"><i class="fa fa-sm fa-twitter text-purple"></i></a></td>
                            {{/if}}
                            {{#if getProfile.vimeo}}
-                           <td><a href="{{getProfile.vimeo}}"><i class="fa fa-sm fa-vimeo text-gray"></i></a></td>
+                           <td><a href="{{getProfile.vimeo}}"><i class="fa fa-sm fa-vimeo text-purple"></i></a></td>
                            {{/if}}
                            {{#if getProfile.youtube}}
-                           <td><a href="{{getProfile.youtube}}"><i class="fa fa-sm fa-youtube text-gray"></i></a></td>
+                           <td><a href="{{getProfile.youtube}}"><i class="fa fa-sm fa-youtube text-purple"></i></a></td>
                            {{/if}}
                            {{#if getProfile.instagram}}
-                           <td><a href="{{getProfile.instagram}}"><i class="fa fa-sm fa-instagram text-gray"></i></a></td>
+                           <td><a href="{{getProfile.instagram}}"><i class="fa fa-sm fa-instagram text-purple"></i></a></td>
                            {{/if}}
                         </tr>
                      </table>

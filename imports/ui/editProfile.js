@@ -25,26 +25,6 @@ Template.userPage.rendered = function(){
 };*/
 
 
-
-   Template.editProfile.helpers({
-    
-     userFullName(){
-      var fullname = "";
-       if (Meteor.user()){
-         fullname = Meteor.user().profile.name + " " + Meteor.user().profile.lastname; 
-         if(Meteor.user().profile.lastname2!=null){
-           fullname = fullname + " " +Meteor.user().profile.lastname2;
-         }
-         return fullname;
-       }
-       else{
-         return "Nada";
-       }
-     }
-   });
-
-
-
    Template.user.helpers({
 /*      images() {
           return ImageData.find();

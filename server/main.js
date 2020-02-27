@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Project } from '../imports/api/project.js';
+import { Industry } from '../imports/api/industry.js';
 import { Portlet } from '../imports/api/portlet.js';
 import { Ocupation } from '../imports/api/ocupations.js';
 import { City } from '../imports/api/city.js';
@@ -9,6 +10,7 @@ import '../imports/api/ocupations.js';
 import '../imports/startup/server/on-create-user.js';
 import './projectMethods.js';
 import './userMethods.js';
+import './industryMethods.js';
 
 
 Meteor.startup(() => {
@@ -174,7 +176,9 @@ Meteor.publish("otherUsers", function () {
       'follows' : 1,
       'fullname':1,
       'profilePictureID': 1,
-      'wizard' : 1
+      'profileCoverID': 1,
+      'wizard' : 1,
+      'likesProject' : 1
     }
   });
 });
@@ -186,6 +190,10 @@ Meteor.publish("follows", function (userId) {
 
 Meteor.publish('myProjects', function(userId) {
    return Project.find();
+});
+
+Meteor.publish('myIndustries', function(userId) {
+   return Industry.find();
 });
 
 Meteor.publish('projectData', function(projId){

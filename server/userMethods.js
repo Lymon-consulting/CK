@@ -122,6 +122,31 @@ Meteor.methods({
          {'_id': followerId},
          { $addToSet: { 'follows': followsToId } }
       );
+	},
+	removeFollowTo(userId, followsToId){
+		Meteor.users.update({'_id': userId}, 
+		{
+			$pull: {
+            	"follows": followsToId
+            }
+     	});
+	},
+	addLikesProject(userId, projectId){
+		Meteor.users.update({'_id': userId}, 
+			{
+				$addToSet: {
+	            	"likesProject": projectId
+	            }
+         });
+	},
+
+	removeLikesProject(userId,projectId){
+	  Meteor.users.update({'_id': userId}, 
+		{
+			$pull: {
+            	"likesProject": projectId
+            }
+     });	
 	}
 	
 

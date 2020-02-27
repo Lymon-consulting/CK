@@ -1,3 +1,7 @@
+h4{
+  background-color: #ccc;
+}
+
 h3{
   color:#666;
 }
@@ -443,7 +447,7 @@ footer{
   padding: 10px;
   margin: 0px;
   background: white;
-  
+  height: 420px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -662,6 +666,17 @@ footer{
    border-width: 1px;
    border-color: #666;
    background-color: #666;
+   color: #FFF;
+   font-family: "AvenirNext-Medium";
+   font-size: 12px;
+}
+
+.button-unfollow{
+   padding-top: 1px;
+   padding-bottom: 1px;
+   border-width: 1px;
+   border-color: #ED1567;
+   background-color: #ED1567;
    color: #FFF;
    font-family: "AvenirNext-Medium";
    font-size: 12px;

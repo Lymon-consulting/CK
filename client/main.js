@@ -22,6 +22,8 @@ import '../imports/ui/editProfile.js';
 import '../imports/ui/userProjects.js';
 import '../imports/ui/editProject.js';
 import '../imports/ui/viewProjects.js';
+import '../imports/ui/viewIndustries.js';
+import '../imports/ui/addIndustry.js';
 import '../imports/ui/peopleList.js';
 import '../imports/ui/projList.js';
 import '../imports/ui/profilePage.js';

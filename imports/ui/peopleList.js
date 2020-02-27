@@ -94,10 +94,11 @@ Template.peopleList.helpers({
       return initials;
     },
     getCoverPicture(userId, size) {
+       Meteor.subscribe("otherUsers");
        var url = "";
        var user = Meteor.users.findOne({'_id':userId});
-       if(user.profileCoverID!=null && user.profileCoverID!=""){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_scale/" + Meteor.user().profileCoverID;
+       if(user.profileCoverID!=null && user.profileCoverID!="undefined"){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_scale/" + user.profileCoverID;
        }
        return url;
     }

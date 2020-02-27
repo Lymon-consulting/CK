@@ -15,7 +15,16 @@ if (Meteor.isClient) {
 
    Template.projectPage.helpers({
       projData(){
-         return Project.findOne({'_id': FlowRouter.getParam('id')});
+         var project = Project.findOne({'_id': FlowRouter.getParam('id')});
+         if(project!=null){
+           if(!project.likes){
+            project.likes = 0;
+           }
+           if(!project.views){
+            project.views = 0;
+           }
+         }
+         return project;
       },
       getProjectPicture(size) {
           var url = "";
@@ -154,6 +163,16 @@ if (Meteor.isClient) {
       },
       modalType(){
         return Session.get("modalType");
+      },
+      notLikeThisProject(){
+        Meteor.subscribe('otherUsers');
+        var projectsUserLike = Meteor.users.find({$and : [ {'_id' : Meteor.userId()} , {"likesProject":  FlowRouter.getParam('id')}]});
+
+        var found = true;
+        if(projectsUserLike.count() > 0){
+           found = false;
+        }
+        return found;
       }
 
    });
@@ -295,6 +314,34 @@ if (Meteor.isClient) {
             $('#linkModal').show();
             window.scrollTo(0, 0);
           }
+        },
+      'click #delete_portlet' : function(e, template, doc){
+          e.preventDefault();
+          if(confirm("¿Deseas eliminar esta sección?")){
+            var id = $(e.target).attr('data-id');
+            var mode = $(e.target).attr('mode');
+            if(mode==='delete'){
+              
+              Meteor.call(
+                'deletePortlet',
+                id
+              );
+
+              //Reordenamiento de índices
+              var portlets = Portlet.find({'projectID': FlowRouter.getParam('id')}, {sort: {'order': 1}}).fetch();
+
+              if(portlets!=null && portlets.length>0){
+                for(var i=1; (i-1) < portlets.length; i++){
+                  var portlet = portlets[i-1];
+                  portlet.order = i;
+                  Meteor.call('updatePortletOrder',portlet);
+                }
+              }
+            }
+
+          }
+          
+          
         }
    });
 
@@ -357,29 +404,43 @@ if (Meteor.isClient) {
    Template.projectPage.events({
       'click #pushLike': function(event, template) {
          event.preventDefault();
-         
          var currentLikes = 1; 
-
          var proj = Project.findOne({'_id' : FlowRouter.getParam('id')});
-         
-         
          if(proj.likes){
             currentLikes = proj.likes;
             currentLikes++;
          }
-         
          Project.update(
             {'_id': FlowRouter.getParam('id')},
             { $set: { 'likes': currentLikes } }
          );
-         
-         //$("#pushLike").attr("disabled", true);
-      }, /*$('#comment').on('keyup', function(event) {
-           var len = $(this).val().length;
-           if (len >= 40) {
-              $(this).val($(this).val().substring(0, len-1));
-           }
-        });*/
+         Meteor.call(
+          'addLikesProject',
+          Meteor.userId(),
+          FlowRouter.getParam('id')
+          );
+      }, 
+
+      'click #pushDontLike' : function(event, template){
+        event.preventDefault();
+        var currentLikes = 1; 
+        var proj = Project.findOne({'_id' : FlowRouter.getParam('id')});
+        if(proj.likes){
+           currentLikes = proj.likes;
+           currentLikes--;
+        }
+        Project.update(
+           {'_id': FlowRouter.getParam('id')},
+           { $set: { 'likes': currentLikes } }
+        );
+
+        Meteor.call(
+          'removeLikesProject',
+          Meteor.userId(),
+          FlowRouter.getParam('id')
+        );
+
+      },
       
       'dragover #drop-zone'(e, t) {
         e.preventDefault();

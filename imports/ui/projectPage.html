@@ -29,7 +29,7 @@
         left:0;
         width:100%;
         height:100%;
-        background:rgba(0,0,0,0.8);
+        background:rgba(0,0,0,0.5);
         z-index:-1;
       }
    </style>
@@ -37,58 +37,6 @@
       {{#if isOwner}}
       <div class="container-fluid text-white">
         <a href="/editProject/{{projData._id}}" class="text-white"><i class="fa fa-2x fa-pencil-square" aria-hidden="true"></i>&nbsp;Editar información</a>
-      </div>
-      <div class="container text-center">
-         <div class="btn-group" role="group" aria-label="...">
-           <!--<button type="button" class="btn btn-outline-light button_white"><a href="/editProject/{{projData._id}}" class="text-button">EDITAR PROYECTO</a></button>
-           <button type="button" class="btn btn-outline-light button_white"><a href="editar_proyecto.html" class="text-button">PUBLICAR CAMBIOS</a></button>
-           <button type="button" class="btn button_white"><i class="fa fa-trash fa-sm"></i></button>-->
-         </div>   
-         <br><br>
-<!--
-         <div class="btn-group" role="group" aria-label="...">
-           <button type="button" class="btn btn-outline-light button_white"><i class="fa fa-pencil fa-sm"></i><a href="/editProject/{{projData._id}}" class="text-button">EDITAR PROYECTO</a></button>
-           <button type="button" class="btn button_white" data-toggle="modal" data-target="#collabModal"><i class="fa fa-users fa-sm"></i> <a href="#" class="text-button">COLABORADORES</a></button>
-           <button type="button" class="btn button_white"><i class="fa fa-file fa-sm"></i> <a href="#" class="text-button" id="add_portlet">AGREGAR SECCIÓN</a></button>           
-         </div> 
-       -->
-         <div class="container text-center">
-         <div class="btn-group" role="group" aria-label="...">
-           <!--
-           <button type="button" class="btn btn-outline-light button_white"><a href="#" class="text-button">PUBLICAR CAMBIOS</a></button>
-           <button type="button" class="btn button_white"><i class="fa fa-trash fa-sm"></i></button>
-            -->
-         </div>   
-         <br><br>
-         <div class="btn-group" role="group" aria-label="...">
-           <!--
-           <button type="button" class="btn button_white" data-toggle="modal" data-target="#collabModal"><i class="fa fa-users fa-sm"></i> <a href="#" class="text-button">COLABORADORES</a></button>
-         
-           <button type="button" class="btn button_white" data-toggle="modal"><i class="fa fa-camera fa-sm"></i> <a href="#" class="text-button add_portlet" data-type="image">IMAGEN</a></button>
--->
-          <!--
-          <button id="upload_widget" class="cloudinary-button">Upload files</button>
-        
-
-           <button type="button" class="btn button_white" data-toggle="modal" data-target="#videoModal"><i class="fa fa-video-camera fa-sm"></i> <a href="#" class="text-button">VIDEO</a></button>
-           <button type="button" class="btn button_white"><i class="fa fa-file-text-o fa-sm"></i> <a href="#" class="text-button add_portlet" data-type="text">TEXTO</a></button>
-           
-           <button type="button" class="btn button_white" data-toggle="modal" data-target="#phraseModal"><i class="fa fa-quote-right fa-sm"></i> <a href="#" class="text-button">FRASE</a></button>
-           <button type="button" class="btn button_white" data-toggle="modal" data-target="#linkModal"><i class="fa fa-link fa-sm"></i> <a href="#" class="text-button">LINK</a></button> -->
-         </div> 
-      </div>
-
-         <!--
-         <div id="windowPortlet" class="hidden fixed">
-           <div class="spacer20"></div>
-           <label for="titlePortlet" class="text-white">Título de la sección: </label>
-           <input type="text" id="titlePortlet" class="form-control" placeholder="Escriba un título para la sección">
-           <input type="hidden" id="modePortlet" value="add">
-           <input type="hidden" id="idPortlet">
-           {{>editor}}
-           <button type="button" class="btn button_white" id="savePortlet"><i class="fa fa-save fa-sm"></i> <a href="#" class="text-button">Guardar</a></button>
-           
-         </div>   -->
       </div>
       {{/if}}
       <section>
@@ -149,6 +97,7 @@
          </div>
       </section>
    </div>
+   {{#if isOwner}}
    <div class="container-fluid background-lightgray">
      <div class="spacer10"></div>
      <div class="row">
@@ -172,18 +121,19 @@
      </div>
      <div class="spacer10"></div>
    </div>
-
+   {{/if}}
+  
    <div class="container-fluid background-verydarkgray">
          <div class="row">
             <div class="col-md-4">
                <table class="table table-responsive borderless">
                   <tbody class="">
                      <tr>
-                        <td><a href="{{projData.project_facebook_page}}"><i class="fa fa-sm fa-facebook text-gray"></i></a></td>
-                        <td><a href="{{projData.project_twitter_page}}"><i class="fa fa-sm fa-twitter text-gray"></i></a></td>
-                        <td><a href="{{projData.proj_vimeo_page}}"><i class="fa fa-sm fa-vimeo text-gray"></i></a></td>
-                        <td><a href="{{projData.proj_youtube_page}}"><i class="fa fa-sm fa-youtube text-gray"></i></a></td>
-                        <td><a href="{{projData.proj_instagram_page}}"><i class="fa fa-sm fa-instagram text-gray"></i></a></td>
+                        <td><a href="{{projData.project_facebook_page}}"><i class="fa fa-sm fa-facebook text-purple"></i></a></td>
+                        <td><a href="{{projData.project_twitter_page}}"><i class="fa fa-sm fa-twitter text-purple"></i></a></td>
+                        <td><a href="{{projData.proj_vimeo_page}}"><i class="fa fa-sm fa-vimeo text-purple"></i></a></td>
+                        <td><a href="{{projData.proj_youtube_page}}"><i class="fa fa-sm fa-youtube text-purple"></i></a></td>
+                        <td><a href="{{projData.proj_instagram_page}}"><i class="fa fa-sm fa-instagram text-purple"></i></a></td>
                      </tr>
                   </tbody>
                </table>
@@ -201,9 +151,13 @@
                      
                   </tr>
                   <tr>
-
+                     {{#if notLikeThisProject}}
                      <td class="low-padding text-no-wrap text-white"><a href="#" id="pushLike"><i class="fa fa-thumbs-up fa-sm text-white"></i></a></td>
-                     <td class="low-padding text-no-wrap text-white numbers"><a href="#" id="pushLike"><small class="text-white">Me gusta</small></a></td>
+                     <td class="low-padding text-no-wrap text-white numbers"><small class="text-white">Me gusta</small></td>
+                     {{else}}
+                     <td class="low-padding text-no-wrap"><a href="#" id="pushDontLike"><i class="fa fa-thumbs-up fa-sm text-purple"></i></a></td>
+                     <td class="low-padding text-no-wrap numbers"><small class="text-purple">Ya no me gusta</small></td>
+                     {{/if}}
                      <td class="low-padding text-no-wrap text-white"><i class="fa fa-share-alt-square fa-sm"></i></td>
                      <td class="low-padding text-no-wrap text-white numbers"><small>Compartir</small></td>
                      
@@ -837,16 +791,18 @@
                <h1 class="h1-title">{{title}}</h1>
             </div>
             <div class="col-lg-2 col-md-4 col-sm-12">
-              {{#if isNotTheLast order}}
-              <i class="fa fa-arrow-down pull-right text-purple"  data-id="{{_id}}" id="down"></i>
-              {{/if}}
-              {{#if isNotTheFirst order}}
-              <i class="fa fa-arrow-up pull-right text-purple" data-id="{{_id}}" id="up"></i>
-              {{/if}}
               <span class="pull-right">
                 <a href="#" class="text-purple" id="edit_portlet"><i class="fa fa-pencil fa-sm" mode="edit" data-id="{{_id}}"></i></a>
-                <!-- {{order}}-->
+                <a href="#" class="text-purple" id="delete_portlet"><i class="fa fa-trash fa-sm" mode="delete" data-id="{{_id}}"></i></a>
+                <!-- {{order}} -->
               </span>
+              <span class="pull-right">&nbsp;</span>
+              {{#if isNotTheLast order}}
+              <a href="#"><i class="fa fa-arrow-down pull-right text-purple"  data-id="{{_id}}" id="down"></i></a>
+              {{/if}}
+              {{#if isNotTheFirst order}}
+              <a href="#"><i class="fa fa-arrow-up pull-right text-purple" data-id="{{_id}}" id="up"></i></a>
+              {{/if}}
             </div>
          </div>
          <div class="row">

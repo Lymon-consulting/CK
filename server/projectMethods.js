@@ -128,6 +128,9 @@ Meteor.methods({
         }
       });
   },
+  deletePortlet(portletID){
+     Portlet.remove({"_id": portletID});
+  },
   updatePortletOrder(portlet){
      Portlet.update({"_id": portlet._id},
         {$set:{
