@@ -10,17 +10,6 @@ if (Meteor.isClient) {
    Meteor.subscribe("fileUploads");
 
    Template.userEditProject.helpers({
-     userFullName(){
-       if (Meteor.user()){
-         return Meteor.user().profile.name + " " + Meteor.user().profile.lastname + " " +Meteor.user().profile.lastname2;
-       }
-       else{
-         return "Nada";
-       }
-     }
-   });
-
-   Template.userEditProject.helpers({
       projData(){
          return Project.findOne({'_id': FlowRouter.getParam('id')});
       },

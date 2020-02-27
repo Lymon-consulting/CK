@@ -289,6 +289,10 @@ footer{
    width: 202px;
 }
 
+.thumbnail-logo{
+   height: 50px; 
+   width: 50px;
+}
 .thumbnail-project{
    height: 50px; 
    width: 250px;

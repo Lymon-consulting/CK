@@ -48,11 +48,11 @@
               <img class="card-img-top" src="/images/background-dark.jpg" style="width: 500px">
            {{/if}}
             <div class="card-body">
-              <h5 class="card-title"><a href="/projectPage/{{this._id}}">{{this.project_title}}</a></h5>
+              <h5 class="card-title"><a href="/projectPage/{{this._id}}">{{this.project_title}} ({{this.project_year}})</a></h5>
               <p class="card-text">{{this.project_type}}</p>
               <p class="card-text">{{this.project_genre}}</p>
-              <p class="card-text">{{this.project_year}}</p>
               <p class="card-text">{{this.project_role}}</p>
+              <p class="card-text">Marcar como principal: <input type="radio" name="selectMain" id="proj_main" {{ isMainProject this._id }} value="{{this._id}}"></p>
             </div>
             <div class="card-footer">
                <div class="row">

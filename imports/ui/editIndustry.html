@@ -1,0 +1,238 @@
+<template name="editIndustry">
+
+
+ <div class="container text-center">
+  <h1 class="h1-title">AGREGAR UNA INDUSTRIA</h1>
+  <h2>{{fullName}}</h2>
+  <hr class="hr_width_600">
+</div>
+
+
+
+<div class="container">
+  <div class="col-md-8 mx-auto">
+   <!-- Tab panes -->
+   <div class="tab-content">
+     <div role="tabpanel" class="tab-pane active" id="persona_panel">    
+       {{#if currentUser}}
+       {{> editIndustries }}
+       {{/if}}
+     </div>       
+   </div>
+ </div>
+</div>
+</template>
+
+
+
+
+<template name="editIndustries">
+ <form>
+
+<div class="row">
+   <div class="col-md-12">
+     <div class="row">
+      <div class="col">
+       <label for="company_name">Nombre comercial de la empresa: <span class="text-purple">(Requerido)</span></label>
+     </div>
+     <div class="col">
+       <input type="text" id="company_name" class="form-control" placeholder="Empresa" value="{{companyData.company_name}}" maxlength="150">
+     </div>
+   </div>
+
+   <div class="spacer20"></div>
+
+  <div class="row">
+    <div class="col">
+      <label for="proj_type">Tipo de empresa: <span class="text-purple">(Requerido)</span></label>
+    </div>
+    <div class="col">
+     <select name="company_type" id="company_type" class="form-control">
+      <option value="" disabled selected style='display:none;'> Seleccione </option>
+      {{#each getCompanyType}}
+      <option value="{{this}}" {{typeSelected this companyData.company_type}}> {{this}} </option>
+      {{/each}}
+    </select>
+    </div>
+  </div>
+  
+  <div class="spacer20"></div>
+
+  <div class="row">
+    <div class="col"><label for="proj_desc">Descripción de la empresa: <span class="text-purple">(Requerido)</span></label></div>
+    <div class="col">
+     <textarea class="form-control" rows="5" id="company_desc" value="" placeholder="Descripción de la empresa (450 caracteres máx)." maxlength="450">{{companyData.company_desc}}</textarea><small>Caracteres restantes:</small> <div id="max">{{resumeCount companyData.company_desc}}</div>
+   </div>
+  </div>
+
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col"><label for="company_year">Año de fundación: <span class="text-purple">(Requerido)</span></label></div>
+    <div class="col">
+     <select name="company_year" id="company_year" class="form-control">
+      <option value="" disabled selected style='display:none;'> Seleccione </option>
+      {{#each getAvailableYears}}
+      <option value="{{this}}" {{yearSelected this companyData.company_year}}> {{this}} </option>   
+      {{/each}}
+    </select>
+  </div>
+  </div>
+
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col"><label for="web">Página Web de la empresa:</label></div>
+  </div>
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col">
+     <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text"><i class="fa fa-globe fa-lg"></i></div>
+      </div>
+      <input type="text" class="form-control" id="company_web_page" value="{{companyData.company_web_page}}" placeholder="Ej: www.cinekomuna.com" maxlength="120">
+    </div>
+  </div>
+  </div>
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col"><label for="web">En la red:</label></div>
+  </div>
+  <div class="spacer20"></div>
+  <div class="row">
+   <div class="col">
+    <div class="input-group">
+     <div class="input-group-prepend">
+       <div class="input-group-text"><i class="fa fa-facebook fa-lg"></i></div>
+     </div>
+     <input  type="text" class="form-control" id="facebook_page" value="{{companyData.company_facebook_page}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120">
+   </div>
+  </div>
+  </div>
+
+  <div class="spacer20"></div>
+  <div class="row">
+   <div class="col">
+    <div class="input-group">
+     <div class="input-group-prepend">
+       <div class="input-group-text"><i class="fa fa-twitter fa-lg"></i></div>
+     </div>
+     <input type="text" class="form-control" id="twitter_page" value="{{companyData.company_twitter_page}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
+   </div>
+  </div>
+  </div>
+  <div class="spacer20"></div>
+  <div class="row">
+   <div class="col">
+    <div class="input-group">
+     <div class="input-group-prepend">
+       <div class="input-group-text"><i class="fa fa-vimeo fa-lg"></i></div>
+     </div>
+     <input type="text" class="form-control" id="vimeo_page" value="{{companyData.company_vimeo_page}}" placeholder="Ej. www.vimeo.com/cinekomuna" maxlength="120">
+   </div>
+  </div>
+  </div>
+  <div class="spacer20"></div>
+  <div class="row">
+   <div class="col">
+    <div class="input-group">
+     <div class="input-group-prepend">
+       <div class="input-group-text"><i class="fa fa-youtube fa-lg"></i></div>
+     </div>
+     <input  type="text" class="form-control" id="youtube_page" value="{{companyData.company_youtube_page}}" placeholder="Ej. www.youtube.com/cinekomuna" maxlength="120">
+   </div>
+  </div>
+  </div>
+  <div class="spacer20"></div>
+  <div class="row">
+   <div class="col">
+    <div class="input-group">
+     <div class="input-group-prepend">
+       <div class="input-group-text"><i class="fa fa-instagram fa-lg"></i></div>
+     </div>
+     <input type="text" class="form-control" id="instagram_page" value="{{companyData.company_instagram_page}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120">
+   </div>
+  </div>
+  </div>
+
+  <div class="spacer20"></div>
+  <div class="row">
+   <div class="col">Logo</div>
+  </div>
+  <div class="row">
+   <div class="col agreements">Elige una imagen de 500 pixeles de ancho por 500 pixeles de alto</div>
+  </div>
+  
+  <div class="row">
+   <div class="col">
+    <input id="company-logo-upload" type="file">
+    {{#if getIndustryLogo}}
+     <table class="table table-condensed">
+       <tbody>
+       <tr>
+          <td>
+            <img src="{{getIndustryLogo}}" class="thumbnail-logo"/>
+          </td>
+       </tr>
+       <tr>
+         <td>
+           <button id="deleteLogoButton" data-id="{{getLogoPublicID}}" class="btn btn-purple">Eliminar logo</button>
+         </td>
+       </tr>
+       </tbody>
+     </table>
+     {{/if}}
+  </div>
+  </div>
+  <div class="row">
+   <div class="col"><hr></div>
+  </div>
+  <div class="spacer20"></div>
+  <div class="row">
+   <div class="col">Imagen de Portada</div>
+  </div>
+  <div class="row">
+   <div class="col agreements">Elige una imagen de 1200 pixeles de ancho por 800 pixeles de alto</div>
+  </div>
+  
+  <div class="row">
+   <div class="col">
+    <input id="company-cover-upload" type="file">
+    {{#if getIndustryCover}}
+     <table class="table table-condensed">
+       <tbody>
+       <tr>
+          <td>
+            <img src="{{getIndustryCover}}" class="thumbnail-cover"/>
+          </td>
+       </tr>
+       <tr>
+         <td>
+           <button id="deleteCoverButton" data-id="{{getCoverPublicID}}" class="btn btn-purple">Eliminar foto de portada</button>
+         </td>
+       </tr>
+       </tbody>
+     </table>
+     {{/if}}
+  </div>
+  </div>
+  <div class="row">
+   <div class="col"><hr></div>
+  </div>
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-purple" id="guardar_empresa" type="button" role="button">GUARDAR EMPRESA</button>   
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col spacer80"></div>
+  </div>
+
+ </div>
+</div>
+   
+
+
+</form>
+</template> 

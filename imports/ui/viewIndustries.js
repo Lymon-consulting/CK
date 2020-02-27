@@ -13,7 +13,7 @@ Template.industryList.helpers({
           var url = "";
           var data = Industry.findOne({'_id' : companyId});
           if(data!=null && data.companyLogoID!=null){
-            url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_limit/" + data.companyLogoID;
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/" + data.companyLogoID;
           }
          return url;
       }

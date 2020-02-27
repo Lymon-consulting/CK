@@ -32,7 +32,10 @@ Template.registerHelper('lastName2', function(){
 });
 
 Template.registerHelper('fullName', function(){
-   var fullName = Meteor.user().profile.name + " " + Meteor.user().profile.lastname + " " + Meteor.user().profile.lastname2;
+   var fullName = "";
+   if(Meteor.user()!=null && Meteor.user().profile!=null){
+     Meteor.user().profile.name + " " + Meteor.user().profile.lastname + " " + Meteor.user().profile.lastname2;
+   }
    return fullName;
 });
 
