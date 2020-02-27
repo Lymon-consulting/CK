@@ -1,0 +1,125 @@
+<template name="industryPage">
+   <style>
+      {{#if getCoverPicture}}
+      /**Estilo para que la foto de perfil aparezca sobre la foto de fondo de portada*/
+      .bg-overlay {
+          background: url({{getCoverPicture}});
+          /*
+          background-image: 
+             linear-gradient(
+               rgba(0, 0, 0, 0.5),
+               rgba(0, 0, 0, 0.5)
+             ),
+             url({{getCoverPicture}});*/
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center center;
+          height: 350px;          
+      }
+      
+      {{else}}
+      .bg-overlay {
+          background: url("/images/background-dark.jpg");
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center center;
+          height: 350px;          
+      }
+      {{/if}}
+   </style>
+   <!-- Inicia bloque para desplegar la foto de perfil -->
+   <div class="container-fluid bg-overlay">
+      <div class="spacer280"></div>
+      {{#if getLogoPicture}}
+      <img src="{{getLogoPicture 100}}" class="img-thumbnail">
+      {{else}}
+      <div id="companyLogo"></div>
+      {{/if}}
+   </div>
+   <!-- Termina bloque para desplegar la foto de perfil -->
+   
+   <!-- Inicia bloque con los datos personales y de contacto del perfil -->
+   <div class="container-fluid">
+      
+      <div class="spacer40"></div>
+      <div class="row">
+         <div class="col-md-9 col-sm-12 text-left">
+            <h1 class="h3-title">{{getCompany.company_name}}</h1>
+         </div>
+         <div class="col-md-3 col-sm-12">
+            {{#if isOwner}}
+            <a href="/editIndustry/{{getCompany._id}}" class="text-purple"><i class="fa fa-pencil-square" aria-hidden="true"></i>&nbsp;Editar información</a>
+            {{/if}}
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-9 col-sm-10 text-left">
+            <div class="row">
+               <div class="col text-left">
+                  {{getCompany.company_type}}      
+               </div>
+            </div>
+         </div>
+         <div class="col-md-1 col-sm-1 text-right">
+            &nbsp;
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-9 col-sm-10 text-left">
+            <div class="row">
+               <div class="col text-left">
+                  Año de fundación: {{getCompany.company_year}}   
+               </div>
+            </div>
+         </div>
+         <div class="col-md-1 col-sm-1 text-right">
+            &nbsp;
+         </div>
+      </div>
+      
+      <div class="row">
+         <div class="col-md-12">
+            <table class="table table-responsive borderless">
+               <tr>
+                  {{#if getCompany.company_facebook_page}}
+                  <td><a href="{{getCompany.company_facebook_page}}" target="_blank"> <i class="fa fa-sm fa-facebook text-purple"></i></a></td>
+                  {{/if}}
+                  {{#if getCompany.company_twitter_page}}
+                  <td><a href="{{getCompany.company_twitter_page}}"><i class="fa fa-sm fa-twitter text-purple"></i></a></td>
+                  {{/if}}
+                  {{#if getCompany.company_vimeo_page}}
+                  <td><a href="{{getCompany.company_vimeo_page}}"><i class="fa fa-sm fa-vimeo text-purple"></i></a></td>
+                  {{/if}}
+                  {{#if getCompany.company_youtube_page}}
+                  <td><a href="{{getCompany.company_youtube_page}}"><i class="fa fa-sm fa-youtube text-purple"></i></a></td>
+                  {{/if}}
+                  {{#if getCompany.company_instagram_page}}
+                  <td><a href="{{getCompany.company_instagram_page}}"><i class="fa fa-sm fa-instagram text-purple"></i></a></td>
+                  {{/if}}
+               </tr>
+            </table>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-9 col-sm-10 text-left">
+            <div class="row">
+               <div class="col">
+                  <div class="spacer20"></div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col text-left">
+                  {{getCompany.company_desc}}      
+               </div>
+            </div>
+         </div>
+         <div class="col-md-1 col-sm-1 text-right">
+            &nbsp;
+         </div>
+      </div>
+
+   </div>
+
+   <div class="spacer80"></div>
+   
+</template>

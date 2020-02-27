@@ -36,7 +36,7 @@ Template.registerHelper('fullName', function(){
    if(Meteor.user()!=null && Meteor.user().profile!=null){
      Meteor.user().profile.name + " " + Meteor.user().profile.lastname + " " + Meteor.user().profile.lastname2;
    }
-   return fullName;
+   return Meteor.user().profile.name + " " + Meteor.user().profile.lastname + " " + Meteor.user().profile.lastname2;
 });
 
 Template.mainlayout.events({

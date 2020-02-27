@@ -132,6 +132,7 @@ if (Meteor.isClient) {
      function(err,result){
        if(!err){
         Bert.alert({message: 'Los datos de la empresa han sido modificados', type: 'success', icon: 'fa fa-check'});
+        FlowRouter.go('/industryPage/' + FlowRouter.getParam('id'));
       }
       else{
        console.log("Ocurrió el siguiente error: " +err);

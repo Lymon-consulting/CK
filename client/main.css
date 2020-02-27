@@ -222,6 +222,12 @@ footer{
   margin: 10px 0;
 }
 
+#companyLogo {
+  width: 150px;
+  height: 50px;
+  
+}
+
 .selectedElement{
   background-color: aqua;
 }
