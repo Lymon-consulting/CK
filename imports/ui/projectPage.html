@@ -35,9 +35,11 @@
    </style>
    <div class="container-fluid bannerProject">
       {{#if isOwner}}
+      {{#if hasTopRole}}
       <div class="container-fluid text-white">
         <a href="/editProject/{{projData._id}}" class="text-white"><i class="fa fa-2x fa-pencil-square" aria-hidden="true"></i>&nbsp;Editar información</a>
       </div>
+      {{/if}}
       {{/if}}
       <section>
          <div class="container-fluid">
@@ -98,6 +100,7 @@
       </section>
    </div>
    {{#if isOwner}}
+   {{#if hasTopRole}}
    <div class="container-fluid background-lightgray">
      <div class="spacer10"></div>
      <div class="row">
@@ -121,6 +124,7 @@
      </div>
      <div class="spacer10"></div>
    </div>
+   {{/if}}
    {{/if}}
   
    <div class="container-fluid background-verydarkgray">

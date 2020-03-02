@@ -1,12 +1,12 @@
-<template name="projList">
+<template name="industryResults">
 <div class="container">
       <div class="spacer40"></div>
       <div class="row">
          <div class="col-lg-3 col-md-6">
             <select class="form-control agreements" id="tipoPersona">
                <option value="Personas">Crew</option>
-               <option value="Proyectos" selected>Proyectos</option>
-               <option value="Industrias">Industrias</option>
+               <option value="Proyectos">Proyectos</option>
+               <option value="Industrias" selected>Industrias</option>
                <option value="Casting" disabled>Casting</option>
             </select>
          </div>
@@ -14,23 +14,23 @@
          <div class="col-lg-3 col-md-6">
             <select class="form-control agreements" id="type">
                   <option value="cualquier"> Cualquier tipo </option>
-               {{#each getProjectType}}
+               {{#each getIndustryType}}
                   <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
                {{/each}}
             </select>
          </div>
          <div class="col-lg-3 col-md-6">
-            <select class="form-control agreements" id="genre">
-                    <option value="cualquier"> Cualquier género </option>
-                {{#each getProjectGender}}
-                    <option value="{{this}}" {{genreSelected this}}> {{this}} </option>
+            <select class="form-control agreements" id="year">
+                    <option value="cualquier"> Cualquier año </option>
+                {{#each getIndustryYear}}
+                    <option value="{{this}}" {{yearSelected this}}> {{this}} </option>
                  {{/each}}
             </select>
          </div>
          
          <div class="col-lg-3 col-md-6">
             <div class="input-group">
-               {{> EasySearch.Input index=projectIndex event="enter" attributes=inputAttributes}}
+               {{> EasySearch.Input index=industryIndex event="enter" attributes=inputAttributes}}
                <span class="input-group-btn">
                  <button class="btn btn-secondary" type="button" id="buscarBtn">
                      <i class="fa fa-search fa-sm"></i>
@@ -60,18 +60,18 @@
                <div class="row">
                   <div class="col-md-12"><hr></div>
                </div>
-               {{#EasySearch.Each index=projectIndex}}
+               {{#EasySearch.Each index=industryIndex}}
                <div class="row">
                   <div class="col-md-2 vertical-align-top">
-                     <a href="/projectPage/{{this.__originalId}}">
-                     {{#if coverPicture this.__originalId 100}}
-                        <img src="{{coverPicture this.__originalId 150}}"/>
+                     <a href="/industryPage/{{this.__originalId}}">
+                     {{#if logoPicture this.__originalId 100}}
+                        <img src="{{logoPicture this.__originalId 150}}"/>
                      {{else}}
                         <img src="/images/background-dark.jpg" style="width: 150px;" alt="">
                      {{/if}}
                      </a>
                   </div>
-                  <div class="col-md-7">
+                  <div class="col-md-10">
                      <div class="container-fluid">
                         <div class="row">
                            <div class="col">
@@ -79,58 +79,25 @@
                                  <tbody>
                                     <tr>
                                        <td class="no-padding text-no-wrap">
-                                          <a href="/projectPage/{{this.__originalId}}"><h5 class="h5-name">{{this.project_title}}</h5></a>
+                                          <a href="/industryPage/{{this.__originalId}}"><h5 class="h5-name">{{this.company_name}}</h5></a>
                                        </td>
                                     </tr>
                                     <tr>
                                        <td class="no-padding text-no-wrap subtitle-underline">
-                                          {{this.project_type}}
+                                          {{this.company_type}}
                                        </td>
                                     </tr>
                                     <tr>
                                        <td class="no-padding text-no-wrap location-underline">
-                                          {{this.project_genre}}
+                                          {{this.company_year}}
                                        </td>
                                     </tr>
-                                    <tr>
-                                       <td class="text-no-wrap">
-                                          <div class="row">
-                                             <div class="col-md-6 numbers">
-                                                <i class="fa fa-thumbs-up fa-sm"></i> <small>
-                                                {{#if this.likes}}
-                                                    {{this.likes}}
-                                                {{else}}
-                                                   0
-                                                {{/if}}
-                                             </small>
-                                             </div>
-                                             <div class="col-md-6 numbers">
-                                                <i class="fa fa-eye fa-sm"></i> <small>
-                                                {{#if this.views}}
-                                                   {{this.views}}
-                                                {{else}}
-                                                   0
-                                                {{/if}}
-                                             </small>
-                                             </div>
-                                          </div>
-                                          
-                                       </td>
-                                    </tr>
+                                    
                                  </tbody>
                               </table>
                            </div>
                         </div>
                      </div>
-                  </div>
-                  <div class="col-md-3">
-                     <a href="/profilePage/{{this.userId}}">
-                     {{#if getProfilePicture this.userId 100}}
-                        <img src="{{getProfilePicture this.userId 100}}" />
-                     {{else}}
-                        <div id="profileImageLarge">{{getInitials this.userId}}</div>
-                     {{/if}}
-                     </a>
                   </div>
                </div>
                <div class="row">
@@ -138,9 +105,9 @@
                </div>
                {{/EasySearch.Each}}
 
-               {{> EasySearch.LoadMore index=projectIndex}}
+               {{> EasySearch.LoadMore index=industryIndex}}
 
-                {{#EasySearch.IfNoResults index=projectIndex}}
+                {{#EasySearch.IfNoResults index=industryIndex}}
                   <div class="no-results">No se encontraron resultados</div>
                 {{/EasySearch.IfNoResults}}
             </div>

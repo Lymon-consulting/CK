@@ -111,6 +111,9 @@ Template.projList.events({
       if(newValue==="Personas"){
         FlowRouter.go('/peopleList');
       }
+      else if(newValue==="Industrias"){
+        FlowRouter.go('/industryList');
+      }
    },
    'change #type': function (e) {
       if($(e.target).val()!="cualquier"){

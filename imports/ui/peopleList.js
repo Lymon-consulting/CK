@@ -153,6 +153,9 @@ Template.peopleList.events({
       if(newValue==="Proyectos"){
         FlowRouter.go('/projList');
       }
+      else if(newValue==="Industrias"){
+        FlowRouter.go('/industryList');
+      }
    }
    
 });

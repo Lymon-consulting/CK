@@ -146,6 +146,25 @@ export const ProjectIndex = new Index({
     }),
 });
 
+export const IndustryIndex = new Index({
+    collection: Industry,
+    fields: ['company_name', 'company_desc', 'company_type', 'company_year'],
+    
+    engine: new MongoDBEngine({
+      selector: function (searchObject, options, aggregation) {
+      const selector = this.defaultConfiguration().selector(searchObject, options, aggregation)
+
+        if (options.search.props.company_type) {
+          selector.company_type = options.search.props.company_type;
+        }
+        if (options.search.props.company_year) {
+          selector.company_year = options.search.props.company_year;
+        }
+        return selector;
+      }
+    }),
+});
+
 Meteor.publish("allProjects", function(){
   return Project.find({},{
     fields: {
