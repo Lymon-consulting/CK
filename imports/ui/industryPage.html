@@ -48,7 +48,9 @@
          </div>
          <div class="col-md-3 col-sm-12">
             {{#if isOwner}}
+               {{#if hasTopRole}}
             <a href="/editIndustry/{{getCompany._id}}" class="text-purple"><i class="fa fa-pencil-square" aria-hidden="true"></i>&nbsp;Editar información</a>
+               {{/if}}
             {{/if}}
          </div>
       </div>

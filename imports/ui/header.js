@@ -18,7 +18,7 @@ Template.header.rendered = function(){
 Template.header.helpers({
   user(){
       return Meteor.user();
-  },
+  }/*,
   hasTopRole(){
     var array = new Array();
     var result = false;
@@ -34,7 +34,7 @@ Template.header.helpers({
       }
     }
     return result;
-}
+}*/
 
 });
 

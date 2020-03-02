@@ -222,7 +222,7 @@ Template.userPage.rendered = function(){
           return Meteor.user().profileCoverID;  
         }
         
-      },
+      }/*,
       hasTopRole(){
         var array = new Array();
         var result = false;
@@ -238,7 +238,7 @@ Template.userPage.rendered = function(){
           }
         }
         return result;
-    }
+    }*/
       
    });
 

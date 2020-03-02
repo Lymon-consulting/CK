@@ -4,7 +4,7 @@ Meteor.methods({
   sendVerificationLink() {
     let userId = Meteor.userId();
     if ( userId ) {
-    	console.log("Enviando correo");
+    	console.log("Enviando correo en sendVerificationLink dentro de server/userMethods");
       return Accounts.sendVerificationEmail( userId );
     }
   },

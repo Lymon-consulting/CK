@@ -34,16 +34,18 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             <h4 class="dropdown-header">CUENTA</h4>
-            <a class="dropdown-item" href="/profilePage/{{currentUser._id}}">Ver mi perfil</a>
-            <a class="dropdown-item" href="/editProfile/{{currentUser._id}}">Editar mi perfil</a>
+            <a class="dropdown-item text-black" href="/profilePage/{{currentUser._id}}">Ver mi perfil</a>
+            <a class="dropdown-item text-black" href="/editProfile/{{currentUser._id}}">Editar mi perfil</a>
             <div class="dropdown-divider"></div>
+            {{#if hasTopRole}}
             <h4 class="dropdown-header">ADMINISTRAR</h4>
-            <a class="dropdown-item" href="/viewProjects/{{currentUser._id}}">Mis proyectos</a>
-            <a class="dropdown-item" href="/viewIndustries/{{currentUser._id}}">Mis industrias</a>
+            <a class="dropdown-item text-black" href="/viewProjects/{{currentUser._id}}">Mis proyectos</a>
+            <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}">Mis industrias</a>
             <div class="dropdown-divider"></div>
+            {{/if}}
             <h4 class="dropdown-header">HERRAMIENTAS</h4>
-            <a class="dropdown-item" href="/jobs">Bolsa de trabajo</a>
-            <a class="dropdown-item" href="/blog">Blog</a>
+            <a class="dropdown-item text-black" href="/jobs">Bolsa de trabajo</a>
+            <a class="dropdown-item text-black" href="/blog">Blog</a>
           </div>
         </li>   
       </ul>    
