@@ -17,6 +17,7 @@ import '../imports/ui/login.js';
 import '../imports/ui/join.js';
 import '../imports/ui/thanksRegister.js';
 import '../imports/ui/confirmProfile.js';
+import '../imports/ui/addCollaborator.js';
 import '../imports/ui/recover.js';
 import '../imports/ui/editProfile.js';
 import '../imports/ui/userProjects.js';
@@ -31,6 +32,7 @@ import '../imports/ui/peopleList.js';
 import '../imports/ui/projList.js';
 import '../imports/ui/profilePage.js';
 import '../imports/ui/projectPage.js';
+
 import '../imports/ui/contact.js';
 import '../imports/ui/blog.js';
 import '../imports/ui/job.js';

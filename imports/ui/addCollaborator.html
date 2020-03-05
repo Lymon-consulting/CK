@@ -1,0 +1,74 @@
+<template name="addCollaborator">
+  <div class="container text-center">
+    <h1 class="h1-title">AGREGAR COLABORADORES</h1>
+    <h2>{{fullName}}</h2>
+    <hr class="hr_width_600">
+  </div>
+  <div class="container">
+    <div class="col-md-10">
+     {{> availableProjects }}
+    </div>
+  </div>
+</template>
+
+
+<template name="availableProjects">
+  <div class="spacer20"></div>
+   {{#if myProjects}}
+     <small>
+      <p>¿En qué proyecto o proyectos participó {{collaboratorName}}?</p>
+    </small>
+    <div class="spacer20"></div>
+    <main role="main">
+      <div class="album py-5 bg-light">
+        <div class="container">
+          <div class="row">
+            {{#each myProjects}}
+            <div class="col-md-4">
+              <div class="card h-1500">
+                {{#if getProjectPicture this._id 500}}
+                <img class="card-img-top" src="{{getProjectPicture this._id 500}}" alt="Card image cap">
+                {{else}}
+                <img class="card-img-top" src="/images/background-dark.jpg" style="width: 500px">
+                {{/if}}
+                <div class="card-body">
+                  <p></p>
+                  {{#if getRole this._id}}
+                  <h5 class="card-title"><input type="checkbox" id="chk_{{this._id}}" value="{{this._id}}" {{checkParticipation this._id}} disabled> {{this.project_title}} ({{this.project_year}})</h5>
+                  {{else}}
+                  <h5 class="card-title"><input type="checkbox" id="chk_{{this._id}}" value="{{this._id}}" {{checkParticipation this._id}}> {{this.project_title}} ({{this.project_year}})</h5>
+                  {{/if}}
+
+                  <p><small>Rol de {{collaboratorName}}:</small></p>
+                  <p>{{getRole this._id}}</p>
+                  <p>
+                  {{#unless getRole this._id}}
+                  <select class="form-control agreements" id="sel_{{this._id}}" name="sel_{{this._id}}" disabled >
+                    {{#each getAllOcupations}}
+                    <option value="{{secondary}}"> {{secondary}} </option>
+                    {{/each}}
+                  </select>
+                  {{/unless}}
+                  </p>
+                  <p>&nbsp;</p>
+                  {{#unless getRole this._id}}
+                  <p><button class="btn button-follow mx-auto add_collaborator" id="but_{{this._id}}" value="{{this._id}}" disabled> Enviar invitación </button>
+                  </p>
+                  <p>&nbsp;</p>
+                  {{/unless}}
+                  {{#if getRole this._id}}
+                  <p><button class="btn button-follow mx-auto remove_collaborator" id="rem_{{this._id}}" value="{{this._id}}"> Eliminar colaboración </button></p>
+                  {{else}}
+                  <p><button class="btn button-follow mx-auto remove_collaborator hidden" id="rem_{{this._id}}" value="{{this._id}}"> Eliminar colaboración </button></p>
+                  {{/if}}
+                </div>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </main>
+   {{/if}}
+   <div class="spacer80"></div>
+</template>

@@ -10,6 +10,22 @@ Template.profilePage.helpers({
       //console.log(FlowRouter.getParam('id'));
       return Meteor.users.findOne({_id : FlowRouter.getParam('id')});
    },
+   getName(userId){
+      var name = "";
+      var user = Meteor.users.findOne({'_id':userId});
+      if(user){
+        if(user.profile.name!=null && user.profile.name!=""){
+          name = user.profile.name;  
+        }
+        if(user.profile.lastname!=null && user.profile.lastname!=""){
+          name = name + " " + user.profile.lastname;
+        }
+        if(user.profile.lastname2!=null && user.profile.lastname2!=""){
+          name = name + " " + user.profile.lastname2;
+        }
+      }
+      return name;
+    },
    ownerRole(){
       var u = Meteor.users.findOne({'_id': FlowRouter.getParam('id')});
       var result = "";

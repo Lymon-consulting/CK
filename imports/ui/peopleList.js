@@ -109,6 +109,8 @@ Template.peopleList.helpers({
 Template.peopleList.events({
    'click #pushFollow': function(event, template) {
       event.preventDefault();
+
+      
       //console.log("Intentando seguir a "+ Session.get('userID'));
       var user = $("#thisUser").val();
       Meteor.users.update(
@@ -118,7 +120,12 @@ Template.peopleList.events({
 
       $("#pushFollow").attr("disabled", true);
    },
-
+  'click .pushCollaborator': function(event, template) {
+      event.preventDefault();
+      var user = event.target.id;
+      Session.set("collaborator",user);
+      FlowRouter.go('/addCollaborator');
+   },
    'click #buscarBtn': function(event, template) {
       //event.preventDefault();
       console.log("Si entra");
