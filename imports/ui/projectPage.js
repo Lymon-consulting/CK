@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { Project } from '../api/project.js';
+import { Industry } from '../api/industry.js';
 import { Portlet } from '../api/portlet.js';
 import { Ocupation } from '../api/ocupations.js';
 
@@ -83,6 +84,31 @@ if (Meteor.isClient) {
           }
        }
        return wizard;
+     },
+     isCollaborator(){
+
+        var result = false;
+        var array = new Array();
+
+        var project = Project.findOne({'_id': FlowRouter.getParam('id')});
+        if(project!=null && project.userId === Meteor.userId()) {
+           result = true;
+        }
+
+        if(!result){
+          if(project!=null){
+            var staff = project.project_staff;
+            if(staff!=null && staff!=""){
+              for (var i = staff.length - 1; i >= 0; i--) {
+                if(staff[i]._id === Meteor.userId()){
+                  result=true;
+                  break;
+                }
+              }
+            }
+          }  
+        }
+        return result;
      },
       profilePicture(userId){
          return Images.find({'owner': userId});
@@ -702,6 +728,27 @@ if (Meteor.isClient) {
             $('#collabModal').modal('toggle');
             $('#inviteByMail').modal('show');
         }, 
+        'click #cancel': function(event,template,doc){
+            $('#collabModal').modal('toggle');
+        },
+        'click #search': function(event,template,doc){
+            /*$('#collabModal').modal('toggle');
+            FlowRouter.go('/searchCollaborator/' + FlowRouter.getParam('id')); */
+            $('#collabModal')
+              .on('hidden.bs.modal', function() {
+                  FlowRouter.go('/searchCollaboratorForProject/' + FlowRouter.getParam('id'));
+              })
+              .modal('hide');
+        },
+        'click #searchCompany': function(event,template,doc){
+            /*$('#collabModal').modal('toggle');
+            FlowRouter.go('/searchCollaborator/' + FlowRouter.getParam('id')); */
+            $('#collabModal')
+              .on('hidden.bs.modal', function() {
+                  FlowRouter.go('/searchIndustryForProject/' + FlowRouter.getParam('id'));
+              })
+              .modal('hide');
+        },
         'click .clear_portlet': function(event,template,doc){
             var type = $(event.target).attr('data-type');
             Session.set("showCounter",null);
@@ -1274,3 +1321,42 @@ if (Meteor.isClient) {
    });   
 
 }
+
+
+Template.companies.helpers({
+      getCompanies(){
+       var collabs = null;
+       var proj = Project.findOne({"_id": FlowRouter.getParam('id')});
+       if(proj){
+          collabs = proj.companies;
+       }
+       return proj;
+      },
+      getCompanyName(companyId){
+        return Industry.findOne({'_id':companyId}).company_name;
+      },
+      getCompanyType(companyId){
+        return Industry.findOne({'_id':companyId}).company_type;
+      },
+      getLogoPicture(companyId, size) {
+       var url = "";
+       var company = Industry.findOne({'_id':companyId});
+       if(company!=null && company.companyLogoID!=null && company.companyLogoID!=""){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_fill/" + company.companyLogoID;
+       }
+       return url;
+      },
+      getInitials(userId){
+        var name = "";
+        var lastname = "";
+        var initials = "";      
+        var user = Meteor.users.findOne({'_id':userId});
+        if(user){
+          name = user.profile.name;
+          lastname = user.profile.lastname;
+          initials = name.charAt(0) + lastname.charAt(0);  
+        }
+        return initials;
+      }
+   });   
+

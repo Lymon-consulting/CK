@@ -49,7 +49,6 @@ Template.availableProjects.helpers({
         for (var i = staff.length - 1; i >= 0; i--) {
           if(staff[i]._id === Session.get("collaborator")){
             result="checked";
-            $("#chk_"+projectId).attr('disabled', 'disabled');
             break;
           }
         }
@@ -84,11 +83,13 @@ Template.availableProjects.events({
     //console.log(event.target.value);
     $("#sel_"+event.target.value).removeAttr('disabled');
     $("#but_"+event.target.value).removeAttr('disabled');
+    $("#but_"+event.target.value).css('background','#ED1567');
   }
   else{
    //console.log("false");
    $("#sel_"+event.target.value).attr('disabled', 'disabled');
    $("#but_"+event.target.value).attr('disabled', 'disabled');
+   $("#but_"+event.target.value).css('background','#666');
  }
 },
 'click .add_collaborator' : function(e, template, doc){
@@ -122,8 +123,8 @@ Template.availableProjects.events({
       "email": email,
       "role": rol,
       "name" : name,
-      "confirmed": false,
-      "invite_sent": false
+      "confirmed": true, /*Cambiar esto para activar las notificaciones*/
+      "invite_sent": true /*Cambiar esto para activar las notificaciones*/
     };
     console.log(collaborator);
 
@@ -159,8 +160,6 @@ Template.availableProjects.events({
   }
   if(confirm("¿Eliminar la colaboración de " + name + " de este proyecto?")){
 
-    var user = Meteor.users.findOne({'_id':Session.get("collaborator")});
-    if(user){
       var email="";
       user.emails.forEach(function(element) {
         if(element.address != ""){ 
@@ -168,17 +167,21 @@ Template.availableProjects.events({
         }
       });
 
-      var name="";
-      if(user.profile.name!=null && user.profile.name!=""){
-        name = user.profile.name;  
+      
+      var project = Project.findOne({'_id': projectId});
+      var rol="";
+      if(project){
+        var staff = project.project_staff;
+        if(staff!=null && staff!=""){
+          for (var i = staff.length - 1; i >= 0; i--) {
+            if(staff[i]._id === Session.get("collaborator")){
+              rol=staff[i].role;
+              break;
+            }
+          }
+        }
       }
-      if(user.profile.lastname!=null && user.profile.lastname!=""){
-        name = name + " " + user.profile.lastname;
-      }
-      if(user.profile.lastname2!=null && user.profile.lastname2!=""){
-        name = name + " " + user.profile.lastname2;
-      }
-      var rol = $( "select#sel_"+e.target.value+" option:checked" ).val();
+      
       console.log("va a borrar="+name + ", " + email + ", " + rol + " del proyecto "+projectId);
 
       var collaborator = {
@@ -191,7 +194,7 @@ Template.availableProjects.events({
       {'_id': projectId},
       { $pull: { project_staff: collaborator }
     });
-   }
+   
 
 
    $("#but_"+e.target.value).html('Enviar invitación');

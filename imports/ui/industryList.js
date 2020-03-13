@@ -25,10 +25,62 @@ Template.industryResults.helpers({
     },
    getIndustryType(){
         var type = new Array();
-        type.push("Agencia de Casting");
-        type.push("Casa Productora");
-        type.push("Festival");
-        type.push("Renta de Equipo");
+        type.push("");
+        type.push("PRINCIPALES");
+        type.push("-----------");
+        type.push("Agencia de casting");
+        type.push("Catering");
+        type.push("Bodega de arte");
+        type.push("Bodega de vestuario");
+        type.push("Canal de television");
+        type.push("Casa productora");
+        type.push("Casa post–productora (Imagen)");
+        type.push("Casa post-productora (Audio)");
+        type.push("Compañía teatral");
+        type.push("Distribuidora");
+        type.push("Escuelas (Cine/ medios audiovisuales)");
+        type.push("Estudio de animacion");
+        type.push("Estudio de grabacion");
+        type.push("Exhibicion (Cine/espacios )");
+        type.push("Festivales de cine");
+        type.push("Musicalizacion");
+        type.push("Renta de equipo");
+        type.push("Renta de foro");
+        type.push("Renta picture cars");
+        type.push("");
+        type.push("SECUNDARIAS");
+        type.push("-----------");
+        type.push("Agencia de extras");
+        type.push("Agencia de modelos");
+        type.push("Agencia de publicidad");
+        type.push("Agencia fotográfica");
+        type.push("Animales adiestrados para cine y televisión");
+        type.push("Armero para cine y televisión");
+        type.push("Aseguradora para cine y televisión");
+        type.push("Baños portatiles");
+        type.push("Contabilidad");
+        type.push("Copywriter");
+        type.push("Despacho legal");
+        type.push("Diseño web");
+        type.push("Diseño grafico (Posters, postales ,tipografia)");
+        type.push("Doblaje");
+        type.push("Drone/ Fotografía aerea");
+        type.push("Editorial");
+        type.push("Efectos especiales (Explosiones)");
+        type.push("Estación de radio");
+        type.push("Estudio de grabación (Música)");
+        type.push("Estudio de grabacion (Audio/ follys/ etc)");
+        type.push("Locaciones");
+        type.push("Maquillaje y peinados");
+        type.push("Plantas de luz");
+        type.push("Utilería y props");
+        type.push("Relaciones públicas");
+        type.push("Renta de campers");
+        type.push("Renta de transporte ( Vans/ camiones)");
+        type.push("Renta de video assist");
+        type.push("Stunts");
+        type.push("Servicio de subtitulaje");
+        type.push("Viveros");
         return type;
      },
      getIndustryYear(){
@@ -48,6 +100,13 @@ Template.industryResults.helpers({
           ptype = "cualquier";
         }
         return (ptype === value) ? 'selected' : '' ;
+      },
+      disableIfTitle: function(value){
+        var status = "";
+        if(value==="PRINCIPALES" || value==="SECUNDARIAS" || value==="-----------" || value===""){
+          status = "disabled";
+        }
+        return status;
       },
       yearSelected: function(value){
         var pyear = "";
@@ -98,7 +157,7 @@ Template.industryResults.events({
          Session.set("year_selected",$(e.target).val());
       }
       else{
-         ProjectIndex.getComponentMethods().removeProps('company_year');  
+         IndustryIndex.getComponentMethods().removeProps('company_year');  
          Session.set("year_selected",null);
       }
   }

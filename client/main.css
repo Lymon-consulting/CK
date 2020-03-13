@@ -7,7 +7,7 @@ h3{
 }
 
 hr{
-  border-color:#333;
+  border-color:#ccc;
 }
 
 footer{
@@ -89,6 +89,10 @@ footer{
 
 }
 
+.modal-body {
+    max-height: calc(100vh - 143px);
+    overflow-y: auto; 
+  }
 
 /***Estilos base para todos los dispositivos***/
 .text-description{
@@ -209,6 +213,18 @@ footer{
   margin: 10px 0;
 }
 
+#iconInitials {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #666;
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  line-height: 35px;
+  /*margin: 10px 0;*/
+}
+
 #profileImageLarge {
   width: 100px;
   height: 100px;
@@ -281,10 +297,11 @@ footer{
 .modal-dialog{
     overflow-y: initial !important
 }
+/*
 .modal-body{
     height: 450px;
     overflow-y: auto;
-}
+}*/
 
 .uppercase {
   text-transform: uppercase;

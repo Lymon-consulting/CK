@@ -65,6 +65,15 @@ Template.registerHelper('hasTopRole', function(){
   return result;
 });
 
+Template.registerHelper('formatURL', function(url){
+  if(url!=""){
+    if (!/^https?:\/\//i.test(url)) {
+      url = 'http://' + url;  
+    }
+  }
+  return url;
+});
+
 Template.mainlayout.events({
   'click .resend-verification-link' ( event, template ) {
     Meteor.call( 'sendVerificationLink', ( error, response ) => {

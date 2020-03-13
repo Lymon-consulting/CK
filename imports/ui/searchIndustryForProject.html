@@ -1,0 +1,167 @@
+<template name="searchIndustryForProject">
+  <div class="container">
+    {{getSecret}}
+    <div class="spacer40"></div>
+    <div class="row">
+      <div class="col">
+        <i class="fa fa-users fa-lg"></i>
+      </div>
+    </div>
+    <div class="spacer10"></div>
+    <div class="row">
+      <div class="col">Agrega a empresas u organizaciones que colaboraron en <strong>{{getProjectName}}</strong></div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <ul>
+          <li>Activa a cada empresa mediante la casilla de selección</li>
+          <!--<li>Elige el rol que tuvo cada uno de ellos en tu proyecto</li>-->
+          <li>presiona el botón "Enviar invitación" para agregar a cada empresa a tu proyecto</li>
+        </ul>
+      </div>
+    </div> 
+    <div class="row">
+      <div class="col">
+        <a class="btn btn-purple" href="/projectPage/{{getProjectID}}" role="button">Regresar al proyecto</a>
+      </div>
+    </div>
+    <div class="spacer40"></div>
+    <div class="row">
+      <div class="col-lg-4 col-md-6">
+        <select class="form-control agreements" id="type">
+          <option value="cualquier"> Cualquier tipo </option>
+          {{#each getIndustryType}}
+          <option value="{{this}}" {{typeSelected this}} {{disableIfTitle this}}> {{this}} </option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <select class="form-control agreements" id="year">
+          <option value="cualquier"> Cualquier año </option>
+          {{#each getIndustryYear}}
+          <option value="{{this}}" {{yearSelected this}}> {{this}} </option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="input-group">
+          {{> EasySearch.Input index=industryIndex event="enter" attributes=inputAttributes}}
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" type="button" id="buscarBtn">
+                <i class="fa fa-search fa-sm"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="spacer40"></div>
+  <div class="row">
+    <div class="col-md-12 agreements">
+      Page 1 - {{industryIndex.count}} results
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <!-- Inicia contenido -->
+      <div class="col-md-12">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12"><hr></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{#EasySearch.Each index=industryIndex}}
+    <div class="row">
+      <div class="col-lg-1">
+        
+        {{#if isCollaborator this.__originalId}}
+        <input type="checkbox" id="chk_{{this.__originalId}}" value="{{this.__originalId}}" {{checkParticipation this.__originalId}} disabled>
+        {{else}}
+        <input type="checkbox" id="chk_{{this.__originalId}}" value="{{this.__originalId}}" {{checkParticipation this.__originalId}}>
+        {{/if}}
+        
+      </div>
+      <div class="col-lg-1 vertical-align-top">
+        <a href="/industryPage/{{this.__originalId}}">
+        {{#if logoPicture this.__originalId 100}}
+          <img src="{{logoPicture this.__originalId 150}}"/>
+        {{else}}
+          <img src="/images/background-dark.jpg" style="width: 150px;" alt="">
+        {{/if}}
+        </a>
+      </div> 
+      <div class="col-lg-8">
+        <div class="container-fluid">
+          <div class="row">
+             <div class="col">
+                <table class="table table-responsive borderless">
+                 <tbody>
+                  <tr>
+                   <td class="no-padding text-no-wrap">
+                      <a href="/industryPage/{{this.__originalId}}"><h5 class="h5-name">{{this.company_name}}</h5></a>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td class="no-padding text-no-wrap subtitle-underline">
+                      {{this.company_type}}
+                   </td>
+                  </tr>
+                  <tr>
+                   <td class="no-padding text-no-wrap location-underline">
+                      {{this.company_year}}
+                   </td>
+                  </tr>
+                 </tbody>
+                </table>
+             </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-lg-2">
+      {{#unless isCollaborator this.__originalId}}
+       <button class="btn button-follow mx-auto add_collaborator" id="but_{{this.__originalId}}" value="{{this.__originalId}}" disabled> Enviar invitación </button>
+      {{/unless}}
+      {{#if isCollaborator this.__originalId}}
+       <button class="btn button-follow mx-auto remove_collaborator" id="rem_{{this.__originalId}}" value="{{this.__originalId}}"> Eliminar colaboración </button>
+      {{else}}
+       <button class="btn button-follow mx-auto remove_collaborator hidden" id="rem_{{this.__originalId}}" value="{{this.__originalId}}"> Eliminar colaboración </button>
+      {{/if}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12"><hr></div>
+  </div>
+  {{/EasySearch.Each}}
+  {{> EasySearch.LoadMore index=industryIndex}}
+
+  {{#EasySearch.IfNoResults index=industryIndex}}
+  <div class="no-results">No se encontraron resultados</div>
+  {{/EasySearch.IfNoResults}}
+  <div class="row">
+    <div class="col">
+      <a class="btn btn-purple" href="/projectPage/{{getProjectID}}" role="button">Regresar al proyecto</a>
+    </div>
+  </div>
+  <!-- Fin contenido -->
+  <div class="spacer80"></div>
+</div>
+
+</template>
+
+<template name="searchIndustryP">
+{{> EasySearch.Input index=industryIndex}}
+
+  <ul>
+    {{#EasySearch.Each index=industryIndex}}
+    <li>{{fullname}}</li>
+    {{/EasySearch.Each}}
+  </ul>
+
+  {{> EasySearch.LoadMore index=industryIndex}}
+
+  {{#EasySearch.IfNoResults index=industryIndex}}
+  <div class="no-results">No results found!</div>
+  {{/EasySearch.IfNoResults}}
+</template>

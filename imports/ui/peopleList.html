@@ -115,7 +115,9 @@
             <button class="btn button-follow disabled"> <i class="fa fa-plus-circle fa-sm"></i> SIGUIENDO</button>
             {{/if}}   
             <br/>   
+            {{#if hasTopRole}}
             <button class="btn button-follow pushCollaborator" id="{{this.__originalId}}"> <i class="fa fa-plus-circle fa-sm"></i> COLABORADOR </button>
+            {{/if}}
             {{/if}}
           </div>
           <div class="col-md-2 vdivide"></div>

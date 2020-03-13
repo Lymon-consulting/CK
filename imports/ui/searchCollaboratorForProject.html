@@ -1,0 +1,231 @@
+<template name="searchCollaboratorForProject">
+  <div class="container">
+    {{getSecret}}
+    <div class="spacer40"></div>
+    <div class="row">
+      <div class="col">
+        <i class="fa fa-users fa-lg"></i>
+      </div>
+    </div>
+    <div class="spacer10"></div>
+    <div class="row">
+      <div class="col">Agrega a personas que participaron en <strong>{{getProjectName}}</strong></div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <ul>
+          <li>Activa a cada colaborador mediante la casilla de selección</li>
+          <li>Elige el rol que tuvo cada uno de ellos en tu proyecto</li>
+          <li>presiona el botón "Enviar invitación" para agregar al colaborador a tu proyecto</li>
+        </ul>
+      </div>
+    </div> 
+    <div class="row">
+      <div class="col">
+        <a class="btn btn-purple" href="/projectPage/{{getProjectID}}" role="button">Regresar al proyecto</a>
+      </div>
+    </div>
+    <div class="spacer40"></div>
+    <div class="row">
+       <div class="col-lg-4 col-md-6">
+        <select class="form-control agreements" id="role">
+          <option value="cualquier"> Cualquier ocupación </option>
+          {{#each getAllOcupations}}
+          <option value="{{secondary}}" {{getRoleSelected secondary}}> {{secondary}} </option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <select class="form-control agreements" id="location">
+          <option value="cualquier"> Cualquier estado </option>
+          {{#each getCitiesFromCountries}}
+          <option value="{{city}}" {{getLocationSelected city}}> {{city}} </option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="input-group">
+
+         {{> EasySearch.Input index=usersIndex event="enter" attributes=inputAttributes}}
+         <span class="input-group-btn">
+           <button class="btn btn-secondary" type="button" id="buscarBtn">
+             <i class="fa fa-search fa-sm"></i>
+           </button>
+         </span>
+       </div>
+     </div>
+  </div>
+
+<div class="spacer40"></div>
+
+<div class="row">
+ <div class="col-md-12 agreements">
+  Page 1 - {{people.count}} results
+</div>
+</div>
+
+</div>
+
+
+
+<div class="container">
+  <div class="row">
+   <!-- Inicia contenido -->
+   <div class="col-md-12">
+    <div class="container-fluid">
+     <div class="row">
+      <div class="col-md-12"><hr></div>
+    </div>
+    {{#EasySearch.Each index=usersIndex}}
+    <div class="row">
+      <div class="col-lg-1">
+        {{#if getRole this.__originalId}}
+        <input type="checkbox" id="chk_{{this.__originalId}}" value="{{this.__originalId}}" {{checkParticipation this.__originalId}} disabled>
+        {{else}}
+        <input type="checkbox" id="chk_{{this.__originalId}}" value="{{this.__originalId}}" {{checkParticipation this.__originalId}}>
+        {{/if}}
+      </div>
+      <div class="col-lg-1 vertical-align-top">
+        <a href="/profilePage/{{this.__originalId}}">
+         {{#if getProfilePicture this.__originalId 35 35}}
+         <img src="{{getProfilePicture this.__originalId 35 35}}" /> 
+         {{else}}
+         <div id="iconInitials">{{getInitials this.__originalId}}</div>
+         {{/if}}
+       </a>
+     </div>
+     <div class="col-lg-4 vertical-align-top">
+       <small><a href="/profilePage/{{this.__originalId}}">{{this.profile.name}} {{this.profile.lastname}} {{this.profile.lastname2}}</a> <br/> {{#if this.role}}{{this.role}}{{/if}} <br/>{{#if this.city}}{{this.city}}, {{this.state}}{{/if}}</small>
+     </div>
+     
+     <div class="col-lg-3">
+       <small>
+        {{#unless getRole this.__originalId}}
+          <select class="form-control agreements" id="sel_{{this.__originalId}}" name="sel_{{this.__originalId}}" disabled >
+            {{#each getAllOcupations}}
+            <option value="{{secondary}}"> {{secondary}} </option>
+            {{/each}}
+          </select> 
+        {{else}}
+          {{getRole this.__originalId}}
+        {{/unless}}
+
+       </small>
+     </div>
+     <div class="col-lg-3">
+      {{#unless getRole this.__originalId}}
+       <button class="btn button-follow mx-auto add_collaborator" id="but_{{this.__originalId}}" value="{{this.__originalId}}" disabled> Enviar invitación </button>
+      {{/unless}}
+      {{#if getRole this.__originalId}}
+        {{#if notSameUser this.__originalId}}
+        <button class="btn button-follow mx-auto remove_collaborator" id="rem_{{this.__originalId}}" value="{{this.__originalId}}"> Eliminar colaboración </button>
+        {{/if}}
+      {{else}}
+        <button class="btn button-follow mx-auto remove_collaborator hidden" id="rem_{{this.__originalId}}" value="{{this.__originalId}}"> Eliminar colaboración </button>
+      {{/if}}
+     </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12"><hr></div>
+    </div>
+
+{{/EasySearch.Each}}
+
+{{> EasySearch.LoadMore index=usersIndex}}
+
+{{#EasySearch.IfNoResults index=usersIndex}}
+<div class="no-results">No se encontraron resultados</div>
+{{/EasySearch.IfNoResults}}
+</div>
+
+<div class="row">
+      <div class="col">
+        <a class="btn btn-purple" href="/projectPage/{{getProjectID}}" role="button">Regresar al proyecto</a>
+      </div>
+    </div>
+
+</div>
+
+<!-- Fin contenido -->
+<!-- Inicia banners -->
+         <!--
+         <div class="col-md-3">
+            <div class="container">
+               <div class="spacer20"></div>
+               <div class="row">
+                  <div class="col">
+                     <img src="../images/banner-section.jpg" alt="" class="img-responsive">
+                  </div>
+               </div>
+               <div class="spacer60"></div>
+               <div class="row">
+                  <div class="col">
+                     <img src="../images/banner-section.jpg" alt="" class="img-responsive">
+                  </div>
+               </div>
+            </div>
+         </div>
+       -->
+       <!-- Fin banners -->
+     </div>
+
+
+      <!--
+      <div class="row">
+         <div class="col-md-12">
+            <nav aria-label="..." class="mx-auto">
+              <ul class="pagination pagination-sm justify-content-center">
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                <li class="page-item active">
+                     <span class="page-link">1<span class="sr-only">(current)</span></span>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" href="#">6</a></li>
+                <li class="page-item"><a class="page-link" href="#">7</a></li>
+                <li class="page-item"><a class="page-link" href="#">8</a></li>
+                <li class="page-item"><a class="page-link" href="#">9</a></li>
+                <li class="page-item"><a class="page-link" href="#">+</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+         </div>
+      </div>
+    -->
+
+
+  </div>
+
+  
+
+  <div class="spacer80"></div>
+</template>
+
+<template name="searchCollabP">
+
+  {{> EasySearch.Input index=usersIndex}}
+
+  <ul>
+    {{#EasySearch.Each index=usersIndex}}
+    <li>{{fullname}}</li>
+    {{/EasySearch.Each}}
+  </ul>
+
+  {{> EasySearch.LoadMore index=usersIndex}}
+
+  {{#EasySearch.IfNoResults index=usersIndex}}
+  <div class="no-results">No results found!</div>
+  {{/EasySearch.IfNoResults}}
+</template>

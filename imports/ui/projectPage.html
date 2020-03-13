@@ -99,11 +99,11 @@
          </div>
       </section>
    </div>
-   {{#if isOwner}}
-   {{#if hasTopRole}}
+   
    <div class="container-fluid background-lightgray">
      <div class="spacer10"></div>
      <div class="row">
+       {{#if isCollaborator}}
        <div class="col-lg-2">
           <div class="dropdown show">
             <a class="text-black dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -120,12 +120,14 @@
             </div>
           </div>
        </div>
+       {{/if}}
+       {{#if isOwner}}
        <div class="col-lg-2"><a href="#" class="text-black" data-toggle="modal" data-target="#collabModal"><i class="fa fa-user-circle text-purple" aria-hidden="true"></i> Colaboradores</a></div>
+       {{/if}}
      </div>
      <div class="spacer10"></div>
    </div>
-   {{/if}}
-   {{/if}}
+   
   
    <div class="container-fluid background-verydarkgray">
          <div class="row">
@@ -133,11 +135,24 @@
                <table class="table table-responsive borderless">
                   <tbody class="">
                      <tr>
-                        <td><a href="{{projData.project_facebook_page}}"><i class="fa fa-sm fa-facebook text-purple"></i></a></td>
-                        <td><a href="{{projData.project_twitter_page}}"><i class="fa fa-sm fa-twitter text-purple"></i></a></td>
-                        <td><a href="{{projData.proj_vimeo_page}}"><i class="fa fa-sm fa-vimeo text-purple"></i></a></td>
-                        <td><a href="{{projData.proj_youtube_page}}"><i class="fa fa-sm fa-youtube text-purple"></i></a></td>
-                        <td><a href="{{projData.proj_instagram_page}}"><i class="fa fa-sm fa-instagram text-purple"></i></a></td>
+                        {{#if projData.project_web_page}}
+                        <td><a href="{{formatURL projData.project_web_page}}" target="_blank"><i class="fa fa-sm fa-globe text-purple"></i></a></td>
+                        {{/if}}
+                        {{#if projData.project_facebook_page}}
+                        <td><a href="{{formatURL projData.project_facebook_page}}" target="_blank"><i class="fa fa-sm fa-facebook text-purple"></i></a></td>
+                        {{/if}}
+                        {{#if projData.project_twitter_page}}
+                        <td><a href="{{formatURL projData.project_twitter_page}}" target="_blank"><i class="fa fa-sm fa-twitter text-purple"></i></a></td>
+                        {{/if}}
+                        {{#if projData.proj_vimeo_page}}
+                        <td><a href="{{formatURL projData.proj_vimeo_page}}" target="_blank"><i class="fa fa-sm fa-vimeo text-purple"></i></a></td>
+                        {{/if}}
+                        {{#if projData.proj_youtube_page}}
+                        <td><a href="{{formatURL projData.proj_youtube_page}}" target="_blank"><i class="fa fa-sm fa-youtube text-purple"></i></a></td>
+                        {{/if}}
+                        {{#if projData.proj_instagram_page}}
+                        <td><a href="{{formatURL projData.proj_instagram_page}}" target="_blank"><i class="fa fa-sm fa-instagram text-purple"></i></a></td>
+                        {{/if}}
                      </tr>
                   </tbody>
                </table>
@@ -174,6 +189,8 @@
 
       <div class="spacer80"></div>
       {{>crew}}  
+      <div class="spacer40"></div>
+      {{>companies}}
       <div class="spacer40"></div>
 
    <div class="container text-center">
@@ -225,12 +242,14 @@
          </div>
          <div class="row">
             <div class="col">
-               Invita a colaboradores que participaron en tu proyecto. Recibirán una invitación directa en caso de pertenecer a Cinekomuna, y opcionalmente una invitación al correo en caso de que no.
+               Agrega a colaboradores que participaron en <strong>{{projData.project_title}}</strong>. Recibirán una invitación para confirmar su participación.
             </div>
          </div>
          <div class="row">
             <div class="col spacer20"></div>
          </div>
+
+        <!-- Esta era la pantalla anterior de colaboradores
          <div class="row">
             <div class="col">
                Nombre: {{> inputAutocomplete settings=settings id="msg" class="form-control form-control-sm" placeholder="Nombre..."}}
@@ -254,12 +273,32 @@
          </div>
          <div class="spacer40"></div>
          {{>selectedUsers}}
+
+
+       -->
+
+        <!-- esto es nuevo -->
+        <div class="row">
+            <div class="col">
+               <button type="button" id="search" class="btn btn-purple"><i class="fa fa-users fa-sm"></i> Agregar personas</button>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <hr>
+            </div>
+         </div>
+        <div class="row">
+            <div class="col">
+               <button type="button" id="searchCompany" class="btn btn-purple"><i class="fa fa-building fa-sm"></i> Agregar empresas u organizaciones</button>
+            </div>
+         </div>
+
       </div>
       <div class="modal-footer">
          <div class="row">
             <div class="col mx-auto">
-               <a href="#" id="sendNotification" class=" btn-purple"><i class="fa fa-envelope fa-xl btn-purple"></i> Enviar notificación</a>
-               
+               <button type="button" id="cancel" class="btn btn-purple">Cancelar</button>
             </div>
          </div>
          
@@ -765,7 +804,7 @@
         <h3 class="h1-title">COLABORADORES</h3>
         <hr>
      </div>
-     <div class="spacer40"></div>
+     
      <div class="d-flex justify-content-around text-center">
         {{#each getCrew.project_staff}}
            {{#if this.confirmed}}
@@ -779,6 +818,51 @@
                  </a>
                   <span class="people-name-text-circle"><a href="/profilePage/{{this._id}}" class="text-title-gray">{{this.name}}</a></span> <br><span class="people-role-text-circle uppercase">{{this.role}}</span> 
               </div>
+           {{/if}}
+        {{/each}}
+     </div>
+   {{/if}}
+</template>
+
+<template name="companies">
+  {{#if getCompanies.companies}}
+     <div class="container text-center">
+        <h3 class="h1-title">INDUSTRIA</h3>
+        <hr>
+     </div>
+     
+     <div class="d-flex justify-content-around text-center">
+        {{#each getCompanies.companies}}
+           {{#if this.confirmed}}
+              <div class="p-2">
+                <a href="/industryPage/{{this._id}}">
+                 {{#if getLogoPicture this._id 100}}
+                    <img src="{{getLogoPicture this._id 100}}" border="0" class="rounded-circle" /><br/>
+                 {{else}}
+                    <div id="companyLogo"></div>
+                 {{/if}}
+                 </a>
+                  <span class="people-name-text-circle"><a href="/industryPage/{{this._id}}" class="text-title-gray">{{getCompanyName this._id}}</a></span> <br><span class="people-role-text-circle uppercase">{{getCompanyType this._id}}</span> 
+              </div>
+              <!--
+              <div class="row">
+                <div class="col">
+                  <a href="/industryPage/{{this._id}}">
+                 {{#if getLogoPicture this._id 100}}
+                  <img src="{{getLogoPicture this._id 100}}" class="img-thumbnail">
+                  {{else}}
+                  <div id="companyLogo"></div>
+                  {{/if}}
+                 </a>  
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <span class="people-name-text-circle"><a href="/industryPage/{{this._id}}" class="text-title-gray">{{getCompanyName this._id}}</a></span> <br><span class="people-role-text-circle uppercase">{{getCompanyType this._id}}</span> 
+                </div>
+              </div>
+            -->
+             
            {{/if}}
         {{/each}}
      </div>

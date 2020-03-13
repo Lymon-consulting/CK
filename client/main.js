@@ -32,7 +32,9 @@ import '../imports/ui/peopleList.js';
 import '../imports/ui/projList.js';
 import '../imports/ui/profilePage.js';
 import '../imports/ui/projectPage.js';
-
+import '../imports/ui/searchCollaboratorForProject.js';
+import '../imports/ui/searchCollaboratorForIndustry.js';
+import '../imports/ui/searchIndustryForProject.js';
 import '../imports/ui/contact.js';
 import '../imports/ui/blog.js';
 import '../imports/ui/job.js';

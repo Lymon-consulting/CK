@@ -23,6 +23,7 @@ Template.industryPage.helpers({
       //return Project.find({$and : [ {'userId' : FlowRouter.getParam('id')} , {"project_is_main": '' }]});
       return Project.find({'userId' : FlowRouter.getParam('id')});
    },
+
    getMainProject(){
       Meteor.subscribe("myMainProject", FlowRouter.getParam('id'));
       return Project.findOne({'userId': FlowRouter.getParam('id'), 'project_is_main' : 'true'});
@@ -58,4 +59,53 @@ Template.industryPage.helpers({
        }
        return url;
     }
+});
+
+Template.company_crew.helpers({
+  getCrew(){
+       var collabs = null;
+       var company = Industry.findOne({"_id": FlowRouter.getParam('id')});
+       if(company){
+          collabs = company.company_staff;
+       }
+       return collabs;
+    },
+    profilePicture(userId){
+         return Images.find({'owner': userId});
+      },
+      getProfilePicture(userId) {
+       var url = "";
+       var user = Meteor.users.findOne({'_id':userId});
+       if(user!=null && user.profilePictureID!=null && user.profilePictureID!=""){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_100,h_100,c_thumb,r_max/" + user.profilePictureID;
+       }
+       return url;
+      },
+      getInitials(userId){
+        var name = "";
+        var lastname = "";
+        var initials = "";      
+        var user = Meteor.users.findOne({'_id':userId});
+        if(user){
+          name = user.profile.name;
+          lastname = user.profile.lastname;
+          initials = name.charAt(0) + lastname.charAt(0);  
+        }
+        return initials;
+      }
+});
+
+Template.industryPage.events({
+'click #cancel': function(event,template,doc){
+            $('#collabModal').modal('toggle');
+        },
+        'click #search': function(event,template,doc){
+            /*$('#collabModal').modal('toggle');
+            FlowRouter.go('/searchCollaborator/' + FlowRouter.getParam('id')); */
+            $('#collabModal')
+              .on('hidden.bs.modal', function() {
+                  FlowRouter.go('/searchCollaboratorForIndustry/' + FlowRouter.getParam('id'));
+              })
+              .modal('hide');
+        }
 });

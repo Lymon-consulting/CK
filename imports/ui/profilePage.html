@@ -200,19 +200,19 @@
                      <table class="table table-responsive borderless">
                         <tr>
                            {{#if getProfile.facebook}}
-                           <td><a href="{{getProfile.facebook}}" target="_blank"> <i class="fa fa-sm fa-facebook text-purple"></i></a></td>
+                           <td><a href="{{formatURL getProfile.facebook}}" target="_blank"> <i class="fa fa-sm fa-facebook text-purple"></i></a></td>
                            {{/if}}
                            {{#if getProfile.twitter}}
-                           <td><a href="{{getProfile.twitter}}"><i class="fa fa-sm fa-twitter text-purple"></i></a></td>
+                           <td><a href="{{formatURL getProfile.twitter}}" target="_blank"><i class="fa fa-sm fa-twitter text-purple"></i></a></td>
                            {{/if}}
                            {{#if getProfile.vimeo}}
-                           <td><a href="{{getProfile.vimeo}}"><i class="fa fa-sm fa-vimeo text-purple"></i></a></td>
+                           <td><a href="{{formatURL getProfile.vimeo}}" target="_blank"><i class="fa fa-sm fa-vimeo text-purple"></i></a></td>
                            {{/if}}
                            {{#if getProfile.youtube}}
-                           <td><a href="{{getProfile.youtube}}"><i class="fa fa-sm fa-youtube text-purple"></i></a></td>
+                           <td><a href="{{formatURL getProfile.youtube}}" target="_blank"><i class="fa fa-sm fa-youtube text-purple"></i></a></td>
                            {{/if}}
                            {{#if getProfile.instagram}}
-                           <td><a href="{{getProfile.instagram}}"><i class="fa fa-sm fa-instagram text-purple"></i></a></td>
+                           <td><a href="{{formatURL getProfile.instagram}}" target="_blank"><i class="fa fa-sm fa-instagram text-purple"></i></a></td>
                            {{/if}}
                         </tr>
                      </table>
