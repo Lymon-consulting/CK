@@ -74,21 +74,14 @@
             <div class="row">
                <div class="col text-nowrap"><i class="fa fa-user fa-sm"></i>&nbsp;<i class="fa fa-angle-left fa-sm"></i>
                   <span class="numbers">
-                     {{#if getFollowers.count}}
-                     {{getFollowers.count}}
-                  {{else}}
-                     0
-                  {{/if}}</span>
+                     {{getFollowersCount}}
+                  </span>
                </div>
             </div>
             <div class="row">
                <div class="col text-nowrap"><i class="fa fa-user fa-sm"></i>&nbsp;<i class="fa fa-angle-right fa-sm"></i>
                   <span class="numbers">
-                     {{#if getProfile.follows.length}}
-                     {{getProfile.follows.length}}
-                  {{else}}
-                     0
-                  {{/if}}</span>
+                     {{getFollowingCount}}</span>
                </div>
             </div>
 
@@ -132,149 +125,180 @@
    
    <!-- Termina bloque con los datos personales y de contacto del perfil -->
    <div class="spacer40"></div>
-   <!-- Inicia grid de proyectos-->
+
+
    <div class="container">
       <div class="row">
-      {{#if getProjects}}
-         {{#each getProjects}}
-         <!-- Inicia cada recuadro de cada proyecto -->
-            <div class="col-lg-3 col-md-6 col-sm-12">
-               <div class="spacer20"></div>
-               <div class="card w-100">
-                  {{#if getProjectImages this._id 175}}
-                     <a href="/projectPage/{{this._id}}" class="card-img-top"><img class="card-img-top w-100" src="{{getProjectImages this._id 175}}" alt="Card image cap"></a>
-                  {{else}}
-                     <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/background-dark.jpg" class="card-img-top w-100" alt=""></a>
-                  {{/if}}  
-
-                 <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a>{{#if ownerRole}}&nbsp;<a href="/editProject/{{this._id}}"><i class="fa fa-pencil fa-sm text-purple"></i></a>{{/if}}</div>
-                 <div class="card-body">
-                   <p class="card-text"><strong>{{getProfile.profile.name}} {{getProfile.profile.lastname}}</strong></p>
-                   <p class="card-text">{{projectRole this._id}}</p>
-                 </div>
-                 <div class="card-footer">
-                   <div class="row">
-                      <div class="col"><i class="fa fa-thumbs-up fa-sm"></i><small>&nbsp;{{this.likes}}</small></div>
-                      <div class="col text-right"><i class="fa fa-thumbs-up fa-sm"></i><small>&nbsp;{{this.views}}</small></div>
-                   </div>
-                 </div>
-               </div>      
-            </div>
-         
-         <!-- Termina cada recuadro de cada proyecto -->
-         {{/each}}
-      {{/if}}
-         <!--Inicia columna de la derecha para el ACERCA DE y los SEGUIDORES-->
-         <div class="col-lg-3 col-md-12 col-sm-12 text-right">
+         <div class="col-lg-9">
+            <!-- Inicia grid de proyectos-->
             <div class="container">
-               <div class="spacer20"></div>
                <div class="row">
-                  <div class="col-md-12 text-left">
-                     <strong class="uppercase">ACERCA DE {{getProfile.profile.name}}</strong>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col">
-                     <hr>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col">
-                     <p class="agreements text-justify">
-                        {{#if getProfile.resume}}
-                           {{getProfile.resume}}
-                        {{else}}
-                           Sin descripción
-                        {{/if}}
-                        
-                     </p>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col text-left">
-                     <a href="{{getProfile.webpage}}" target="_blank" class="text-gray"><strong class="text-gray"><small>{{getProfile.webpage}}</small></strong></a>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-md-12">
-                     <table class="table table-responsive borderless">
-                        <tr>
-                           {{#if getProfile.facebook}}
-                           <td><a href="{{formatURL getProfile.facebook}}" target="_blank"> <i class="fa fa-sm fa-facebook text-purple"></i></a></td>
-                           {{/if}}
-                           {{#if getProfile.twitter}}
-                           <td><a href="{{formatURL getProfile.twitter}}" target="_blank"><i class="fa fa-sm fa-twitter text-purple"></i></a></td>
-                           {{/if}}
-                           {{#if getProfile.vimeo}}
-                           <td><a href="{{formatURL getProfile.vimeo}}" target="_blank"><i class="fa fa-sm fa-vimeo text-purple"></i></a></td>
-                           {{/if}}
-                           {{#if getProfile.youtube}}
-                           <td><a href="{{formatURL getProfile.youtube}}" target="_blank"><i class="fa fa-sm fa-youtube text-purple"></i></a></td>
-                           {{/if}}
-                           {{#if getProfile.instagram}}
-                           <td><a href="{{formatURL getProfile.instagram}}" target="_blank"><i class="fa fa-sm fa-instagram text-purple"></i></a></td>
-                           {{/if}}
-                        </tr>
-                     </table>
-                  </div>
-               </div>
+               {{#if getProjects}}
+                  {{#each getProjects}}
+                  <!-- Inicia cada recuadro de cada proyecto -->
+                     <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="spacer20"></div>
+                        <div class="card w-100">
+                           {{#if getProjectImages this._id 175}}
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img class="card-img-top w-100" src="{{getProjectImages this._id 175}}" alt="Card image cap"></a>
+                           {{else}}
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/background-dark.jpg" class="card-img-top w-100" alt=""></a>
+                           {{/if}}  
 
-               <div class="row">
-                  <div class="col spacer120"></div>
-               </div>
-               {{#if getFollowers.count}}
-               
-               <div class="row">
-                  <div class="col-md-8 text-left">
-                     <strong>SEGUIDORES</strong>
-                  </div>
-                  <div class="col-md-4">
-                     <small>
-                     {{#if getFollowers.count getProfile._id}}
-                        {{getFollowers.count getProfile._id}}
-                     {{else}}
-                        0
-                     {{/if}}
-                     </small>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col"><hr></div>
-               </div>
-     
-               <div class="row">
-                  <div class="col">
-                     <div class="container">
-                        <div class="row">
-                           {{#each getFollowers}}
-                           <div class="col-md-4">
-                              <a href="/profilePage/{{this._id}}">
-                              {{#if getProfilePicture this._id 40}}
-                              <img src="{{getProfilePicture this._id 40}}">
-                              {{else}}
-                              <div id="profileImage">{{getInitials this._id}}</div>
-                              {{/if}}
-                              </a>
-
-                           </div>
-                           {{/each}}
-
-                        </div>
+                          <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a>{{#if ownerRole}}&nbsp;<a href="/editProject/{{this._id}}"><i class="fa fa-pencil fa-sm text-purple"></i></a>{{/if}}</div>
+                          <div class="card-body">
+                            <p class="card-text"><strong>{{getProfile.profile.name}} {{getProfile.profile.lastname}}</strong></p>
+                            <p class="card-text">{{projectRole this._id}}</p>
+                          </div>
+                          <div class="card-footer">
+                            <div class="row">
+                               <div class="col"><i class="fa fa-thumbs-up fa-sm"></i><small>&nbsp;{{this.likes}}</small></div>
+                               <div class="col text-right"><i class="fa fa-thumbs-up fa-sm"></i><small>&nbsp;{{this.views}}</small></div>
+                            </div>
+                          </div>
+                        </div>      
                      </div>
-                  </div>
-               </div>
+                  <!-- Termina cada recuadro de cada proyecto -->
+                  {{/each}}
                {{/if}}
-               <div class="row">
-                  <div class="col spacer80"></div>
                </div>
             </div>
          </div>
-         <!--Termina columna de la derecha para el ACERCA DE y los SEGUIDORES-->
+         <div class="col-lg-3">
+            <!--Inicia columna de la derecha para el ACERCA DE y los SEGUIDORES-->
+            <div class="container">
+               <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 text-right">
+                     <div class="container">
+                        <div class="spacer20"></div>
+                        <div class="row">
+                           <div class="col-md-12 text-left">
+                              <strong class="uppercase">ACERCA DE {{getProfile.profile.name}}</strong>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col">
+                              <hr>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col">
+                              <p class="agreements text-justify">
+                                 {{#if getProfile.resume}}
+                                    {{getProfile.resume}}
+                                 {{else}}
+                                    Sin descripción
+                                 {{/if}}
+                                 
+                              </p>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col text-left">
+                              <a href="{{getProfile.webpage}}" target="_blank" class="text-gray"><strong class="text-gray"><small>{{getProfile.webpage}}</small></strong></a>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-12">
+                              <table class="table table-responsive borderless">
+                                 <tr>
+                                    {{#if getProfile.facebook}}
+                                    <td><a href="{{formatURL getProfile.facebook}}" target="_blank"> <i class="fa fa-sm fa-facebook text-purple"></i></a></td>
+                                    {{/if}}
+                                    {{#if getProfile.twitter}}
+                                    <td><a href="{{formatURL getProfile.twitter}}" target="_blank"><i class="fa fa-sm fa-twitter text-purple"></i></a></td>
+                                    {{/if}}
+                                    {{#if getProfile.vimeo}}
+                                    <td><a href="{{formatURL getProfile.vimeo}}" target="_blank"><i class="fa fa-sm fa-vimeo text-purple"></i></a></td>
+                                    {{/if}}
+                                    {{#if getProfile.youtube}}
+                                    <td><a href="{{formatURL getProfile.youtube}}" target="_blank"><i class="fa fa-sm fa-youtube text-purple"></i></a></td>
+                                    {{/if}}
+                                    {{#if getProfile.instagram}}
+                                    <td><a href="{{formatURL getProfile.instagram}}" target="_blank"><i class="fa fa-sm fa-instagram text-purple"></i></a></td>
+                                    {{/if}}
+                                 </tr>
+                              </table>
+                           </div>
+                        </div>
+
+                        {{#if getFollowersCount}}
+                        <div class="row">
+                           <div class="col spacer120"></div>
+                        </div>
+                        <div class="row">
+                           <strong>SEGUIDORES</strong>
+                        </div>
+                        <div class="row">
+                           <div class="col"><hr></div>
+                        </div>
+                        <div class="row">
+                           <div class="col">
+                              <div class="container">
+                                 <div class="row">
+                                    {{#each getFollowers}}
+                                    <div class="col-md-4">
+                                       <a href="/profilePage/{{this._id}}">
+                                       {{#if getProfilePicture this._id 40}}
+                                       <img src="{{getProfilePicture this._id 40}}">
+                                       {{else}}
+                                       <div id="profileImage">{{getInitials this._id}}</div>
+                                       {{/if}}
+                                       </a>
+                                    </div>
+                                    {{/each}}
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        {{/if}}
+
+                        {{#if getFollowing}}
+                        <div class="row">
+                           <div class="col spacer120"></div>
+                        </div>
+                        <div class="row">
+                           <strong>SIGUIENDO</strong>
+                        </div>
+                        <div class="row">
+                           <div class="col"><hr></div>
+                        </div>
+                        <div class="row">
+                           <div class="col">
+                              <div class="container">
+                                 <div class="row">
+                                    {{#each getFollowing}}
+                                    <div class="col-md-4">
+                                       <a href="/profilePage/{{this._id}}">
+                                       {{#if getProfilePicture this._id 40}}
+                                       <img src="{{getProfilePicture this._id 40}}">
+                                       {{else}}
+                                       <div id="profileImage">{{getInitials this._id}}</div>
+                                       {{/if}}
+                                       </a>
+                                    </div>
+                                    {{/each}}
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        {{/if}}
+                       
+                        <div class="row">
+                           <div class="col spacer80"></div>
+                        </div>
+                     </div>
+                  </div>
+            <!--Termina columna de la derecha para el ACERCA DE y los SEGUIDORES-->
+               </div>
+            </div>
+         </div>
       </div>
    </div>
-   <!-- Termina grid de proyectos-->
+
+   
 
 
    
-   
+<div class="spacer40"></div>   
 </template>

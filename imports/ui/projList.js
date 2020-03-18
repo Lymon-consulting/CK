@@ -14,6 +14,13 @@ Template.projList.helpers({
          id: 'searchBox'
       }; 
    },
+   searchCount: () => {
+    // index instanceof EasySearch.index
+    let dict = ProjectIndex.getComponentDict(/* optional name */);
+
+    // get the total count of search results, useful when displaying additional information
+    return dict.get('count')
+   },
    coverPicture: function (projectId, size) {
     Meteor.subscribe("allProjects");
       var url = "";

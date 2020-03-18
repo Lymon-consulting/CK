@@ -116,27 +116,40 @@ Template.profilePage.helpers({
       }
       return found;
    },
-   getFollowers(userId){
+   getFollowersCount(){
       Meteor.subscribe("otherUsers");
-      return Meteor.users.find({'follows': FlowRouter.getParam('id')});
+      var count = 0;
+      count = Meteor.users.find({ 'follows': { $all : [FlowRouter.getParam('id')]}}).count();
+      return count;
    },
+   getFollowers(){
+      Meteor.subscribe("otherUsers");
+      var followers = Meteor.users.find({ 'follows': { $all : [FlowRouter.getParam('id')]}});
+      console.log(followers);
+      return followers;
+   },
+   getFollowingCount(){
+      Meteor.subscribe("otherUsers");
+      var user = Meteor.users.findOne({'_id' : FlowRouter.getParam('id')});
+      var count = 0;
+
+      if(user && Array.isArray(user.follows)){
+        count = Meteor.users.find({'_id': { $in: user.follows }}).count();
+      }
+      return count;
+   }, 
    getFollowing(){
       //find regresa un cursor que contiene los documentos encontrados
       //fetch regresa un arreglo conteniendo los documentos
-      Meteor.subscribe("follows", FlowRouter.getParam('id'));
-      var docs = Meteor.users.find({'_id' : FlowRouter.getParam('id')}).map( function(u) { return u.follows; } );
+      Meteor.subscribe("otherUsers");
+      var user = Meteor.users.findOne({'_id' : FlowRouter.getParam('id')});
 
-      console.log(docs);
-      
-      var ids = new Array();
-      for(var i=0; i<=docs.length; i++){
-         if(docs){
-            ids.push(docs[i]);
-         }
+      if(user && Array.isArray(user.follows)){
+        return Meteor.users.find({'_id': { $in: user.follows }}).fetch();
       }
-      
-      return ids;
-      
+      else{
+        return [];
+      }
    },
    getProfilePicture(userId, size) {
        var url = "";

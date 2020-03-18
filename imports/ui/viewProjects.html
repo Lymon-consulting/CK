@@ -43,9 +43,9 @@
         <div class="col-md-4">
           <div class="card h-1500">
            {{#if getProjectPicture this._id 500}}
-              <img class="card-img-top" src="{{getProjectPicture this._id 500}}" alt="Card image cap">
+              <a href="/projectPage/{{this._id}}"><img class="card-img-top" src="{{getProjectPicture this._id 500}}" alt="Card image cap"></a>
            {{else}}
-              <img class="card-img-top" src="/images/background-dark.jpg" style="width: 500px">
+              <a href="/projectPage/{{this._id}}"><img class="card-img-top" src="/images/background-dark.jpg" style="width: 500px"></a>
            {{/if}}
             <div class="card-body">
               <h5 class="card-title"><a href="/projectPage/{{this._id}}">{{this.project_title}} ({{this.project_year}})</a></h5>

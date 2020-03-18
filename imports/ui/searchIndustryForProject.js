@@ -14,6 +14,13 @@ Template.searchIndustryForProject.helpers({
      id: 'searchBox'
    }; 
  },
+ searchCount: () => {
+    // index instanceof EasySearch.index
+    let dict = IndustryIndex.getComponentDict(/* optional name */);
+
+    // get the total count of search results, useful when displaying additional information
+    return dict.get('count')
+   },
  getProjectName(){
   var project = Project.findOne({'_id': FlowRouter.getParam('id')});
   var name = "";

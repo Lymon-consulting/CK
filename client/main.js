@@ -18,6 +18,7 @@ import '../imports/ui/join.js';
 import '../imports/ui/thanksRegister.js';
 import '../imports/ui/confirmProfile.js';
 import '../imports/ui/addCollaborator.js';
+import '../imports/ui/addCollaboratorIndustry.js';
 import '../imports/ui/recover.js';
 import '../imports/ui/editProfile.js';
 import '../imports/ui/userProjects.js';

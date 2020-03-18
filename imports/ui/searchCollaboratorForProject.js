@@ -17,6 +17,13 @@ Template.searchCollaboratorForProject.helpers({
        id: 'searchBox'
      }; 
    },
+   searchCount: () => {
+    // index instanceof EasySearch.index
+    let dict = UsersIndex.getComponentDict(/* optional name */);
+
+    // get the total count of search results, useful when displaying additional information
+    return dict.get('count')
+   },
    getAllOcupations(){
     return Ocupation.find({},{sort:{"secondary":1}}).fetch();
   },

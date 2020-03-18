@@ -44,7 +44,7 @@
       
       <div class="row">
          <div class="col-md-12 agreements">
-            Page 1 - {{people.count}} results
+            Resultados: {{searchCount}}
          </div>
       </div>
       
@@ -92,7 +92,13 @@
                                           {{this.company_year}}
                                        </td>
                                     </tr>
-                                    
+                                    {{#if currentUser}}
+                                    <tr>
+                                       <td>
+                                          <button class="btn button-follow pushCollaborator" id="{{this.__originalId}}"> <i class="fa fa-plus-circle fa-sm"></i> COLABORADOR </button>
+                                       </td>
+                                    </tr>
+                                    {{/if}}
                                  </tbody>
                               </table>
                            </div>
@@ -105,11 +111,17 @@
                </div>
                {{/EasySearch.Each}}
 
-               {{> EasySearch.LoadMore index=industryIndex}}
+               {{> EasySearch.LoadMore index=industryIndex content="Mostrar más"}}
 
                 {{#EasySearch.IfNoResults index=industryIndex}}
                   <div class="no-results">No se encontraron resultados</div>
                 {{/EasySearch.IfNoResults}}
+
+                {{#EasySearch.IfSearching index=industryIndex}}
+                     <div>Buscando...</div>
+               {{/EasySearch.IfSearching}}
+
+               {{> EasySearch.Pagination index=industryIndex maxPages=10 prevAndNext=true}}
             </div>
          </div>
          <!-- Fin contenido -->

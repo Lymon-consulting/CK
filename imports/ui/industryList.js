@@ -14,6 +14,13 @@ Template.industryResults.helpers({
          id: 'searchBox'
       }; 
    },
+   searchCount: () => {
+    // index instanceof EasySearch.index
+    let dict = IndustryIndex.getComponentDict(/* optional name */);
+
+    // get the total count of search results, useful when displaying additional information
+    return dict.get('count')
+   },
    logoPicture: function (companyId, size) {
     Meteor.subscribe("allIndustries");
       var url = "";
@@ -117,7 +124,8 @@ Template.industryResults.helpers({
           pyear = "cualquier";
         }
         return (pyear === value) ? 'selected' : '' ;
-      }
+      },
+
 
    
 });
@@ -160,7 +168,13 @@ Template.industryResults.events({
          IndustryIndex.getComponentMethods().removeProps('company_year');  
          Session.set("year_selected",null);
       }
-  }
+  },
+  'click .pushCollaborator': function(event, template) {
+      event.preventDefault();
+      var companyId = event.target.id;
+      Session.set("collaborator",companyId);
+      FlowRouter.go('/addCollaboratorIndustry');
+   },
    
 });
 

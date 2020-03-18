@@ -44,7 +44,7 @@
       
       <div class="row">
          <div class="col-md-12 agreements">
-            Page 1 -  results
+            Resultados: {{searchCount}}
          </div>
       </div>
       
@@ -138,11 +138,17 @@
                </div>
                {{/EasySearch.Each}}
 
-               {{> EasySearch.LoadMore index=projectIndex}}
+               {{> EasySearch.LoadMore index=projectIndex content="Mostrar más"}}
 
-                {{#EasySearch.IfNoResults index=projectIndex}}
-                  <div class="no-results">No se encontraron resultados</div>
-                {{/EasySearch.IfNoResults}}
+              {{#EasySearch.IfNoResults index=projectIndex}}
+                <div class="no-results">No se encontraron resultados</div>
+              {{/EasySearch.IfNoResults}}
+
+              {{#EasySearch.IfSearching index=projectIndex}}
+                   <div>Buscando...</div>
+             {{/EasySearch.IfSearching}}
+
+             {{> EasySearch.Pagination index=projectIndex maxPages=10 prevAndNext=true}}
             </div>
          </div>
          <!-- Fin contenido -->
