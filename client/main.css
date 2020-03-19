@@ -217,7 +217,13 @@ footer{
 
 
 
+.media-thumb{
+   width: 200px;
+   height: 100px;
 
+   /*Scale down will take the necessary specified space that is 400px x 200px without stretching the image*/
+   object-fit:scale-down;
+}
 
 .item {
   display: block;

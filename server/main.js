@@ -4,6 +4,7 @@ import { Industry } from '../imports/api/industry.js';
 import { Portlet } from '../imports/api/portlet.js';
 import { Ocupation } from '../imports/api/ocupations.js';
 import { City } from '../imports/api/city.js';
+import { Media } from '../imports/api/media.js';
 import { Index, MongoDBEngine } from 'meteor/easy:search'
 
 import '../imports/api/ocupations.js';
@@ -11,6 +12,7 @@ import '../imports/startup/server/on-create-user.js';
 import './projectMethods.js';
 import './userMethods.js';
 import './industryMethods.js';
+import './mediaMethods.js';
 
 
 Meteor.startup(() => {
@@ -235,6 +237,27 @@ Meteor.publish('myPortlets', function() {
       'author':1,
       'url':1,
       'order':1
+    }
+  });
+});
+
+
+Meteor.publish('allMedia', function(){
+  //return Media.find();
+  
+  return Media.find({},{
+    fields: {
+      '_id':1,
+      'userId':1,
+      'mediaId':1,
+      'media_title':1,
+      'media_desc':1,
+      'media_size':1,
+      'media_type':1,
+      'media_name':1,
+      'media_date':1,
+      'media_width':1,
+      'media_height':1
     }
   });
 });

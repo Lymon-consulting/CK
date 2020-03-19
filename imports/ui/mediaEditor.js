@@ -1,9 +1,9 @@
 import { Template } from 'meteor/templating';
+import { Media } from '../api/media.js';
 
 import './mediaEditor.html';
 
 var uploadingPhotos = ReactiveVar(); // upload indicator
-
 
 function uploadFiles(files, profileId) {
   _.each(files, function(file) {
@@ -44,8 +44,8 @@ function uploadFiles(files, profileId) {
 
       	//var newData = userData.obj.width;
       	//var obj = JSON.parse(res);
-      	console.log("width="+res.width);
-      	console.log("height="+res.height);
+      	//console.log("width="+res.width);
+      	//console.log("height="+res.height);
 
         Meteor.call(
           'saveMedia',
@@ -81,7 +81,7 @@ function uploadFiles(files, profileId) {
 
 Template.header.rendered = function(){
 	$("#dragzone").css({
-	  display: "none",
+	  "display": "none",
 	});
 };
 
@@ -133,14 +133,19 @@ Template.dragZone.events({
 Template.mediaEditor.helpers({
 	getMedia() {
 
-		 Meteor.subscribe("otherUsers");
+		 Meteor.subscribe("allMedia");
+		 
+		 var media = Media.find({'userId': Meteor.userId()});
+		 
+		 return media;
+
+/*
 	     var user = Meteor.users.findOne({'_id' : Meteor.userId()});
 
 	     if(user && Array.isArray(user.media)){
 	       var array = user.media;
 	       
 	       var sortedJsObjects = array.sort(function(a,b){ 
-			    //return Math.abs(new Date(a.media_date) - new Date(b.media_date)) 
 			    if (a.media_date > b.media_date) return -1;
    				if (a.media_date < b.media_date) return 1;
 			});
@@ -148,7 +153,7 @@ Template.mediaEditor.helpers({
 	     }
 	     else{
 	       return [];
-	     }
+	     }*/
 
 
          

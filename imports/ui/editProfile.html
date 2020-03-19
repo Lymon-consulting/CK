@@ -215,7 +215,13 @@
          <div class="spacer20"></div>
          <div class="row">
             <div class="col">Imagen de perfil</div>
+            <div class="col">
+              <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal1">Seleccionar</button>
+            </div>
          </div>
+
+         
+         <!--
          <div class="row">
             <div class="col agreements">Elige una imagen de 80 pixeles de ancho por 80 pixeles de alto</div>
          </div>
@@ -239,7 +245,7 @@
                  </tbody>
                </table>
             </div>
-         </div>
+         </div>-->
          <div class="spacer20"></div>
          <div class="row">
             <div class="col">Imagen de portada</div>
@@ -288,6 +294,42 @@
 
       </form>
 
+
+        <!--Modal: Name-->
+        <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+
+            <!--Content-->
+            <div class="modal-content">
+
+              <!--Body-->
+              <div class="modal-body">
+                
+                <div class="container">
+                  <div class="row background-verylightgray light-padding">
+                    {{#each getMedia}}
+                    <div class="col-lg-3 col-sm-6 align-self-center">
+                      <a><img class="media-thumb z-depth-1" src="{{getURL this.mediaId}}" alt="image"></a>
+                    </div>
+                    {{/each}}
+                  </div>
+                </div>
+                
+
+              </div>
+
+              <!--Footer-->
+              <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button>
+
+              </div>
+
+            </div>
+            <!--/.Content-->
+
+          </div>
+        </div>
+        <!--Modal: Name-->
 
 <div class="modal modal-backdrop" tabindex="-1" id="myModal" role="dialog">
   <div class="modal-dialog" role="document">

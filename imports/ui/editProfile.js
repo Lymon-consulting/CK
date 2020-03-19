@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Ocupation } from '../api/ocupations.js';
 import { City } from '../api/city.js';
+import { Media } from '../api/media.js';
 
 
 import './editProfile.html';
@@ -225,7 +226,22 @@ Template.userPage.rendered = function(){
           return Meteor.user().profileCoverID;  
         }
         
-      }/*,
+      },
+      getMedia() {
+
+        Meteor.subscribe("allMedia");
+     
+        var media = Media.find({'userId': Meteor.userId()});
+     
+        return media;
+      },
+      getURL(mediaId){
+        var url = "";
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/" + mediaId;
+        return url;
+      }
+
+      /*,
       hasTopRole(){
         var array = new Array();
         var result = false;
@@ -291,6 +307,7 @@ Template.userPage.rendered = function(){
          }
          return false
       },
+
 
       'keyup #resume' : function(event){
          event.preventDefault();

@@ -75,51 +75,11 @@ Meteor.methods({
                }
             });
 	},
-	saveMedia(userId, fileId, size, type, name, width, height){
+	
+	
+	
 
-		var date = new Date(Date.now());
-
-		
-		var fileData = {
-	      "_id" : fileId,
-	      "media_title": "",
-	      "media_desc": "",
-	      "media_size": size,
-	      "media_type": type,
-	      "media_name": name,
-	      "media_date": date,
-	      "media_width": width,
-	      "media_height": height
-	    };
-
-		Meteor.users.upsert(
-	       {'_id': userId},
-	       { $push: { media: fileData }
-	     });
-	},
-	updateMediaTitle(userId, mediaId, title){
-		Meteor.users.update(
-	       {'_id': userId, 'media._id': mediaId},
-	       { $set: { 'media.$.media_title': title }
-	     });
-	},
-	updateMediaDescription(userId, mediaId, description){
-		Meteor.users.update(
-	       {'_id': userId, 'media._id': mediaId},
-	       { $set: { 'media.$.media_desc': description }
-	     });
-	},
-
-	deleteMedia(userId, mediaId){
-		var fileData = {
-	      "_id" : mediaId
-	    };
-
-		Meteor.users.upsert(
-	       {'_id': userId},
-	       { $pull: { media: fileData }
-	     });
-	},
+	
 
 	saveProfilePictureID(userId, profilePictureID){
 		Meteor.users.update({'_id': userId}, {
