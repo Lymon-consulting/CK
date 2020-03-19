@@ -197,7 +197,8 @@ Meteor.publish("otherUsers", function () {
       'profilePictureID': 1,
       'profileCoverID': 1,
       'wizard' : 1,
-      'likesProject' : 1
+      'likesProject' : 1,
+      'media' : 1
     }
   });
 });

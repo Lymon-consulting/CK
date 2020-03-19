@@ -2,8 +2,11 @@ import { Template } from 'meteor/templating';
 import { Ocupation } from '../api/ocupations.js';
 import { City } from '../api/city.js';
 
+
 import './editProfile.html';
 import '/lib/common.js';
+import {Croper} from '../cropper/cropper.js';
+
 
 if (Meteor.isClient) {
    Meteor.subscribe("fileUploads");
@@ -467,6 +470,62 @@ Template.userPage.rendered = function(){
             console.log("Upload Error:"  + err); //no output on console
           }
         });
+      },
+      'dblclick #image':function(event, template){
+          
+          var croppable = false;
+          var croppedCanvas;
+          var roundedImage;
+          const cropper = new Cropper(image, {
+
+          dragMode: 'move',
+          aspectRatio: 16 / 9,
+          autoCropArea: 0.65,
+          restore: false,
+          guides: false,
+          center: false,
+          highlight: false,
+          cropBoxMovable: true,
+          cropBoxResizable: false,
+          toggleDragModeOnDblclick: false,
+          ready() {
+            croppable = true;
+          },
+          crop(event) {
+            /*console.log(event.detail.x);
+            console.log(event.detail.y);
+            console.log(event.detail.width);
+            console.log(event.detail.height);
+            /*console.log(event.detail.rotate);
+            console.log(event.detail.scaleX);
+            console.log(event.detail.scaleY);*/
+            croppedCanvas = cropper.getCroppedCanvas();
+            roundedImage = document.createElement('img');
+            roundedImage.src = croppedCanvas.toDataURL()
+            result.innerHTML = '';
+            result.appendChild(roundedImage);
+          },
+        });
+      },
+      'click #crop': function(event,template){
+        var image = document.getElementById('image');
+        var button = document.getElementById('crop');
+        var result = document.getElementById('result');
+        var croppedCanvas;
+        var roundedCanvas;
+        var roundedImage;
+
+        // Crop
+        croppedCanvas = cropper.getCroppedCanvas();
+
+        // Round
+        roundedCanvas = getRoundedCanvas(croppedCanvas);
+
+        // Show
+        roundedImage = document.createElement('img');
+        roundedImage.src = roundedCanvas.toDataURL()
+        result.innerHTML = '';
+        result.appendChild(roundedImage);
       }
    });
 }

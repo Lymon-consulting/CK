@@ -1,6 +1,15 @@
 <template name="editProfile">
 
 
+  <style>
+    img {
+      display: block;
+
+      /* This rule is very important, please don't ignore this */
+      max-width: 100%;
+    }
+  </style>
+
    <div class="container text-center">
       <h1 class="h1-title">EDITAR EL PERFIL DE</h1>
       <h2>{{fullName}}</h2>
@@ -249,7 +258,9 @@
                  <tbody>
                  <tr>
                     <td>
-                      <img src="{{getCoverPicture}}" class="thumbnail-project"/>
+                      <img id="image" src="{{getCoverPicture}}" class="thumbnail-project"/>
+                      <button id="crop">Cortar</button>
+                      <div id="result"></div>
                     </td>
                  </tr>
                  <tr>

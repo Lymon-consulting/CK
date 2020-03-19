@@ -1,0 +1,115 @@
+<template name="mediaEditor">
+	<div class="container">
+		<h1 class="h1-title text-center">BIBLIOTECA DE IMÁGENES</h1>
+		<br>
+
+		<div class="row">
+			<div class="col-lg-12 col-md-12 mb-4 text-center">
+				<button class="btn btn-purple" id="toggleDropper">Agregar nueva imagen</button>
+			</div>
+		</div>
+		
+		<div id="dragzone">
+			{{>dragZone}}
+		</div>
+
+		<!-- Grid row -->
+		<div class="row background-verylightgray light-padding">
+			{{#if getMedia}}
+			{{#each getMedia}}
+			<!-- Grid column -->
+			<div class="col-lg-4 col-md-12 mb-4">
+				<!--Modal: Name-->
+				<div class="modal fade" id="modal{{@index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document">
+
+						<!--Content-->
+						<div class="modal-content">
+
+							<!--Body-->
+							<div class="modal-body">
+								
+								<div class="container">
+									<div class="row">
+										<div class="col-lg-7 text-center">
+											<div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
+												<iframe class="embed-responsive-item" src="{{getURL this._id}}"
+												allowfullscreen></iframe>
+											</div>
+										</div>
+										<div class="col-lg-5 background-verylightgray">
+											<p class="text-right"><small><span id="message"></span></small></p>
+											<p><small><strong>Nombre:</strong> {{this.media_name}}</small></p>
+											<p><small><strong>Tipo:</strong> {{this.media_type}}</small></p>
+											<p><small><strong>Subido el:</strong> {{formatDate this.media_date}}</small></p>
+											<p><small><strong>Tamaño:</strong> {{formatSize this.media_size}}</small></p>
+											<p><small><strong>Dimensiones:</strong> {{this.media_width}} por {{this.media_height}} pixeles </small></p>
+											<p><hr></p>
+											<p><small>Título:</small> <input class="form-control" id="title{{this._id}}" type="text" placeholder="Título" value="{{this.media_title}}"></p>
+											<p><small>Descripción:</small> <input class="form-control" id="descr{{this._id}}" type="text" placeholder="Descripción" value="{{this.media_desc}}"></p>
+											<p><a href="" class="delete" data-id="{{this._id}}"><small>Borrar permanentemente</small></a></p>
+											<input class="hidden" id="media{{this._id}}" type="text" value="{{this._id}}">
+										</div>
+
+									</div>
+								</div>
+
+								
+
+							</div>
+
+							<!--Footer-->
+							<div class="modal-footer justify-content-center">
+								<button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button>
+
+							</div>
+
+						</div>
+						<!--/.Content-->
+
+					</div>
+				</div>
+				<!--Modal: Name-->
+				<div class="col-lg-4 col-sm-6 align-self-center background-lightgray">
+				  <a href="#" id="setVariable"> <div class='box background-lightgray mx-auto'><a><img class="img-fluid z-depth-1" src="{{getURL this._id}}" alt="image"
+        data-toggle="modal" data-target="#modal{{@index}}"></a></div></a>
+				  
+				</div>
+				
+
+				
+
+				
+
+
+			</div>      
+			{{/each}}
+			{{/if}}
+		</div>
+	</div>
+	<div class="spacer60"></div>
+</template>
+
+<template name="dragZone">
+
+	{{#if uploading}}
+	    <p class="form-control-static">
+	      <div class="alert alert-info">
+	        Loading
+	        {{#if moreThanOne}}
+	          Restan archivos {{uploading}}
+	        {{/if}}
+	      </div>
+	    </p>
+	  {{else}}
+	    <div id="dropzone" class="dropzone active">
+	      <div class="container">
+	        Arrastra y suelta la imagen que quieres subir o haz clic en el botón
+	        <span class="btn btn-file btn-secondary">
+	          <input type="file">
+	        </span>
+	      </div>
+	    </div>
+	  {{/if}}
+	
+</template>

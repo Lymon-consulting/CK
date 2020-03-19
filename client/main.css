@@ -89,6 +89,30 @@ footer{
 
 }
 
+
+.box{
+    height:250px;
+    width:300px;
+    overflow:hidden;
+    display:block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropzone {
+    line-height:100px;
+    border:5px dashed #ccc;
+    height: 300px;
+    background-color: #eee;
+    margin-bottom: 20px;
+    padding: 40px;
+    font-size: 12px;
+}
+.drag-over {
+  border:5px dashed #34bdeb;
+}
+
 .modal-body {
     max-height: calc(100vh - 143px);
     overflow-y: auto; 
@@ -101,8 +125,9 @@ footer{
 }
 .h1-title{
    font-family: "AvenirNext-Bold";  
-   font-size: 46px;
+   font-size: 36px;
    color:#333;
+   margin-top: 45px;
 }
 .h3-title{
    font-family: "Sans-serif";
@@ -544,6 +569,11 @@ footer{
    font-family: "Avenir-Light";
 }
 
+.light-padding{
+  padding: 10px;
+  margin: 10px;
+}
+
 .input-width-80{
    width:80px;
 }
@@ -583,6 +613,10 @@ footer{
 
 .background-lightgray{
    background-color: #CCC;
+}
+
+.background-verylightgray{
+   background-color: #eee;
 }
 
 .banner-table{
