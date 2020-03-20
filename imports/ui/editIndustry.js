@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Industry } from '../api/industry.js';
 import { Ocupation } from '../api/ocupations.js';
+import { Media } from '../api/media.js';
 
 import './editIndustry.html';
 import '/lib/common.js';
@@ -40,12 +41,24 @@ if (Meteor.isClient) {
     return type;
   },
   getIndustryLogo() {
+    Meteor.subscribe("allMedia");
+    var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
+    var url;
+    if(data!=null && data.companyLogoID!=null){
+      var cover = Media.findOne({'mediaId':data.companyLogoID});
+      if(cover!=null){
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_250,c_scale" + "/v" + cover.media_version + "/" + Meteor.userId() + "/" + data.companyLogoID;    
+      }
+      
+    }
+    return url;
+    /*
     var url = "";
     var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
     if(data!=null && data.companyLogoID!=null){
       url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_250,c_scale/" + data.companyLogoID;
     }
-    return url;
+    return url;*/
   },
   getLogoPublicID(){
     var companyLogoID="";
@@ -58,12 +71,29 @@ if (Meteor.isClient) {
     
   },
   getIndustryCover() {
+    Meteor.subscribe("allMedia");
+    var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
+    var url;
+    if(data!=null && data.companyCoverID!=null){
+      var cover = Media.findOne({'mediaId':data.companyCoverID});
+      if(cover!=null){
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_250,c_scale" + "/v" + cover.media_version + "/" + Meteor.userId() + "/" + data.companyCoverID;    
+      }
+      
+    }
+    return url;
+    /*
     var url = "";
     var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
     if(data!=null && data.companyCoverID!=null){
       url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_250,c_scale/" + data.companyCoverID;
     }
-    return url;
+    return url;*/
+  },
+  getMedia(type) {
+    Meteor.subscribe("allMedia");
+    var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
+    return media;
   },
   getCoverPublicID(){
     var companyCoverID="";
@@ -229,6 +259,41 @@ return false;
           );
      }
      
+  },
+  'click .goMediaLibrary': function(event,template){
+    event.preventDefault();
+    $('.modal').modal('hide'); 
+    $('.modal-backdrop').remove();
+    FlowRouter.go("/mediaEditor/" + Meteor.userId());
+  },
+
+  'click #selectLogo': function(event,template){
+     event.preventDefault();
+     var mediaId = $(event.currentTarget).attr("data-id");
+
+     Meteor.call(
+        'saveCompanyLogoID',
+        FlowRouter.getParam('id'),
+        mediaId
+      );
+
+    $('.modal').modal('hide'); 
+    $('.modal-backdrop').remove();
+
+  },
+  'click #selectCoverIndustry': function(event,template){
+     event.preventDefault();
+     var mediaId = $(event.currentTarget).attr("data-id");
+
+     Meteor.call(
+        'saveCompanyCoverID',
+        FlowRouter.getParam('id'),
+        mediaId
+      );
+
+    $('.modal').modal('hide'); 
+    $('.modal-backdrop').remove();
+
   }
 
 });

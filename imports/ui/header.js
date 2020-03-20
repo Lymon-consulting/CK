@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor'
 import { Project } from '../api/project.js';
+import { Media } from '../api/media.js';
  
 import './header.html';
 import './projectPage.html';
@@ -40,11 +41,22 @@ Template.header.helpers({
 
 Template.profile.helpers({
   getProfilePicture() {
+    Meteor.subscribe("allMedia");
+    var url;
+    if(Meteor.user().profilePictureID!=null){
+      var profile = Media.findOne({'mediaId':Meteor.user().profilePictureID});
+      if(profile!=null){
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_40,h_40,c_thumb,f_auto,r_max/" + "/v" + profile.media_version + "/" + Meteor.userId() + "/" + Meteor.user().profilePictureID;    
+      }
+      
+    }
+    return url;
+    /*
      var url = "";
      if(Meteor.user().profilePictureID!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_40,h_40,c_thumb,f_auto,r_max/" + Meteor.user().profilePictureID;
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_40,h_40,c_thumb,f_auto,r_max/" + Meteor.userId() + "/" + Meteor.user().profilePictureID;
      }
-     return url;
+     return url;*/
   },
   getInitials(){
     var name = Meteor.user().profile.name;

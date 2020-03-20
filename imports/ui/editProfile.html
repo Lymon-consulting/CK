@@ -214,42 +214,43 @@
          </div>
          <div class="spacer20"></div>
          <div class="row">
-            <div class="col">Imagen de perfil</div>
+            <div class="col">Esta es tu imagen de perfil actual</div>
+          </div>
+          <div class="row">
             <div class="col">
-              <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal1">Seleccionar</button>
+              {{#if getProfilePicture}}
+              <img src="{{getProfilePicture}}"/>
+              {{else}}
+              <div id="profileImageLarge">{{getInitials}}</div>
+              {{/if}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <br>
+              <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal1">Seleccionar otra</button>
             </div>
          </div>
-
-         
-         <!--
-         <div class="row">
-            <div class="col agreements">Elige una imagen de 80 pixeles de ancho por 80 pixeles de alto</div>
-         </div>
-         <div class="row">
-            <div class="col"><hr></div>
-         </div>
-         <div class="row">
-            <div class="col">
-               <input id="file-upload" type="file">
-               <table class="table table-condensed">
-                 <tbody>
-                 <tr>
-                   <td>
-                    {{#if getProfilePicture}}
-                    <img src="{{getProfilePicture}}"/>
-                    {{else}}
-                    <div id="profileImageLarge">{{getInitials}}</div>
-                    {{/if}}
-                   </td>  
-                 </tr>
-                 </tbody>
-               </table>
-            </div>
-         </div>-->
          <div class="spacer20"></div>
          <div class="row">
-            <div class="col">Imagen de portada</div>
+            <div class="col">Esta es tu imagen de portada actual</div>
          </div>
+         <div class="row">
+            <div class="col">
+              {{#if getCoverPicture}}
+              <img id="image" src="{{getCoverPicture}}" class="thumbnail-project"/>
+              {{else}}
+              <img id="image" src="/images/c4.jpg" class="thumbnail-project"/>
+              {{/if}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <br>
+              <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal2">Seleccionar otra</button>
+            </div>
+         </div>
+          <!--
          <div class="row">
                <div class="col agreements">Elige una imagen de 1950 pixeles de ancho por 350 pixeles de alto</div>
             </div>
@@ -279,6 +280,7 @@
                {{/if}}
             </div>
          </div>
+       -->
          <div class="row">
             <div class="col"><hr></div>
          </div>
@@ -306,10 +308,18 @@
               <div class="modal-body">
                 
                 <div class="container">
+                  <div class="row">
+                    <div class="col text-center">Elige tu foto de perfil</div>
+                  </div>
+                  <div class="row">
+                    <div class="col"><small>Se muestran únicamente las imágenes definidas como <strong>"Foto de perfil o logo"</strong> en la biblioteca de imágenes. Haz clic en la que usarás como foto de perfil o ve a la biblioteca de imágenes para definir otras fotos como imagen de perfil.</small>
+                    </div>
+                  </div>
+                  
                   <div class="row background-verylightgray light-padding">
-                    {{#each getMedia}}
+                    {{#each getMedia "profile"}}
                     <div class="col-lg-3 col-sm-6 align-self-center">
-                      <a><img class="media-thumb z-depth-1" src="{{getURL this.mediaId}}" alt="image"></a>
+                      <a href="#" id="selectProfilePicture" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image"></a>
                     </div>
                     {{/each}}
                   </div>
@@ -320,7 +330,61 @@
 
               <!--Footer-->
               <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button>
+                <div class="row">
+                  <div class="col"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+                  <div class="col"><button class="btn btn-purple goMediaLibrary">Ir a la biblioteca de imágenes</button></div>
+                </div>
+                
+                
+
+              </div>
+
+            </div>
+            <!--/.Content-->
+
+          </div>
+        </div>
+        <!--Modal: Name-->
+
+        <!--Modal: Name-->
+        <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+
+            <!--Content-->
+            <div class="modal-content">
+
+              <!--Body-->
+              <div class="modal-body">
+                
+                <div class="container">
+                  <div class="row">
+                    <div class="col text-center">Elige tu foto de portada</div>
+                  </div>
+                  <div class="row">
+                    <div class="col"><small>Se muestran únicamente las imágenes definidas como <strong>"Foto de portada"</strong> en la biblioteca de imágenes. Haz clic en la que usarás como foto de portada o ve a la biblioteca de imágenes para definir otras imágenes como foto de portada.</small>
+                    </div>
+                  </div>
+                  
+                  <div class="row background-verylightgray light-padding">
+                    {{#each getMedia "cover"}}
+                    <div class="col-lg-3 col-sm-6 align-self-center">
+                      <a href="#" id="selectCoverPicture" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image"></a>
+                    </div>
+                    {{/each}}
+                  </div>
+                </div>
+                
+
+              </div>
+
+              <!--Footer-->
+              <div class="modal-footer justify-content-center">
+                <div class="row">
+                  <div class="col"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+                  <div class="col"><button class="btn btn-purple goMediaLibrary">Ir a la biblioteca de imágenes</button></div>
+                </div>
+                
+                
 
               </div>
 

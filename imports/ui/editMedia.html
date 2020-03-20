@@ -1,0 +1,40 @@
+<template name="editMedia">
+   <style>
+   	/* Ensure the size of the image fit the container perfectly */
+		img {
+		  display: block;
+
+		  /* This rule is very important, please don't ignore this */
+		  max-width: 100%;
+		}
+   </style>
+   <form class="nova-sessao">
+   <div class="container text-center">
+      <h1 class="h1-title">EDITAR IMAGEN</h1>
+      <br>
+
+      <p class="text-description">
+      {{getTitle}}
+      </p>
+      <div class="spacer20"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<!-- Wrap the image or canvas element with a block element (container) -->
+					<div>
+					  <img id="image" src="{{getMedia.media_url}}">
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<button class="btn btn-purple" id="crop">Crop</button><br>
+					<div><img id="preview"></div>
+				</div>
+			</div>
+	      	
+			
+		</div>
+		
+   </div>      
+	</form>
+   <div class="spacer60"></div>
+</template>

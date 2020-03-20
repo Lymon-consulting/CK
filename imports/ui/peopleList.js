@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Ocupation } from '../api/ocupations.js';
 import { City } from '../api/city.js';
+import { Media } from '../api/media.js';
 import { UsersIndex } from '/lib/common.js';
 
 import './peopleList.html';
@@ -81,12 +82,22 @@ Template.peopleList.helpers({
       return (plocation === value) ? 'selected' : '' ;
     },
     getProfilePicture(userId) {
+      Meteor.subscribe("allMedia");
+      var user = Meteor.users.findOne({'_id':userId});
+      if(user!=null && user.profilePictureID!=null){
+        var profile = Media.findOne({'mediaId':user.profilePictureID});
+        if(profile!=null){
+          return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_100,h_100,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+        }
+        
+      }
+      /*
        var url = "";
        var user = Meteor.users.findOne({'_id':userId});
        if(user.profilePictureID!=null && user.profilePictureID!=""){
           url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_100,h_100,c_thumb,r_max/" + user.profilePictureID;
        }
-       return url;
+       return url;*/
     },
     getInitials(userId){
       var name = "";
@@ -101,13 +112,26 @@ Template.peopleList.helpers({
       return initials;
     },
     getCoverPicture(userId, size) {
+      Meteor.subscribe("allMedia");
+      var user = Meteor.users.findOne({'_id':userId});
+      var url;
+      if(user!=null && user.profileCoverID!=null){
+        var cover = Media.findOne({'mediaId':user.profileCoverID});
+        if(cover!=null){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_scale" + "/v" + cover.media_version + "/" + userId + "/" + user.profileCoverID;    
+        }
+        
+      }
+      console.log(url);
+      return url;
+      /*
        Meteor.subscribe("otherUsers");
        var url = "";
        var user = Meteor.users.findOne({'_id':userId});
        if(user.profileCoverID!=null && user.profileCoverID!="undefined"){
           url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_scale/" + user.profileCoverID;
        }
-       return url;
+       return url;*/
     }
 
    

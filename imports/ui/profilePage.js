@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { Project } from '../api/project.js';
+import { Media } from '../api/media.js';
 
 
 import './profilePage.html';
@@ -73,12 +74,24 @@ Template.profilePage.helpers({
       return Project.findOne({'userId': FlowRouter.getParam('id'), 'project_is_main' : 'true'});
    },
    getProjectImages(projId, size){
+    Meteor.subscribe("allMedia");
+      var data = Project.findOne({'_id' : projId});
+      var url;
+      if(data!=null && data.projectPictureID!=null){
+        var cover = Media.findOne({'mediaId':data.projectPictureID});
+        if(cover!=null){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_scale" + "/v" + cover.media_version + "/" + Meteor.userId() + "/" + data.projectPictureID;    
+        }
+        
+      }
+      return url;
+    /*
       var url = "";
       var data = Project.findOne({'_id' : projId});
       if(data!=null && data.projectPictureID!=null){
         url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_scale/" + data.projectPictureID;
       }
-     return url;
+     return url;*/
    },
    projectRole(projId){
       var u = Project.findOne({'_id': projId});
@@ -125,7 +138,6 @@ Template.profilePage.helpers({
    getFollowers(){
       Meteor.subscribe("otherUsers");
       var followers = Meteor.users.find({ 'follows': { $all : [FlowRouter.getParam('id')]}});
-      console.log(followers);
       return followers;
    },
    getFollowingCount(){
@@ -152,12 +164,18 @@ Template.profilePage.helpers({
       }
    },
    getProfilePicture(userId, size) {
-       var url = "";
-       var user = Meteor.users.findOne({'_id':userId});
-       if(user!=null && user.profilePictureID!=null && user.profilePictureID!=""){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",h_"+size+",c_thumb,r_max/" + user.profilePictureID;
-       }
-       return url;
+      Meteor.subscribe("allMedia");
+      var user = Meteor.users.findOne({'_id':userId});
+      var url;
+      if(user!=null && user.profilePictureID!=null){
+        var profile = Media.findOne({'mediaId':user.profilePictureID});
+        if(profile!=null){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_fill/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+        }
+        
+      }
+      return url;
+    
     },
     getInitials(userId){
       var name = "";
@@ -172,12 +190,18 @@ Template.profilePage.helpers({
       return initials;
     },
     getCoverPicture(userId) {
-       var url = "";
-       var user = Meteor.users.findOne({'_id':userId});
-       if(user!=null && user.profileCoverID!=null && user.profileCoverID!=""){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_1200,h_250,c_fill/" + Meteor.user().profileCoverID;
-       }
-       return url;
+      Meteor.subscribe("allMedia");
+      var user = Meteor.users.findOne({'_id':userId});
+      var url;
+      if(user!=null && user.profileCoverID!=null){
+        var cover = Media.findOne({'mediaId':user.profileCoverID});
+        if(cover!=null){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_1200,h_600,c_fill/" + "/v" + cover.media_version + "/" + userId + "/" + user.profileCoverID;    
+        }
+        
+      }
+      return url;
+      
     }
 });
 

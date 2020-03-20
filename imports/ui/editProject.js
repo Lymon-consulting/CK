@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Project } from '../api/project.js';
 import { Ocupation } from '../api/ocupations.js';
+import { Media } from '../api/media.js';
 
 import './editProject.html';
 import '/lib/common.js';
@@ -184,13 +185,24 @@ if (Meteor.isClient) {
         }
         return result;
       },
+      getMedia(type) {
+        Meteor.subscribe("allMedia");
+        var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
+        return media;
+      },
       getProjectPicture() {
-          var url = "";
-          var data = Project.findOne({'_id' : FlowRouter.getParam('id')});
-          if(data!=null && data.projectPictureID!=null){
-            url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_250,c_scale/" + data.projectPictureID;
+        Meteor.subscribe("allMedia");
+        var data = Project.findOne({'_id' : FlowRouter.getParam('id')});
+        var url;
+        if(data!=null && data.projectPictureID!=null){
+          var cover = Media.findOne({'mediaId':data.projectPictureID});
+          if(cover!=null){
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_250,c_scale" + "/v" + cover.media_version + "/" + Meteor.userId() + "/" + data.projectPictureID;    
           }
-         return url;
+          
+        }
+        return url;
+        
       },
       getPublicID(){
         var projectPictureID="";
@@ -294,6 +306,21 @@ if (Meteor.isClient) {
               );
          }
          
+      },
+      'click #selectCoverForProject': function(event,template){
+         event.preventDefault();
+         var mediaId = $(event.currentTarget).attr("data-id");
+
+         
+         Meteor.call(
+           'saveProjectPictureID',
+           FlowRouter.getParam('id'),
+           mediaId
+         );
+
+        $('.modal').modal('hide'); 
+        $('.modal-backdrop').remove();
+
       },/*
       'change .your-upload-class': function (event, template) {
          console.log("uploading...")
@@ -321,6 +348,12 @@ if (Meteor.isClient) {
 
          });
       },*/
+      'click .goMediaLibrary': function(event,template){
+        event.preventDefault();
+        $('.modal').modal('hide'); 
+        $('.modal-backdrop').remove();
+        FlowRouter.go("/mediaEditor/" + Meteor.userId());
+      },
       'change #category':function(event, template){
          event.preventDefault();
          Session.set("selected_category", event.currentTarget.value);

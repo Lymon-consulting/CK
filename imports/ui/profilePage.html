@@ -7,7 +7,7 @@
           background-repeat: no-repeat;
           background-size: cover;
           background-position: center center;
-          height: 350px;          
+                  
       }
       {{else}}
       .bg-overlay {
@@ -15,7 +15,7 @@
           background-repeat: no-repeat;
           background-size: cover;
           background-position: center center;
-          height: 350px;          
+          
       }
       {{/if}}
    </style>
@@ -142,7 +142,7 @@
                            {{#if getProjectImages this._id 175}}
                               <a href="/projectPage/{{this._id}}" class="card-img-top"><img class="card-img-top w-100" src="{{getProjectImages this._id 175}}" alt="Card image cap"></a>
                            {{else}}
-                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/background-dark.jpg" class="card-img-top w-100" alt=""></a>
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/nocover.jpg" class="card-img-top w-100" alt=""></a>
                            {{/if}}  
 
                           <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a>{{#if ownerRole}}&nbsp;<a href="/editProject/{{this._id}}"><i class="fa fa-pencil fa-sm text-purple"></i></a>{{/if}}</div>

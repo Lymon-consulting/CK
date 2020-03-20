@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { Industry } from '../api/industry.js';
+import { Media } from '../api/media.js';
 import { IndustryIndex } from '/lib/common.js';
 
 import './industryList.html';
@@ -22,13 +23,25 @@ Template.industryResults.helpers({
     return dict.get('count')
    },
    logoPicture: function (companyId, size) {
+    Meteor.subscribe("allMedia");
+    var data = Industry.findOne({'_id' : companyId});
+    var url;
+    if(data!=null && data.companyLogoID!=null){
+      var cover = Media.findOne({'mediaId':data.companyLogoID});
+      if(cover!=null){
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_limit" + "/v" + cover.media_version + "/" + Meteor.userId() + "/" + data.companyLogoID;    
+      }
+      
+    }
+    return url;
+    /*
     Meteor.subscribe("allIndustries");
       var url = "";
       var data = Industry.findOne({'_id' : companyId});
       if(data!=null && data.companyLogoID!=null){
         url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_limit/" + data.companyLogoID;
       }
-     return url;
+     return url;*/
     },
    getIndustryType(){
         var type = new Array();

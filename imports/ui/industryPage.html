@@ -33,7 +33,7 @@
       {{#if getLogoPicture}}
       <img src="{{getLogoPicture 100}}" class="img-thumbnail">
       {{else}}
-      <div id="companyLogo"></div>
+      <img class="thumbnail-logo" src="/images/nologo.png">
       {{/if}}
    </div>
    <!-- Termina bloque para desplegar la foto de perfil -->
@@ -198,6 +198,7 @@
       <div class="spacer40"></div>
       <hr>
       <h3>NUESTROS COLABORADORES</h3>
+      <div class="spacer20"></div>
      </div>
      <div class="d-flex justify-content-around text-center">
         {{#each getCrew}}
@@ -205,7 +206,7 @@
               <div class="">
                 <a href="/profilePage/{{this._id}}">
                  {{#if getProfilePicture this._id}}
-                    <img src="{{getProfilePicture this._id}}" border="0" class="rounded-circle" /><br/>
+                    <img src="{{getProfilePicture this._id}}" class="rounded-circle" /><br/>
                  {{else}}
                     <div id="profileImageLarge">{{getInitials this._id}}</div>
                  {{/if}}
@@ -235,7 +236,7 @@
                 {{#if getProjectPicture this._id 500}}
                 <a href="/projectPage/{{this._id}}"><img class="card-img-top" src="{{getProjectPicture this._id 500}}" alt="Card image cap"></a>
                 {{else}}
-                <a href="/projectPage/{{this._id}}"><img class="card-img-top" src="/images/background-dark.jpg" style="width: 500px"></a>
+                <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/nocover.jpg" class="card-img-top w-100" alt=""></a>
                 {{/if}}
                 <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a></div>
                 <div class="card-body">

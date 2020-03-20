@@ -4,7 +4,7 @@
      {{#if getProjectPicture 800}}
      .bannerProject{
         width: 100%;
-        height:100%;
+        height:auto;
         background-image: url({{getProjectPicture 800}});
         background-repeat: no-repeat;
         background-size: cover;
@@ -14,8 +14,8 @@
       {{else}}
       .bannerProject{
         width: 100%;
-        height:100%;
-        background-image: url("/images/background-dark.jpg");
+        height:auto;
+        background-image: url("/images/nocover.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         position: relative;
@@ -839,7 +839,7 @@
                  {{#if getLogoPicture this._id 100}}
                     <img src="{{getLogoPicture this._id 100}}" border="0" class="rounded-circle" /><br/>
                  {{else}}
-                    <div id="companyLogo"></div>
+                    <img class="rounded-circle" src="/images/nologo.png">
                  {{/if}}
                  </a>
                   <span class="people-name-text-circle"><a href="/industryPage/{{this._id}}" class="text-title-gray">{{getCompanyName this._id}}</a></span> <br><span class="people-role-text-circle uppercase">{{getCompanyType this._id}}</span> 

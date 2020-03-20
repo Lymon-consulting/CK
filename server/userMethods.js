@@ -77,7 +77,22 @@ Meteor.methods({
 	},
 	
 	
-	
+	updateProfilePicture(userId, mediaId){
+		Meteor.users.update({'_id': userId}, {
+			$set:
+				{
+					"profilePictureID": mediaId
+				}
+		});
+	},
+	updateCoverPicture(userId, mediaId){
+		Meteor.users.update({'_id': userId}, {
+			$set:
+				{
+					"profileCoverID": mediaId
+				}
+		});
+	},
 
 	
 

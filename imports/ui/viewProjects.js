@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { Project } from '../api/project.js';
+import { Media } from '../api/media.js';
 import './viewProjects.html';
 
 
@@ -20,15 +21,30 @@ if (Meteor.isClient) {
         return (main === 'true') ? 'checked' : '' ; 
       },
       getProjectPicture(projectId, size) {
+        Meteor.subscribe("allMedia");
+        var data = Project.findOne({'_id' : projectId});
+        var url;
+        if(data!=null && data.projectPictureID!=null){
+          var cover = Media.findOne({'mediaId':data.projectPictureID});
+          if(cover!=null){
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_fill" + "/v" + cover.media_version + "/" + Meteor.userId() + "/" + data.projectPictureID;    
+          }
+          
+        }
+        return url;
+        /*
           var url = "";
           var data = Project.findOne({'_id' : projectId});
           if(data!=null && data.projectPictureID!=null){
             url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_limit/" + data.projectPictureID;
           }
-         return url;
+         return url;*/
       },
       wizard(){
-       return Meteor.user().wizard;
+        if(Meteor.user()!=null && Meteor.user().wizard!=null){
+          return Meteor.user().wizard;
+        }
+
      }
    });
 

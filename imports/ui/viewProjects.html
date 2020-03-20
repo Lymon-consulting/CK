@@ -41,11 +41,11 @@
       <div class="row">
         {{#each myProjects}}
         <div class="col-md-4">
-          <div class="card h-1500">
+          <div class="card h-250">
            {{#if getProjectPicture this._id 500}}
-              <a href="/projectPage/{{this._id}}"><img class="card-img-top" src="{{getProjectPicture this._id 500}}" alt="Card image cap"></a>
+              <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="{{getProjectPicture this._id 500}}" alt="Card image cap"></a>
            {{else}}
-              <a href="/projectPage/{{this._id}}"><img class="card-img-top" src="/images/background-dark.jpg" style="width: 500px"></a>
+              <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="/images/nocover.jpg"></a>
            {{/if}}
             <div class="card-body">
               <h5 class="card-title"><a href="/projectPage/{{this._id}}">{{this.project_title}} ({{this.project_year}})</a></h5>

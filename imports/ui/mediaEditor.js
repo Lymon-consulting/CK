@@ -13,24 +13,14 @@ function uploadFiles(files, profileId) {
       return;
     }
     // some size check
-    if (file.size > 1200000) {
-      Bert.alert({message: 'El archivo' + file.name +' excede los 12 MB' , type: 'danger', icon: 'fa fa-danger'});
+    if (file.size > 10000000) {
+      Bert.alert({message: 'El archivo' + file.name +' excede los 10 MB' , type: 'danger', icon: 'fa fa-danger'});
       return;
     }
     // uploading..
     
-    var fr = new FileReader;
-    fr.onload = function() { // file is loaded
-	    var img = new Image;
-
-	    img.onload = function() {
-	        console.log(img.width + " x " + img.height); // image is loaded; sizes are available
-	    };
-
-	};
-
     $.cloudinary.config({
-      cloud_name:"drhowtsxb"
+      cloud_name: Meteor.settings.public.CLOUD
     });
 
     var options = {
@@ -39,23 +29,25 @@ function uploadFiles(files, profileId) {
 
     Cloudinary.upload(file, options, function(err,res){
       if(!err){
-
-      	console.log(res);
-
-      	//var newData = userData.obj.width;
-      	//var obj = JSON.parse(res);
-      	//console.log("width="+res.width);
-      	//console.log("height="+res.height);
-
+        console.log(res);
+        var public_id = res.public_id;
+        public_id = public_id.substring(public_id.indexOf("/")+1,public_id.length);
+        console.log("Nuevo public id="+public_id);
+        //var newData = userData.obj.width;
+        //var obj = JSON.parse(res);
+        //console.log("width="+res.width);
+        //console.log("height="+res.height);
         Meteor.call(
           'saveMedia',
           Meteor.userId(),
-          res.public_id,
+          public_id,
           file.size,
           file.type,
           file.name,
           res.width,
-          res.height
+          res.height,
+          res.version,
+          res.url
         );
         Bert.alert({message: 'Tu archivo ha sido cargado' , type: 'success', icon: 'fa fa-check'});
       }
@@ -63,39 +55,32 @@ function uploadFiles(files, profileId) {
         console.log("Upload Error:"  + err); //no output on console
       }
     });
-    /*
-    var reader = new FileReader();
-    reader.onload = function(fileLoadEvent) {
-      uploadingPhotos.set((uploadingPhotos.get() || 0) +1);
-      Meteor.call('portfolio-upload', profileId, file.type, file.name, reader.result,
-                  function(err) {
-                    uploadingPhotos.set(uploadingPhotos.get()-1);
-                    if (err) {
-                      // message..
-                    }
-                  });
-    };*/
-    //reader.readAsBinaryString(file);
   });
 }
 
 Template.header.rendered = function(){
-	$("#dragzone").css({
-	  "display": "none",
-	});
+  $("#dragzone").css({
+    "display": "none",
+  });
+};
+
+Template.mediaEditor.onRendered = function(){
+  $("#dragzone").css({
+    "display": "none",
+  });
 };
 
 Template.dragZone.helpers({
-	uploading: function() { 
-		return uploadingPhotos.get(); 
-	},
-  	moreThanOne: function() { 
-  		return uploadingPhotos.get() > 1 ? true : false; 
-  	}
+  uploading: function() { 
+    return uploadingPhotos.get(); 
+  },
+  moreThanOne: function() { 
+    return uploadingPhotos.get() > 1 ? true : false; 
+  }
 });
 
 Template.dragZone.events({
-  
+
   'dragover #dropzone': function(e, t) {
     e.preventDefault();
     e.stopPropagation();
@@ -117,137 +102,133 @@ Template.dragZone.events({
     t.$('#dropzone').removeClass('drag-over');
     
     $("#dragzone").css({
-	  display: "none",
-	});
+      display: "none",
+    });
   },        
   'change [type="file"]': function(e, t) {
     uploadFiles(e.target.files, this._id);
     
     $("#dragzone").css({
-	  display: "none",
-	});
+      display: "none",
+    });
   },
 });
 
 
 Template.mediaEditor.helpers({
-	getMedia() {
-
-		 Meteor.subscribe("allMedia");
-		 
-		 var media = Media.find({'userId': Meteor.userId()});
-		 
-		 return media;
-
-/*
-	     var user = Meteor.users.findOne({'_id' : Meteor.userId()});
-
-	     if(user && Array.isArray(user.media)){
-	       var array = user.media;
-	       
-	       var sortedJsObjects = array.sort(function(a,b){ 
-			    if (a.media_date > b.media_date) return -1;
-   				if (a.media_date < b.media_date) return 1;
-			});
-	       return sortedJsObjects;
-	     }
-	     else{
-	       return [];
-	     }*/
-
-
-         
-      },
-      getURL(mediaId){
-      	var url = "";
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/" + mediaId;
-        return url;
-      },
-      formatDate(date){
-      	var d = new Date(date);
-      	var month = d.toLocaleString('default', { month: 'long' });
-		var datestring = d.getDate()  + " " + month + " " + d.getFullYear();
-
-      	return datestring;
-
-      },
-      formatSize(size){
-      	if(size>0){
-      		var i = Math.floor( Math.log(size) / Math.log(1024) );
-    		return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
-    	}
-    	else{
-    		return 0;
-    	}
+  getMedia() {
+    Meteor.subscribe("allMedia");
+    var media = Media.find({'userId': Meteor.userId()});
+    return media;
+  },
+  getURL(mediaId){
+    Meteor.subscribe("allMedia");
+    var media = Media.findOne({'userId': Meteor.userId(), 'mediaId' : mediaId});
+    return Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.userId() + "/" + mediaId;
+    
+  },
+  formatDate(date){
+    var d = new Date(date);
+    var month = d.toLocaleString('default', { month: 'long' });
+    var datestring = d.getDate()  + " " + month + " " + d.getFullYear();
+    return datestring;
+  },
+  formatSize(size){
+    if(size>0){
+      var i = Math.floor( Math.log(size) / Math.log(1024) );
+      return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
+    }
+    else{
+      return 0;
+    }
+  },
+  getUse(mediaId){
+    Meteor.subscribe("allMedia");
+    var media = Media.findOne({'userId': Meteor.userId(), 'mediaId' : mediaId});
+    var use;
+    if(media!=null){
+      if(media.media_use==='profile'){
+        use = "Foto de perfil o logo";
       }
-
+      else if(media.media_use==='cover'){
+        use = "Foto de portada";
+      }
+      else if(media.media_use==='gallery'){
+        use = "Galería de proyecto";
+      }
+      else{
+        use = "Sin definir";
+      }
+    }
+    return use;
+  }
 });
 
 Template.mediaEditor.events({
-	
-	'click #toggleDropper':function(event, template){
-		event.preventDefault();
+  'click #toggleDropper':function(event, template){
+    event.preventDefault();
+    if($("#dragzone").is(":visible")){
+      $("#dragzone").hide();
+    }
+    else{
+      $("#dragzone").show();  
+    }
+  },
+  'drop #toggleDropper': function(event,template){
+    event.preventDefault();
+    console.log("dropped", files);
+    var reader = new FileReader();
+    var name = files[0].name;
+    var data = event.target.result;
+    reader.readAsBinaryString(files[0]);
+  },
+  'change [type="text"]': function(event,template){
+    var id = event.target.id;
+    if(id.indexOf("title")>=0){ //es el título
+      id = id.substring(id.indexOf("title")+5,id.length);
+      $("#message").html("Guardando...");
+      Meteor.call(
+        'updateMediaTitle',
+        Meteor.userId(),
+        id,
+        event.target.value
+      );  
+    }
+    else if(id.indexOf("descr")>=0){ //es la descripción
+      id = id.substring(id.indexOf("descr")+5,id.length);
+      $("#message").html("Guardando...");
+      Meteor.call(
+        'updateMediaDescription',
+        Meteor.userId(),
+        id,
+        event.target.value
+      );
+    }
+    $("#message").html("Datos actualizados"); 
+  },
+  'click .delete' : function(event,template){
+    if(confirm("¿Desea eliminar esta imagen?")){
+      var public_id = $(event.currentTarget).attr("data-id");
+      Cloudinary.delete(public_id,function(res){
+        //console.log(res);
+      });
+      Meteor.call(
+        'deleteMedia',
+        Meteor.userId(),
+        public_id
+      );
 
-		if($("#dragzone").is(":visible")){
-			$("#dragzone").hide();
-		}
-		else{
-			$("#dragzone").show();	
-		}
-
-		
-	},
-	'drop #toggleDropper': function(event,template){
-		event.preventDefault();
-		console.log("dropped", files);
-        var reader = new FileReader();
-        var name = files[0].name;
-        var data = event.target.result;
-        reader.readAsBinaryString(files[0]);
-
-	},
-	'change [type="text"]': function(event,template){
-		var id = event.target.id;
-
-		if(id.indexOf("title")>=0){ //es el título
-			id = id.substring(id.indexOf("title")+5,id.length);
-			$("#message").html("Guardando...");
-			Meteor.call(
-	        	'updateMediaTitle',
-	        	Meteor.userId(),
-	        	id,
-	        	event.target.value
-	        );	
-		}
-		else if(id.indexOf("descr")>=0){ //es la descripción
-			id = id.substring(id.indexOf("descr")+5,id.length);
-			$("#message").html("Guardando...");
-			Meteor.call(
-	        	'updateMediaDescription',
-	        	Meteor.userId(),
-	        	id,
-	        	event.target.value
-	        );
-		}
-
-		$("#message").html("Datos actualizados");	
-	},
-	'click .delete' : function(event,template){
-
-		if(confirm("¿Desea eliminar esta imagen?")){
-			var public_id = $(event.currentTarget).attr("data-id");
-            Cloudinary.delete(public_id,function(res){
-               //console.log(res);
-            });
-            Meteor.call(
-              'deleteMedia',
-              Meteor.userId(),
-              public_id
-            );
-            
-            $('.modal').modal('hide'); 
-			$('.modal-backdrop').remove();
-		}
-	}
-
+      $('.modal').modal('hide'); 
+      $('.modal-backdrop').remove();
+    }
+  },
+  'change #type': function(event, template){
+    event.preventDefault();
+    var public_id = $(event.currentTarget).attr("data-id");
+    var type = event.target.value;
+    console.log(type);
+    $('.modal').modal('hide'); 
+    $('.modal-backdrop').remove();
+    FlowRouter.go('/editMedia/' + public_id+'/'+type);
+  }
 });

@@ -156,71 +156,49 @@
 
   <div class="spacer20"></div>
   <div class="row">
-   <div class="col">Logo</div>
-  </div>
-  <div class="row">
-   <div class="col agreements">Elige una imagen de 500 pixeles de ancho por 500 pixeles de alto</div>
-  </div>
+            <div class="col">Este es tu logo actual</div>
+          </div>
+          <div class="row">
+            <div class="col">
+              {{#if getIndustryLogo}}
+              <img src="{{getIndustryLogo}}" class="thumbnail-logo"/>
+              {{else}}
+              <img src="/images/nologo.png" class="thumbnail-logo" />
+              {{/if}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <br>
+              <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal1">Seleccionar otro</button>
+            </div>
+         </div>
+         <div class="spacer20"></div>
+         <div class="row">
+            <div class="col">Esta es tu imagen de portada actual</div>
+         </div>
+         <div class="row">
+            <div class="col">
+              {{#if getIndustryCover}}
+              <img id="image" src="{{getIndustryCover}}" class="thumbnail-project"/>
+              {{else}}
+              <img id="image" src="/images/nocover.jpg" class="thumbnail-project"/>
+              {{/if}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <br>
+              <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal2">Seleccionar otra</button>
+            </div>
+         </div>
   
-  <div class="row">
-   <div class="col">
-    <input id="company-logo-upload" type="file">
-    {{#if getIndustryLogo}}
-     <table class="table table-condensed">
-       <tbody>
-       <tr>
-          <td>
-            <img src="{{getIndustryLogo}}" class="thumbnail-logo"/>
-          </td>
-       </tr>
-       <tr>
-         <td>
-           <button id="deleteLogoButton" data-id="{{getLogoPublicID}}" class="btn btn-purple">Eliminar logo</button>
-         </td>
-       </tr>
-       </tbody>
-     </table>
-     {{/if}}
-  </div>
-  </div>
   <div class="row">
    <div class="col"><hr></div>
   </div>
   <div class="spacer20"></div>
   <div class="row">
-   <div class="col">Imagen de Portada</div>
-  </div>
-  <div class="row">
-   <div class="col agreements">Elige una imagen de 1200 pixeles de ancho por 800 pixeles de alto</div>
-  </div>
-  
-  <div class="row">
-   <div class="col">
-    <input id="company-cover-upload" type="file">
-    {{#if getIndustryCover}}
-     <table class="table table-condensed">
-       <tbody>
-       <tr>
-          <td>
-            <img src="{{getIndustryCover}}" class="thumbnail-cover"/>
-          </td>
-       </tr>
-       <tr>
-         <td>
-           <button id="deleteCoverButton" data-id="{{getCoverPublicID}}" class="btn btn-purple">Eliminar foto de portada</button>
-         </td>
-       </tr>
-       </tbody>
-     </table>
-     {{/if}}
-  </div>
-  </div>
-  <div class="row">
-   <div class="col"><hr></div>
-  </div>
-  <div class="spacer20"></div>
-  <div class="row">
-    <div class="col">
+    <div class="col text-center">
       <button class="btn btn-purple" id="guardar_empresa" type="button" role="button">GUARDAR EMPRESA</button>   
     </div>
   </div>
@@ -235,4 +213,102 @@
 
 
 </form>
+
+<!--Modal: Name-->
+        <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+
+            <!--Content-->
+            <div class="modal-content">
+
+              <!--Body-->
+              <div class="modal-body">
+                
+                <div class="container">
+                  <div class="row">
+                    <div class="col text-center">Elige una imagen para el logo</div>
+                  </div>
+                  <div class="row">
+                    <div class="col text-center"><small>Se muestran únicamente las imágenes definidas como <strong>"Foto de perfil o logo"</strong> en la biblioteca de imágenes. Haz clic en la que usarás como logo o ve a la biblioteca de imágenes para definir otras fotos como logo.</small>
+                    </div>
+                  </div>
+                  
+                  <div class="row background-verylightgray light-padding">
+                    {{#each getMedia "profile"}}
+                    <div class="col-lg-3 col-sm-6 align-self-center">
+                      <a href="#" id="selectLogo" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image"></a>
+                    </div>
+                    {{/each}}
+                  </div>
+                </div>
+                
+
+              </div>
+
+              <!--Footer-->
+              <div class="modal-footer justify-content-center">
+                <div class="row">
+                  <div class="col"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+                  <div class="col"><button class="btn btn-purple goMediaLibrary">Ir a la biblioteca de imágenes</button></div>
+                </div>
+                
+                
+
+              </div>
+
+            </div>
+            <!--/.Content-->
+
+          </div>
+        </div>
+        <!--Modal: Name-->
+
+        <!--Modal: Name-->
+        <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+
+            <!--Content-->
+            <div class="modal-content">
+
+              <!--Body-->
+              <div class="modal-body">
+                
+                <div class="container">
+                  <div class="row">
+                    <div class="col text-center">Elige la foto de portada de tu empresa</div>
+                  </div>
+                  <div class="row">
+                    <div class="col text-center"><small>Se muestran únicamente las imágenes definidas como <strong>"Foto de portada"</strong> en la biblioteca de imágenes. Haz clic en la que usarás como foto de portada o ve a la biblioteca de imágenes para definir otras imágenes como foto de portada.</small>
+                    </div>
+                  </div>
+                  
+                  <div class="row background-verylightgray light-padding">
+                    {{#each getMedia "cover"}}
+                    <div class="col-lg-3 col-sm-6 align-self-center">
+                      <a href="#" id="selectCoverIndustry" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image"></a>
+                    </div>
+                    {{/each}}
+                  </div>
+                </div>
+                
+
+              </div>
+
+              <!--Footer-->
+              <div class="modal-footer justify-content-center">
+                <div class="row">
+                  <div class="col"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+                  <div class="col"><button class="btn btn-purple goMediaLibrary">Ir a la biblioteca de imágenes</button></div>
+                </div>
+                
+                
+
+              </div>
+
+            </div>
+            <!--/.Content-->
+
+          </div>
+        </div>
+        <!--Modal: Name-->
 </template> 

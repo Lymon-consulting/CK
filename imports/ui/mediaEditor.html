@@ -15,10 +15,11 @@
 		</div>
 
 		<!-- Grid row -->
-		<div class="row background-verylightgray light-padding">
+		<div class="row text-center background-verylightgray">
+		<!--<div class="row background-verylightgray light-padding justify-content-center">-->
 			{{#each getMedia}}
 			<!-- Grid column -->
-			<div class="col-lg-4 col-md-12 mb-4">
+			<div class="col-lg-3 col-md-6 mt-3">
 				
 				<!--Modal: Name-->
 				<div class="modal fade" id="modal{{@index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -32,23 +33,35 @@
 								
 								<div class="container">
 									<div class="row">
-										<div class="col-lg-7 text-center">
-											<div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
-												<iframe class="embed-responsive-item" src="{{getURL this.mediaId}}"
-												allowfullscreen></iframe>
+										<div class="col-lg-7">
+											<div class="">
+												<img src="{{ this.media_url}}" class="media-preview z-index-1 zoom">
+												<!--<iframe class="embed-responsive-item" src="{{ this.media_url}}"
+												allowfullscreen></iframe>-->
 											</div>
 										</div>
-										<div class="col-lg-5 background-verylightgray">
+										<div class="col-lg-5 background-verylightgray text-left">
 											<p class="text-right"><small><span id="message"></span></small></p>
 											<p><small><strong>Nombre:</strong> {{this.media_name}}</small></p>
 											<p><small><strong>Tipo:</strong> {{this.media_type}}</small></p>
 											<p><small><strong>Subido el:</strong> {{formatDate this.media_date}}</small></p>
 											<p><small><strong>Tamaño:</strong> {{formatSize this.media_size}}</small></p>
 											<p><small><strong>Dimensiones:</strong> {{this.media_width}} por {{this.media_height}} pixeles </small></p>
+											<p><small><strong>Uso:</strong> {{getUse this.mediaId}}</small></p>
 											<p><hr></p>
 											<p><small>Título:</small> <input class="form-control" id="title{{this.mediaId}}" type="text" placeholder="Título" value="{{this.media_title}}"></p>
 											<p><small>Descripción:</small> <input class="form-control" id="descr{{this.mediaId}}" type="text" placeholder="Descripción" value="{{this.media_desc}}"></p>
-											<p><a href="" class="delete" data-id="{{this.mediaId}}"><small>Borrar permanentemente</small></a></p>
+
+											<p><a href="" class="delete" data-id="{{this.mediaId}}"><small>Borrar permanentemente</small></a> 
+											<br>
+											<small>Cambiar uso (Actualmente "{{getUse this.mediaId}}""):</small><br>
+											<select class="form-control form-control-sm" id="type" data-id="{{this.mediaId}}">
+												<option>--- Sin definir ---</option>
+												<option value="gallery">Galería de proyecto</option>
+												<option value="profile">Foto de perfil o logo de empresa</option>
+												<option value="cover">Portada para perfil, proyecto o empresa</option>
+											</select>
+											</p>
 											<input class="hidden" id="media{{this.mediaId}}" type="text" value="{{this.mediaId}}">
 										</div>
 
@@ -71,11 +84,19 @@
 					</div>
 				</div>
 				<!--Modal: Name-->
+
+				<div class="col-lg-3 col-md-4 col-6">
+		      	  <a href="#" id="setVariable" class="d-block mb-4 h-100" data-toggle="tooltip" data-placement="top" title="{{getUse this.mediaId}}">
+		            <img class="media-thumb img-thumbnail" src="{{this.media_url}}" alt="" data-toggle="modal" data-target="#modal{{@index}}">
+		          </a>
+			    </div>
+			    <!--
 				<div class="col-lg-4 col-sm-6 align-self-center background-lightgray">
-				  <a href="#" id="setVariable"> <div class='box background-lightgray mx-auto'><a><img class="img-fluid z-depth-1" src="{{getURL this.mediaId}}" alt="image"
+				  <a href="#" id="setVariable"> <div class='box background-lightgray mx-auto'><a><img class="img-fluid z-depth-1" src="{{this.media_url}}" alt="image"
         data-toggle="modal" data-target="#modal{{@index}}"></a></div></a>
+
 				  
-				</div>
+				</div>-->
 
 			</div>      
 			{{/each}}

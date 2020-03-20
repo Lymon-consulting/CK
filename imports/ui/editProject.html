@@ -216,55 +216,92 @@
             <div class="row">
                <div class="col"><hr></div>
             </div>
+             <div class="row">
+                <div class="col">Esta es tu imagen de portada actual</div>
+             </div>
+             <div class="row">
+                <div class="col">
+                  {{#if getProjectPicture}}
+                  <img id="image" src="{{getProjectPicture}}" class="thumbnail-project"/>
+                  {{else}}
+                  <img id="image" src="/images/c4.jpg" class="thumbnail-project"/>
+                  {{/if}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <br>
+                  <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal1">Seleccionar otra</button>
+                </div>
+             </div>
+             <div class="row">
+               <div class="col spacer20"></div>
+             </div>
+            
+
             <div class="row">
-               <div class="col">
-                  <input id="cover-upload" type="file">
-                   {{#if getProjectPicture}}
-                   <table class="table table-condensed">
-                     <tbody>
-                     <tr>
-                        <td>
-                          <img src="{{getProjectPicture}}" class="thumbnail-cover"/>
-                        </td>
-                     </tr>
-                     <tr>
-                       <td>
-                         <button id="deleteFileButton" data-id="{{getPublicID}}" class="btn btn-purple">Eliminar imagen de portada</button>
-                       </td>
-                     </tr>
-                     </tbody>
-                   </table>
-                   {{/if}}
-               </div>
-            </div>
-            <div class="row">
-               <div class="col">
+               <div class="col text-center">
                   <button class="btn btn-purple" id="guardar_proyecto" type="button" role="button">GUARDAR PROYECTO</button>
-                  
-    <div class="fields">
-      <div class="twelve wide field">
-        <input type="text"   name="cloudinaryFileName" placeholder="Please upload image">
-        <input type="hidden" name="cloudinaryUrl" disabled="true">
-        <input type="hidden" name="cloudinaryThumbnail" disabled="true">
-      </div>
-      <div class="four wide field">
-        <button class="ui button" id="cloudinary-upload-widget">
-          Upload image file
-        </button>
-      </div>
-    </div>
-                    
                </div>
             </div>
                
 
-               <div class="row">
-                  <div class="col spacer80"></div>
-               </div>
+           <div class="row">
+              <div class="col spacer80"></div>
+           </div>
 
          </div>
       </div>
 
       
    </form>
+
+   <!--Modal: Name-->
+        <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+
+            <!--Content-->
+            <div class="modal-content">
+
+              <!--Body-->
+              <div class="modal-body">
+                
+                <div class="container">
+                  <div class="row">
+                    <div class="col text-center">Elige tu portada de proyecto</div>
+                  </div>
+                  <div class="row">
+                    <div class="col text-center"><small>Se muestran únicamente las imágenes definidas como <strong>"Foto de portada"</strong> en la biblioteca de imágenes. Haz clic en la que usarás como foto de portada o ve a la biblioteca de imágenes para definir otras imágenes como foto de portada.</small>
+                    </div>
+                  </div>
+                  
+                  <div class="row background-verylightgray light-padding">
+                    {{#each getMedia "cover"}}
+                    <div class="col-lg-3 col-sm-6 align-self-center">
+                      <a href="#" id="selectCoverForProject" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image"></a>
+                    </div>
+                    {{/each}}
+                  </div>
+                </div>
+                
+
+              </div>
+
+              <!--Footer-->
+              <div class="modal-footer justify-content-center">
+                <div class="row">
+                  <div class="col"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+                  <div class="col"><button class="btn btn-purple goMediaLibrary">Ir a la biblioteca de imágenes</button></div>
+                </div>
+                
+                
+
+              </div>
+
+            </div>
+            <!--/.Content-->
+
+          </div>
+        </div>
+        <!--Modal: Name-->
 </template> 

@@ -257,7 +257,10 @@ Meteor.publish('allMedia', function(){
       'media_name':1,
       'media_date':1,
       'media_width':1,
-      'media_height':1
+      'media_height':1,
+      'media_version':1,
+      'media_url':1,
+      'media_use':1
     }
   });
 });
