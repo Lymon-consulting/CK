@@ -14,20 +14,42 @@
       <br>
 
       <p class="text-description">
-      {{getTitle}}
+      Desde aquí puedes agregar un título y/o descripción a la foto, así como elegir el uso que le vas a dar y recortarla a un tamaño recomendado.
       </p>
       <div class="spacer20"></div>
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-8">
+				<div class="col-lg-8 text-center">
 					<!-- Wrap the image or canvas element with a block element (container) -->
-					<div>
+					<div class="te">
 					  <img id="image" src="{{getMedia.media_url}}">
 					</div>
 				</div>
-				<div class="col-lg-4">
-					<button class="btn btn-purple" id="crop">Crop</button><br>
-					<div><img id="preview"></div>
+				<div class="col-lg-4 text-left">
+					<p class="text-right"><small><span id="message"></span></small></p>
+					<p><small><strong>Nombre:</strong> {{getMedia.media_name}}</small></p>
+					<p><small><strong>Tipo:</strong> {{getMedia.media_type}}</small></p>
+					<p><small><strong>Subido el:</strong> {{formatDate getMedia.media_date}}</small></p>
+					<p><small><strong>Tamaño:</strong> {{formatSize getMedia.media_size}}</small></p>
+					<p><small><strong>Dimensiones:</strong> {{getMedia.media_width}} por {{getMedia.media_height}} pixeles </small></p>
+					<p><small><strong>Uso:</strong> {{getUse getMedia.mediaId}}</small></p>
+					<p><hr></p>
+					<p><small>Título:</small> <input class="form-control" id="title{{getMedia.mediaId}}" type="text" placeholder="Título" value="{{getMedia.media_title}}"></p>
+					<p><small>Descripción:</small> <input class="form-control" id="descr{{getMedia.mediaId}}" type="text" placeholder="Descripción" value="{{getMedia.media_desc}}"></p>
+
+					
+					<p>
+					<small>Cambiar uso (Actualmente <strong>"{{getUse getMedia.mediaId}}"</strong>):</small><br>
+					<select class="form-control form-control-sm" id="type" data-id="{{getMedia.mediaId}}">
+						<option>--- Sin definir ---</option>
+						<option value="gallery">Galería de proyecto</option>
+						<option value="profile">Foto de perfil o logo de empresa</option>
+						<option value="cover">Portada para perfil, proyecto o empresa</option>
+					</select>
+					</p>
+					<p><a href="" class="delete" data-id="{{getMedia.mediaId}}"><small>Borrar permanentemente</small></a> </p>
+					<p>&nbsp;</p>
+					<p><button class="btn btn-purple" id="crop" disabled>Crop</button><button class="btn btn-purple" id="goBack">Regresar a biblioteca de imágenes</button></p>
 				</div>
 			</div>
 	      	

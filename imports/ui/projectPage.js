@@ -35,7 +35,7 @@ if (Meteor.isClient) {
         if(data!=null && data.projectPictureID!=null){
           var cover = Media.findOne({'mediaId':data.projectPictureID});
           if(cover!=null){
-            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_fill" + "/v" + cover.media_version + "/" + Meteor.userId() + "/" + data.projectPictureID;    
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_fill" + "/v" + cover.media_version + "/" + data.userId + "/" + data.projectPictureID;    
           }
           
         }
@@ -225,6 +225,11 @@ if (Meteor.isClient) {
            found = false;
         }
         return found;
+      },
+      getMedia() {
+        Meteor.subscribe("allMedia");
+        var media = Media.find({'userId': Meteor.userId()});
+        return media;
       }
 
    });
@@ -332,6 +337,7 @@ if (Meteor.isClient) {
             $('#descImg').val(portlet.content);
             $('#maxImg').text(450-portlet.content.length);
             $('#urlImg').val(portlet.url);
+            $('#version').val(portlet.author);
             $('#imageModal').show();
             window.scrollTo(0, 0);
           }
@@ -371,12 +377,19 @@ if (Meteor.isClient) {
           e.preventDefault();
           if(confirm("¿Deseas eliminar esta sección?")){
             var id = $(e.target).attr('data-id');
+            var url = $(e.target).attr('data-url');
             var mode = $(e.target).attr('mode');
             if(mode==='delete'){
               
               Meteor.call(
                 'deletePortlet',
-                id
+                id, function(error,result){
+                  if(!error){
+                    Cloudinary.delete(url,function(res){
+                      //console.log(res);
+                    });
+                  }
+                }
               );
 
               //Reordenamiento de índices
@@ -449,7 +462,7 @@ if (Meteor.isClient) {
         }
       },
       cloudURL(){
-        return Meteor.settings.public.CLOUDINARY_RES_URL + "/";
+        return Meteor.settings.public.CLOUDINARY_RES_URL;
       }
    });
 
@@ -754,6 +767,31 @@ if (Meteor.isClient) {
             $('#collabModal').modal('toggle');
             $('#inviteByMail').modal('show');
         }, 
+        'click #selectPicture': function(event,template){
+         event.preventDefault();
+         var mediaId = $(event.currentTarget).attr("data-id");
+         
+         Session.set("selectedImg",mediaId);
+
+         console.log("Mostrando el div escondido");
+         $(".imagesAttr").show();
+         $("#imagesGrid").hide();
+         
+         
+
+
+         //console.log(mediaId);
+        /*
+         Meteor.call(
+            'updateProfilePicture',
+            Meteor.userId(),
+            mediaId
+          );*/
+
+        //$('.modal').modal('hide'); 
+        //$('.modal-backdrop').remove();
+
+      },
         'click #cancel': function(event,template,doc){
             $('#collabModal').modal('toggle');
         },
@@ -784,6 +822,7 @@ if (Meteor.isClient) {
             $('#type').val(type);
             $('#author').val("");
             $('#url').val("");
+            $('#version').val("");
             
             if(type==="text"){
               $('#modePortlet').val("add");
@@ -833,6 +872,7 @@ if (Meteor.isClient) {
             $('#descImg').val(portlet.content);
             $('#maxImg').text(450-portlet.content.length);
             $('#urlImg').val(portlet.url);
+            $('#version').val(portlet.author);
             $('#imageModal').show();
             window.scrollTo(0, 0);
           }
@@ -967,6 +1007,7 @@ if (Meteor.isClient) {
           var title = $("#titleImg").val();
           var url = $("#urlImg").val();//contiene el public_id de Cloudinary
           var content = $("#descImg").val();//contiene la descripción de la imagen
+          var version = $("#version").val();//contiene la versión de la imagen en cloudinary
           var porID = null;
           /*
           console.log("Va a guardar: title=" + title+
@@ -981,43 +1022,38 @@ if (Meteor.isClient) {
             Bert.alert({message: 'El título no puede estar vacío', type: 'danger', icon: 'fa fa-exclamation'});
           }
           else{
+            $.cloudinary.config({
+              cloud_name: Meteor.settings.public.CLOUD
+            });
             if(mode==="edit"){
-              Meteor.call(
-                 'updatePortlet',
-                 id,
-                 title,
-                 content,
-                 null,
-                 null, 
-                 function(error, result){
-                    if(!error){
-                      $.cloudinary.config({
-                        cloud_name:"drhowtsxb"
-                      });
-
-                      var options = {
-                        folder: Meteor.userId()
-                      };
-                      Cloudinary.delete(content, function(err,res){
-                         console.log(result);
-                      });
-                      var file = document.getElementById('portlet-img-upload').files[0];
-
-                      Cloudinary.upload(file, options, function(err,res){
-                        if(!err){
-                          Meteor.call(
-                             'savePortletPictureID',
-                             id,
-                             res.public_id,
-                          );
-                        }
-                        else{
-                          console.log("Upload Error:"  + err); //no output on console
-                        }
-                      });
-                    }
-                 }
-              );
+              //url = url.substring(url.indexOf("portlets")+9, url.length);
+              console.log("Actualizando imagen "+url);
+              var options = {
+                /*folder: Meteor.userId()+"/portlets",*/
+                public_id: url
+              };
+              var file = document.getElementById('portlet-img-upload').files[0];
+              Cloudinary.upload(file, options, function(err,res){
+                if(!err){
+                  Meteor.call(
+                     'saveVersion',
+                     id,
+                     res.version,
+                  );
+                  Meteor.call(
+                     'updatePortlet',
+                     id,
+                     title,
+                     content,
+                     null,
+                     url
+                  );
+                }
+                else{
+                  console.log("Upload Error:"  + err); //no output on console
+                }
+              });
+              
               
               
             }
@@ -1041,12 +1077,11 @@ if (Meteor.isClient) {
                  null,
                  order, function(error, result){
                    if(!error){
-                      $.cloudinary.config({
-                        cloud_name:"drhowtsxb"
-                      });
+                      
+                      
 
                       var options = {
-                        folder: Meteor.userId()
+                        folder: Meteor.userId() + "/portlets"
                       };
 
                       var file = document.getElementById('portlet-img-upload').files[0];
@@ -1057,6 +1092,7 @@ if (Meteor.isClient) {
                              'savePortletPictureID',
                              result,
                              res.public_id,
+                             res.version
                           );
                         }
                         else{
@@ -1070,6 +1106,13 @@ if (Meteor.isClient) {
             //$('#modalPortletImage').hide();
             //$("#imageModal").hide();
             $('#imageModal').hide();
+            $('#imagesAttr').hide();
+            $('#imagesGrid').show();
+            $('.modal').modal('hide'); 
+            $('.modal-backdrop').remove();
+
+            Session.set("selectedImg",null);
+
           }
         },
         'click #saveVideoPortlet' : function(e, template, doc){
@@ -1382,7 +1425,7 @@ Template.companies.helpers({
         if(data!=null && data.companyLogoID!=null){
           var cover = Media.findOne({'mediaId':data.companyLogoID});
           if(cover!=null){
-            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_fill" + "/v" + cover.media_version + "/" + Meteor.userId() + "/" + data.companyLogoID;    
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_fill" + "/v" + cover.media_version + "/" + data.userId + "/" + data.companyLogoID;    
           }
           
         }

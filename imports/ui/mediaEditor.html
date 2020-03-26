@@ -21,83 +21,21 @@
 			<!-- Grid column -->
 			<div class="col-lg-3 col-md-6 mt-3">
 				
-				<!--Modal: Name-->
-				<div class="modal fade" id="modal{{@index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-					<div class="modal-dialog modal-lg" role="document">
-
-						<!--Content-->
-						<div class="modal-content">
-
-							<!--Body-->
-							<div class="modal-body">
-								
-								<div class="container">
-									<div class="row">
-										<div class="col-lg-7">
-											<div class="">
-												<img src="{{ this.media_url}}" class="media-preview z-index-1 zoom">
-												<!--<iframe class="embed-responsive-item" src="{{ this.media_url}}"
-												allowfullscreen></iframe>-->
-											</div>
-										</div>
-										<div class="col-lg-5 background-verylightgray text-left">
-											<p class="text-right"><small><span id="message"></span></small></p>
-											<p><small><strong>Nombre:</strong> {{this.media_name}}</small></p>
-											<p><small><strong>Tipo:</strong> {{this.media_type}}</small></p>
-											<p><small><strong>Subido el:</strong> {{formatDate this.media_date}}</small></p>
-											<p><small><strong>Tamaño:</strong> {{formatSize this.media_size}}</small></p>
-											<p><small><strong>Dimensiones:</strong> {{this.media_width}} por {{this.media_height}} pixeles </small></p>
-											<p><small><strong>Uso:</strong> {{getUse this.mediaId}}</small></p>
-											<p><hr></p>
-											<p><small>Título:</small> <input class="form-control" id="title{{this.mediaId}}" type="text" placeholder="Título" value="{{this.media_title}}"></p>
-											<p><small>Descripción:</small> <input class="form-control" id="descr{{this.mediaId}}" type="text" placeholder="Descripción" value="{{this.media_desc}}"></p>
-
-											<p><a href="" class="delete" data-id="{{this.mediaId}}"><small>Borrar permanentemente</small></a> 
-											<br>
-											<small>Cambiar uso (Actualmente "{{getUse this.mediaId}}""):</small><br>
-											<select class="form-control form-control-sm" id="type" data-id="{{this.mediaId}}">
-												<option>--- Sin definir ---</option>
-												<option value="gallery">Galería de proyecto</option>
-												<option value="profile">Foto de perfil o logo de empresa</option>
-												<option value="cover">Portada para perfil, proyecto o empresa</option>
-											</select>
-											</p>
-											<input class="hidden" id="media{{this.mediaId}}" type="text" value="{{this.mediaId}}">
-										</div>
-
-									</div>
-								</div>
-
-								
-
-							</div>
-
-							<!--Footer-->
-							<div class="modal-footer justify-content-center">
-								<button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button>
-
-							</div>
-
-						</div>
-						<!--/.Content-->
-
-					</div>
-				</div>
-				<!--Modal: Name-->
+				
 
 				<div class="col-lg-3 col-md-4 col-6">
+		      	  <a href="#"  class="d-block mb-4 h-100" data-toggle="tooltip" data-placement="top" title="{{getUse this.mediaId}}">
+		            <img class="media-thumb img-thumbnail" src="{{this.media_url}}" alt="" id="sendToEditor" data-id="{{this.mediaId}}">
+		          </a>
+			    </div>
+
+				<!-- Código original con la ventana modal
+			    <div class="col-lg-3 col-md-4 col-6">
 		      	  <a href="#" id="setVariable" class="d-block mb-4 h-100" data-toggle="tooltip" data-placement="top" title="{{getUse this.mediaId}}">
 		            <img class="media-thumb img-thumbnail" src="{{this.media_url}}" alt="" data-toggle="modal" data-target="#modal{{@index}}">
 		          </a>
-			    </div>
-			    <!--
-				<div class="col-lg-4 col-sm-6 align-self-center background-lightgray">
-				  <a href="#" id="setVariable"> <div class='box background-lightgray mx-auto'><a><img class="img-fluid z-depth-1" src="{{this.media_url}}" alt="image"
-        data-toggle="modal" data-target="#modal{{@index}}"></a></div></a>
-
-				  
-				</div>-->
-
+			    </div>-->
+			   
 			</div>      
 			{{/each}}
 		</div>
@@ -121,7 +59,7 @@
 	      <div class="container">
 	        Arrastra y suelta la imagen que quieres subir o haz clic en el botón
 	        <span class="btn btn-file btn-secondary">
-	          <input type="file">
+	          <input type="file" multiple="">
 	        </span>
 	      </div>
 	    </div>

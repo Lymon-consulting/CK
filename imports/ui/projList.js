@@ -29,7 +29,7 @@ Template.projList.helpers({
     if(data!=null && data.projectPictureID!=null){
       var cover = Media.findOne({'mediaId':data.projectPictureID});
       if(cover!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_limit" + "/v" + cover.media_version + "/" + Meteor.userId() + "/" + data.projectPictureID;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_limit" + "/v" + cover.media_version + "/" + data.userId + "/" + data.projectPictureID;    
       }
       
     }

@@ -44,10 +44,6 @@ Meteor.methods({
 	     });
 	},
 	deleteMedia(userId, mediaId){
-		var fileData = {
-	      "_id" : mediaId
-	    };
-
 		Media.remove(
 			{'userId': userId, 'mediaId': mediaId}
 		);

@@ -30,10 +30,15 @@ getProjects(){
       return Project.findOne({'userId': FlowRouter.getParam('id'), 'project_is_main' : 'true'});
     },
     getProjectImages(projId, size){
-      var url = "";
+      Meteor.subscribe("allMedia");
       var data = Project.findOne({'_id' : projId});
+      var url;
       if(data!=null && data.projectPictureID!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_scale/" + data.projectPictureID;
+        var cover = Media.findOne({'mediaId':data.projectPictureID});
+        if(cover!=null){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_scale" + "/v" + cover.media_version + "/" + data.userId + "/" + data.projectPictureID;    
+        }
+        
       }
       return url;
     },
@@ -51,7 +56,7 @@ getProjects(){
     if(data!=null && data.companyCoverID!=null){
       var cover = Media.findOne({'mediaId':data.companyCoverID});
       if(cover!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_1200,h_250,c_fill/" + "/v" + cover.media_version + "/" + Meteor.userId() + "/" + data.companyCoverID;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_1200,h_250,c_fill/" + "/v" + cover.media_version + "/" + data.userId + "/" + data.companyCoverID;    
       }
       
     }
@@ -71,7 +76,7 @@ getProjects(){
     if(data!=null && data.companyLogoID!=null){
       var cover = Media.findOne({'mediaId':data.companyLogoID});
       if(cover!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_fill/" + "/v" + cover.media_version + "/" + Meteor.userId() + "/" + data.companyLogoID;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_fill/" + "/v" + cover.media_version + "/" + data.userId + "/" + data.companyLogoID;    
       }
       
     }
@@ -157,7 +162,7 @@ Template.company_projects.helpers({
     if(data!=null && data.projectPictureID!=null){
       var cover = Media.findOne({'mediaId':data.projectPictureID});
       if(cover!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_limit" + "/v" + cover.media_version + "/" + Meteor.userId() + "/" + data.projectPictureID;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_limit" + "/v" + cover.media_version + "/" + data.userId + "/" + data.projectPictureID;    
       }
       
     }

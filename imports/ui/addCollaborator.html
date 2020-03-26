@@ -27,7 +27,7 @@
                 {{#if getProjectPicture this._id 500}}
                 <img class="card-img-top" src="{{getProjectPicture this._id 500}}" alt="Card image cap">
                 {{else}}
-                <img class="card-img-top" src="/images/background-dark.jpg" style="width: 500px">
+                <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/nocover.jpg" class="card-img-top w-100" alt=""></a>
                 {{/if}}
                 <div class="card-body">
                   <p></p>

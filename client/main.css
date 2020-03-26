@@ -239,6 +239,16 @@ footer{
    object-fit:scale-down;
 }
 
+
+.media-portlet img{
+   width: 1024px !important;
+   height: 1024px;
+
+
+   /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
+   object-fit:scale-down;
+}
+
 .zoom {
   transition: transform .2s; /* Animation */
   cursor: pointer;

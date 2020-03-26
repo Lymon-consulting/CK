@@ -207,12 +207,22 @@ Meteor.methods({
         }
     });
   },
-  savePortletPictureID(portletId, portletPictureID){
+  savePortletPictureID(portletId, portletPictureID, version){
     //console.log("Guardando "+ projectPictureID + " en proyecto "+projectId);
     Portlet.update({'_id': portletId}, {
       $set:
         {
-          "url": portletPictureID
+          "url": portletPictureID,
+          "version": version
+        }
+    });
+  },
+  saveVersion(portletId, version){
+    //console.log("Guardando "+ projectPictureID + " en proyecto "+projectId);
+    Portlet.update({'_id': portletId}, {
+      $set:
+        {
+          "version": version
         }
     });
   },

@@ -1,5 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Media } from '../api/media.js';
+import { Project } from '../api/project.js';
+import { Industry } from '../api/industry.js';
 
 import './mediaEditor.html';
 
@@ -49,7 +51,7 @@ function uploadFiles(files, profileId) {
           res.version,
           res.url
         );
-        Bert.alert({message: 'Tu archivo ha sido cargado' , type: 'success', icon: 'fa fa-check'});
+        Bert.alert({message: 'Tus archivos han sido cargados' , type: 'success', icon: 'fa fa-check'});
       }
       else{
         console.log("Upload Error:"  + err); //no output on console
@@ -58,13 +60,15 @@ function uploadFiles(files, profileId) {
   });
 }
 
-Template.header.rendered = function(){
+Template.header.created = function(){
+  $('#dropzone').removeClass('drag-over');
   $("#dragzone").css({
     "display": "none",
   });
 };
 
 Template.mediaEditor.onRendered = function(){
+  $('#dropzone').removeClass('drag-over');
   $("#dragzone").css({
     "display": "none",
   });
@@ -127,21 +131,7 @@ Template.mediaEditor.helpers({
     return Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.userId() + "/" + mediaId;
     
   },
-  formatDate(date){
-    var d = new Date(date);
-    var month = d.toLocaleString('default', { month: 'long' });
-    var datestring = d.getDate()  + " " + month + " " + d.getFullYear();
-    return datestring;
-  },
-  formatSize(size){
-    if(size>0){
-      var i = Math.floor( Math.log(size) / Math.log(1024) );
-      return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
-    }
-    else{
-      return 0;
-    }
-  },
+  
   getUse(mediaId){
     Meteor.subscribe("allMedia");
     var media = Media.findOne({'userId': Meteor.userId(), 'mediaId' : mediaId});
@@ -182,53 +172,19 @@ Template.mediaEditor.events({
     var data = event.target.result;
     reader.readAsBinaryString(files[0]);
   },
-  'change [type="text"]': function(event,template){
-    var id = event.target.id;
-    if(id.indexOf("title")>=0){ //es el título
-      id = id.substring(id.indexOf("title")+5,id.length);
-      $("#message").html("Guardando...");
-      Meteor.call(
-        'updateMediaTitle',
-        Meteor.userId(),
-        id,
-        event.target.value
-      );  
-    }
-    else if(id.indexOf("descr")>=0){ //es la descripción
-      id = id.substring(id.indexOf("descr")+5,id.length);
-      $("#message").html("Guardando...");
-      Meteor.call(
-        'updateMediaDescription',
-        Meteor.userId(),
-        id,
-        event.target.value
-      );
-    }
-    $("#message").html("Datos actualizados"); 
-  },
-  'click .delete' : function(event,template){
-    if(confirm("¿Desea eliminar esta imagen?")){
-      var public_id = $(event.currentTarget).attr("data-id");
-      Cloudinary.delete(public_id,function(res){
-        //console.log(res);
-      });
-      Meteor.call(
-        'deleteMedia',
-        Meteor.userId(),
-        public_id
-      );
-
-      $('.modal').modal('hide'); 
-      $('.modal-backdrop').remove();
-    }
-  },
   'change #type': function(event, template){
     event.preventDefault();
     var public_id = $(event.currentTarget).attr("data-id");
     var type = event.target.value;
     console.log(type);
-    $('.modal').modal('hide'); 
+    //$('.modal').modal('hide'); 
     $('.modal-backdrop').remove();
     FlowRouter.go('/editMedia/' + public_id+'/'+type);
+  },
+  'click #sendToEditor': function(event, template){
+    event.preventDefault();
+    var mediaId = $(event.target).attr('data-id');
+    console.log("Va a editar la imagen "+mediaId);
+    FlowRouter.go("/editMedia/"+mediaId+"/gallery");
   }
 });

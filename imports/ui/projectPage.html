@@ -452,7 +452,6 @@
 </div>
 <!--Text modal ends-->
 
-
 <!-- Image Modal -->
 <div class="modal" tabindex="-1" id="imageModal" role="dialog">
   <div class="modal-dialog" role="document">
@@ -518,6 +517,7 @@
                <input type="hidden" id="idPortletImg">
                <input type="hidden" id="contentImg">
                <input type="hidden" id="urlImg">
+               <input type="hidden" id="version">
             </div>
          </div>
       </div>
@@ -525,6 +525,105 @@
   </div>
 </div>
 <!--Image modal ends-->
+
+<!--
+        <div class="modal fade" id="modal-img" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+
+            
+            <div class="modal-content">
+
+              
+              <div class="modal-body">
+                
+                <div class="container" id="imagesGrid">
+                  <div class="row">
+                    <div class="col text-center">Elige una imagen</div>
+                  </div>
+                  <div class="row">
+                    <div class="col"><small>Se muestran todas tus imágenes. Haz clic en la que quieres publicar o ve a la biblioteca de imágenes para administrarlas.</small>
+                    </div>
+                  </div>
+                  
+                  <div class="row background-verylightgray light-padding">
+                    {{#each getMedia "cover"}}
+                    <div class="col-lg-3 col-sm-6 align-self-center">
+                      <a href="#" id="selectPicture" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image"></a>
+                    </div>
+                    {{/each}}
+                  </div>
+                </div>
+                
+                <div class="container imagesAttr" id="imagesAttr" hidden="true">
+                  <div class="row">
+                    <div class="col">
+                       Introduce un Título y la descripción de tu publicación
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="col">
+                       <div class="input-group">
+                          <input type="text" class="form-control" id="titleImg" placeholder="Título">
+                       </div>
+                    </div>
+                 </div>
+                 <div class="spacer20"></div>
+                 <div class="row">
+                    <div class="col">
+                       <div class="input-group">
+                          Descripción:
+                       </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="col-12">
+                       <div class="input-group">
+                          <textarea class="form-control" rows="3" id="descImg" maxlength="450"></textarea>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="col">
+                       <div class="input-group agreements">
+                          Quedan &nbsp;<div id="maxImg">{{contentCount}}</div>&nbsp; caracteres
+                       </div>
+                    </div>
+                 </div>
+                 <div class="spacer40"></div>
+                 <div class="row">
+                    <div class="col-md-10 border-exterior mx-auto" style="padding: 10px;">
+                      <button type="button" class="btn btn-gray" id="saveImagePortlet"><i class="fa fa-save fa-sm"></i> <a href="#" class="text-button">Guardar</a></button>
+                       <input type="hidden" id="modePortletImg">
+                       <input type="hidden" id="idPortletImg">
+                       <input type="hidden" id="contentImg">
+                       <input type="hidden" id="urlImg">
+                    </div>
+                 </div>
+                </div>
+                
+
+              </div>
+
+              
+              <div class="modal-footer justify-content-center">
+                <div class="row">
+                  <div class="col"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+                  <div class="col"><button class="btn btn-purple goMediaLibrary">Ir a la biblioteca de imágenes</button></div>
+                </div>
+                
+                
+
+              </div>
+
+            </div>
+            
+
+          </div>
+        </div>
+        -->
+
+
+
 <!-- Video Modal -->
 <div class="modal" tabindex="-1" id="videoModal" role="dialog">
   <div class="modal-dialog" role="document">
@@ -881,7 +980,7 @@
             <div class="col-lg-2 col-md-4 col-sm-12">
               <span class="pull-right">
                 <a href="#" class="text-purple" id="edit_portlet"><i class="fa fa-pencil fa-sm" mode="edit" data-id="{{_id}}"></i></a>
-                <a href="#" class="text-purple" id="delete_portlet"><i class="fa fa-trash fa-sm" mode="delete" data-id="{{_id}}"></i></a>
+                <a href="#" class="text-purple" id="delete_portlet"><i class="fa fa-trash fa-sm" mode="delete" data-id="{{_id}}" data-url="{{url}}"></i></a>
                 <!-- {{order}} -->
               </span>
               <span class="pull-right">&nbsp;</span>
@@ -929,10 +1028,10 @@
                {{content}}
             </div>
          </div>
-         <div class="spacer20"></div>
+         
          <div class="row">
-            <div class="col">
-               <img src="{{cloudURL}}{{url}}">
+            <div class="col media-portlet text-center">
+               <img src="{{cloudURL}}/v{{version}}/{{url}}" class="img-fluid">
             </div>
          </div>
            {{else}}

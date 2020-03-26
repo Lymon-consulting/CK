@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Project } from '../api/project.js';
 import { Ocupation } from '../api/ocupations.js';
+import { Media } from '../api/media.js';
 
 import './addCollaborator.html';
 
@@ -32,12 +33,17 @@ Template.availableProjects.helpers({
    return Ocupation.find({},{sort:{"secondary":1}}).fetch();
   },
   getProjectPicture(projectId, size) {
-    var url = "";
-    var data = Project.findOne({'_id' : projectId});
-    if(data!=null && data.projectPictureID!=null){
-      url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_limit/" + data.projectPictureID;
-    }
-    return url;
+    Meteor.subscribe("allMedia");
+      var data = Project.findOne({'_id' : projectId});
+      var url;
+      if(data!=null && data.projectPictureID!=null){
+        var cover = Media.findOne({'mediaId':data.projectPictureID});
+        if(cover!=null){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_scale" + "/v" + cover.media_version + "/" + Meteor.userId() + "/" + data.projectPictureID;    
+        }
+        
+      }
+      return url;
   },
   checkParticipation(projectId){
     Meteor.subscribe('myProjects');

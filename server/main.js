@@ -236,7 +236,8 @@ Meteor.publish('myPortlets', function() {
       'content':1,
       'author':1,
       'url':1,
-      'order':1
+      'order':1,
+      'version':1
     }
   });
 });

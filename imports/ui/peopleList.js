@@ -122,7 +122,7 @@ Template.peopleList.helpers({
         }
         
       }
-      console.log(url);
+      //console.log(url);
       return url;
       /*
        Meteor.subscribe("otherUsers");
@@ -142,8 +142,10 @@ Template.peopleList.events({
       event.preventDefault();
 
       
-      //console.log("Intentando seguir a "+ Session.get('userID'));
-      var user = $("#thisUser").val();
+      
+      //var user = $("#thisUser").val();
+      var user = $(event.target).attr("data-id");
+      console.log("Intentando seguir a "+ user);
       Meteor.users.update(
          {'_id': Meteor.userId()},
          { $push: { 'follows': user } }
