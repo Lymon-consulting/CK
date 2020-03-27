@@ -1,34 +1,92 @@
 <template name="confirmProfile">
-   <div class="container text-center">
-      <h1 class="h1-title">Queremos saber más de ti</h1>
-      <br>
-  </div>
-  <div class="container">
-      <p class="text-description">
-      ¿Eres productor o director? Selecciona tu rol. Si tienes un rol distinto selecciona "Tengo otro rol"
-        <form>
-        	<div class="spacer20"></div>
-	        
-			<div class="form-check">
-			  <input class="form-check-input" type="radio" name="profileSelection" value="1">
-			  <label class="form-check-label" for="exampleRadios2">Soy Director</label>
-			</div>
-			<div class="form-check">
-			  <input class="form-check-input" type="radio" name="profileSelection" value="2">
-			  <label class="form-check-label" for="exampleRadios1">Soy Productor</label>
-			</div>
-			<div class="form-check">
-			  <input class="form-check-input" type="radio" name="profileSelection" value="3">
-			  <label class="form-check-label" for="exampleRadios1">Soy tanto Director como Productor</label>
-			</div>
-			<div class="form-check">
-			  <input class="form-check-input" type="radio" name="profileSelection" value="0" checked>
-			  <label class="form-check-label" for="exampleRadios1">No soy Director ni Productor, pero tengo otro rol</label>
-			</div>
-			<div class="spacer20"></div>
-			<button class="btn btn-purple" id="saveProfile" type="button" role="button">CONTINUAR</button>
-	     </form>
-      </p>
-   </div>      
-   <div class="spacer60"></div>
+ <div class="container text-center">
+  <h1 class="h1-title">Queremos saber más de ti {{type}}</h1>
+  <br>
+</div>
+<div class="container">
+{{#if typeIsCrew}}
+  <p class="text-description">
+    ¿Qué rol desempeñas dentro del Crew?
+  </p>
+  <div class="spacer20"></div>
+  <div class="row">
+      <div class="col-lg-12">
+        <div class="row">
+
+          <div class="col-lg-6 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#" class="saveProfile" ><img class="card-img-top" src="/images/productor_thumb.jpg" alt="" data-type="1"></a>
+              <div class="card-body">
+                <p class="card-text">Soy Productor</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#" class="saveProfile"  data-type="2"><img class="card-img-top" src="/images/director_thumb.jpg" alt="" data-type="2"></a>
+              <div class="card-body">
+                <p class="card-text">Soy Director</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#" class="saveProfile" data-type="3"><img class="card-img-top" src="/images/proddir_thumb.jpg" alt="" data-type="3"></a>
+              <div class="card-body">
+                <p class="card-text">Soy tanto Productor como Director</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#" class="saveProfile"  data-type="4"><img class="card-img-top" src="/images/crew_thumb.jpg" alt="" data-type="4"></a>
+              <div class="card-body">
+                <p class="card-text">No soy Productor ni Director, pero desempeño otro rol dentro del Crew</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.col-lg-9 -->
+    </div>
+    <!-- /.row -->
+{{else}}
+  <p class="text-description">
+    ¿Cuál es tu perfil?
+  </p>
+  <div class="spacer20"></div>
+  <div class="row">
+      <div class="col-lg-12">
+        <div class="row">
+
+          <div class="col-lg-6 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#" class="saveProfile" ><img class="card-img-top" src="/images/productor_thumb.jpg" alt="" data-type="1"></a>
+              <div class="card-body">
+                <p class="card-text">Soy Dueño o Director de una empresa, que presta servicios a proyectos audiovisuales</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#" class="saveProfile"  data-type="2"><img class="card-img-top" src="/images/director_thumb.jpg" alt="" data-type="2"></a>
+              <div class="card-body">
+                <p class="card-text">Soy Organizador de Festivales relacionados con la industria audiovisual</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.col-lg-9 -->
+    </div>
+    <!-- /.row -->
+{{/if}}
+</div>
+<div class="spacer60"></div>
 </template>

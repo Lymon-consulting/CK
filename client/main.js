@@ -16,6 +16,7 @@ import '../imports/ui/header.js';
 import '../imports/ui/login.js';
 import '../imports/ui/join.js';
 import '../imports/ui/thanksRegister.js';
+import '../imports/ui/selectProfile.js';
 import '../imports/ui/confirmProfile.js';
 import '../imports/ui/addCollaborator.js';
 import '../imports/ui/addCollaboratorIndustry.js';

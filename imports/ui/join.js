@@ -30,7 +30,7 @@ Template.join.events({
             if ( error ) {
               console.log(error.reason);
             } else {
-              FlowRouter.go('/confirmProfile');
+              FlowRouter.go('/selectProfile');
             }
           });
         }
