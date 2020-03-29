@@ -10,415 +10,398 @@
     }
   </style>
 
-   <div class="container text-center">
-      <h1 class="h1-title">EDITAR EL PERFIL DE</h1>
-      <h2>{{fullName}}</h2>
-      <hr class="hr_width_600">
+  <div class="container text-center">
+    <h1 class="h1-title">EDITAR EL PERFIL DE</h1>
+    <h2>{{fullName}}</h2>
+    <hr class="hr_width_600">
+  </div>
+
+  <div class="container">
+    <div class="col-md-10 mx-auto">
+     <!-- Tab panes -->
+     <div class="tab-content">
+       <div role="tabpanel" class="tab-pane active" id="persona_panel">    
+         {{#if currentUser}}
+         {{> user }}
+         {{/if}}
+       </div>       
+       <!-- {{> acreditation }} -->
+       <!-- {{> firstSetOfInformation }} -->
+     </div>
    </div>
-
-   
-
-   <div class="container">
-      <div class="col-md-10 mx-auto">
-         <!--
-         <ul class="nav nav-tabs nav-justified" role="tablist" id="Navigation">
-           <li class="nav-item">
-             <a class="nav-link text-white active" href="#persona_panel" role="tab" data-toggle="tab">PERSONA</a>
-           </li>
-           <li class="nav-item">
-             <a class="nav-link text-white" href="#negocio_panel" role="tab" data-toggle="tab">NEGOCIO/INSTITUCIÓN</a>
-           </li>
-         </ul>
-      -->
-
-         <!-- Tab panes -->
-         <div class="tab-content">
-           <div role="tabpanel" class="tab-pane active" id="persona_panel">    
-             {{#if currentUser}}
-                {{> user }}
-             {{/if}}
-           </div>       
-           <!-- {{> acreditation }} -->
-           <!-- {{> firstSetOfInformation }} -->
-           <div role="tabpanel" class="tab-pane fade" id="negocio_panel">
-               Acá lo de negocio
-           </div>
-         </div>
-      </div>
-   </div>
+ </div>
 </template>
 
-
-
-
 <template name="user">
-   <form>
+ <form>
+   <div class="spacer40"></div>
+   <div class="row">
+     <div class="col">
+       <h2>Datos personales</h2>
+     </div>
+   </div>
+   <div class="spacer40"></div>
+   <div class="row">
+    <div class="col form-group">
+     <label for="nombre">Nombre <span class="text-purple">(Requerido)</span></label>
+     <input type="text" class="form-control" id="personName" placeholder="Nombres" value="{{name}}" maxlength="30">
+   </div>
+   <div class="col form-group">
+     <label for="nombre">Apellido Paterno <span class="text-purple">(Requerido)</span></label>
+     <input type="text" class="form-control" id="personLastName" placeholder="Apellido paterno" value="{{lastname}}" maxlength="20">
+   </div>
+   <div class="col form-group">
+     <label for="nombre">Apellido Materno</label>
+     <input type="text" class="form-control" id="personLastName2" placeholder="Apellido materno" value="{{lastname2}}" maxlength="20">
+   </div>
+ </div>
+ <div class="spacer20"></div>
+ <div class="form-group">
+  <label for="resumen">Resumen </label>
+  <textarea class="form-control" rows="5" id="resume" value="" placeholder="Cuéntanos de ti (450 caracteres máx)." maxlength="450">{{resume}}</textarea><small>Caracteres restantes: <div id="max">{{resumeCount}}</div></small>
+</div>
 
-         <div class="spacer40"></div>
-         <div class="row">
-            <div class="col form-group">
-               <label for="nombre">Nombre <span class="text-purple">(Requerido)</span></label>
-               <input type="text" class="form-control" id="personName" placeholder="Nombres" value="{{name}}" maxlength="30">
-            </div>
-            <div class="col form-group">
-               <label for="nombre">Apellido Paterno <span class="text-purple">(Requerido)</span></label>
-               <input type="text" class="form-control" id="personLastName" placeholder="Apellido paterno" value="{{lastname}}" maxlength="20">
-            </div>
-            <div class="col form-group">
-               <label for="nombre">Apellido Materno</label>
-               <input type="text" class="form-control" id="personLastName2" placeholder="Apellido materno" value="{{lastname2}}" maxlength="20">
-            </div>
-         </div>
-         <div class="spacer20"></div>
+<div class="spacer40"></div>
+<div class="row">
+  <div class="col">
+    <h2>Ubicación</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <label for="country">País <span class="text-purple">(Requerido)</span></label>
+    <select name="country" id="country" class="form-control">
+     {{#each getCountries}}
+     <option value="{{country}}" {{countrySelected country}}> {{country}} </option>
+     {{/each}}
+   </select>
+ </div>
+ <div class="col-md-4">
+   <label for="state">Estado <span class="text-purple">(Requerido)</span></label>
+   <select name="state" id="states" class="form-control">
+     {{#each getStatesFromCountries}}
+     <option value="{{state}}" {{stateSelected state}}> {{state}} </option>
+     {{/each}}
+   </select>  
+ </div>
+ <div class="col-md-4">
+   <label for="city">Ciudad <span class="text-purple">(Requerido)</span></label>
+   <select name="city" id="city" class="form-control">
+     {{#each getCitiesFromStates}}
+     <option value="{{city}}" {{citySelected city}}> {{city}} </option>
+     {{/each}}
+   </select>  
+ </div>
+</div>
 
-         <div class="row">
-           <div class="col-md-12">
-             <small>
-               <p>Para seleccionar tus ocupaciones:</p>
-               <ul>
-                  <li>En la lista de la izquierda, selecciona el departamento al cual pertenece tu ocupación.</li>
-                  <li>En el recuadro de la derecha, haz doble clic sobre la ocupación para agregarla a tu lista de ocupaciones.</li> 
-                  <li>Puedes seleccionar tantos departamentos y ocupaciones como quieras.</li> 
-                  <li>Para eliminar una ocupación de tu lista, has doble clic sobre ella.</li>
-               </ul>
-             </small>
-           </div>
-         </div>
+<div class="spacer40"></div>
+<div class="row">
+  <div class="col">
+    <h2>Roles</h2>
+  </div>
+</div>
+ {{#if hasPrimaryRole}}
+ <div class="row">
+   <div class="col-lg-12">
+     Tus roles primarios son: <strong>{{getPrimaryRoles}}</strong>
+   </div>
+ </div>
+ {{/if}}
+ <div class="spacer20"></div>
+ <div class="row">
+   <div class="col-md-12">
 
-         
-         <div class="spacer20"></div>
-         <div class="row">
-            <div class="col-md-6">
-                <label for="oc">Departamentos <span class="text-purple">(Selecciona al menos uno)</span></label>
-                 <select name="category" id="category" class="form-control">
-                   {{#each getCategories}}
-                      <option value="{{title}}"> {{title}} </option>
-                   {{/each}}
-                </select>
-            </div>
-            <div class="col-md-6">
-               <label for="Ocupation">Ocupaciones <span class="text-purple">(Selecciona con doble clic)</span></label>
-               <select multiple name="Ocupation" id="ocupation" class="form-control">
-                 {{#each getOcupationsFromCategory}}
-                    <option value="{{secondary}}" {{roleSelected secondary}}> {{secondary}} </option>
-                 {{/each}}
-              </select>  
-            </div>
-            
-            
-         </div>
+    <p>A continuación puedes seleccionar otros roles que tengas:</p>
+    <small>
+     <ul>
+      <li>En la lista de la izquierda, selecciona el departamento al cual pertenece tu rol.</li>
+      <li>En el recuadro de la derecha, haz doble clic sobre el rol para agregarlo a tu perfil.</li> 
+      <li>Puedes seleccionar tantos departamentos y roles como quieras.</li> 
+      <li>Para eliminar un rol de tu lista haciendo doble clic sobre él.</li>
+    </ul>
+  </small>
+</div>
+</div>
 
-         <div class="spacer20"></div>
-         <div class="row">
-            <div class="col-md-12">
-               <label for="Ocupation">Ocupación <span class="text-purple">(Elimina con doble clic)</span></label>
-               <select name="Selection" multiple id="selection" class="form-control">
-                 {{#each item in getRolesSelected}}
-                    <option value="{{item}}" {{roleSelected item}}> {{item}} </option>
-                 {{/each}}
-              </select>  
-            </div>
-            
-         </div>
+<div class="spacer20"></div>
+<div class="row">
+  <div class="col-md-6">
+    <label for="oc">Departamentos </label>
+    <select name="category" id="category" class="form-control">
+     {{#each getCategories}}
+     <option value="{{title}}"> {{title}} </option>
+     {{/each}}
+   </select>
+ </div>
+ <div class="col-md-6">
+   <label for="Ocupation">Roles <span class="text-purple">(Selecciona con doble clic)</span></label>
+   <select multiple name="Ocupation" id="ocupation" class="form-control">
+     {{#each getOcupationsFromCategory}}
+     <option value="{{secondary}}" {{roleSelected secondary}}> {{secondary}} </option>
+     {{/each}}
+   </select>  
+ </div>
 
-         <div class="spacer20"></div>
-         <div class="row">
-            <div class="col-md-4">
-                <label for="country">País <span class="text-purple">(Requerido)</span></label>
-                 <select name="country" id="country" class="form-control">
-                   {{#each getCountries}}
-                      <option value="{{country}}" {{countrySelected country}}> {{country}} </option>
-                   {{/each}}
-                </select>
-            </div>
-            <div class="col-md-4">
-               <label for="state">Estado <span class="text-purple">(Requerido)</span></label>
-               <select name="state" id="state" class="form-control">
-                 {{#each getStatesFromCountries}}
-                    <option value="{{state}}" {{stateSelected state}}> {{state}} </option>
-                 {{/each}}
-              </select>  
-            </div>
-            <div class="col-md-4">
-               <label for="city">Ciudad <span class="text-purple">(Requerido)</span></label>
-               <select name="city" id="city" class="form-control">
-                 {{#each getCitiesFromStates}}
-                    <option value="{{city}}" {{citySelected city}}> {{city}} </option>
-                 {{/each}}
-              </select>  
-            </div>
-            
-            
-         </div>
+</div>
+
+<div class="spacer20"></div>
+<div class="row">
+  <div class="col-md-12">
+   <label for="Ocupation">Roles que has seleccionado <span class="text-purple">(Elimina con doble clic)</span></label>
+   <select name="Selection" multiple id="selection" class="form-control">
+     {{#each item in getRolesSelected}}
+     <option value="{{item}}" {{roleSelected item}}> {{item}} </option>
+     {{/each}}
+   </select>  
+ </div>
+</div>
+
+<div class="spacer40"></div>
+
+<div class="row">
+  <div class="col">
+    <h2>En internet</h2>
+  </div>
+</div>
+<div class="form-group">
+  <label for="web">Página Web</label>
+  <div class="input-group">
+   <div class="input-group-prepend">
+     <div class="input-group-text"><i class="fa fa-globe fa-lg"></i></div>
+   </div>
+   <input type="text" class="form-control" id="web_page" value="{{webpage}}" placeholder="Ej: www.cinekomuna.com" maxlength="120">
+ </div>
+</div>
+<div class="spacer20"></div>
+<div class="form-group">
+  <label for="">En la red <br> <small>Vincula tus cuentas de otros sitios en la red</small></label>
+</div>
+<div class="spacer20"></div>
+<div class="form-group">
+  <div class="input-group">
+   <div class="input-group-prepend">
+     <div class="input-group-text"><i class="fa fa-facebook fa-lg"></i></div>
+   </div>
+   <input  type="text" class="form-control" id="facebook_page" value="{{facebook}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120">
+ </div>
+</div>
+<div class="form-group">
+  <div class="input-group">
+   <div class="input-group-prepend">
+     <div class="input-group-text"><i class="fa fa-twitter fa-lg"></i></div>
+   </div>
+   <input type="text" class="form-control" id="twitter_page" value="{{twitter}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
+ </div>
+</div>
+<div class="form-group">
+  <div class="input-group">
+   <div class="input-group-prepend">
+     <div class="input-group-text"><i class="fa fa-vimeo fa-lg"></i></div>
+   </div>
+   <input type="text" class="form-control" id="vimeo_page" value="{{vimeo}}" placeholder="Ej. www.vimeo.com/cinekomuna" maxlength="120">
+ </div>
+</div>
+<div class="form-group">
+  <div class="input-group">
+   <div class="input-group-prepend">
+     <div class="input-group-text"><i class="fa fa-youtube fa-lg"></i></div>
+   </div>
+   <input  type="text" class="form-control" id="youtube_page" value="{{youtube}}" placeholder="Ej. www.youtube.com/cinekomuna" maxlength="120">
+ </div>
+</div>
+<div class="form-group">
+  <div class="input-group">
+   <div class="input-group-prepend">
+     <div class="input-group-text"><i class="fa fa-instagram fa-lg"></i></div>
+   </div>
+   <input type="text" class="form-control" id="instagram_page" value="{{instagram}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120">
+ </div>
+</div>
 
 
-         <div class="spacer20"></div>
-         <div class="form-group">
-            <label for="resumen">Resumen <span class="text-purple">(Requerido)</span></label>
-            <textarea class="form-control" rows="5" id="resume" value="" placeholder="Cuéntanos de ti (450 caracteres máx)." maxlength="450">{{resume}}</textarea><small>Caracteres restantes:</small> <div id="max">{{resumeCount}}</div>
-         </div>
-         <div class="spacer20"></div>
-         <div class="form-group">
-            <label for="web">Página Web</label>
-             <div class="input-group">
-               <div class="input-group-prepend">
-                 <div class="input-group-text"><i class="fa fa-globe fa-lg"></i></div>
+<div class="spacer40"></div>
+
+<div class="row">
+  <div class="col">
+    <h2>Imagen de perfil y de portada</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col">Esta es tu imagen de perfil actual</div>
+</div>
+<div class="row">
+  <div class="col">
+    {{#if getProfilePicture}}
+    <img src="{{getProfilePicture}}"/>
+    {{else}}
+    <div id="profileImageLarge">{{getInitials}}</div>
+    {{/if}}
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <br>
+    <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal1">Seleccionar otra</button>
+  </div>
+</div>
+<div class="spacer20"></div>
+<div class="row">
+  <div class="col">Esta es tu imagen de portada actual</div>
+</div>
+<div class="row">
+  <div class="col">
+    {{#if getCoverPicture}}
+    <img id="image" src="{{getCoverPicture}}" class="thumbnail-project"/>
+    {{else}}
+    <img id="image" src="/images/c4.jpg" class="thumbnail-project"/>
+    {{/if}}
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <br>
+    <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal2">Seleccionar otra</button>
+  </div>
+</div>
+          
+<div class="row">
+  <div class="col"><hr></div>
+</div>
+<div class="spacer20"></div>
+<div class="form-group row">
+  <div class="col text-center">
+   <button class="btn btn-purple" id="goProfile" type="button" role="button">VER MI PERFIL</button>
+   {{#if hasTopRole}}
+   <a href="/viewProjects/{{currentUser._id}}" class="btn btn-purple" id="mis_proyectos" type="button" role="button">VER MIS PROYECTOS</a>
+   {{/if}}
+ </div>
+</div>
+
+</form>
+
+
+   <!--Modal: Name-->
+   <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+
+      <!--Content-->
+      <div class="modal-content">
+
+        <!--Body-->
+        <div class="modal-body">
+
+          <div class="container">
+            <div class="row">
+              <div class="col text-center">Elige tu foto de perfil</div>
+            </div>
+            <div class="row">
+              <div class="col"><small>Se muestran únicamente las imágenes definidas como <strong>"Foto de perfil o logo"</strong> en la biblioteca de imágenes. Haz clic en la que usarás como foto de perfil o ve a la biblioteca de imágenes para definir otras fotos como imagen de perfil.</small>
               </div>
-               <input type="text" class="form-control" id="web_page" value="{{webpage}}" placeholder="Ej: www.cinekomuna.com" maxlength="120">
             </div>
-         </div>
-         <div class="spacer20"></div>
-         <div class="form-group">
-            <label for="">En la red <br> <small>Vincula tus cuentas de otros sitios en la red</small></label>
-         </div>
-         <div class="spacer20"></div>
-         <div class="form-group">
-            <div class="input-group">
-               <div class="input-group-prepend">
-                 <div class="input-group-text"><i class="fa fa-facebook fa-lg"></i></div>
+
+            <div class="row background-verylightgray light-padding">
+              {{#each getMedia "profile"}}
+              <div class="col-lg-3 col-sm-6 align-self-center">
+                <a href="#" id="selectProfilePicture" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image"></a>
               </div>
-               <input  type="text" class="form-control" id="facebook_page" value="{{facebook}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120">
+              {{/each}}
             </div>
-         </div>
-         <div class="form-group">
-            <div class="input-group">
-               <div class="input-group-prepend">
-                 <div class="input-group-text"><i class="fa fa-twitter fa-lg"></i></div>
-              </div>
-               <input type="text" class="form-control" id="twitter_page" value="{{twitter}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
-            </div>
-         </div>
-         <div class="form-group">
-            <div class="input-group">
-               <div class="input-group-prepend">
-                 <div class="input-group-text"><i class="fa fa-vimeo fa-lg"></i></div>
-              </div>
-               <input type="text" class="form-control" id="vimeo_page" value="{{vimeo}}" placeholder="Ej. www.vimeo.com/cinekomuna" maxlength="120">
-            </div>
-         </div>
-         <div class="form-group">
-            <div class="input-group">
-               <div class="input-group-prepend">
-                 <div class="input-group-text"><i class="fa fa-youtube fa-lg"></i></div>
-              </div>
-               <input  type="text" class="form-control" id="youtube_page" value="{{youtube}}" placeholder="Ej. www.youtube.com/cinekomuna" maxlength="120">
-            </div>
-         </div>
-         <div class="form-group">
-            <div class="input-group">
-               <div class="input-group-prepend">
-                 <div class="input-group-text"><i class="fa fa-instagram fa-lg"></i></div>
-              </div>
-               <input type="text" class="form-control" id="instagram_page" value="{{instagram}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120">
-            </div>
-         </div>
-         <div class="spacer20"></div>
-         <div class="row">
-            <div class="col">Esta es tu imagen de perfil actual</div>
           </div>
-          <div class="row">
-            <div class="col">
-              {{#if getProfilePicture}}
-              <img src="{{getProfilePicture}}"/>
-              {{else}}
-              <div id="profileImageLarge">{{getInitials}}</div>
-              {{/if}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <br>
-              <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal1">Seleccionar otra</button>
-            </div>
-         </div>
-         <div class="spacer20"></div>
-         <div class="row">
-            <div class="col">Esta es tu imagen de portada actual</div>
-         </div>
-         <div class="row">
-            <div class="col">
-              {{#if getCoverPicture}}
-              <img id="image" src="{{getCoverPicture}}" class="thumbnail-project"/>
-              {{else}}
-              <img id="image" src="/images/c4.jpg" class="thumbnail-project"/>
-              {{/if}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <br>
-              <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal2">Seleccionar otra</button>
-            </div>
-         </div>
-          <!--
-         <div class="row">
-               <div class="col agreements">Elige una imagen de 1950 pixeles de ancho por 350 pixeles de alto</div>
-            </div>
-         <div class="row">
-            <div class="col"><hr></div>
-         </div>
-         <div class="row">
-            <div class="col">
-               <input id="cover-upload" type="file">
-               {{#if getCoverPicture}}
-               <table class="table table-condensed">
-                 <tbody>
-                 <tr>
-                    <td>
-                      <img id="image" src="{{getCoverPicture}}" class="thumbnail-project"/>
-                      <button id="crop">Cortar</button>
-                      <div id="result"></div>
-                    </td>
-                 </tr>
-                 <tr>
-                   <td>
-                     <button id="deleteFileButton" data-id="{{getPublicID 'cover'}}" class="btn btn-purple">Eliminar imagen de portada</button>
-                   </td>
-                 </tr>
-                 </tbody>
-               </table>
-               {{/if}}
-            </div>
-         </div>
-       -->
-         <div class="row">
-            <div class="col"><hr></div>
-         </div>
-         <div class="spacer20"></div>
-         <div class="form-group row">
-            <div class="col text-center">
-               <button class="btn btn-purple" id="guardar_set1" type="button" role="button">GUARDAR PERFIL</button>
-               {{#if hasTopRole}}
-               <a href="/viewProjects/{{currentUser._id}}" class="btn btn-purple" id="mis_proyectos" type="button" role="button">MIS PROYECTOS</a>
-               {{/if}}
-            </div>
-         </div>
-
-      </form>
 
 
-        <!--Modal: Name-->
-        <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg" role="document">
-
-            <!--Content-->
-            <div class="modal-content">
-
-              <!--Body-->
-              <div class="modal-body">
-                
-                <div class="container">
-                  <div class="row">
-                    <div class="col text-center">Elige tu foto de perfil</div>
-                  </div>
-                  <div class="row">
-                    <div class="col"><small>Se muestran únicamente las imágenes definidas como <strong>"Foto de perfil o logo"</strong> en la biblioteca de imágenes. Haz clic en la que usarás como foto de perfil o ve a la biblioteca de imágenes para definir otras fotos como imagen de perfil.</small>
-                    </div>
-                  </div>
-                  
-                  <div class="row background-verylightgray light-padding">
-                    {{#each getMedia "profile"}}
-                    <div class="col-lg-3 col-sm-6 align-self-center">
-                      <a href="#" id="selectProfilePicture" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image"></a>
-                    </div>
-                    {{/each}}
-                  </div>
-                </div>
-                
-
-              </div>
-
-              <!--Footer-->
-              <div class="modal-footer justify-content-center">
-                <div class="row">
-                  <div class="col"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
-                  <div class="col"><button class="btn btn-purple goMediaLibrary">Ir a la biblioteca de imágenes</button></div>
-                </div>
-                
-                
-
-              </div>
-
-            </div>
-            <!--/.Content-->
-
-          </div>
         </div>
-        <!--Modal: Name-->
 
-        <!--Modal: Name-->
-        <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg" role="document">
-
-            <!--Content-->
-            <div class="modal-content">
-
-              <!--Body-->
-              <div class="modal-body">
-                
-                <div class="container">
-                  <div class="row">
-                    <div class="col text-center">Elige tu foto de portada</div>
-                  </div>
-                  <div class="row">
-                    <div class="col"><small>Se muestran únicamente las imágenes definidas como <strong>"Foto de portada"</strong> en la biblioteca de imágenes. Haz clic en la que usarás como foto de portada o ve a la biblioteca de imágenes para definir otras imágenes como foto de portada.</small>
-                    </div>
-                  </div>
-                  
-                  <div class="row background-verylightgray light-padding">
-                    {{#each getMedia "cover"}}
-                    <div class="col-lg-3 col-sm-6 align-self-center">
-                      <a href="#" id="selectCoverPicture" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image"></a>
-                    </div>
-                    {{/each}}
-                  </div>
-                </div>
-                
-
-              </div>
-
-              <!--Footer-->
-              <div class="modal-footer justify-content-center">
-                <div class="row">
-                  <div class="col"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
-                  <div class="col"><button class="btn btn-purple goMediaLibrary">Ir a la biblioteca de imágenes</button></div>
-                </div>
-                
-                
-
-              </div>
-
-            </div>
-            <!--/.Content-->
-
+        <!--Footer-->
+        <div class="modal-footer justify-content-center">
+          <div class="row">
+            <div class="col"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+            <div class="col"><button class="btn btn-purple goMediaLibrary">Ir a la biblioteca de imágenes</button></div>
           </div>
-        </div>
-        <!--Modal: Name-->
 
-<div class="modal modal-backdrop" tabindex="-1" id="myModal" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Asistente de Cinekomuna</h5>
-        <button type="button" class="closeModal" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+
+
+        </div>
+
       </div>
-      <div class="modal-body">
-        <img src="/images/wizard/editProfile.png" class="img-fluid">
+      <!--/.Content-->
+
+    </div>
+  </div>
+  <!--Modal: Name-->
+
+  <!--Modal: Name-->
+  <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+
+      <!--Content-->
+      <div class="modal-content">
+
+        <!--Body-->
+        <div class="modal-body">
+
+          <div class="container">
+            <div class="row">
+              <div class="col text-center">Elige tu foto de portada</div>
+            </div>
+            <div class="row">
+              <div class="col"><small>Se muestran únicamente las imágenes definidas como <strong>"Foto de portada"</strong> en la biblioteca de imágenes. Haz clic en la que usarás como foto de portada o ve a la biblioteca de imágenes para definir otras imágenes como foto de portada.</small>
+              </div>
+            </div>
+
+            <div class="row background-verylightgray light-padding">
+              {{#each getMedia "cover"}}
+              <div class="col-lg-3 col-sm-6 align-self-center">
+                <a href="#" id="selectCoverPicture" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image"></a>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+
+
+        </div>
+
+        <!--Footer-->
+        <div class="modal-footer justify-content-center">
+          <div class="row">
+            <div class="col"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+            <div class="col"><button class="btn btn-purple goMediaLibrary">Ir a la biblioteca de imágenes</button></div>
+          </div>
+
+
+
+        </div>
+
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" id="hideWizard">No volver a mostrar</button>&nbsp;
-        <button type="button" class="btn btn-secondary closeModal">Cerrar</button>
+      <!--/.Content-->
+
+    </div>
+  </div>
+  <!--Modal: Name-->
+
+  <div class="modal modal-backdrop" tabindex="-1" id="myModal" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Asistente de Cinekomuna</h5>
+          <button type="button" class="closeModal" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img src="/images/wizard/editProfile.png" class="img-fluid">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="hideWizard">No volver a mostrar</button>&nbsp;
+          <button type="button" class="btn btn-secondary closeModal">Cerrar</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
   {{#if wizard}}
-    <script>
-      $('#myModal').show();
-    </script>
+  <script>
+    $('#myModal').show();
+  </script>
   {{/if}}
 
 </template> 

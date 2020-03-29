@@ -29,10 +29,42 @@ Template.profilePage.helpers({
     },
    ownerRole(){
       var u = Meteor.users.findOne({'_id': FlowRouter.getParam('id')});
-      var result = "";
+      var result = new Array();
+      var strResult = "";
       if(u){
-         rolesArray = u.role;
-         if(rolesArray){
+         userRoles = u.role;
+
+         if(userRoles){
+         
+           for (var i = 0; i < userRoles.length; i++) {
+              if(userRoles[i]==="Productor"){
+                result.push(userRoles[i]);
+              }
+              else if(userRoles[i]==="Director"){
+                result.push(userRoles[i]);
+              }
+              else if(userRoles[i]==="Dueño"){
+                //result.push(userRoles[i]);
+              }
+              else if(userRoles[i]==="Legal"){
+                //result.push("Representante legal");
+              }
+              else if(userRoles[i]==="Ejecutivo"){
+                //result.push("Administrador de industria");
+              }
+              else{
+                result.push(userRoles[i]);
+              }
+            }
+
+            for (var i = 0; i < result.length; i++) {
+              strResult = strResult + ", " + result[i];
+            }
+            strResult = strResult.substring(2, strResult.length);
+          }
+        }
+
+         /*if(rolesArray){
             var size = rolesArray.length;
             var count = 0;
             rolesArray.forEach(function(elem){
@@ -42,10 +74,11 @@ Template.profilePage.helpers({
                   result = result + ", ";
                }
             });
-         }
-      }
+         }*/
+      return strResult;
 
-      return result;
+
+      
    },
    getEmail(){
       var email = "";

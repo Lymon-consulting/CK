@@ -48,6 +48,39 @@ Template.peopleList.helpers({
       }
       return val;
    },
+   getPrimaryRoles(roles){
+      var result = new Array();
+      var strResult = "";
+      userRoles = roles;
+      for (var i = 0; i < userRoles.length; i++) {
+        if(userRoles[i]==="Productor"){
+          result.push(userRoles[i]);
+        }
+        else if(userRoles[i]==="Director"){
+          result.push(userRoles[i]);
+        }
+        else if(userRoles[i]==="Dueño"){
+          //result.push(userRoles[i]);
+        }
+        else if(userRoles[i]==="Legal"){
+          //result.push("Representante legal");
+        }
+        else if(userRoles[i]==="Ejecutivo"){
+          //result.push("Administrador de industria");
+        }
+        else{
+          result.push(userRoles[i]);
+        }
+      }
+
+      for (var i = 0; i < result.length; i++) {
+        strResult = strResult + ", " + result[i];
+      }
+      strResult = strResult.substring(2, strResult.length);
+
+      return strResult;
+
+   },
 /*   personalCover(userId){
       Meteor.subscribe("personalcover");
       return PersonalCover.find({'owner': userId});

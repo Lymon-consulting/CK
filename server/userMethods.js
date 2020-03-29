@@ -4,7 +4,7 @@ Meteor.methods({
   sendVerificationLink() {
     let userId = Meteor.userId();
     if ( userId ) {
-    	console.log("Enviando correo en sendVerificationLink dentro de server/userMethods");
+      console.log("Enviando correo en sendVerificationLink dentro de server/userMethods");
       return Accounts.sendVerificationEmail( userId );
     }
   },
@@ -15,12 +15,12 @@ Meteor.methods({
     }
   },
   hideWizard(){
-  	Meteor.users.update({'_id': Meteor.userId()}, {
-			$set:
-				{
-					"wizard": false
-				}
-		});
+    Meteor.users.update({'_id': Meteor.userId()}, {
+      $set:
+      {
+        "wizard": false
+      }
+    });
   }
 });
 
@@ -51,124 +51,195 @@ Accounts.onCreateUser(function(options, user) {
 
       return user;
   });
-*/
-Meteor.methods({
+  */
+  Meteor.methods({
 
-	updateUser(userId, name, lastname, lastname2, city, state, country, resume, fullname, webpage, facebook, twitter, vimeo, youtube, instagram){
-		
-		Meteor.users.update({'_id': userId}, {
-			$set: 
-               {"profile.name": name, 
-                "profile.lastname": lastname, 
-                "profile.lastname2": lastname2,
-                "city" : city,
-                "state" : state,
-                "country" : country,
-                "resume" : resume,
-                "fullname": fullname,
-                "webpage": webpage, 
-	            "facebook": facebook,
-	            "twitter": twitter,
-	            "vimeo": vimeo,
-	            "youtube": youtube,
-	            "instagram": instagram
-               }
-            });
-	},
-	
-	
-	updateProfilePicture(userId, mediaId){
-		Meteor.users.update({'_id': userId}, {
-			$set:
-				{
-					"profilePictureID": mediaId
-				}
-		});
-	},
-	updateCoverPicture(userId, mediaId){
-		Meteor.users.update({'_id': userId}, {
-			$set:
-				{
-					"profileCoverID": mediaId
-				}
-		});
-	},
+    updateName(userId,name){
+      Meteor.users.update({'_id': userId},{
+        $set:{"profile.name":name}
+      });
+    },
+    updateLastName(userId,lastname){
+      Meteor.users.update({'_id': userId},{
+        $set:{"profile.lastname":lastname}
+      });
+    },
+    updateLastName2(userId,lastname2){
+      Meteor.users.update({'_id': userId},{
+        $set:{"profile.lastname2":lastname2}
+      });
+    },
+    updateResume(userId,resume){
+      Meteor.users.update({'_id': userId},{
+        $set:{"resume":resume}
+      });
+    },
+    updateCountry(userId,country){
+      Meteor.users.update({'_id': userId},{
+        $set:{"country":country}
+      });
+    },
+    updateState(userId,state){
+      Meteor.users.update({'_id': userId},{
+        $set:{"state":state}
+      });
+    },
+    updateCity(userId,city){
+      Meteor.users.update({'_id': userId},{
+        $set:{"city":city}
+      });
+    },
+    updateWebPage(userId,web_page){
+      Meteor.users.update({'_id': userId},{
+        $set:{"webpage":web_page}
+      });
+    },
+    updateFacebookPage(userId,facebook_page){
+      Meteor.users.update({'_id': userId},{
+        $set:{"facebook":facebook_page}
+      });
+    },
+    updateTwitterPage(userId,twitter_page){
+      Meteor.users.update({'_id': userId},{
+        $set:{"twitter":twitter_page}
+      });
+    },
+    updateVimeoPage(userId,vimeo_page){
+      Meteor.users.update({'_id': userId},{
+        $set:{"vimeo":vimeo_page}
+      });
+    },
+    updateYoutubePage(userId,youtube_page){
+      Meteor.users.update({'_id': userId},{
+        $set:{"youtube":youtube_page}
+      });
+    },
+    updateInstagramPage(userId,instagram_page){
+      Meteor.users.update({'_id': userId},{
+        $set:{"instagram":instagram_page}
+      });
+    },
+    updateFullName(userId,fullname){
+      Meteor.users.update({'_id': userId},{
+        $set:{"fullname":fullname}
+      });
+    },
 
-	
+    updateUser(userId, name, lastname, lastname2, city, state, country, resume, fullname, webpage, facebook, twitter, vimeo, youtube, instagram){
 
-	saveProfilePictureID(userId, profilePictureID){
-		Meteor.users.update({'_id': userId}, {
-			$set:
-				{
-					"profilePictureID": profilePictureID
-				}
-		});
-	},
-	saveProfileCoverID(userId, profileCoverID){
-		Meteor.users.update({'_id': userId}, {
-			$set:
-				{
-					"profileCoverID": profileCoverID
-				}
-		});
-	},
-	deleteCover(userId, profileCoverID){
-		Meteor.users.update({'_id': userId}, {
-			$set:
-				{
-					"profileCoverID": null
-				}
-		});	
-	},
+      Meteor.users.update({'_id': userId}, {
+        $set: 
+        {"profile.name": name, 
+        "profile.lastname": lastname, 
+        "profile.lastname2": lastname2,
+        "city" : city,
+        "state" : state,
+        "country" : country,
+        "resume" : resume,
+        "fullname": fullname,
+        "webpage": webpage, 
+        "facebook": facebook,
+        "twitter": twitter,
+        "vimeo": vimeo,
+        "youtube": youtube,
+        "instagram": instagram
+      }
+    });
+    },
+    
+    
+    updateProfilePicture(userId, mediaId){
+      Meteor.users.update({'_id': userId}, {
+        $set:
+        {
+          "profilePictureID": mediaId
+        }
+      });
+    },
+    updateCoverPicture(userId, mediaId){
+      Meteor.users.update({'_id': userId}, {
+        $set:
+        {
+          "profileCoverID": mediaId
+        }
+      });
+    },
 
-	addRole(userId, role){
-		Meteor.users.update({'_id': userId}, 
-			{
-				$addToSet: {
-	            	"role": role
-	            }
-         });
-	},
-	removeRole(userId, role){
-		Meteor.users.update({'_id': userId}, 
-			{
-				$pull: {
-	            	"role": role
-	            }
-         });
-	},
-	addFollowTo(followerId, followsToId){
-		Meteor.users.update(
-         {'_id': followerId},
-         { $addToSet: { 'follows': followsToId } }
-      );
-	},
-	removeFollowTo(userId, followsToId){
-		Meteor.users.update({'_id': userId}, 
-		{
-			$pull: {
-            	"follows": followsToId
-            }
-     	});
-	},
-	addLikesProject(userId, projectId){
-		Meteor.users.update({'_id': userId}, 
-			{
-				$addToSet: {
-	            	"likesProject": projectId
-	            }
-         });
-	},
+    
 
-	removeLikesProject(userId,projectId){
-	  Meteor.users.update({'_id': userId}, 
-		{
-			$pull: {
-            	"likesProject": projectId
-            }
-     });	
-	}
-	
+    saveProfilePictureID(userId, profilePictureID){
+      Meteor.users.update({'_id': userId}, {
+        $set:
+        {
+          "profilePictureID": profilePictureID
+        }
+      });
+    },
+    saveProfileCoverID(userId, profileCoverID){
+      Meteor.users.update({'_id': userId}, {
+        $set:
+        {
+          "profileCoverID": profileCoverID
+        }
+      });
+    },
+    deleteCover(userId, profileCoverID){
+      Meteor.users.update({'_id': userId}, {
+        $set:
+        {
+          "profileCoverID": null
+        }
+      }); 
+    },
+
+    addRole(userId, role){
+      Meteor.users.update({'_id': userId}, 
+      {
+        $addToSet: {
+          "role": role
+        }
+      });
+    },
+    removeRole(userId, role){
+      Meteor.users.update({'_id': userId}, 
+      {
+        $pull: {
+          "role": role
+        }
+      });
+    },
+    addFollowTo(followerId, followsToId){
+      Meteor.users.update(
+       {'_id': followerId},
+       { $addToSet: { 'follows': followsToId } }
+       );
+    },
+    removeFollowTo(userId, followsToId){
+      Meteor.users.update({'_id': userId}, 
+      {
+        $pull: {
+          "follows": followsToId
+        }
+      });
+    },
+    addLikesProject(userId, projectId){
+      Meteor.users.update({'_id': userId}, 
+      {
+        $addToSet: {
+          "likesProject": projectId
+        }
+      });
+    },
+
+    removeLikesProject(userId,projectId){
+      Meteor.users.update({'_id': userId}, 
+      {
+        $pull: {
+          "likesProject": projectId
+        }
+      });    
+    }
+    
 
 
-});
+  });
