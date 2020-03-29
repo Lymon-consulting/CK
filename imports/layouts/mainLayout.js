@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import './mainLayout.html';
 
+
 Template.mainlayout.helpers({
   currentUser: function() {
     return Meteor.userId();
@@ -73,6 +74,9 @@ Template.registerHelper('formatURL', function(url){
   }
   return url;
 });
+
+
+
 
 Template.mainlayout.events({
   'click .resend-verification-link' ( event, template ) {

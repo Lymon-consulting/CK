@@ -181,6 +181,7 @@ Meteor.publish("otherUsers", function () {
     fields: { 
       '_id': 1 , 
       'profile': 1, 
+      'artistic': 1,
       'emails' : 1, 
       'city':1, 
       'state':1,
@@ -200,7 +201,8 @@ Meteor.publish("otherUsers", function () {
       'profileCoverID': 1,
       'wizard' : 1,
       'likesProject' : 1,
-      'media' : 1
+      'media' : 1,
+      'showArtisticName': 1
     }
   });
 });

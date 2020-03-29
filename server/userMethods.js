@@ -69,6 +69,16 @@ Accounts.onCreateUser(function(options, user) {
         $set:{"profile.lastname2":lastname2}
       });
     },
+    updatePreferedName(userId, value){
+      Meteor.users.update({'_id': userId},{
+        $set:{"showArtisticName": value}
+      });
+    },
+    updateGender(userId, value){
+      Meteor.users.update({'_id': userId},{
+        $set:{"profile.gender": value}
+      });
+    },
     updateResume(userId,resume){
       Meteor.users.update({'_id': userId},{
         $set:{"resume":resume}
@@ -122,6 +132,11 @@ Accounts.onCreateUser(function(options, user) {
     updateFullName(userId,fullname){
       Meteor.users.update({'_id': userId},{
         $set:{"fullname":fullname}
+      });
+    },
+    updateArtisticName(userId,artisticName){
+      Meteor.users.update({'_id': userId},{
+        $set:{"artistic":artisticName}
       });
     },
 

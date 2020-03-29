@@ -24,6 +24,7 @@ import '../imports/ui/recover.js';
 import '../imports/ui/mediaEditor.js';
 import '../imports/ui/editMedia.js';
 import '../imports/ui/editProfile.js';
+import '../imports/ui/editProfileActor.js';
 import '../imports/ui/userProjects.js';
 import '../imports/ui/editProject.js';
 import '../imports/ui/viewProjects.js';

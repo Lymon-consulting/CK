@@ -6,7 +6,6 @@ import { Media } from '../api/media.js';
 
 import './editProfile.html';
 import '/lib/common.js';
-import {Croper} from '../cropper/cropper.js';
 
 
 if (Meteor.isClient) {
