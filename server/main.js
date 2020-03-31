@@ -192,6 +192,7 @@ Meteor.publish("otherUsers", function () {
       'webpage':1,
       'facebook':1,
       'twitter':1,
+      'imdb': 1,
       'youtube':1,
       'vimeo':1,
       'instagram':1,
@@ -202,7 +203,18 @@ Meteor.publish("otherUsers", function () {
       'wizard' : 1,
       'likesProject' : 1,
       'media' : 1,
-      'showArtisticName': 1
+      'showArtisticName': 1,
+      'height' : 1,
+      'ageRange' : 1,
+      'physical': 1,
+      'ethnicity': 1,
+      'eyes': 1,
+      'hair': 1,
+      'hairType': 1,
+      'language': 1,
+      'beard': 1,
+      'peculiarities': 1,
+      'skills': 1
     }
   });
 });

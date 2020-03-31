@@ -48,19 +48,10 @@ lastname2(){
 }
 },
 resume(){
- if(Meteor.user()){
+ if(Meteor.user() && Meteor.user().resume){
+  $('#max').text(Meteor.settings.public.MAX_CHAR_IN_TEXTAREA - Meteor.user().resume.length);
   return Meteor.user().resume;
 }
-},
-resumeCount(){
-  if(Meteor.user()){
-    var rest = Meteor.user().resume;
-    var result = 0;
-    if(rest!=null && rest.length!=null){
-      result = (450 - rest.length);
-    }
-    return result;
-  }
 },
 webpage(){
  if(Meteor.user()){
@@ -369,7 +360,9 @@ Template.user.events({
     var state = trimInput(event.target.value);
     Meteor.call('updateState', Meteor.userId(), state);
     Meteor.call('updateCountry', Meteor.userId(), "México");
-    Session.set("selected_state", event.target.value);
+    Session.set("selected_state", state);
+    var firstCity = City.findOne({'state': state}).city;
+    Meteor.call('updateCity', Meteor.userId(), firstCity);  
   },
   'change #city': function(event,template){
     var city = trimInput(event.target.value);
@@ -489,11 +482,11 @@ Template.user.events({
  event.preventDefault();
 
  var len = $('#resume').val().length;
- if(len > 450){
-  val.value= val.value.substring(0,450);
+ if(len > Meteor.settings.public.MAX_CHAR_IN_TEXTAREA){
+  val.value= val.value.substring(0,Meteor.settings.public.MAX_CHAR_IN_TEXTAREA);
 }
 else{
-  $('#max').text(450-len);
+  $('#max').text(Meteor.settings.public.MAX_CHAR_IN_TEXTAREA-len);
 }
 },
 

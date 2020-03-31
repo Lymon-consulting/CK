@@ -53,7 +53,11 @@ Accounts.onCreateUser(function(options, user) {
   });
   */
   Meteor.methods({
-
+    updateProfileType(userId,type){
+      Meteor.users.update({'_id': userId},{
+        $set:{"profileType":type}
+      });
+    },
     updateName(userId,name){
       Meteor.users.update({'_id': userId},{
         $set:{"profile.name":name}
@@ -77,6 +81,11 @@ Accounts.onCreateUser(function(options, user) {
     updateGender(userId, value){
       Meteor.users.update({'_id': userId},{
         $set:{"profile.gender": value}
+      });
+    },
+    updateBeard(userId, value){
+      Meteor.users.update({'_id': userId},{
+        $set:{"beard": value}
       });
     },
     updateResume(userId,resume){
@@ -114,6 +123,11 @@ Accounts.onCreateUser(function(options, user) {
         $set:{"twitter":twitter_page}
       });
     },
+    updateImdbPage(userId,imdb_page){
+      Meteor.users.update({'_id': userId},{
+        $set:{"imdb":imdb_page}
+      });
+    },
     updateVimeoPage(userId,vimeo_page){
       Meteor.users.update({'_id': userId},{
         $set:{"vimeo":vimeo_page}
@@ -129,16 +143,68 @@ Accounts.onCreateUser(function(options, user) {
         $set:{"instagram":instagram_page}
       });
     },
-    updateFullName(userId,fullname){
+    updateFullName(userId,value){
       Meteor.users.update({'_id': userId},{
-        $set:{"fullname":fullname}
+        $set:{"fullname":value}
       });
     },
-    updateArtisticName(userId,artisticName){
+    updateArtisticName(userId,value){
       Meteor.users.update({'_id': userId},{
-        $set:{"artistic":artisticName}
+        $set:{"artistic":value}
       });
     },
+    updateHeight(userId,value){
+      Meteor.users.update({'_id': userId},{
+        $set:{"height":value}
+      });
+    },
+    updateAge(userId,value){
+      Meteor.users.update({'_id': userId},{
+        $set:{"ageRange":value}
+      });
+    },
+    updatePhysical(userId,value){
+      Meteor.users.update({'_id': userId},{
+        $set:{"physical":value}
+      });
+    },
+    updateEthnicity(userId,value){
+      Meteor.users.update({'_id': userId},{
+        $set:{"ethnicity":value}
+      });
+    },
+    updateEyes(userId,value){
+      Meteor.users.update({'_id': userId},{
+        $set:{"eyes":value}
+      });
+    },
+    updateHair(userId,value){
+      Meteor.users.update({'_id': userId},{
+        $set:{"hair":value}
+      });
+    },
+    updateTypeOfHair(userId,value){
+      Meteor.users.update({'_id': userId},{
+        $set:{"hairType":value}
+      });
+    },
+    updateLanguage(userId,value){
+      Meteor.users.update({'_id': userId},{
+        $set:{"language":value}
+      });
+    },
+    updatePeculiarities(userId,value){
+      Meteor.users.update({'_id': userId},{
+        $set:{"peculiarities":value}
+      });
+    },
+    updateSkills(userId,value){
+      Meteor.users.update({'_id': userId},{
+        $set:{"skills":value}
+      });
+    },
+
+    
 
     updateUser(userId, name, lastname, lastname2, city, state, country, resume, fullname, webpage, facebook, twitter, vimeo, youtube, instagram){
 

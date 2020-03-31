@@ -57,14 +57,14 @@
       <div class="col-lg-4 form-group">
         <label for="gender">Sexo <span class="text-purple">(Requerido)</span></label>
         <div class="row">
-          <div class="col"><input type="radio" name="gender" class="sex" data-answer="m">Masculino</div>
+          <div class="col"><input type="radio" name="gender" class="sex" data-answer="m" {{selectedGender 'm'}}>Masculino</div>
         </div>
         <div class="row">
-          <div class="col"><input type="radio" name="gender" class="sex" data-answer="f">Femenino</div>
+          <div class="col"><input type="radio" name="gender" class="sex" data-answer="f" {{selectedGender 'f'}}>Femenino</div>
         </div>
         <div class="row">
           <div class="col">
-            <input type="radio" name="gender" class="sex" data-answer="s">Sin definir    
+            <input type="radio" name="gender" class="sex" data-answer="s" {{selectedGender 's'}}>Sin definir    
           </div>
         </div>
       </div>
@@ -72,19 +72,9 @@
         <label for="age">Rango de edad (o la que aparenta) <span class="text-purple">(Requerido)</span></label>
         <select name="country" id="age" class="form-control">
          <option value="">--- Selecciona una opción ---</option>
-         <option value=""> Recién nacido o que aparente pocos meses de nacido </option>
-         <option value=""> 3 meses a 1 año </option>
-         <option value=""> 1 a 3 años </option>
-         <option value=""> 3 a 5 años </option>
-         <option value=""> 5 a 10 años </option>
-         <option value=""> 10 a 15 años </option>
-         <option value=""> 15 a 20 años </option>
-         <option value=""> 20 a 30 años </option>
-         <option value=""> 30 a 40 años </option>
-         <option value=""> 40 a 50 años </option>
-         <option value=""> 50 a 60 años </option>
-         <option value=""> 60 a 70 años </option>
-         <option value=""> Más de 70 años </option>
+         {{#each ages}}
+         <option value="{{spec}}" {{ageSelected spec}}> {{spec}} </option>
+         {{/each}}
        </select>
       </div>
     </div>
@@ -131,35 +121,27 @@
         <label for="height">Altura </label>
         <select name="height" id="height" class="form-control">
          <option value="">--- Selecciona una opción ---</option>
-         <option value=""> 1.40 metros o menos </option>
-         <option value=""> 1.40 metros – 1.60 metros </option>
-         <option value=""> 1.60 metros – 1.80 metros </option>
-         <option value=""> 1.80 metros o mas </option>
+         {{#each heights}}
+         <option value="{{spec}}" {{heightSelected spec}}> {{spec}} </option>
+         {{/each}}
        </select>
       </div>
       <div class="col-lg-4 form-group">
-        <label for="complex">Complexión física </label>
-        <select name="complex" id="complex" class="form-control">
+        <label for="physical">Complexión física </label>
+        <select name="physical" id="physical" class="form-control">
          <option value="">--- Selecciona una opción ---</option>
-         <option value=""> Delgado </option>
-         <option value=""> Esbelto </option>
-         <option value=""> Estándar </option>
-         <option value=""> Deportivo/Muscular </option>
-         <option value=""> Corpulento </option>
-         <option value=""> Robusto </option>
+         {{#each physical}}
+         <option value="{{spec}}" {{physicalSelected spec}}> {{spec}} </option>
+         {{/each}}
        </select>
       </div>
       <div class="col-lg-4 form-group">
         <label for="ethnics">Etnicidad </label>
         <select name="ethnics" id="ethnics" class="form-control">
          <option value="">--- Selecciona una opción ---</option>
-         <option value=""> Caucasica- Blanca </option>
-         <option value=""> Indigena </option>
-         <option value=""> Mulato </option>
-         <option value=""> Afro-descendiente </option>
-         <option value=""> Asiatico </option>
-         <option value=""> Arabe – Oriente Medio </option>
-         <option value=""> Sin definir </option>
+         {{#each ethnics}}
+         <option value="{{spec}}" {{ethnicsSelected spec}}> {{spec}} </option>
+         {{/each}}
        </select>
       </div>
     </div>
@@ -169,37 +151,27 @@
         <label for="eyes">Color de ojos </label>
         <select name="eyes" id="eyes" class="form-control">
          <option value="">--- Selecciona una opción ---</option>
-         <option value=""> Azules </option>
-         <option value=""> Verdes </option>
-         <option value=""> Marrones </option>
-         <option value=""> Negros </option>
-         <option value=""> Castaños </option>
-         <option value=""> Otro </option>
+         {{#each eyes}}
+         <option value="{{spec}}" {{eyesSelected spec}}> {{spec}} </option>
+         {{/each}}
        </select>
       </div>
       <div class="col-lg-4 form-group">
         <label for="hair">Color de pelo </label>
         <select name="hair" id="hair" class="form-control">
          <option value="">--- Selecciona una opción ---</option>
-         <option value=""> Rubio </option>
-         <option value=""> Castaño </option>
-         <option value=""> Pelirojo </option>
-         <option value=""> Negro </option>
-         <option value=""> Gris/ canoso </option>
-         <option value=""> Blanco </option>
-         <option value=""> Otro </option>
+         {{#each hair}}
+         <option value="{{spec}}" {{hairSelected spec}}> {{spec}} </option>
+         {{/each}}
        </select>
       </div>
       <div class="col-lg-4 form-group">
-        <label for="hair_type">Tipo de pelo </label>
-        <select name="hair_type" id="hair_type" class="form-control">
+        <label for="hairType">Tipo de pelo </label>
+        <select name="hairType" id="hairType" class="form-control">
          <option value="">--- Selecciona una opción ---</option>
-         <option value=""> Calvo </option>
-         <option value=""> Afro </option>
-         <option value=""> Rizado </option>
-         <option value=""> Lacio </option>
-         <option value=""> Ondulado </option>
-         <option value=""> Rastas </option>
+         {{#each hairType}}
+         <option value="{{spec}}" {{hairTypeSelected spec}}> {{spec}} </option>
+         {{/each}}
        </select>
       </div>
     </div>
@@ -208,10 +180,10 @@
       <div class="col-lg-6 form-group">
         <label for="gender">Barba y bigote (Hombres) </label>
         <div class="row">
-          <div class="col"><input type="radio" name="beard" checked>Si</div>
+          <div class="col"><input type="radio" name="beard" class="facial-hair" data-answer="true" {{selectedBeard 'true'}}>Si</div>
         </div>
         <div class="row">
-          <div class="col"><input type="radio" name="beard">No</div>
+          <div class="col"><input type="radio" name="beard" class="facial-hair" data-answer="false" {{selectedBeard 'false'}}>No</div>
         </div>
       </div>
     </div>
@@ -223,32 +195,26 @@
     </div>
     <div class="row">
       <div class="col-lg-12 form-group">
-        <label for="resumen">Características físicas particulares ( Cicatrices,lunares, tatuajes, etc.) </label>
-          <textarea class="form-control" rows="5" id="ponerleNombre" value="" placeholder="(450 caracteres máx)." maxlength="450"></textarea><small>Caracteres restantes: <div id="max">{{resumeCount}}</div></small>
+        <label for="peculiarities">Características físicas particulares ( Cicatrices,lunares, tatuajes, etc.) </label>
+          <textarea class="form-control" rows="5" id="peculiarities" value="" placeholder="(450 caracteres máx)." maxlength="450">{{peculiarities}}</textarea><small>Caracteres restantes: <div id="max-peculiarities"></div></small>
       </div>
     </div>
     <div class="spacer40"></div>
     <div class="row">
       <div class="col-lg-12 form-group">
         <label for="skills">Habilidades especiales (Montar a caballo, stunts, gimnasia, natacion, canto, baile ,etc) </label>
-          <textarea class="form-control" rows="5" id="skills" value="" placeholder="(450 caracteres máx)." maxlength="450"></textarea><small>Caracteres restantes: <div id="max">{{resumeCount}}</div></small>
+          <textarea class="form-control" rows="5" id="skills" value="" placeholder="(450 caracteres máx)." maxlength="450">{{skills}}</textarea><small>Caracteres restantes: <div id="max-skills"></div></small>
       </div>
     </div>
     <div class="spacer40"></div>
     <div class="row">
       <div class="col-lg-4 form-group">
-        <label for="languages">Idiomas </label>
-        <select name="languages" id="languages" class="form-control">
+        <label for="language">Idiomas </label>
+        <select name="language" id="language" class="form-control">
          <option value="">--- Selecciona una opción ---</option>
-         <option value=""> Lengua y/o dialecto indigena </option>
-         <option value=""> Ingles </option>
-         <option value=""> Frances </option>
-         <option value=""> Aleman </option>
-         <option value=""> Ruso </option>
-         <option value=""> Portuguese </option>
-         <option value=""> Mandarin </option>
-         <option value=""> Arabe </option>
-         <option value=""> Otra </option>
+         {{#each languages}}
+         <option value="{{spec}}" {{languageSelected spec}}> {{spec}} </option>
+         {{/each}}
        </select>
       </div>
     </div>
@@ -301,9 +267,9 @@
         <label for="nombre">Video de muestra </label>
         <div class="input-group">
           <div class="input-group-prepend">
-            <div class="input-group-text"><i class="fa fa-video fa-lg"></i></div>
+            <div class="input-group-text"><i class="fa fa-play fa-lg"></i></div>
           </div>
-          <input type="text" class="form-control" id="video" placeholder="URL de youtube, vimeo, etc." value="" maxlength="150">
+          <input type="text" class="form-control" id="video" placeholder="URL de youtube, vimeo, etc." value="{{video}}" maxlength="150">
         </div>
         
       </div>
@@ -343,7 +309,7 @@
           <div class="input-group-prepend">
             <div class="input-group-text"><i class="fa fa-imdb fa-lg"></i></div>
           </div>
-          <input type="text" class="form-control" id="imdb_page" value="" placeholder="Ej. www.imdb.com/cinekomuna" maxlength="120">
+          <input type="text" class="form-control" id="imdb_page" value="{{imdb}}" placeholder="Ej. www.imdb.com/cinekomuna" maxlength="120">
         </div>
       </div>
     </div>
@@ -379,4 +345,103 @@
     {{/if}}
   </div>
   <div class="spacer40"></div>
+
+
+  <!--Modal: Name-->
+   <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+
+      <!--Content-->
+      <div class="modal-content">
+
+        <!--Body-->
+        <div class="modal-body">
+
+          <div class="container">
+            <div class="row">
+              <div class="col text-center">Elige tu foto de perfil</div>
+            </div>
+            <div class="row">
+              <div class="col"><small>Se muestran únicamente las imágenes definidas como <strong>"Foto de perfil o logo"</strong> en la biblioteca de imágenes. Haz clic en la que usarás como foto de perfil o ve a la biblioteca de imágenes para definir otras fotos como imagen de perfil.</small>
+              </div>
+            </div>
+
+            <div class="row background-verylightgray light-padding">
+              {{#each getMedia "profile"}}
+              <div class="col-lg-3 col-sm-6 align-self-center">
+                <a href="#" id="selectProfilePicture" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image"></a>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+
+
+        </div>
+
+        <!--Footer-->
+        <div class="modal-footer justify-content-center">
+          <div class="row">
+            <div class="col"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+            <div class="col"><button class="btn btn-purple goMediaLibrary">Ir a la biblioteca de imágenes</button></div>
+          </div>
+
+
+
+        </div>
+
+      </div>
+      <!--/.Content-->
+
+    </div>
+  </div>
+  <!--Modal: Name-->
+
+  <!--Modal: Name-->
+  <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+
+      <!--Content-->
+      <div class="modal-content">
+
+        <!--Body-->
+        <div class="modal-body">
+
+          <div class="container">
+            <div class="row">
+              <div class="col text-center">Elige tu foto de portada</div>
+            </div>
+            <div class="row">
+              <div class="col"><small>Se muestran únicamente las imágenes definidas como <strong>"Foto de portada"</strong> en la biblioteca de imágenes. Haz clic en la que usarás como foto de portada o ve a la biblioteca de imágenes para definir otras imágenes como foto de portada.</small>
+              </div>
+            </div>
+
+            <div class="row background-verylightgray light-padding">
+              {{#each getMedia "cover"}}
+              <div class="col-lg-3 col-sm-6 align-self-center">
+                <a href="#" id="selectCoverPicture" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image"></a>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+
+
+        </div>
+
+        <!--Footer-->
+        <div class="modal-footer justify-content-center">
+          <div class="row">
+            <div class="col"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+            <div class="col"><button class="btn btn-purple goMediaLibrary">Ir a la biblioteca de imágenes</button></div>
+          </div>
+
+
+
+        </div>
+
+      </div>
+      <!--/.Content-->
+
+    </div>
+  </div>
+  <!--Modal: Name-->
 </template>

@@ -3,24 +3,25 @@ import { Template } from 'meteor/templating';
 import './selectProfile.html';
 
 Template.selectProfile.events({
-	'click #saveProfile': function(event, template){
+	'click .setProfile': function(event, template){
 		event.preventDefault();
-		var element = template.find('input:radio[name=profileSelection]:checked');
-		var value = $(element).val();
+		var optionSelected = $(event.target).attr("data-answer");
+		console.log(optionSelected);
 
-		
-		if(value==="1"){
-			Meteor.call('addRole',Meteor.userId(),"Director");
+		if(optionSelected==='crew'){
+			Meteor.call('updateProfileType', Meteor.userId(), 'crew'); 
+			FlowRouter.go('/confirmProfile/crew' + Meteor.userId());	
 		}
-		else if(value==="2"){
-			Meteor.call('addRole',Meteor.userId(),"Productor");
+		else if(optionSelected==='industry'){
+			Meteor.call('updateProfileType', Meteor.userId(), 'crew'); 
+			FlowRouter.go('/confirmProfile/industry' + Meteor.userId());	
 		}
-		else if(value==="3"){
-			Meteor.call('addRole',Meteor.userId(),"Director");
-			Meteor.call('addRole',Meteor.userId(),"Productor");
+		else if(optionSelected==='cast'){
+			Meteor.call('updateProfileType', Meteor.userId(), 'cast'); 
+			FlowRouter.go('/editProfileActor/' + Meteor.userId());	
 		}
 
-    	FlowRouter.go('/editProfile/' + Meteor.userId());
+    	
 
 	}
 });
