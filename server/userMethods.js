@@ -188,9 +188,20 @@ Accounts.onCreateUser(function(options, user) {
         $set:{"hairType":value}
       });
     },
-    updateLanguage(userId,value){
-      Meteor.users.update({'_id': userId},{
-        $set:{"language":value}
+    addLanguage(userId, value){
+      Meteor.users.update({'_id': userId}, 
+      {
+        $addToSet: {
+          "languages": value
+        }
+      });
+    },
+    removeLanguage(userId, value){
+      Meteor.users.update({'_id': userId}, 
+      {
+        $pull: {
+          "languages": value
+        }
       });
     },
     updatePeculiarities(userId,value){

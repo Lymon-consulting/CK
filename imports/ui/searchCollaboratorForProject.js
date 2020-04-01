@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { Ocupation } from '../api/ocupations.js';
 import { City } from '../api/city.js';
 import { Project } from '../api/project.js';
+import { Media } from '../api/media.js';
 import { UsersIndex } from '/lib/common.js';
 
 import './searchCollaboratorForProject.html';
@@ -134,12 +135,22 @@ checkParticipation(userId){
     return (plocation === value) ? 'selected' : '' ;
   },
   getProfilePicture(userId, size) {
+    Meteor.subscribe("allMedia");
+    var user = Meteor.users.findOne({'_id':userId});
+    if(user!=null && user.profilePictureID!=null){
+      var profile = Media.findOne({'mediaId':user.profilePictureID});
+      if(profile!=null){
+        return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+      }
+      
+    }
+    /*
    var url = "";
    var user = Meteor.users.findOne({'_id':userId});
    if(user.profilePictureID!=null && user.profilePictureID!=""){
     url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",h_"+size+",c_thumb,r_max/" + user.profilePictureID;
   }
-  return url;
+  return url;*/
 },
 getInitials(userId){
   var name = "";

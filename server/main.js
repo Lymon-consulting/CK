@@ -211,10 +211,11 @@ Meteor.publish("otherUsers", function () {
       'eyes': 1,
       'hair': 1,
       'hairType': 1,
-      'language': 1,
+      'languages': 1,
       'beard': 1,
       'peculiarities': 1,
-      'skills': 1
+      'skills': 1,
+      'profileType': 1
     }
   });
 });

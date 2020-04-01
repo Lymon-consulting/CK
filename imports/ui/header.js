@@ -19,7 +19,19 @@ Template.header.rendered = function(){
 Template.header.helpers({
   user(){
       return Meteor.user();
-  }/*,
+  },
+  isActor(){
+    if(Meteor.user()){
+      if(Meteor.user().profileType && Meteor.user().profileType==="cast"){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+  }
+
+  /*,
   hasTopRole(){
     var array = new Array();
     var result = false;

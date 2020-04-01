@@ -90,6 +90,20 @@ footer{
 }
 
 
+.carousel-item{
+   width: 600px;
+   /*height: 500px;*/
+
+   /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
+   object-fit:scale-down;
+}
+
+.carousel{
+  width: 600px; 
+  
+}
+
+
 .box{
     height:100px;
     width:150px;

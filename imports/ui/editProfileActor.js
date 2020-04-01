@@ -92,6 +92,12 @@ Template.editProfileActor.helpers({
       return Meteor.user().profile.lastname2;
     }
   },
+  resume(){
+    if(Meteor.user() && Meteor.user().resume){
+     $('#max').text(Meteor.settings.public.MAX_CHAR_IN_TEXTAREA - Meteor.user().resume.length);
+     return Meteor.user().resume;
+    }
+  },
   showName(){
     var name = "";
     if(Meteor.user()){
@@ -349,19 +355,15 @@ Template.editProfileActor.helpers({
    }
    return result;
   },
-  languageSelected:function(item){
+  checkLanguage:function(item){
     var result="";
-    var language = Meteor.user().language;
-    //console.log(height);
-    if(language){
-     var elem = language.indexOf(item);
-     if(elem >= 0){
-       result = 'selected';
-     }
-     else{
-       result = "";
-     } 
-   }
+    var language = new Array() ;
+    if(Meteor.user() && Meteor.user().languages){
+      language = Meteor.user().languages;
+      if(language!=null && language.indexOf(item)>=0){
+        result = "checked";
+      }
+    }
    return result;
   },
   getCategories(){
@@ -503,6 +505,16 @@ Template.editProfileActor.helpers({
 });
 
 Template.editProfileActor.events({
+  'keyup #resume' : function(event){
+    event.preventDefault();
+    var len = $('#resume').val().length;
+    if(len > Meteor.settings.public.MAX_CHAR_IN_TEXTAREA){
+      val.value= val.value.substring(0,Meteor.settings.public.MAX_CHAR_IN_TEXTAREA);
+    }
+    else{
+      $('#max').text(Meteor.settings.public.MAX_CHAR_IN_TEXTAREA-len);
+    }
+  },
   'keyup #peculiarities' : function(event){
      event.preventDefault();
      var len = $('#peculiarities').val().length;
@@ -528,7 +540,7 @@ Template.editProfileActor.events({
     var name = trimInput(event.target.value);
     console.log("Actualizando profile.name"+ " con "+ name + " para "+Meteor.userId());
     if(isNotEmpty(name)){
-      Meteor.call('updateOneField', Meteor.userId(), 'name', name); 
+      Meteor.call('updateName', Meteor.userId(), name);
       var lastname = trimInput($('#personLastName').val());
       var lastname2 = trimInput($('#personLastName2').val());
       var fullname = name + " " + lastname + " " + lastname2;
@@ -633,6 +645,10 @@ Template.editProfileActor.events({
     var value = event.target.value;
     Meteor.call('updateLanguage', Meteor.userId(), value);
   },
+  'change #resume': function(event,template){
+    var resume = trimInput(event.target.value);
+    Meteor.call('updateResume', Meteor.userId(), resume);
+  },
   'change #peculiarities': function(event,template){
     var value = event.target.value;
     Meteor.call('updatePeculiarities', Meteor.userId(), value);
@@ -714,4 +730,17 @@ Template.editProfileActor.events({
     $('.modal-backdrop').remove();
     FlowRouter.go("/mediaEditor/" + Meteor.userId());
   },
+  'click #goProfile': function(event,template){
+    FlowRouter.go("/profilePageActor/"+Meteor.userId());
+  },
+  'change .language': function(event, template){
+    console.log($(event.target).val() + " - " + event.target.checked);
+
+    if(event.target.checked){
+      Meteor.call('addLanguage', Meteor.userId(), $(event.target).val());
+    }
+    else{
+      Meteor.call('removeLanguage', Meteor.userId(), $(event.target).val()); 
+    }
+  }
 });

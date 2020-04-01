@@ -36,6 +36,7 @@ import '../imports/ui/editIndustry.js';
 import '../imports/ui/peopleList.js';
 import '../imports/ui/projList.js';
 import '../imports/ui/profilePage.js';
+import '../imports/ui/profilePageActor.js';
 import '../imports/ui/projectPage.js';
 import '../imports/ui/searchCollaboratorForProject.js';
 import '../imports/ui/searchCollaboratorForIndustry.js';

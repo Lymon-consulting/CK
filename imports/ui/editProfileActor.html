@@ -5,6 +5,7 @@
 
       /* This rule is very important, please don't ignore this */
       max-width: 100%;
+
     }
   </style>
   <div class="container text-center">
@@ -78,6 +79,14 @@
        </select>
       </div>
     </div>
+    <div class="spacer40"></div>
+    <div class="row">
+      <div class="col-lg-12 form-group">
+        <label for="resume">Escribe algo sobre ti, que quieres que los demás sepan </label>
+          <textarea class="form-control" rows="5" id="resume" value="" placeholder="(450 caracteres máx)." maxlength="450">{{resume}}</textarea><small>Caracteres restantes: <div id="max"></div></small>
+      </div>
+    </div>
+    
     <div class="spacer40"></div>
     <div class="row">
       <div class="col-lg-12 mx-auto">
@@ -208,14 +217,26 @@
     </div>
     <div class="spacer40"></div>
     <div class="row">
-      <div class="col-lg-4 form-group">
-        <label for="language">Idiomas </label>
-        <select name="language" id="language" class="form-control">
-         <option value="">--- Selecciona una opción ---</option>
-         {{#each languages}}
-         <option value="{{spec}}" {{languageSelected spec}}> {{spec}} </option>
-         {{/each}}
-       </select>
+      <div class="col-lg-12 form-group">
+        <h2>Idiomas</h2>
+        
+        <div class="container">
+          <div class="row">
+            {{#each languages}}
+            <div class="col-lg-4 col-md-6 col-xs-12" style="text-align:left">
+              <div class="checkbox">
+                <label><input type="checkbox" value="{{spec}}" class="language" {{checkLanguage spec}}> {{spec}}</label>
+              </div>
+             </div>
+            {{/each}}   
+          </div>
+          
+        </div>
+        
+        
+        
+        
+     
       </div>
     </div>
     <div class="spacer40"></div>
