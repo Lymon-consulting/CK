@@ -155,11 +155,14 @@ Template.industryResults.events({
    'change #tipoPersona': function(event,template){
       event.preventDefault();
       var newValue = $(event.target).val();
-      if(newValue==="Personas"){
+      if(newValue==="Proyectos"){
+        FlowRouter.go('/projList');
+      }
+      else if(newValue==="Crew"){
         FlowRouter.go('/peopleList');
       }
-      else if(newValue==="Proyectos"){
-        FlowRouter.go('/projList');
+      else if(newValue==="Cast"){
+        FlowRouter.go('/peopleListCast');
       }
    },
    'change #type': function (e) {

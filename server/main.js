@@ -94,7 +94,7 @@ Meteor.publish("userData", function () {
 //const Users = new Mongo.Collection('users');
 export const UsersIndex = new Index({
     collection: Meteor.users,
-    fields: ['profile.name', 'profile.lastname', 'profile.lastname2', 'emails'],
+    fields: ['profile.name', 'profile.lastname', 'profile.lastname2', 'emails', 'profileType'],
     engine: new MongoDBEngine({
 
     selectorPerField: function (field, searchString) {
@@ -116,17 +116,61 @@ export const UsersIndex = new Index({
         const selector = this.defaultConfiguration().selector(searchObject, options, aggregation)
 
         // modify the selector to only match documents where region equals "New York"
+        if (options.search.props.profileType) {
+          selector.profileType = options.search.props.profileType;
+        }
         if (options.search.props.city) {
           selector.city = options.search.props.city;
         }
         if (options.search.props.role) {
           selector.role = options.search.props.role;
         }
+        if (options.search.props.profileType) {
+          selector.profileType = options.search.props.profileType;
+        }
+        if (options.search.props.categories) {
+          selector.categories = options.search.props.categories;
+        }
+        if (options.search.props.sex) {
+          selector.sex = options.search.props.sex;
+        }
+        if (options.search.props.eyes) {
+          selector.eyes = options.search.props.eyes;
+        }
+        if (options.search.props.hair) {
+          selector.hair = options.search.props.hair;
+        }
+        if (options.search.props.hairType) {
+          selector.hairType = options.search.props.hairType;
+        }
+        if (options.search.props.physical) {
+          selector.physical = options.search.props.physical;
+        }
+        if (options.search.props.ethnicity) {
+          selector.ethnicity = options.search.props.ethnicity;
+        }
+        if (options.search.props.ageRange) {
+          selector.ageRange = options.search.props.ageRange;
+        }
+        if (options.search.props.height) {
+          selector.height = options.search.props.height;
+        }
+        if (options.search.props.country) {
+          selector.country = options.search.props.country;
+        }
+        if (options.search.props.state) {
+          selector.state = options.search.props.state;
+        }
+        if (options.search.props.city) {
+          selector.city = options.search.props.city;
+        }
 
         return selector;
     }
   }),
 });
+
+
 
 export const ProjectIndex = new Index({
     collection: Project,
@@ -215,7 +259,9 @@ Meteor.publish("otherUsers", function () {
       'beard': 1,
       'peculiarities': 1,
       'skills': 1,
-      'profileType': 1
+      'profileType': 1,
+      'categories': 1,
+      'sex': 1
     }
   });
 });

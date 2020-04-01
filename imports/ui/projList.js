@@ -140,11 +140,14 @@ Template.projList.events({
    'change #tipoPersona': function(event,template){
       event.preventDefault();
       var newValue = $(event.target).val();
-      if(newValue==="Personas"){
+      if(newValue==="Crew"){
         FlowRouter.go('/peopleList');
       }
       else if(newValue==="Industrias"){
         FlowRouter.go('/industryList');
+      }
+      else if(newValue==="Cast"){
+        FlowRouter.go('/peopleListCast');
       }
    },
    'change #type': function (e) {

@@ -32,6 +32,17 @@ Template.registerHelper('lastName2', function(){
  return Meteor.user().profile.lastname2;
 });
 
+Template.registerHelper('isActor', function(){
+  if(Meteor.user()){
+    if(Meteor.user().profileType && Meteor.user().profileType==="cast"){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+});
+
 Template.registerHelper('fullName', function(){
  var fullName = "";
  if(Meteor.user()!=null && Meteor.user().profile!=null){

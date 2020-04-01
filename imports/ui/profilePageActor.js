@@ -94,60 +94,20 @@ Template.profilePageActor.helpers({
       console.log(url);
       return url;
     },
-   ownerRole(){
-      var strResult = "Cast";
-    /*
-      var u = Meteor.users.findOne({'_id': FlowRouter.getParam('id')});
+   categories(){
+      var strResult = "";
+    
+      var user = Meteor.users.findOne({'_id': FlowRouter.getParam('id')});
       var result = new Array();
       
-      if(u){
-         userRoles = u.role;
-
-         if(userRoles){
-         
-           for (var i = 0; i < userRoles.length; i++) {
-              if(userRoles[i]==="Productor"){
-                result.push(userRoles[i]);
-              }
-              else if(userRoles[i]==="Director"){
-                result.push(userRoles[i]);
-              }
-              else if(userRoles[i]==="Dueño"){
-                //result.push(userRoles[i]);
-              }
-              else if(userRoles[i]==="Legal"){
-                //result.push("Representante legal");
-              }
-              else if(userRoles[i]==="Ejecutivo"){
-                //result.push("Administrador de industria");
-              }
-              else{
-                result.push(userRoles[i]);
-              }
-            }
-
-            for (var i = 0; i < result.length; i++) {
-              strResult = strResult + ", " + result[i];
-            }
-            strResult = strResult.substring(2, strResult.length);
-          }
-        }*/
-
-         /*if(rolesArray){
-            var size = rolesArray.length;
-            var count = 0;
-            rolesArray.forEach(function(elem){
-               result = result + elem;
-               count++;
-               if(count < size){
-                  result = result + ", ";
-               }
-            });
-         }*/
-      return strResult;
-
-
-      
+      if(user && user.categories){
+         result = user.categories;
+         for (var i = 0; i < result.length; i++) {
+           strResult = strResult + ", " + result[i];
+         }
+         strResult = strResult.substring(2,strResult.length);
+      }
+      return strResult;      
    },
    getEmail(){
       var email = "";
@@ -272,7 +232,7 @@ Template.profilePageActor.helpers({
       if(user!=null && user.profilePictureID!=null){
         var profile = Media.findOne({'mediaId':user.profilePictureID});
         if(profile!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_fill/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
         }
         
       }

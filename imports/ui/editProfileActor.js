@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import { Ocupation } from '../api/ocupations.js';
 import { City } from '../api/city.js';
 import { Media } from '../api/media.js';
-import { catHeights, catAges, catPhysical, catEthnics, catEyes, catHair, catHairType, catLanguages } from '/lib/globals.js';
+import { catHeights, catAges, catPhysical, catEthnics, catEyes, catHair, catHairType, catLanguages, catCategories } from '/lib/globals.js';
 
 import '/lib/common.js';
 import './editProfileActor.html';
@@ -49,6 +49,9 @@ Template.editProfileActor.helpers({
   },
   languages(){
     return catLanguages; //variable global en globals.js
+  },
+  categories(){
+    return catCategories; //variable global en globals.js
   },
   peculiarities(){
    if(Meteor.user() && Meteor.user().peculiarities){
@@ -132,14 +135,14 @@ Template.editProfileActor.helpers({
   selectedGender(radioVal){
     var result = "";
     Meteor.subscribe("otherUsers");
-    var userSelection = Meteor.user().profile.gender; 
-    if(userSelection==='m' && radioVal==='m'){ 
+    var userSelection = Meteor.user().sex; 
+    if(userSelection==='Masculino' && radioVal==='Masculino'){ 
       result = "checked";
     }
-    else if(userSelection==='f' && radioVal==='f'){
+    else if(userSelection==='Femenino' && radioVal==='Femenino'){
       result = "checked";
     }
-    else if(userSelection==='s' && radioVal==='s'){
+    else if(userSelection==='Sin definir' && radioVal==='Sin definir'){
       result = "checked";
     }
     return result;
@@ -361,6 +364,17 @@ Template.editProfileActor.helpers({
     if(Meteor.user() && Meteor.user().languages){
       language = Meteor.user().languages;
       if(language!=null && language.indexOf(item)>=0){
+        result = "checked";
+      }
+    }
+   return result;
+  },
+  checkCategory:function(item){
+    var result="";
+    var category = new Array() ;
+    if(Meteor.user() && Meteor.user().categories){
+      category = Meteor.user().categories;
+      if(category!=null && category.indexOf(item)>=0){
         result = "checked";
       }
     }
@@ -741,6 +755,16 @@ Template.editProfileActor.events({
     }
     else{
       Meteor.call('removeLanguage', Meteor.userId(), $(event.target).val()); 
+    }
+  },
+  'change .category': function(event, template){
+    console.log($(event.target).val() + " - " + event.target.checked);
+
+    if(event.target.checked){
+      Meteor.call('addCategory', Meteor.userId(), $(event.target).val());
+    }
+    else{
+      Meteor.call('removeCategory', Meteor.userId(), $(event.target).val()); 
     }
   }
 });

@@ -55,17 +55,30 @@
     </div>
     <div class="spacer40"></div>
     <div class="row">
+      <div class="col"><label for="category">¿Cuál es tu categoría o categorías? <span class="text-purple">(Requerido)</span></label></div>
+    </div>
+    <div class="row">
+    {{#each categories}}
+    <div class="col-lg-4 col-md-6 col-xs-12" style="text-align:left">
+      <div class="checkbox">
+        <label><input type="checkbox" value="{{spec}}" class="category" {{checkCategory spec}}> {{spec}}</label>
+      </div>
+     </div>
+    {{/each}}   
+    </div>
+    <div class="spacer40"></div>
+    <div class="row">
       <div class="col-lg-4 form-group">
         <label for="gender">Sexo <span class="text-purple">(Requerido)</span></label>
         <div class="row">
-          <div class="col"><input type="radio" name="gender" class="sex" data-answer="m" {{selectedGender 'm'}}>Masculino</div>
+          <div class="col"><input type="radio" name="gender" class="sex" data-answer="Masculino" {{selectedGender 'Masculino'}}>Masculino</div>
         </div>
         <div class="row">
-          <div class="col"><input type="radio" name="gender" class="sex" data-answer="f" {{selectedGender 'f'}}>Femenino</div>
+          <div class="col"><input type="radio" name="gender" class="sex" data-answer="Femenino" {{selectedGender 'Femenino'}}>Femenino</div>
         </div>
         <div class="row">
           <div class="col">
-            <input type="radio" name="gender" class="sex" data-answer="s" {{selectedGender 's'}}>Sin definir    
+            <input type="radio" name="gender" class="sex" data-answer="Sin definir" {{selectedGender 'Sin definir'}}>Sin definir    
           </div>
         </div>
       </div>

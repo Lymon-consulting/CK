@@ -34,6 +34,7 @@ import '../imports/ui/industryPage.js';
 import '../imports/ui/addIndustry.js';
 import '../imports/ui/editIndustry.js';
 import '../imports/ui/peopleList.js';
+import '../imports/ui/peopleListCast.js';
 import '../imports/ui/projList.js';
 import '../imports/ui/profilePage.js';
 import '../imports/ui/profilePageActor.js';

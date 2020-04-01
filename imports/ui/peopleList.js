@@ -9,6 +9,11 @@ import '/lib/common.js';
 
 
 Meteor.subscribe("otherUsers");
+
+Template.peopleList.rendered = function(){
+  UsersIndex.getComponentMethods().addProps('profileType', 'crew');
+}
+
 Template.peopleList.helpers({
    usersIndex: () => UsersIndex, // instanceof EasySearch.Index
    inputAttributes: function () {
@@ -228,6 +233,9 @@ Template.peopleList.events({
       }
       else if(newValue==="Industrias"){
         FlowRouter.go('/industryList');
+      }
+      else if(newValue==="Cast"){
+        FlowRouter.go('/peopleListCast');
       }
    }
    

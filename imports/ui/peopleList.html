@@ -5,10 +5,10 @@
     <div class="row">
      <div class="col-lg-3 col-md-6">
       <select class="form-control agreements" id="tipoPersona">
-       <option value="Personas" selected>Crew</option>
+       <option value="Crew" selected>Crew</option>
        <option value="Proyectos">Proyectos</option>
        <option value="Industrias">Industrias</option>
-       <option value="Casting" disabled>Casting</option>
+       <option value="Cast">Casting</option>
      </select>
    </div>
    <div class="col-lg-3 col-md-6">
@@ -32,11 +32,7 @@
     <div class="input-group">
 
      {{> EasySearch.Input index=usersIndex event="enter" attributes=inputAttributes}}
-     <span class="input-group-btn">
-       <button class="btn btn-secondary" type="button" id="buscarBtn">
-         <i class="fa fa-search fa-sm"></i>
-       </button>
-     </span>
+     
    </div>
  </div>
 </div>

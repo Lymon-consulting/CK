@@ -80,7 +80,7 @@ Accounts.onCreateUser(function(options, user) {
     },
     updateGender(userId, value){
       Meteor.users.update({'_id': userId},{
-        $set:{"profile.gender": value}
+        $set:{"sex": value}
       });
     },
     updateBeard(userId, value){
@@ -201,6 +201,22 @@ Accounts.onCreateUser(function(options, user) {
       {
         $pull: {
           "languages": value
+        }
+      });
+    },
+    addCategory(userId, value){
+      Meteor.users.update({'_id': userId}, 
+      {
+        $addToSet: {
+          "categories": value
+        }
+      });
+    },
+    removeCategory(userId, value){
+      Meteor.users.update({'_id': userId}, 
+      {
+        $pull: {
+          "categories": value
         }
       });
     },

@@ -47,7 +47,9 @@
             {{#if hasTopRole}}
             <a class="dropdown-item text-black" href="/viewProjects/{{currentUser._id}}">Mis proyectos</a>
             {{/if}}
+            {{#unless isActor}}
             <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}">Mis industrias</a>
+            {{/unless}}
             <a class="dropdown-item text-black" href="/mediaEditor/{{currentUser._id}}">Mis imágenes</a>
             <div class="dropdown-divider"></div>
             
