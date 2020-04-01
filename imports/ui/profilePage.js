@@ -27,6 +27,20 @@ Template.profilePage.helpers({
       }
       return name;
     },
+    getPersonalURL(userId){
+      var result = "";
+      var user = Meteor.users.findOne({'_id':userId});
+      if(user){
+        if(user.profileType==="cast"){
+          result = "/profilePageActor";
+        }
+        else{
+          result = "/profilePage";
+        }
+      }
+      return result;
+
+    },
    ownerRole(){
       var u = Meteor.users.findOne({'_id': FlowRouter.getParam('id')});
       var result = new Array();

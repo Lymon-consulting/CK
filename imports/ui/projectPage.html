@@ -908,7 +908,7 @@
         {{#each getCrew.project_staff}}
            {{#if this.confirmed}}
               <div class="p-2">
-                <a href="/profilePage/{{this._id}}">
+                <a href="{{getPersonalURL this._id}}/{{this._id}}">
                  {{#if getProfilePicture this._id}}
                     <img src="{{getProfilePicture this._id}}" border="0" class="rounded-circle" /><br/>
                  {{else}}

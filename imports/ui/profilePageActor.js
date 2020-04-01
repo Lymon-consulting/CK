@@ -53,6 +53,20 @@ Template.profilePageActor.helpers({
       }
       return result;
     },
+    getPersonalURL(userId){
+      var result = "";
+      var user = Meteor.users.findOne({'_id':userId});
+      if(user){
+        if(user.profileType==="cast"){
+          result = "/profilePageActor";
+        }
+        else{
+          result = "/profilePage";
+        }
+      }
+      return result;
+
+    },
     getBeard(val){
       var result="";
       if(val==="true"){

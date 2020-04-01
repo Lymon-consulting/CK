@@ -58,6 +58,7 @@ if (Meteor.isClient) {
         }
         return val;
       },
+      
       ownerName(owner){
          
          var u = Meteor.users.findOne({'_id': owner}); 
@@ -1364,6 +1365,20 @@ if (Meteor.isClient) {
 
          return proj;
       },
+      getPersonalURL(userId){
+      var result = "";
+      var user = Meteor.users.findOne({'_id':userId});
+      if(user){
+        if(user.profileType==="cast"){
+          result = "/profilePageActor";
+        }
+        else{
+          result = "/profilePage";
+        }
+      }
+      return result;
+
+    },
       profilePicture(userId){
          return Images.find({'owner': userId});
       },

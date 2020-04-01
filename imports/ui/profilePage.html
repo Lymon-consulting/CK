@@ -238,7 +238,7 @@
                                  <div class="row">
                                     {{#each getFollowers}}
                                     <div class="col-md-4">
-                                       <a href="/profilePage/{{this._id}}">
+                                       <a href="{{getPersonalURL this._id}}/{{this._id}}">
                                        {{#if getProfilePicture this._id 40}}
                                        <img src="{{getProfilePicture this._id 40}}">
                                        {{else}}
@@ -269,7 +269,7 @@
                                  <div class="row">
                                     {{#each getFollowing}}
                                     <div class="col-md-4">
-                                       <a href="/profilePage/{{this._id}}">
+                                       <a href="{{getPersonalURL this._id}}/{{this._id}}">
                                        {{#if getProfilePicture this._id 40}}
                                        <img src="{{getProfilePicture this._id 40}}">
                                        {{else}}
