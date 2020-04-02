@@ -498,6 +498,33 @@ Template.editProfileActor.helpers({
 
     }
   },
+  getGallery(){
+    var media = Media.find({"userId": Meteor.userId(), "media_use":"gallery"}).fetch();
+    var array = new Array();
+    if(media){
+      array = media;
+      for (var i = 0; i < array.length; i++) {
+        if(i==0){
+          array[i].position = 1;
+        }
+        else{
+          array[i].position = 2;
+        }
+        //array[i]
+      }
+    }
+    return array;
+  },
+  isFirstElement(position){
+    var result = false;
+    if(position===1){
+      result = true;
+    }
+    else{
+      result = false;
+    }
+    return result;
+  },
   getPublicID(type){
     if(type==='profile'){
       return Meteor.user().profilePictureID;
@@ -513,7 +540,10 @@ Template.editProfileActor.helpers({
   },
   getURL(mediaId){
     var url = "";
-    url = Meteor.settings.public.CLOUDINARY_RES_URL + "/" + mediaId;
+    var media = Media.findOne({'mediaId':mediaId});
+      if(media!=null){
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.userId() + "/" + media.mediaId;    
+      }
     return url;
   }
 });
@@ -766,5 +796,9 @@ Template.editProfileActor.events({
     else{
       Meteor.call('removeCategory', Meteor.userId(), $(event.target).val()); 
     }
+  },
+  'click #goToMedia': function(event,template){
+    event.preventDefault();
+    FlowRouter.go("/mediaEditor/"+Meteor.userId());
   }
 });

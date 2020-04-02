@@ -54,9 +54,6 @@ Template.peopleListCast.helpers({
     languages(){
       return catLanguages; //variable global en globals.js
     },
-    categories(){
-      return catCategories; //variable global en globals.js
-    },
     getName(userId){
       var result="";
       var user = Meteor.users.findOne({'_id': userId});
@@ -313,6 +310,27 @@ Template.peopleListCast.events({
       }
   },
   'change .category': function (event) {
+
+      var modelo = $("#modelo").prop("checked");
+      var actor = $("#actor").prop("checked");
+      var bailarin = $("#bailarin").prop("checked");
+      var cantante = $("#cantante").prop("checked");
+      var extra = $("#extra").prop("checked");
+      var doble = $("#doble").prop("checked");
+      if(modelo && actor && bailarin && cantante && extra && doble){ //Todos seleccionados
+        UsersIndex.getComponentMethods().removeProps('categories');  
+        Session.set("category_selected",null);
+      }
+      else if(!modelo && !actor && !bailarin && !cantante && !extra && !doble){ //Ninguno seleccionados
+        UsersIndex.getComponentMethods().removeProps('categories');  
+        Session.set("category_selected",null);
+      }
+      else{
+        UsersIndex.getComponentMethods().addProps('categories', $(event.target).val());
+        Session.set("category_selected",$(event.target).val());
+      }
+
+      /*
       if(event.target.checked){
         UsersIndex.getComponentMethods().addProps('categories', $(event.target).val());
         Session.set("category_selected",$(event.target).val());
@@ -320,9 +338,34 @@ Template.peopleListCast.events({
       else{
         UsersIndex.getComponentMethods().removeProps('categories');  
         Session.set("category_selected",null);
-      }
+      }*/
   },
   'change .gender': function (event) {
+      /*
+      console.log($("#f-check").prop("checked"));
+      console.log($("#m-check").prop("checked"));*/
+
+      var male = $("#m-check").prop("checked");
+      var female = $("#f-check").prop("checked")
+
+      if(male && female){ //Ambos tienen el check, buscar todos
+        UsersIndex.getComponentMethods().removeProps('sex');
+        Session.set("gender_selected",null);
+      }
+      else if(!male && !female){ //Ninguno tiene el check, buscar todos
+        UsersIndex.getComponentMethods().removeProps('sex');
+        Session.set("gender_selected",null);
+      }
+      else if(male && !female){ //Masculino tiene el ckeck y femenino no
+        UsersIndex.getComponentMethods().addProps('sex', $("#m-check").val());
+        Session.set("gender_selected",$("#m-check").val());
+      }
+      else if(!male && female){ //Femenino tiene el ckeck y masculino no
+        UsersIndex.getComponentMethods().addProps('sex', $("#f-check").val());
+        Session.set("gender_selected",$("#f-check").val());
+      }
+
+      /*
       if(event.target.checked){
         UsersIndex.getComponentMethods().addProps('sex', $(event.target).val());
         Session.set("gender_selected",$(event.target).val());
@@ -330,7 +373,7 @@ Template.peopleListCast.events({
       else{
         UsersIndex.getComponentMethods().removeProps('sex');  
         Session.set("gender_selected",null);
-      }
+      }*/
   },
   'change #eyes': function (e) {
       if($(e.target).val()!="cualquier"){
@@ -405,23 +448,26 @@ Template.peopleListCast.events({
   'change #country': function (e) {
       Session.set("selected_country", e.target.value);
       if($(e.target).val()!="cualquier"){
-         UsersIndex.getComponentMethods().addProps('country', $(e.target).val());
-         Session.set("country_selected",$(e.target).val());
+        UsersIndex.getComponentMethods().addProps('country', $(e.target).val());
+        UsersIndex.getComponentMethods().removeProps('state');  
+        UsersIndex.getComponentMethods().removeProps('city'); 
+        Session.set("country_selected",$(e.target).val());
       }
       else{
-         UsersIndex.getComponentMethods().removeProps('country');  
-         Session.set("country_selected",null);
+        UsersIndex.getComponentMethods().removeProps('country');  
+        Session.set("country_selected",null);
       }
   },
   'change #state': function (e) {
       Session.set("selected_state", e.target.value);
       if($(e.target).val()!="cualquier"){
-         UsersIndex.getComponentMethods().addProps('state', $(e.target).val());
-         Session.set("state_selected",$(e.target).val());
+        UsersIndex.getComponentMethods().addProps('state', $(e.target).val());
+        Session.set("state_selected",$(e.target).val());
       }
       else{
-         UsersIndex.getComponentMethods().removeProps('state');  
-         Session.set("state_selected",null);
+        UsersIndex.getComponentMethods().removeProps('state');  
+        UsersIndex.getComponentMethods().removeProps('city'); 
+        Session.set("state_selected",null);
       }
   },
   'change #city': function (e) {

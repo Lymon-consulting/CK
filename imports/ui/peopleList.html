@@ -1,255 +1,238 @@
 <template name="peopleList">
   <div class="container">
-    {{getSecret}}
     <div class="spacer40"></div>
     <div class="row">
-     <div class="col-lg-3 col-md-6">
-      <select class="form-control agreements" id="tipoPersona">
-       <option value="Crew" selected>Crew</option>
-       <option value="Proyectos">Proyectos</option>
-       <option value="Industrias">Industrias</option>
-       <option value="Cast">Casting</option>
-     </select>
-   </div>
-   <div class="col-lg-3 col-md-6">
-    <select class="form-control agreements" id="role">
-      <option value="cualquier"> Cualquier ocupación </option>
-      {{#each getAllOcupations}}
-      <option value="{{secondary}}" {{getRoleSelected secondary}}> {{secondary}} </option>
-      {{/each}}
-    </select>
-  </div>
-  <div class="col-lg-3 col-md-6">
-    <select class="form-control agreements" id="location">
-      <option value="cualquier"> Cualquier estado </option>
-      {{#each getCitiesFromCountries}}
-      <option value="{{city}}" {{getLocationSelected city}}> {{city}} </option>
-      {{/each}}
-    </select>
-  </div>
-
-  <div class="col-lg-3 col-md-6">
-    <div class="input-group">
-
-     {{> EasySearch.Input index=usersIndex event="enter" attributes=inputAttributes}}
-     
-   </div>
- </div>
-</div>
-
-<div class="spacer40"></div>
-
-<div class="row">
- <div class="col-md-12 agreements">
-    Resultados: {{searchCount}}
- </div>
-</div>
-
-</div>
-
-
-
-<div class="container">
-  <div class="row">
-   <!-- Inicia contenido -->
-   <div class="col-md-12">
-    <div class="container-fluid">
-     <div class="row">
-      <div class="col-md-12"><hr></div>
-    </div>
-    {{#EasySearch.Each index=usersIndex}}
-    <div class="row">
-      <div class="col-md-2 vertical-align-top">
-        <a href="/profilePage/{{this.__originalId}}">
-         {{#if getProfilePicture this.__originalId}}
-         <img src="{{getProfilePicture this.__originalId}}" />
-         {{else}}
-         <div id="profileImageLarge">{{getInitials this.__originalId}}</div>
-         {{/if}}
-       </a>
-     </div>
-     <div class="col-md-7">
-       <div class="container-fluid">
+      <div class="col-lg-3">
         <div class="row">
-         <div class="col">
-          <table class="table table-responsive borderless">
-           <tbody>
-            <tr>
-             <td class="no-padding text-no-wrap">
-              <a href="/profilePage/{{this.__originalId}}"><h5 class="h5-name">{{this.profile.name}} {{this.profile.lastname}} {{this.profile.lastname2}}</h5></a>
-            </td>
-          </tr>
-          <tr>
-           <td class="no-padding text-no-wrap subtitle-underline">
-            {{#if this.role}}
-            {{getPrimaryRoles this.role}}
-            {{/if}}
-          </td>
-        </tr>
-        <tr>
-         <td class="no-padding text-no-wrap location-underline">
-          {{#if this.city}}
-          <i class="fa fa-map-marker fa-sm"></i> 
-          {{this.city}}, {{this.state}}
-          {{/if}}
-
-        </td>
-      </tr>
-
-      <tr>
-       <td class="text-no-wrap">
-        <div class="row">
-          {{#if currentUser}}
-          <div class="col-md-4">
-            <input type="hidden" id="thisUser" value="{{this.__originalId}}">
-            {{#if notSameUser this.__originalId}}
-            {{#if showButtonFollow this.__originalId}}
-            {{#if isVerified}}
-            <button class="btn button-follow" id="pushFollow" data-id="{{this.__originalId}}"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
-            {{/if}}
-            {{else}}
-            <button class="btn button-follow disabled"> <i class="fa fa-plus-circle fa-sm"></i> SIGUIENDO</button>
-            {{/if}}   
-            <br/>   
-            {{#if hasTopRole}}
-            <button class="btn button-follow pushCollaborator" id="{{this.__originalId}}"> <i class="fa fa-plus-circle fa-sm"></i> COLABORADOR </button>
-            {{/if}}
-            {{/if}}
-          </div>
-          <div class="col-md-2 vdivide"></div>
-          {{/if}}
-
-          <div class="col-md-3 numbers">
-            <i class="fa fa-thumbs-up fa-sm"></i> 
-            {{#if this.likes}}
-            {{this.likes}}
-            {{else}}
-            0
-            {{/if}}
-          </div>
-          <div class="col-md-3 numbers">
-            <i class="fa fa-eye fa-sm"></i> 
-            {{#if this.views}}
-            {{this.views}}
-            {{else}}
-            0
-            {{/if}}
+          <div class="col">
+            <select class="form-control agreements" id="tipoPersona">
+              <option value="Crew" selected="">Crew</option>
+              <option value="Proyectos">Proyectos</option>
+              <option value="Industrias">Industrias</option>
+              <option value="Cast">Casting</option>
+            </select>
           </div>
         </div>
-
-      </td>
-    </tr>
-
-  </tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="col-md-3">
-
-  <img src="{{getCoverPicture this.__originalId 300}}"/>
-
-</div>
-</div>
-<div class="row">
-  <div class="col-md-12"><hr></div>
-</div>
-{{/EasySearch.Each}}
-
-{{> EasySearch.LoadMore index=usersIndex}}
-
-{{#EasySearch.IfNoResults index=usersIndex}}
-<div class="no-results">No se encontraron resultados</div>
-{{/EasySearch.IfNoResults}}
-</div>
-</div>
-<!-- Fin contenido -->
-<!-- Inicia banners -->
-         <!--
-         <div class="col-md-3">
-            <div class="container">
-               <div class="spacer20"></div>
-               <div class="row">
-                  <div class="col">
-                     <img src="../images/banner-section.jpg" alt="" class="img-responsive">
-                  </div>
-               </div>
-               <div class="spacer60"></div>
-               <div class="row">
-                  <div class="col">
-                     <img src="../images/banner-section.jpg" alt="" class="img-responsive">
-                  </div>
-               </div>
-            </div>
-         </div>
-       -->
-       <!-- Fin banners -->
-     </div>
-
-
-      <!--
-      <div class="row">
-         <div class="col-md-12">
-            <nav aria-label="..." class="mx-auto">
-              <ul class="pagination pagination-sm justify-content-center">
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                </li>
-                <li class="page-item active">
-                     <span class="page-link">1<span class="sr-only">(current)</span></span>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                <li class="page-item"><a class="page-link" href="#">7</a></li>
-                <li class="page-item"><a class="page-link" href="#">8</a></li>
-                <li class="page-item"><a class="page-link" href="#">9</a></li>
-                <li class="page-item"><a class="page-link" href="#">+</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-         </div>
       </div>
-    -->
-
-
+    </div>
   </div>
+  <div class="spacer60"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        
+        <div class="row">
+          <div class="col agreements">Nombre</div>
+        </div>
+        <div class="row">
+          <div class="col agreements">
+            {{> EasySearch.Input index=usersIndex event="enter" attributes=inputAttributes}}
+          </div>
+        </div>
+        <div class="spacer10"></div>
+        <div class="row">
+          <div class="col">
+            <label for="oc" class="agreements">Departamento </label>
+            <select name="category" id="category" class="form-control agreements">
+              <option value="cualquier"> Cualquier departamento </option>
+             {{#each getCategories}}
+             <option value="{{title}}"> {{title}} </option>
+             {{/each}}
+           </select>
+          </div>
+        </div>
+        <div class="spacer10"></div>
+        <div class="row">
+          <div class="col">
+            <label class="agreements" for="eyes">Ocupación </label>
+            <select class="form-control agreements" id="role">
+              <option value="cualquier"> Cualquier ocupación </option>
+              {{#each getOcupationsFromCategory}}
+              <option value="{{secondary}}"> {{secondary}} </option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+        <div class="spacer10"></div>
+        <div class="row">
+          <div class="col agreements">País</div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <select class="form-control agreements" id="country">
+              <option value="cualquier"> Cualquier país </option>
+              {{#each getCountries}}
+              <option value="{{country}}"> {{country}} </option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+        <div class="spacer10"></div>
+        <div class="row">
+          <div class="col agreements">Estado</div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <select class="form-control agreements" id="state">
+              <option value="cualquier"> Cualquier estado </option>
+              {{#each getStatesFromCountries}}
+              <option value="{{state}}"> {{state}} </option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+        <div class="spacer10"></div>
+        <div class="row">
+          <div class="col agreements">Ciudad</div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <select class="form-control agreements" id="city">
+              <option value="cualquier"> Cualquier ciudad </option>
+              {{#each getCitiesFromStates}}
+              <option value="{{city}}"> {{city}} </option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div class="container">
+          <div class="row">
+          
+            <!-- Inicia contenido -->
+            <div class="col-md-12">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col agreements">Resultados: {{searchCount}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12"><hr></div>
+                </div>
+                {{#EasySearch.Each index=usersIndex}}
+                <div class="row">
+                  <div class="col-md-2 vertical-align-top">
+                    <a href="/profilePage/{{this.__originalId}}">
+                    {{#if getProfilePicture this.__originalId}}
+                    <img src="{{getProfilePicture this.__originalId}}" />
+                    {{else}}
+                    <div id="profileImageLarge">{{getInitials this.__originalId}}</div>
+                    {{/if}}
+                    </a>
+                  </div>
+                  <div class="col-md-7">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col">
+                          <table class="table table-responsive borderless">
+                            <tbody>
+                              <tr>
+                                <td class="no-padding text-no-wrap">
+                                  <a href="/profilePage/{{this.__originalId}}"><h5 class="h5-name">{{this.profile.name}} {{this.profile.lastname}} {{this.profile.lastname2}}</h5></a>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="no-padding text-no-wrap subtitle-underline">
+                                {{#if this.role}}
+                                {{getPrimaryRoles this.role}}
+                                {{/if}}
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="no-padding text-no-wrap location-underline">
+                                 {{#if this.city}}
+                                  <i class="fa fa-map-marker fa-sm"></i> 
+                                 {{this.city}}, {{this.state}}
+                                 {{/if}}
 
+                                </td>
+                              </tr>
 
+                              <tr>
+                                <td class="text-no-wrap">
+                                  <div class="row">
+                                    {{#if currentUser}}
+                                    <div class="col-md-4">
+                                      <input type="hidden" id="thisUser" value="{{this.__originalId}}">
+                                      {{#if notSameUser this.__originalId}}
+                                        {{#if showButtonFollow this.__originalId}}
+                                          {{#if isVerified}}
+                                      <button class="btn button-follow" id="pushFollow" data-id="{{this.__originalId}}"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
+                                          {{/if}}
+                                        {{else}}
+                                      <button class="btn button-follow disabled"> <i class="fa fa-plus-circle fa-sm"></i> SIGUIENDO</button>
+                                        {{/if}}   
+                                      <br/>   
+                                        {{#if hasTopRole}}
+                                      <button class="btn button-follow pushCollaborator" id="{{this.__originalId}}"> <i class="fa fa-plus-circle fa-sm"></i> COLABORADOR </button>
+                                        {{/if}}
+                                      {{/if}}
+                                    </div>
+                                    <div class="col-md-2 vdivide"></div>
+                                    {{/if}}
+                                    <div class="col-md-3 numbers">
+                                      <i class="fa fa-thumbs-up fa-sm"></i> 
+                                        {{#if this.likes}}
+                                          {{this.likes}}
+                                        {{else}}
+                                          0
+                                        {{/if}}
+                                    </div>
+                                    <div class="col-md-3 numbers">
+                                      <i class="fa fa-eye fa-sm"></i> 
+                                      {{#if this.views}}
+                                        {{this.views}}
+                                      {{else}}
+                                        0
+                                      {{/if}}
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <img src="{{getCoverPicture this.__originalId 300}}"/>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12"><hr></div>
+                </div>
+                {{/EasySearch.Each}}
 
+                {{> EasySearch.LoadMore index=usersIndex}}
+
+                {{#EasySearch.IfNoResults index=usersIndex}}
+                <div class="no-results">No se encontraron resultados</div>
+                {{/EasySearch.IfNoResults}}
+              </div>
+            </div>
+            <!-- Fin contenido -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="spacer80"></div>
 </template>
 
 <template name="search">
-
   {{> EasySearch.Input index=usersIndex}}
-
   <ul>
     {{#EasySearch.Each index=usersIndex}}
     <li>{{fullname}}</li>
     {{/EasySearch.Each}}
   </ul>
-
   {{> EasySearch.LoadMore index=usersIndex content="Mostrar más"}}
-
   {{#EasySearch.IfNoResults index=usersIndex}}
     <div class="no-results">No se encontraron resultados</div>
   {{/EasySearch.IfNoResults}}
-
   {{#EasySearch.IfSearching index=usersIndex}}
        <div>Buscando...</div>
- {{/EasySearch.IfSearching}}
-
- {{> EasySearch.Pagination index=usersIndex maxPages=10 prevAndNext=true}}
+  {{/EasySearch.IfSearching}}
+  {{> EasySearch.Pagination index=usersIndex maxPages=10 prevAndNext=true}}
 </template>

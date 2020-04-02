@@ -105,7 +105,6 @@ Template.profilePageActor.helpers({
           url = "https://www.youtube.com/embed/" + youtubeVideoID;
         }
       }
-      console.log(url);
       return url;
     },
    categories(){
@@ -278,7 +277,42 @@ Template.profilePageActor.helpers({
       }
       return url;
       
+    },
+    getGallery(){
+    var media = Media.find({"userId": FlowRouter.getParam('id'), "media_use":"gallery"}).fetch();
+    var array = new Array();
+    if(media){
+      array = media;
+      for (var i = 0; i < array.length; i++) {
+        if(i==0){
+          array[i].position = 1;
+        }
+        else{
+          array[i].position = 2;
+        }
+        //array[i]
+      }
     }
+    return array;
+  },
+  isFirstElement(position){
+    var result = false;
+    if(position===1){
+      result = true;
+    }
+    else{
+      result = false;
+    }
+    return result;
+  },
+  getURL(mediaId){
+    var url = "";
+    var media = Media.findOne({'mediaId':mediaId});
+      if(media!=null){
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + FlowRouter.getParam('id') + "/" + media.mediaId;    
+      }
+    return url;
+  }
 });
 
 

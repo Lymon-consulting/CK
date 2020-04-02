@@ -1,68 +1,81 @@
 <template name="mediaEditor">
-	<div class="container">
-		<h1 class="h1-title text-center">BIBLIOTECA DE IMÁGENES</h1>
-		<br>
-		
+    <div class="container">
+        <h1 class="h1-title text-center">BIBLIOTECA DE IMÁGENES</h1>
+        <br>
+        
 
-		<div class="row">
-			<div class="col-lg-12 col-md-12 mb-4 text-center">
-				<button class="btn btn-purple" id="toggleDropper">Agregar nueva imagen</button>
-			</div>
-		</div>
-		
-		<div id="dragzone">
-			{{>dragZone}}
-		</div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 mb-4 text-center">
+                <button class="btn btn-purple" id="toggleDropper">Agregar nueva imagen</button>
+            </div>
+        </div>
+        
+        <div id="dragzone">
+            {{>dragZone}}
+        </div>
 
-		<!-- Grid row -->
-		<div class="row text-center background-verylightgray">
-		<!--<div class="row background-verylightgray light-padding justify-content-center">-->
-			{{#each getMedia}}
-			<!-- Grid column -->
-			<div class="col-lg-3 col-md-6 mt-3">
-				
-				
+        <!-- Grid row -->
+        <div class="row text-center background-verylightgray">
+        <!--<div class="row background-verylightgray light-padding justify-content-center">-->
+            {{#each getMedia}}
+            <!-- Grid column -->
+            <div class="col-lg-3 col-md-6 col-sm-12 mt-3 d-flex justify-content-center">
+                <div class="col-lg-12 col-md-6 col-6">
+                    <div class="row">
+                        <div class="col">
+                            <a href="#"  class="d-block mb-0 h-100" data-toggle="tooltip" data-placement="top" title="{{getUse this.mediaId}}">
+                                <img class="media-thumb img-thumbnail" src="{{this.media_url}}" alt="" id="sendToEditor" data-id="{{this.mediaId}}">
+                            </a>            
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col d-flex justify-content-center agreements">
+                            {{translateUse this.media_use}}
+                        </div>
+                    </div>
+                  <br>
+                </div>
 
-				<div class="col-lg-3 col-md-4 col-6">
-		      	  <a href="#"  class="d-block mb-4 h-100" data-toggle="tooltip" data-placement="top" title="{{getUse this.mediaId}}">
-		            <img class="media-thumb img-thumbnail" src="{{this.media_url}}" alt="" id="sendToEditor" data-id="{{this.mediaId}}">
-		          </a>
-			    </div>
-
-				<!-- Código original con la ventana modal
-			    <div class="col-lg-3 col-md-4 col-6">
-		      	  <a href="#" id="setVariable" class="d-block mb-4 h-100" data-toggle="tooltip" data-placement="top" title="{{getUse this.mediaId}}">
-		            <img class="media-thumb img-thumbnail" src="{{this.media_url}}" alt="" data-toggle="modal" data-target="#modal{{@index}}">
-		          </a>
-			    </div>-->
-			   
-			</div>      
-			{{/each}}
-		</div>
-	</div>
-	<div class="spacer60"></div>
+                <!-- Código original con la ventana modal
+                <div class="col-lg-3 col-md-4 col-6">
+                  <a href="#" id="setVariable" class="d-block mb-4 h-100" data-toggle="tooltip" data-placement="top" title="{{getUse this.mediaId}}">
+                    <img class="media-thumb img-thumbnail" src="{{this.media_url}}" alt="" data-toggle="modal" data-target="#modal{{@index}}">
+                  </a>
+                </div>-->
+               
+            </div>      
+            {{/each}}
+        </div>
+    </div>
+    <div class="spacer60"></div>
 </template>
 
 <template name="dragZone">
 
-	{{#if uploading}}
-	    <p class="form-control-static">
-	      <div class="alert alert-info">
-	        Loading
-	        {{#if moreThanOne}}
-	          Restan archivos {{uploading}}
-	        {{/if}}
-	      </div>
-	    </p>
-	  {{else}}
-	    <div id="dropzone" class="dropzone active">
-	      <div class="container">
-	        Arrastra y suelta la imagen que quieres subir o haz clic en el botón
-	        <span class="btn btn-file btn-secondary">
-	          <input type="file" multiple="">
-	        </span>
-	      </div>
-	    </div>
-	  {{/if}}
-	
+    {{#if uploading}}
+        <p class="form-control-static">
+          <div class="alert alert-info">
+            Loading
+            {{#if moreThanOne}}
+              Restan archivos {{uploading}}
+            {{/if}}
+          </div>
+        </p>
+      {{else}}
+        <div id="dropzone" class="dropzone active">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6 col-md-12 col-sm-12 text-center">
+                Arrastra y suelta la imagen que quieres subir o haz clic en el botón
+              </div>
+              <div class="col-lg-6 col-md-12 col-sm-12 text-center">
+                <span class="btn btn-file btn-secondary">
+                  <input type="file" multiple="">
+                </span>    
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/if}}
+    
 </template>

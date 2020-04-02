@@ -103,6 +103,18 @@ footer{
   
 }
 
+.carousel-thumb{
+  width: 200px; 
+  
+}
+.carousel-item-thumb{
+   width: 200px;
+   /*height: 500px;*/
+
+   /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
+   object-fit:scale-down;
+}
+
 #searchBox{
   display: block;
   width: 100%;
@@ -128,7 +140,7 @@ footer{
 .dropzone {
     line-height:100px;
     border:5px dashed #ccc;
-    height: 200px;
+    /*height: 200px;*/
     background-color: #eee;
     margin-bottom: 20px;
     padding: 40px;
@@ -329,6 +341,19 @@ footer{
   text-align: center;
   line-height: 100px;
   /*margin: 10px 0;*/
+}
+
+#profileImageLarge200 {
+  width: 200px;
+  height: auto;
+  border-radius: 50%;
+  background: #666;
+  /*border:solid;*/
+  font-size: 45px;
+  color: #fff;
+  text-align: center;
+  line-height: 100px;
+  margin-left: 20px;
 }
 
 #companyLogo {

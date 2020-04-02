@@ -131,7 +131,19 @@ Template.mediaEditor.helpers({
     return Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.userId() + "/" + mediaId;
     
   },
-  
+  translateUse(media_use){
+    var result = "";
+    if(media_use==="profile"){
+      result = "Perfil";
+    }
+    else if(media_use==="cover"){
+      result = "Portada";
+    }
+    else if(media_use==="gallery"){
+      result = "Galería";
+    }
+    return result;
+  },
   getUse(mediaId){
     Meteor.subscribe("allMedia");
     var media = Media.findOne({'userId': Meteor.userId(), 'mediaId' : mediaId});

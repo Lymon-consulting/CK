@@ -35,11 +35,24 @@
           <div class="col agreements">Categoría:</div>
         </div>
         <div class="row">
-          {{#each categories}}
           <div class="col-6" style="text-align:left">
-            <label class="agreements"><input type="checkbox" value="{{spec}}" class="category agreements"> {{spec}}</label>
+            <label class="agreements"><input type="checkbox" value="Modelo" id="modelo" class="category agreements"> Modelo</label>
           </div>
-          {{/each}}
+          <div class="col-6" style="text-align:left">
+            <label class="agreements"><input type="checkbox" value="Actor" id="actor" class="category agreements"> Actor</label>
+          </div>
+          <div class="col-6" style="text-align:left">
+            <label class="agreements"><input type="checkbox" value="Bailarín" id="bailarin" class="category agreements"> Bailarín</label>
+          </div>
+          <div class="col-6" style="text-align:left">
+            <label class="agreements"><input type="checkbox" value="Cantante" id="cantante" class="category agreements"> Cantante</label>
+          </div>
+          <div class="col-6" style="text-align:left">
+            <label class="agreements"><input type="checkbox" value="Extra" id="extra" class="category agreements"> Extra</label>
+          </div>
+          <div class="col-6" style="text-align:left">
+            <label class="agreements"><input type="checkbox" value="Doble" id="doble" class="category agreements"> Doble</label>
+          </div>
         </div>
         <div class="spacer10"></div>
         <div class="row">
@@ -48,12 +61,12 @@
         <div class="row">
           <div class="col" style="text-align:left">
             <div class="checkbox">
-              <label class="agreements"><input type="checkbox" value="Femenino" class="gender agreements"> Femenino</label>
+              <label class="agreements"><input type="checkbox" value="Femenino" id="f-check" class="gender agreements"> Femenino</label>
             </div>
            </div>
            <div class="col" style="text-align:left">
             <div class="checkbox">
-              <label class="agreements"><input type="checkbox" value="Masculino" class="gender agreements"> Masculino</label>
+              <label class="agreements"><input type="checkbox" value="Masculino" id="m-check" class="gender agreements"> Masculino</label>
             </div>
            </div>
         </div>

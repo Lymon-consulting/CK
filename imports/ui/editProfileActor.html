@@ -295,6 +295,48 @@
         <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal2">Seleccionar otra</button>
       </div>
     </div>
+    {{#if getGallery}}
+    <div class="spacer40"></div>
+    <div class="row">
+      <div class="col">Esta es tu galería de imágenes</div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <!--Inicia carrousel -->
+        <div id="carouselExampleControls" class="carousel carousel-thumb slide" data-ride="carousel">
+          <div class="carousel-inner">
+            {{#each getGallery}}
+              {{#if isFirstElement this.position}}
+            <div class="carousel-item carousel-item-thumb active">
+              <img class="d-block w-100" src="{{getURL this.mediaId}}" alt="First slide">
+            </div>
+              {{else}}
+            <div class="carousel-item carousel-item-thumb">
+              <img class="d-block w-100" src="{{getURL this.mediaId}}" alt="Not first slide">
+            </div>
+              {{/if}}
+            {{/each}}
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Anterior</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Siguiente</span>
+          </a>
+        </div>
+        <!--Termina carrousel -->
+          
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <br>
+        <button type="button" class="btn btn-purple" id="goToMedia" >Agregar más imágenes</button>
+      </div>
+    </div>
+    {{/if}}
     <div class="spacer40"></div>
     <div class="row">
       <div class="col-lg-8 form-group">
