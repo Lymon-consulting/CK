@@ -172,7 +172,7 @@ getPrimaryRoles(roles){
     if(user!=null && user.profilePictureID!=null){
       var profile = Media.findOne({'mediaId':user.profilePictureID});
       if(profile!=null){
-        return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_100,h_100,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+        return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_80,h_80,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
       }
 
     }

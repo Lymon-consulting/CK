@@ -330,6 +330,19 @@ footer{
   /*margin: 10px 0;*/
 }
 
+#profileImageSmall {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #666;
+  /*border:solid;*/
+  font-size: 25px;
+  color: #fff;
+  text-align: center;
+  line-height: 80px;
+  /*margin: 10px 0;*/
+}
+
 #profileImageLarge {
   width: 100px;
   height: auto;
@@ -697,6 +710,7 @@ footer{
    width: 140px;
    height: 70px; 
 }
+
 
 .cover-top{
    width: 100%;

@@ -1,25 +1,39 @@
 <template name="peopleListCast">
   <div class="container">
-    <div class="spacer40"></div>
     <div class="row">
-      <div class="col-lg-3">
+      <div class="col-lg-12">
         <div class="row">
-          <div class="col">
-            <select class="form-control agreements" id="tipoPersona">
-              <option value="Crew">Crew</option>
-              <option value="Proyectos">Proyectos</option>
-              <option value="Industrias">Industrias</option>
-              <option value="Cast" selected="">Casting</option>
-            </select>
+          <div class="col-lg-4 col-md-6">
+            <div class="card h-100">
+              <a href="/peopleList/"><img class="card-img-top" src="/images/crew_thumb.jpg" alt=""></a>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="card h-100">
+              <a href="/projList/"><img class="card-img-top" src="/images/project_thumb.jpg" alt=""></a>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="card h-100">
+              <a href="/industryList"><img class="card-img-top" src="/images/industry_thumb.jpg" alt=""></a>
+            </div>
           </div>
         </div>
+        <!-- /.row -->
       </div>
+      <!-- /.col-lg-9 -->
     </div>
+    <!-- /.row -->
   </div>
-  <div class="spacer60"></div>
+  <!-- /.container -->
+  <div class="container text-center">
+    <h1 class="h1-title">CAST</h1>
+    <hr>
+    <div class="spacer40"></div>
+  </div>
   <div class="container">
     <div class="row">
-      <div class="col-lg-3">
+      <div class="col-lg-3 rounded background-verylightgray p-3">
         
         <div class="row">
           <div class="col agreements">Nombre</div>
