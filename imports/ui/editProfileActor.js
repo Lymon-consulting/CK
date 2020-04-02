@@ -619,7 +619,6 @@ Template.editProfileActor.events({
   'change .radio' : function(event, template){
     event.preventDefault();
     var inputValue = $(event.target).attr("data-answer");
-    console.log(inputValue);
     if(inputValue==="artistic"){
       Meteor.call('updatePreferedName', Meteor.userId(), true); 
     }

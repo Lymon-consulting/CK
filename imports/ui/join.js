@@ -25,7 +25,10 @@ Template.join.events({
       Accounts.createUser( user, ( error ) => {
         if ( error ) {
           Bert.alert( error.reason, 'danger' );
-        } else {
+        } 
+        else {
+          var fullname = firstName + " " + lastName;
+          Meteor.call('updateFullName', Meteor.userId(), fullname);
           Meteor.call( 'sendVerificationLink', ( error, response ) => {
             if ( error ) {
               console.log(error.reason);

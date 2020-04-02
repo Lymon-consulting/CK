@@ -181,9 +181,9 @@
       {{/if}}
       
       <div class="spacer40"></div>
-            
       <div class="row">
          <div class="col-lg-8">
+            {{#if getGallery}}
             <div class="row">
                <div class="col-md-12 text-left">
                   <strong class="uppercase">GALERÍA DE FOTOS</strong>
@@ -219,6 +219,7 @@
               </a>
             </div>
             <!--Termina carrousel -->
+            {{/if}}
             {{#if getVideo getProfile.vimeo getProfile.youtube}}
             <div class="spacer40"></div>
             <div class="row">
@@ -232,7 +233,7 @@
                </div>
             </div>
             <div class="embed-responsive embed-responsive-16by9">
-               <iframe src="{{getVideo getProfile.vimeo getProfile.youtube}}" class="embed-responsive-item" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+               <iframe src="{{getVideo getProfile.vimeo getProfile.youtube}}" class="embed-responsive-item"></iframe>
             </div>
             {{/if}}
 
@@ -290,7 +291,7 @@
                         <div class="row">
                            <div class="col">
 
-                              {{#if getProfile.profile.gender}}
+                              {{#if getProfile.sex}}
                               <p class=" text-justify"><strong>Sexo:</strong> {{getProfile.sex}}</p>
                               {{/if}}
                               {{#if getProfile.ageRange}}
