@@ -1,0 +1,216 @@
+.carousel-item{
+   width: 600px;
+   /*height: 500px;*/
+
+   /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
+   object-fit:scale-down;
+}
+
+.carousel{
+  width: 600px; 
+  
+}
+
+.carousel-thumb{
+  width: 200px; 
+  
+}
+.carousel-item-thumb{
+   width: 200px;
+   /*height: 500px;*/
+
+   /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
+   object-fit:scale-down;
+}
+.imageDivHeight{
+    width: 100%;
+    max-width: 100%;
+    height:500px;
+    background-position: center;
+    background-image: url("/images/intro-bg3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.img-thumbnail{
+  padding: 0.25rem;
+  background-color: #ccc;
+  border: 2px solid #fff;
+  border-radius: 0.25rem;
+  max-width: none;
+  height: auto;
+}
+
+.media-thumb{
+   width: 200px;
+   height: 100px;
+
+   /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
+   object-fit:scale-down;
+}
+
+.media-preview{
+   width: 400px;
+   height: 200px;
+
+   /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
+   object-fit:scale-down;
+}
+
+
+.media-portlet img{
+   width: 1024px !important;
+   height: 1024px;
+
+
+   /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
+   object-fit:scale-down;
+}
+.zoom {
+  transition: transform .2s; /* Animation */
+  cursor: pointer;
+  z-index: 1;
+  position: relative;
+
+}
+.zoom:hover {
+  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+#profileImage {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #666;
+  font-size: 15px;
+  color: #fff;
+  text-align: center;
+  line-height: 35px;
+  margin: 10px 0;
+}
+#profileImageSmall {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #666;
+  /*border:solid;*/
+  font-size: 25px;
+  color: #fff;
+  text-align: center;
+  line-height: 80px;
+  /*margin: 10px 0;*/
+}
+
+#profileImageLarge {
+  width: 100px;
+  height: auto;
+  border-radius: 50%;
+  background: #666;
+  /*border:solid;*/
+  font-size: 45px;
+  color: #fff;
+  text-align: center;
+  line-height: 100px;
+  /*margin: 10px 0;*/
+}
+
+#profileImageLarge200 {
+  width: 200px;
+  height: auto;
+  border-radius: 50%;
+  background: #666;
+  /*border:solid;*/
+  font-size: 45px;
+  color: #fff;
+  text-align: center;
+  line-height: 100px;
+  margin-left: 20px;
+}
+
+#companyLogo {
+  width: 150px;
+  height: 50px;
+  
+}
+.thumbnail-cover{
+  /*Las portadas tienen un aspectRatio de 2:1*/
+   width: 200px;
+   height: 100px; 
+}
+
+.logo{
+  width: 40px;
+  height: 40px;
+  max-width: unset !important;
+}
+
+.thumbnail-logo{
+   height: 50px; 
+   width: 50px;
+}
+.thumbnail-project{
+  /*Las portadas tienen un aspectRatio de 2:1*/
+   width: 300px;
+   height: 150px; 
+   
+}
+.thumbnail{
+   background: transparent;
+}
+
+.thumbs{
+   background: transparent;
+   width: 50px;
+   height: 50px;
+}
+.larger_thumbs{
+   background: transparent;
+   width: 120px;
+   height: 80px;
+}
+.card-img-top{
+  width:100%;
+  height:auto;
+}
+.cover-thumbnail{
+   width: 140px;
+   height: 70px; 
+}
+
+
+.cover-top{
+   width: 100%;
+   height: auto; 
+}
+
+.cover-large{
+   height: 300px; 
+   width: 1080px;
+}
+.title-banner{
+   font-size: 36px;
+   font-weight: bold;
+}
+
+@media screen and (min-width: 100px) {
+    
+
+    #bannerBack{
+      width: 100%;
+        height:220px;
+        background-image: url("/images/bb.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+   }
+   
+}
+@media screen and (min-width: 100px) {
+    #imageBanner{
+        /*max-width:100%; */
+        /*max-height:100%;*/
+        display:block;
+        /*height: 230px;*/
+        background-image: url("/images/banner-david.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
+

@@ -3,32 +3,30 @@ import { Ocupation } from '../api/ocupations.js';
 import { City } from '../api/city.js';
 import { Media } from '../api/media.js';
 
-
 import './editProfile.html';
 import '/lib/common.js';
 
+var trimInput= function(val){
+  return val.replace(/^\s*|\s*$/g, "");
+}
 
-if (Meteor.isClient) {
- Meteor.subscribe("fileUploads");
- Meteor.subscribe("getOcupations");
- Meteor.subscribe("getCategories");
- Meteor.subscribe("getCountries");
- Meteor.subscribe("userData");
-
-/*
-Template.userPage.rendered = function(){
-  
-  //if(Meteor.user()){
-    let wizard = Meteor.user().wizard;
-    if(wizard){
-      $('#myModal').show();
-    }
-  //}
-
-};*/
+var isNotEmpty=function(val){
+  if(val && val!== ""){
+    return true;
+  }
+//  Bert.alert("", "danger", "growl-top-right");
+Bert.alert({message: 'Por favor completa todos los campos obligatorios', type: 'danger', icon: 'fa fa-exclamation'});
+return false;
+}
 
 
-Template.user.helpers({
+Meteor.subscribe("fileUploads");
+Meteor.subscribe("getOcupations");
+Meteor.subscribe("getCategories");
+Meteor.subscribe("getCountries");
+Meteor.subscribe("userData");
+
+Template.editProfile.helpers({
   userId() {
     return Meteor.userId();
   },
@@ -141,26 +139,22 @@ countrySelected: function(value){
    } 
  }
  return result;
-      },/*
-      personalCover:function(){
-         Meteor.subscribe("personalcover");
-         return PersonalCover.find({'owner': Meteor.userId()});
-       },*/
-       getCategories(){
-         var data = Ocupation.find({},{sort:{'title':1}}).fetch();
-         return _.uniq(data, false, function(transaction) {return transaction.title});
-       },
-       getOcupationsFromCategory(){
-         if(Session.get("selected_category")!=null){
-          return Ocupation.find({'title': Session.get("selected_category")}).fetch();
-        }
-        else{
-          return Ocupation.find({'title': "Animacion y arte digital"}).fetch();
-        }
-      },
-      getRolesSelected(){
-        var result = new Array();
-        var userRoles = Meteor.user().role;
+},
+getCategories(){
+ var data = Ocupation.find({},{sort:{'title':1}}).fetch();
+ return _.uniq(data, false, function(transaction) {return transaction.title});
+},
+getOcupationsFromCategory(){
+ if(Session.get("selected_category")!=null){
+  return Ocupation.find({'title': Session.get("selected_category")}).fetch();
+}
+else{
+  return Ocupation.find({'title': "Animacion y arte digital"}).fetch();
+}
+},
+getRolesSelected(){
+  var result = new Array();
+  var userRoles = Meteor.user().role;
         //console.log(userRoles);
         if(userRoles){
           for (var i = 0; i < userRoles.length; i++) {
@@ -240,10 +234,10 @@ countrySelected: function(value){
       else{
         return City.find({'state': 'Aguascalientes'}).fetch();    
       }
-   }
+    }
 
- },
- getProfilePicture() {
+  },
+  getProfilePicture() {
 
    if(Meteor.user().profilePictureID!=null){
     var profile = Media.findOne({'mediaId':Meteor.user().profilePictureID});
@@ -267,54 +261,33 @@ getCoverPicture() {
     }
 
   }
-        /*
-         var url = "";
-         if(Meteor.user().profileCoverID!=null){
-            url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_250,c_scale/" + Meteor.user().profileCoverID;
-         }
-         return url;*/
-       },
-       getPublicID(type){
-        if(type==='profile'){
-          return Meteor.user().profilePictureID;
-        }
-        else if(type==='cover'){
-          return Meteor.user().profileCoverID;  
-        }
-        
-      },
-      getMedia(type) {
-        Meteor.subscribe("allMedia");
-        var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
-        return media;
-      },
-      getURL(mediaId){
-        var url = "";
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/" + mediaId;
-        return url;
-      }
+  
+},
+getPublicID(type){
+  if(type==='profile'){
+    return Meteor.user().profilePictureID;
+  }
+  else if(type==='cover'){
+    return Meteor.user().profileCoverID;  
+  }
+  
+},
+getMedia(type) {
+  Meteor.subscribe("allMedia");
+  var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
+  return media;
+},
+getURL(mediaId){
+  var url = "";
+  url = Meteor.settings.public.CLOUDINARY_RES_URL + "/" + mediaId;
+  return url;
+}
 
-      /*,
-      hasTopRole(){
-        var array = new Array();
-        var result = false;
-        if(Meteor.user().role!=null){
-          array = Meteor.user().role;
-          for (var i = array.length - 1; i >= 0; i--) {
-            if(array[i]==="Director"){
-              result = true;  
-            }
-            if(array[i]==="Productor"){
-              result = true;  
-            }
-          }
-        }
-        return result;
-      }*/
-      
-    });
 
-Template.user.events({
+
+});
+
+Template.editProfile.events({
 
   'change #personName': function(event,template){
     var name = trimInput(event.target.value);
@@ -396,42 +369,7 @@ Template.user.events({
 
   'click #goProfile': function(event, template){
    event.preventDefault();
-   /*
-   var name = trimInput($('#personName').val());
-   var lastname = trimInput($('#personLastName').val());
-   var lastname2 = trimInput($('#personLastName2').val());
-   var city = trimInput($('#city').val()); 
-   var state = trimInput($('#state').val()); 
-   var country = trimInput($('#country').val()); 
-   var resume = trimInput($('#resume').val());
-   var webpage = trimInput($('#web_page').val());
-   var facebook = trimInput($('#facebook_page').val());
-   var twitter = trimInput($('#twitter_page').val());
-   var vimeo = trimInput($('#vimeo_page').val());
-   var youtube = trimInput($('#youtube_page').val());
-   var instagram = trimInput($('#instagram_page').val());
-   var userId = Meteor.userId();
-   var fullname = name + " " + lastname + " " + lastname2;
-
-   if(isNotEmpty(name) && isNotEmpty(lastname) && isNotEmpty(resume)){
-    Meteor.call(
-      'updateUser',
-      userId,
-      name,
-      lastname, 
-      lastname2,
-      city,
-      state,
-      country,
-      resume,
-      fullname,
-      webpage, 
-      facebook,
-      twitter,
-      vimeo,
-      youtube,
-      instagram
-      );*/
+   
 
     //Bert.alert({message: 'Se ha actualizado tu perfil', type: 'success', icon: 'fa fa-check'});
     FlowRouter.go('/profilePage/' + Meteor.userId());
@@ -519,267 +457,77 @@ else{
 
         $('#myModal').hide();
       },
-      /*
-      'change .your-upload-class': function (event, template) {
-         console.log("uploading...")
-         FS.Utility.eachFile(event, function (file) {
-            console.log("each file...");
-            var yourFile = new FS.File(file);
-            yourFile.owner = Meteor.userId(); 
-            yourFile.use = 'profile';
-            
-
-            var verifyOnlyOne = Images.find({'owner': Meteor.userId()}).forEach( function(myDoc) {
-               console.log("Va a borrar " + myDoc._id);
-               Images.remove({'_id': myDoc._id});
-             });*/
-
-            /*for (var k in verifyOnlyOne) {
-               console.log("Va a borrar " + verifyOnlyOne[k]);
-               Images.remove({'_id': verifyOnlyOne[k]['_id']});               
-             }*/
-
-            /*
-            Images.insert(yourFile, function (err, fileObj) {
-                 console.log("callback for the insert, err: ", err);
-                 if (!err) {
-                   console.log("inserted without error");
-                   Bert.alert({message: 'Tu foto de perfil ha cambiado', type: 'info'});
-                   
-                 }
-                 else {
-                   console.log("there was an error", err);
-                 }    
-            });
-
-         });
-      },
-      'change .your-cover-class': function (event, template) {
-         console.log("uploading...")
-         FS.Utility.eachFile(event, function (file) {
-            console.log("each file...");
-            var yourFile = new FS.File(file);
-            yourFile.owner = Meteor.userId(); 
-            yourFile.use = 'profile';
-
-            var verifyOnlyOne = PersonalCover.find({'owner': Meteor.userId()}).forEach( function(myDoc) {
-               console.log("Va a borrar " + myDoc._id);
-               PersonalCover.remove({'_id': myDoc._id});
-            });
-
-            PersonalCover.insert(yourFile, function (err, fileObj) {
-                 console.log("callback for the insert, err: ", err);
-                 if (!err) {
-                   console.log("inserted without error");
-                   Bert.alert({message: 'Tu foto de portada ha cambiado', type: 'info'});
-                   
-                 }
-                 else {
-                   console.log("there was an error", err);
-                 }    
-            });
-
-         });
-       },*/
-       'change #category':function(event, template){
-         event.preventDefault();
-         Session.set("selected_category", event.currentTarget.value);
-       },
-       'dblclick #ocupation':function(event, template){
-         event.preventDefault();
-         Meteor.call(
-          'addRole',
-          Meteor.userId(),
-          event.currentTarget.value
-          );
-       },
-       'dblclick #selection':function(event, template){
-         event.preventDefault();
-         Meteor.call(
-          'removeRole',
-          Meteor.userId(),
-          event.currentTarget.value
-          );
-       },/*
-       'change #country':function(event, template){
-         event.preventDefault();
-         Session.set("selected_country", event.currentTarget.value);
-       },
-       
-       'change #state':function(event, template){
-         event.preventDefault();
-         Session.set("selected_state", event.currentTarget.value);
-       },*/
-       'change #file-upload': function(event, template){
-        var file = event.target.files[0];
-
-        $.cloudinary.config({
-          cloud_name:"drhowtsxb"
-        });
-
-        var options = {
-          folder: Meteor.userId()
-        };
-
-        Cloudinary.upload(file, options, function(err,res){
-          if(!err){
-            Meteor.call(
-              'saveProfilePictureID',
-              Meteor.userId(),
-              res.public_id
-              );
-          }
-          else{
-            console.log("Upload Error:"  + err); //no output on console
-          }
-        });
-      },
-      'change #cover-upload': function(event, template){
-        var file = event.target.files[0];
-
-        $.cloudinary.config({
-          cloud_name:"drhowtsxb"
-        });
-
-        var options = {
-          folder: Meteor.userId()
-        };
-
-        Cloudinary.upload(file, options, function(err,res){
-          if(!err){
-            Meteor.call(
-              'saveProfileCoverID',
-              Meteor.userId(),
-              res.public_id
-              );
-          }
-          else{
-            console.log("Upload Error:"  + err); //no output on console
-          }
-        });
-      },
-      'dblclick #image':function(event, template){
-
-        var croppable = false;
-        var croppedCanvas;
-        var roundedImage;
-        const cropper = new Cropper(image, {
-
-          dragMode: 'move',
-          aspectRatio: 16 / 9,
-          autoCropArea: 0.65,
-          restore: false,
-          guides: false,
-          center: false,
-          highlight: false,
-          cropBoxMovable: true,
-          cropBoxResizable: false,
-          toggleDragModeOnDblclick: false,
-          ready() {
-            croppable = true;
-          },
-          crop(event) {
-            /*console.log(event.detail.x);
-            console.log(event.detail.y);
-            console.log(event.detail.width);
-            console.log(event.detail.height);
-            /*console.log(event.detail.rotate);
-            console.log(event.detail.scaleX);
-            console.log(event.detail.scaleY);*/
-            croppedCanvas = cropper.getCroppedCanvas();
-            roundedImage = document.createElement('img');
-            roundedImage.src = croppedCanvas.toDataURL()
-            result.innerHTML = '';
-            result.appendChild(roundedImage);
-          },
-        });
-      },
-      'click #crop': function(event,template){
-        var image = document.getElementById('image');
-        var button = document.getElementById('crop');
-        var result = document.getElementById('result');
-        var croppedCanvas;
-        var roundedCanvas;
-        var roundedImage;
-
-        // Crop
-        croppedCanvas = cropper.getCroppedCanvas();
-
-        // Round
-        roundedCanvas = getRoundedCanvas(croppedCanvas);
-
-        // Show
-        roundedImage = document.createElement('img');
-        roundedImage.src = roundedCanvas.toDataURL()
-        result.innerHTML = '';
-        result.appendChild(roundedImage);
-      }
-    });
-}
-
-
-var trimInput= function(val){
-  return val.replace(/^\s*|\s*$/g, "");
-}
-
-var isNotEmpty=function(val){
-  if(val && val!== ""){
-    return true;
-  }
-//  Bert.alert("", "danger", "growl-top-right");
-Bert.alert({message: 'Por favor completa todos los campos obligatorios', type: 'danger', icon: 'fa fa-exclamation'});
-return false;
-}
-
-
-/*
-if (Meteor.isServer) {
-  Images.allow({
-     'insert': function (userId, doc) {
-       // add custom authentication code here
-       return true;
+      
+      'change #category':function(event, template){
+       event.preventDefault();
+       Session.set("selected_category", event.currentTarget.value);
      },
-     'remove': function (userId, doc) {
-       return true;
+     'dblclick #ocupation':function(event, template){
+       event.preventDefault();
+       Meteor.call(
+        'addRole',
+        Meteor.userId(),
+        event.currentTarget.value
+        );
      },
-     'download': function (userId, doc) {
-       return true;
-     }
-   });
-  PersonalCover.allow({
-     'insert': function (userId, doc) {
-       // add custom authentication code here
-       return true;
+     'dblclick #selection':function(event, template){
+       event.preventDefault();
+       Meteor.call(
+        'removeRole',
+        Meteor.userId(),
+        event.currentTarget.value
+        );
      },
-     'remove': function (userId, doc) {
-       return true;
-     },
-     'download': function (userId, doc) {
-       return true;
-     }
-   });
-}
-*/
-/*
-,
-   'click #deleteFileButton ': function (event) {
-        console.log("deleteFile button ", this);
-        FileData.remove({_id:this._id});
-        
-   },
-   'change .your-upload-class': function (event, template) {
-    console.log("uploading...")
-    FS.Utility.eachFile(event, function (file) {
-      console.log("each file...");
-      var yourFile = new FS.File(file);
-      yourFile.creatorId = 123; // todo
-      FileData.insert(yourFile, function (err, fileObj) {
-        console.log("callback for the insert, err: ", err);
-        if (!err) {
-          console.log("inserted without error");
-        }
-        else {
-          console.log("there was an error", err);
-        }
+     'change #file-upload': function(event, template){
+      var file = event.target.files[0];
+
+      $.cloudinary.config({
+        cloud_name:"drhowtsxb"
       });
-*/
+
+      var options = {
+        folder: Meteor.userId()
+      };
+
+      Cloudinary.upload(file, options, function(err,res){
+        if(!err){
+          Meteor.call(
+            'saveProfilePictureID',
+            Meteor.userId(),
+            res.public_id
+            );
+        }
+        else{
+            console.log("Upload Error:"  + err); //no output on console
+          }
+        });
+    },
+    'change #cover-upload': function(event, template){
+      var file = event.target.files[0];
+
+      $.cloudinary.config({
+        cloud_name:"drhowtsxb"
+      });
+
+      var options = {
+        folder: Meteor.userId()
+      };
+
+      Cloudinary.upload(file, options, function(err,res){
+        if(!err){
+          Meteor.call(
+            'saveProfileCoverID',
+            Meteor.userId(),
+            res.public_id
+            );
+        }
+        else{
+            console.log("Upload Error:"  + err); //no output on console
+          }
+        });
+    }
+    
+  });
+
+
+

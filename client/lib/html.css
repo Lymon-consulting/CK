@@ -1,0 +1,94 @@
+h4{
+  background-color: #ccc;
+}
+
+h3{
+  color:#666;
+}
+
+h2{
+  font-size: 20px;
+}
+
+hr{
+  border-color:#ccc;
+}
+
+label{
+  font-size: 14px;
+}
+
+a:link, a.text-purple:hover
+{
+  color: #ED1567;
+}
+
+a.text-button{
+  font-family: "Avenir-Heavy";
+}
+
+a.text-gray{
+   color: #999;
+}
+
+a.text-black{
+   color: #000;
+}
+
+input,
+input::-webkit-input-placeholder {
+  font-size: 12px;
+  line-height: 1;
+}
+
+div.vertical-line{
+  width: 1px; 
+  background-color: black;
+}
+
+div.vertical-line-white{
+  width: 1px; 
+  background-color: white;
+}
+
+td.low-padding{
+  margin: 0 !important;  
+  padding: 5px !important;
+}
+
+blockquote{
+  font-size: 30px;
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: .5em 10px;
+  padding: 0 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+  padding: 10px 20px;
+  line-height: 1.4;
+}
+
+blockquote:before {
+  content: open-quote;
+  display: inline;
+  height: 0;
+  line-height: 0;
+  left: -10px;
+  position: relative;
+  top: 30px;
+  color: #ccc;
+  font-size: 3em;
+}
+
+p{
+  margin: 0;
+}
+
+footer{
+  margin-top: 40px;
+  text-align: right;
+  vertical-align: bottom;
+  font-size: 1em;
+  font-style: italic;
+  color:#666;
+  font-weight: bold;
+}

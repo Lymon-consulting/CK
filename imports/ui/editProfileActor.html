@@ -9,417 +9,440 @@
     }
   </style>
   <div class="container text-center">
-    <h1 class="h1-title">EDITAR EL PERFIL DE</h1>
+    <h1 class="h1-title">EDITA TU PERFIL DE CAST</h1>
     <h2>{{showName}}</h2>
-    <hr class="hr_width_600">
+    <hr>
   </div>
+
+  
+
+  {{#if currentUser}}
   <div class="container">
-    {{#if currentUser}}
-    <div class="spacer40"></div>
     <div class="row">
-      <div class="col-lg-12 mx-auto">
-        <h2>Datos personales</h2>
-      </div>
-    </div>
-    <div class="spacer20"></div>
-    <div class="row">
-      <div class="col-lg-4 form-group">
-        <label for="nombre">Nombre <span class="text-purple">(Requerido)</span></label>
-        <input type="text" class="form-control" id="personName" placeholder="Nombre" value="{{name}}" maxlength="30">
-      </div>
-      <div class="col-lg-4 form-group">
-        <label for="nombre">Apellido Paterno <span class="text-purple">(Requerido)</span></label>
-        <input type="text" class="form-control" id="personLastName" placeholder="Apellido Paterno" value="{{lastname}}" maxlength="20">
-      </div>
-      <div class="col-lg-4 form-group">
-        <label for="nombre">Apellido Materno </label>
-        <input type="text" class="form-control" id="personLastName2" placeholder="Apellido Materno" value="{{lastname2}}" maxlength="20">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-4 form-group">
-        <label for="artisticName">Nombre artístico </label>
-        <input type="text" class="form-control" id="artisticName" placeholder="Nombre" value="{{artistic}}" maxlength="30">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-12 form-group">
-        <label for="gender">¿Qué nombre prefieres que se muestre en tu perfil público? <span class="text-purple">(Requerido)</span></label>
-        <div class="row">
-          <div class="col"><input type="radio" name="preferedName" class="radio" data-answer="real" {{showArtistic 1}}>Nombre real</div>
-        </div>
-        <div class="row">
-          <div class="col"><input type="radio" name="preferedName" class="radio" data-answer="artistic" {{showArtistic 2}}>Nombre artístico</div>
-        </div>
-      </div>
-    </div>
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col"><label for="category">¿Cuál es tu categoría o categorías? <span class="text-purple">(Requerido)</span></label></div>
-    </div>
-    <div class="row">
-    {{#each categories}}
-    <div class="col-lg-4 col-md-6 col-xs-12" style="text-align:left">
-      <div class="checkbox">
-        <label><input type="checkbox" value="{{spec}}" class="category" {{checkCategory spec}}> {{spec}}</label>
-      </div>
-     </div>
-    {{/each}}   
-    </div>
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col-lg-4 form-group">
-        <label for="gender">Sexo <span class="text-purple">(Requerido)</span></label>
-        <div class="row">
-          <div class="col"><input type="radio" name="gender" class="sex" data-answer="Masculino" {{selectedGender 'Masculino'}}>Masculino</div>
-        </div>
-        <div class="row">
-          <div class="col"><input type="radio" name="gender" class="sex" data-answer="Femenino" {{selectedGender 'Femenino'}}>Femenino</div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <input type="radio" name="gender" class="sex" data-answer="Sin definir" {{selectedGender 'Sin definir'}}>Sin definir    
+      <div class="col-lg-3 rounded background-verylightgray p-3">
+        <div class="sticky-top">
+          <div class="row">
+            <div class="col d-flex justify-content-center">
+              {{#if getProfilePicture}}
+              <img src="{{getProfilePicture}}"/>
+              {{else}}
+              <div id="profileImageLarge">{{getInitials}}</div>
+              {{/if}}
+            </div>
           </div>
+          <div class="row">
+            <div class="col text-14 text-purple text-center">
+              <a href="#" class="text-purple" data-toggle="modal" data-target="#modal1">Cambiar <i class="fa fa-pencil"></i></a>
+            </div>
+          </div>
+          <div class="spacer20"></div>
+          <div class="row">
+            <div class="col text-center text-16">
+              <strong>¡Te damos la bienvenida, {{name}}!</strong>
+            </div>
+          </div>
+          <div class="spacer40"></div>
+          <div><hr></div>
+          <div class="row">
+            <div class="col text-14">
+              <a href="#" class="text-purple" id="goProfile"><i class="fa fa-eye"></i> Tu perfil</a>    
+            </div>
+          </div>
+          
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col text-14">
+              <a href="/editProfile/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-user"></i> Crear perfil de crew</a>
+            </div>
+          </div>
+          <div class="spacer40"></div>
+          <div><hr></div>
+          <div class="row">
+            <div class="col text-14">Portada <a href="#" class="text-purple" data-toggle="modal" data-target="#modal2">Cambiar <i class="fa fa-pencil"></i></a></div>
+          </div>
+          <div class="row">
+            <div class="col">
+              {{#if getCoverPicture}}
+              <img id="image" src="{{getCoverPicture}}" class="thumbnail-project"/>
+              {{else}}
+              <img id="image" src="/images/c4.jpg" class="thumbnail-project"/>
+              {{/if}}
+            </div>
+          </div>
+          <div class="spacer20"></div>
         </div>
       </div>
-      <div class="col-lg-4 form-group">
-        <label for="age">Rango de edad (o la que aparenta) <span class="text-purple">(Requerido)</span></label>
-        <select name="country" id="age" class="form-control">
-         <option value="">--- Selecciona una opción ---</option>
-         {{#each ages}}
-         <option value="{{spec}}" {{ageSelected spec}}> {{spec}} </option>
-         {{/each}}
-       </select>
-      </div>
-    </div>
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col-lg-12 form-group">
-        <label for="resume">Escribe algo sobre ti, que quieres que los demás sepan </label>
-          <textarea class="form-control" rows="5" id="resume" value="" placeholder="(450 caracteres máx)." maxlength="450">{{resume}}</textarea><small>Caracteres restantes: <div id="max"></div></small>
-      </div>
-    </div>
-    
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col-lg-12 mx-auto">
-        <h2>Ubicación</h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-4 form-group">
-        <label for="country">País <span class="text-purple">(Requerido)</span></label>
-        <select name="country" id="country" class="form-control">
-         {{#each getCountries}}
-         <option value="{{country}}" {{countrySelected country}}> {{country}} </option>
-         {{/each}}
-       </select>
-      </div>
-      <div class="col-lg-4 form-group">
-        <label for="state">Estado <span class="text-purple">(Requerido)</span></label>
-        <select name="state" id="states" class="form-control">
-          {{#each getStatesFromCountries}}
-          <option value="{{state}}" {{stateSelected state}}> {{state}} </option>
-          {{/each}}
-        </select>
-      </div>
-      <div class="col-lg-4 form-group">
-        <label for="city">Ciudad <span class="text-purple">(Requerido)</span></label>
-        <select name="city" id="city" class="form-control">
-          {{#each getCitiesFromStates}}
-          <option value="{{city}}" {{citySelected city}}> {{city}} </option>
-          {{/each}}
-        </select> 
-      </div>
-    </div>
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col-lg-12 mx-auto">
-        <h2>Datos avanzados</h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-4 form-group">
-        <label for="height">Altura </label>
-        <select name="height" id="height" class="form-control">
-         <option value="">--- Selecciona una opción ---</option>
-         {{#each heights}}
-         <option value="{{spec}}" {{heightSelected spec}}> {{spec}} </option>
-         {{/each}}
-       </select>
-      </div>
-      <div class="col-lg-4 form-group">
-        <label for="physical">Complexión física </label>
-        <select name="physical" id="physical" class="form-control">
-         <option value="">--- Selecciona una opción ---</option>
-         {{#each physical}}
-         <option value="{{spec}}" {{physicalSelected spec}}> {{spec}} </option>
-         {{/each}}
-       </select>
-      </div>
-      <div class="col-lg-4 form-group">
-        <label for="ethnics">Etnicidad </label>
-        <select name="ethnics" id="ethnics" class="form-control">
-         <option value="">--- Selecciona una opción ---</option>
-         {{#each ethnics}}
-         <option value="{{spec}}" {{ethnicsSelected spec}}> {{spec}} </option>
-         {{/each}}
-       </select>
-      </div>
-    </div>
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col-lg-4 form-group">
-        <label for="eyes">Color de ojos </label>
-        <select name="eyes" id="eyes" class="form-control">
-         <option value="">--- Selecciona una opción ---</option>
-         {{#each eyes}}
-         <option value="{{spec}}" {{eyesSelected spec}}> {{spec}} </option>
-         {{/each}}
-       </select>
-      </div>
-      <div class="col-lg-4 form-group">
-        <label for="hair">Color de pelo </label>
-        <select name="hair" id="hair" class="form-control">
-         <option value="">--- Selecciona una opción ---</option>
-         {{#each hair}}
-         <option value="{{spec}}" {{hairSelected spec}}> {{spec}} </option>
-         {{/each}}
-       </select>
-      </div>
-      <div class="col-lg-4 form-group">
-        <label for="hairType">Tipo de pelo </label>
-        <select name="hairType" id="hairType" class="form-control">
-         <option value="">--- Selecciona una opción ---</option>
-         {{#each hairType}}
-         <option value="{{spec}}" {{hairTypeSelected spec}}> {{spec}} </option>
-         {{/each}}
-       </select>
-      </div>
-    </div>
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col-lg-6 form-group">
-        <label for="gender">Barba y bigote (Hombres) </label>
-        <div class="row">
-          <div class="col"><input type="radio" name="beard" class="facial-hair" data-answer="true" {{selectedBeard 'true'}}>Si</div>
-        </div>
-        <div class="row">
-          <div class="col"><input type="radio" name="beard" class="facial-hair" data-answer="false" {{selectedBeard 'false'}}>No</div>
-        </div>
-      </div>
-    </div>
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col-lg-12 mx-auto">
-        <h2>Datos extra</h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-12 form-group">
-        <label for="peculiarities">Características físicas particulares ( Cicatrices,lunares, tatuajes, etc.) </label>
-          <textarea class="form-control" rows="5" id="peculiarities" value="" placeholder="(450 caracteres máx)." maxlength="450">{{peculiarities}}</textarea><small>Caracteres restantes: <div id="max-peculiarities"></div></small>
-      </div>
-    </div>
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col-lg-12 form-group">
-        <label for="skills">Habilidades especiales (Montar a caballo, stunts, gimnasia, natacion, canto, baile ,etc) </label>
-          <textarea class="form-control" rows="5" id="skills" value="" placeholder="(450 caracteres máx)." maxlength="450">{{skills}}</textarea><small>Caracteres restantes: <div id="max-skills"></div></small>
-      </div>
-    </div>
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col-lg-12 form-group">
-        <h2>Idiomas</h2>
-        
+      <div class="col-lg-9">
         <div class="container">
           <div class="row">
-            {{#each languages}}
-            <div class="col-lg-4 col-md-6 col-xs-12" style="text-align:left">
-              <div class="checkbox">
-                <label><input type="checkbox" value="{{spec}}" class="language" {{checkLanguage spec}}> {{spec}}</label>
+            <!-- Inicia contenido -->
+            <div class="container">
+              {{#if currentUser}}
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col-lg-12 mx-auto">
+                  <h2>Datos personales</h2>
+                </div>
               </div>
-             </div>
-            {{/each}}   
-          </div>
-          
-        </div>
-        
-        
-        
-        
-     
-      </div>
-    </div>
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col-lg-12 mx-auto">
-        <h2>Fotos y video</h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">Esta es tu imagen de perfil actual</div>
-    </div>
-    <div class="row">
-      <div class="col">
-        {{#if getProfilePicture}}
-        <img src="{{getProfilePicture}}"/>
-        {{else}}
-        <div id="profileImageLarge">{{getInitials}}</div>
-        {{/if}}
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <br>
-        <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal1">Seleccionar otra</button>
-      </div>
-    </div>
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col">Esta es tu imagen de portada</div>
-    </div>
-    <div class="row">
-      <div class="col">
-        {{#if getCoverPicture}}
-        <img id="image" src="{{getCoverPicture}}" class="thumbnail-project"/>
-        {{else}}
-        <img id="image" src="/images/c4.jpg" class="thumbnail-project"/>
-        {{/if}}
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <br>
-        <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal2">Seleccionar otra</button>
-      </div>
-    </div>
-    {{#if getGallery}}
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col">Esta es tu galería de imágenes</div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <!--Inicia carrousel -->
-        <div id="carouselExampleControls" class="carousel carousel-thumb slide" data-ride="carousel">
-          <div class="carousel-inner">
-            {{#each getGallery}}
-              {{#if isFirstElement this.position}}
-            <div class="carousel-item carousel-item-thumb active">
-              <img class="d-block w-100" src="{{getURL this.mediaId}}" alt="First slide">
-            </div>
-              {{else}}
-            <div class="carousel-item carousel-item-thumb">
-              <img class="d-block w-100" src="{{getURL this.mediaId}}" alt="Not first slide">
-            </div>
-              {{/if}}
-            {{/each}}
-          </div>
-          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Anterior</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Siguiente</span>
-          </a>
-        </div>
-        <!--Termina carrousel -->
-          
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <br>
-        <button type="button" class="btn btn-purple" id="goToMedia" >Agregar más imágenes</button>
-      </div>
-    </div>
-    {{/if}}
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col-lg-8 form-group">
-        <label for="nombre">Video de muestra </label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text"><i class="fa fa-play fa-lg"></i></div>
-          </div>
-          <input type="text" class="form-control" id="video" placeholder="URL de youtube, vimeo, etc." value="{{video}}" maxlength="150">
-        </div>
-        
-      </div>
-    </div>
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col-lg-12 mx-auto">
-        <h2>En Internet</h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-8 form-group">
-        <label for="web">Facebook</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text"><i class="fa fa-facebook fa-lg"></i></div>
-          </div>
-          <input  type="text" class="form-control" id="facebook_page" value="{{facebook}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-8 form-group">
-        <label for="web">Instagram</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text"><i class="fa fa-instagram fa-lg"></i></div>
-          </div>
-          <input type="text" class="form-control" id="instagram_page" value="{{instagram}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-8 form-group">
-        <label for="web">IMDB</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text"><i class="fa fa-imdb fa-lg"></i></div>
-          </div>
-          <input type="text" class="form-control" id="imdb_page" value="{{imdb}}" placeholder="Ej. www.imdb.com/cinekomuna" maxlength="120">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-8 form-group">
-        <label for="web">Twitter</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text"><i class="fa fa-twitter fa-lg"></i></div>
-          </div>
-          <input type="text" class="form-control" id="twitter_page" value="{{twitter}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-8 form-group">
-        <label for="web">Página Web</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text"><i class="fa fa-globe fa-lg"></i></div>
-          </div>
-          <input type="text" class="form-control" id="web_page" value="{{webpage}}" placeholder="Ej: www.cinekomuna.com" maxlength="120">
-        </div>
-      </div>
-    </div>
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col-lg-12 mx-auto text-center">
-        <button class="btn btn-purple" id="goProfile" type="button" role="button">VER MI PERFIL</button>
-      </div>
-    </div>
+              <div class="spacer20"></div>
+              <div class="row">
+                <div class="col-lg-4 form-group">
+                  <label for="nombre">Nombre <span class="text-purple">(Requerido)</span></label>
+                  <input type="text" class="form-control" id="personName" placeholder="Nombre" value="{{name}}" maxlength="30">
+                </div>
+                <div class="col-lg-4 form-group">
+                  <label for="nombre">Apellido Paterno <span class="text-purple">(Requerido)</span></label>
+                  <input type="text" class="form-control" id="personLastName" placeholder="Apellido Paterno" value="{{lastname}}" maxlength="20">
+                </div>
+                <div class="col-lg-4 form-group">
+                  <label for="nombre">Apellido Materno </label>
+                  <input type="text" class="form-control" id="personLastName2" placeholder="Apellido Materno" value="{{lastname2}}" maxlength="20">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4 form-group">
+                  <label for="artisticName">Nombre artístico </label>
+                  <input type="text" class="form-control" id="artisticName" placeholder="Nombre" value="{{artistic}}" maxlength="30">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12 form-group">
+                  <label for="gender">¿Qué nombre prefieres que se muestre en tu perfil público? <span class="text-purple">(Requerido)</span></label>
+                  <div class="spacer10"></div>
+                  <div class="row">
+                    <div class="col text-14"><input type="radio" name="preferedName" class="radio" data-answer="real" {{showArtistic 1}}>Nombre real</div>
+                  </div>
+                  <div class="spacer10"></div>
+                  <div class="row">
+                    <div class="col text-14"><input type="radio" name="preferedName" class="radio" data-answer="artistic" {{showArtistic 2}}>Nombre artístico</div>
+                  </div>
+                </div>
+              </div>
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col"><label for="category">¿Cuál es tu categoría o categorías? <span class="text-purple">(Requerido)</span></label></div>
+              </div>
+              <div class="row">
+              {{#each categories}}
+              <div class="col-lg-4 col-md-6 col-xs-12" style="text-align:left">
+                <div class="checkbox">
+                  <label><input type="checkbox" value="{{spec}}" class="category" {{checkCategory spec}}> {{spec}}</label>
+                </div>
+               </div>
+              {{/each}}   
+              </div>
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col-lg-4 form-group">
+                  <label for="gender">Sexo <span class="text-purple">(Requerido)</span></label>
+                  <div class="row">
+                    <div class="col text-14"><input type="radio" name="gender" class="sex" data-answer="Masculino" {{selectedGender 'Masculino'}}>Masculino</div>
+                  </div>
+                  <div class="spacer10"></div>
+                  <div class="row">
+                    <div class="col text-14"><input type="radio" name="gender" class="sex" data-answer="Femenino" {{selectedGender 'Femenino'}}>Femenino</div>
+                  </div>
+                  <div class="spacer10"></div>
+                  <div class="row">
+                    <div class="col text-14">
+                      <input type="radio" name="gender" class="sex" data-answer="Sin definir" {{selectedGender 'Sin definir'}}>Sin definir    
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 form-group">
+                  <label for="age">Rango de edad (o la que aparenta) <span class="text-purple">(Requerido)</span></label>
+                  <select name="country" id="age" class="form-control">
+                   <option value="">--- Selecciona una opción ---</option>
+                   {{#each ages}}
+                   <option value="{{spec}}" {{ageSelected spec}}> {{spec}} </option>
+                   {{/each}}
+                 </select>
+                </div>
+              </div>
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col-lg-12 form-group">
+                  <label for="resume">Escribe algo sobre ti, que quieres que los demás sepan </label>
+                    <textarea class="form-control" rows="5" id="resume" value="" placeholder="(450 caracteres máx)." maxlength="450">{{resume}}</textarea><small>Caracteres restantes: <div id="max"></div></small>
+                </div>
+              </div>
+              
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col-lg-12 mx-auto">
+                  <h2>Ubicación</h2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4 form-group">
+                  <label for="country">País <span class="text-purple">(Requerido)</span></label>
+                  <select name="country" id="country" class="form-control">
+                   {{#each getCountries}}
+                   <option value="{{country}}" {{countrySelected country}}> {{country}} </option>
+                   {{/each}}
+                 </select>
+                </div>
+                <div class="col-lg-4 form-group">
+                  <label for="state">Estado <span class="text-purple">(Requerido)</span></label>
+                  <select name="state" id="states" class="form-control">
+                    {{#each getStatesFromCountries}}
+                    <option value="{{state}}" {{stateSelected state}}> {{state}} </option>
+                    {{/each}}
+                  </select>
+                </div>
+                <div class="col-lg-4 form-group">
+                  <label for="city">Ciudad <span class="text-purple">(Requerido)</span></label>
+                  <select name="city" id="city" class="form-control">
+                    {{#each getCitiesFromStates}}
+                    <option value="{{city}}" {{citySelected city}}> {{city}} </option>
+                    {{/each}}
+                  </select> 
+                </div>
+              </div>
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col-lg-12 mx-auto">
+                  <h2>Datos avanzados</h2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4 form-group">
+                  <label for="height">Altura </label>
+                  <select name="height" id="height" class="form-control">
+                   <option value="">--- Selecciona una opción ---</option>
+                   {{#each heights}}
+                   <option value="{{spec}}" {{heightSelected spec}}> {{spec}} </option>
+                   {{/each}}
+                 </select>
+                </div>
+                <div class="col-lg-4 form-group">
+                  <label for="physical">Complexión física </label>
+                  <select name="physical" id="physical" class="form-control">
+                   <option value="">--- Selecciona una opción ---</option>
+                   {{#each physical}}
+                   <option value="{{spec}}" {{physicalSelected spec}}> {{spec}} </option>
+                   {{/each}}
+                 </select>
+                </div>
+                <div class="col-lg-4 form-group">
+                  <label for="ethnics">Etnicidad </label>
+                  <select name="ethnics" id="ethnics" class="form-control">
+                   <option value="">--- Selecciona una opción ---</option>
+                   {{#each ethnics}}
+                   <option value="{{spec}}" {{ethnicsSelected spec}}> {{spec}} </option>
+                   {{/each}}
+                 </select>
+                </div>
+              </div>
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col-lg-4 form-group">
+                  <label for="eyes">Color de ojos </label>
+                  <select name="eyes" id="eyes" class="form-control">
+                   <option value="">--- Selecciona una opción ---</option>
+                   {{#each eyes}}
+                   <option value="{{spec}}" {{eyesSelected spec}}> {{spec}} </option>
+                   {{/each}}
+                 </select>
+                </div>
+                <div class="col-lg-4 form-group">
+                  <label for="hair">Color de pelo </label>
+                  <select name="hair" id="hair" class="form-control">
+                   <option value="">--- Selecciona una opción ---</option>
+                   {{#each hair}}
+                   <option value="{{spec}}" {{hairSelected spec}}> {{spec}} </option>
+                   {{/each}}
+                 </select>
+                </div>
+                <div class="col-lg-4 form-group">
+                  <label for="hairType">Tipo de pelo </label>
+                  <select name="hairType" id="hairType" class="form-control">
+                   <option value="">--- Selecciona una opción ---</option>
+                   {{#each hairType}}
+                   <option value="{{spec}}" {{hairTypeSelected spec}}> {{spec}} </option>
+                   {{/each}}
+                 </select>
+                </div>
+              </div>
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col-lg-6 form-group">
+                  <label for="gender">Barba y bigote (Hombres) </label>
+                  <div class="spacer10"></div>
+                  <div class="row">
+                    <div class="col text-14"><input type="radio" name="beard" class="facial-hair" data-answer="true" {{selectedBeard 'true'}}>Si</div>
+                  </div>
+                  <div class="spacer10"></div>
+                  <div class="row">
+                    <div class="col text-14"><input type="radio" name="beard" class="facial-hair" data-answer="false" {{selectedBeard 'false'}}>No</div>
+                  </div>
 
-    {{/if}}
+                </div>
+              </div>
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col-lg-12 mx-auto">
+                  <h2>Datos extra</h2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12 form-group">
+                  <label for="peculiarities">Características físicas particulares ( Cicatrices,lunares, tatuajes, etc.) </label>
+                    <textarea class="form-control" rows="5" id="peculiarities" value="" placeholder="(450 caracteres máx)." maxlength="450">{{peculiarities}}</textarea><small>Caracteres restantes: <div id="max-peculiarities"></div></small>
+                </div>
+              </div>
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col-lg-12 form-group">
+                  <label for="skills">Habilidades especiales (Montar a caballo, stunts, gimnasia, natacion, canto, baile ,etc) </label>
+                    <textarea class="form-control" rows="5" id="skills" value="" placeholder="(450 caracteres máx)." maxlength="450">{{skills}}</textarea><small>Caracteres restantes: <div id="max-skills"></div></small>
+                </div>
+              </div>
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col-lg-12 form-group">
+                  <h2>Idiomas</h2>
+                  
+                  <div class="container">
+                    <div class="row">
+                      {{#each languages}}
+                      <div class="col-lg-4 col-md-6 col-xs-12" style="text-align:left">
+                        <div class="checkbox">
+                          <label><input type="checkbox" value="{{spec}}" class="language" {{checkLanguage spec}}> {{spec}}</label>
+                        </div>
+                       </div>
+                      {{/each}}   
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="spacer40"></div>
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col-lg-8 form-group">
+                  <label for="nombre">Video de muestra </label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fa fa-play"></i></div>
+                    </div>
+                    <input type="text" class="form-control" id="video" placeholder="URL de youtube, vimeo, etc." value="{{video}}" maxlength="150">
+                  </div>
+                </div>
+              </div>
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col-lg-12 mx-auto">
+                  <h2>En Internet</h2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-8 form-group">
+                  <label for="web">Facebook</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fa fa-facebook"></i></div>
+                    </div>
+                    <input  type="text" class="form-control" id="facebook_page" value="{{facebook}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-8 form-group">
+                  <label for="web">Instagram</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fa fa-instagram"></i></div>
+                    </div>
+                    <input type="text" class="form-control" id="instagram_page" value="{{instagram}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-8 form-group">
+                  <label for="web">IMDB</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fa fa-imdb"></i></div>
+                    </div>
+                    <input type="text" class="form-control" id="imdb_page" value="{{imdb}}" placeholder="Ej. www.imdb.com/cinekomuna" maxlength="120">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-8 form-group">
+                  <label for="web">Twitter</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fa fa-twitter"></i></div>
+                    </div>
+                    <input type="text" class="form-control" id="twitter_page" value="{{twitter}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-8 form-group">
+                  <label for="web">Página Web</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fa fa-globe"></i></div>
+                    </div>
+                    <input type="text" class="form-control" id="web_page" value="{{webpage}}" placeholder="Ej: www.cinekomuna.com" maxlength="120">
+                  </div>
+                </div>
+              </div>
+              <div class="spacer40"></div>
+              {{#if getGallery}}
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col-lg-12">Galería de imágenes <a href="#" class="text-purple" id="goToMedia" ><br>Agregar <i class="fa fa-pencil"></i></a></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <!--Inicia carrousel -->
+                  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                      {{#each getGallery}}
+                        {{#if isFirstElement this.position}}
+                      <div class="carousel-item active">
+                        <img class="d-block w-100" src="{{getURL this.mediaId}}" alt="First slide">
+                      </div>
+                        {{else}}
+                      <div class="carousel-item carousel-item-thumb">
+                        <img class="d-block w-100" src="{{getURL this.mediaId}}" alt="Not first slide">
+                      </div>
+                        {{/if}}
+                      {{/each}}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Anterior</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Siguiente</span>
+                    </a>
+                  </div>
+                  <!--Termina carrousel -->
+                    
+                </div>
+              </div>
+             
+              {{/if}}
+              <div class="spacer40"></div>
+
+
+              {{/if}}
+            </div>
+            <!-- Termina contenido -->
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+
+
+  
   <div class="spacer40"></div>
 
 
@@ -520,4 +543,5 @@
     </div>
   </div>
   <!--Modal: Name-->
+  {{/if}}
 </template>

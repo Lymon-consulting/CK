@@ -1,6 +1,5 @@
 <template name="editProfile">
 
-
   <style>
     img {
       display: block;
@@ -9,275 +8,308 @@
       max-width: 100%;
     }
   </style>
-
+  
   <div class="container text-center">
-    <h1 class="h1-title">EDITAR EL PERFIL DE</h1>
+    <h1 class="h1-title">EDITA TU PERFIL DE CREW</h1>
     <h2>{{fullName}}</h2>
-    <hr class="hr_width_600">
+    <hr>
   </div>
 
+
+  {{#if currentUser}}
   <div class="container">
-    <div class="col-md-10 mx-auto">
-     <!-- Tab panes -->
-     <div class="tab-content">
-       <div role="tabpanel" class="tab-pane active" id="persona_panel">    
-         {{#if currentUser}}
-         {{> user }}
-         {{/if}}
-       </div>       
-       <!-- {{> acreditation }} -->
-       <!-- {{> firstSetOfInformation }} -->
-     </div>
-   </div>
- </div>
-</template>
-
-<template name="user">
- <form>
-   <div class="spacer40"></div>
-   <div class="row">
-     <div class="col">
-       <h2>Datos personales</h2>
-     </div>
-   </div>
-   <div class="spacer40"></div>
-   <div class="row">
-    <div class="col form-group">
-     <label for="nombre">Nombre <span class="text-purple">(Requerido)</span></label>
-     <input type="text" class="form-control" id="personName" placeholder="Nombres" value="{{name}}" maxlength="30">
-   </div>
-   <div class="col form-group">
-     <label for="nombre">Apellido Paterno <span class="text-purple">(Requerido)</span></label>
-     <input type="text" class="form-control" id="personLastName" placeholder="Apellido paterno" value="{{lastname}}" maxlength="20">
-   </div>
-   <div class="col form-group">
-     <label for="nombre">Apellido Materno</label>
-     <input type="text" class="form-control" id="personLastName2" placeholder="Apellido materno" value="{{lastname2}}" maxlength="20">
-   </div>
- </div>
- <div class="spacer20"></div>
- <div class="form-group">
-  <label for="resumen">Resumen </label>
-  <textarea class="form-control" rows="5" id="resume" value="" placeholder="Cuéntanos de ti (450 caracteres máx)." maxlength="450">{{resume}}</textarea><small>Caracteres restantes: <div id="max"></div></small>
-</div>
-
-<div class="spacer40"></div>
-<div class="row">
-  <div class="col">
-    <h2>Ubicación</h2>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-4">
-    <label for="country">País <span class="text-purple">(Requerido)</span></label>
-    <select name="country" id="country" class="form-control">
-     {{#each getCountries}}
-     <option value="{{country}}" {{countrySelected country}}> {{country}} </option>
-     {{/each}}
-   </select>
- </div>
- <div class="col-md-4">
-   <label for="state">Estado <span class="text-purple">(Requerido)</span></label>
-   <select name="state" id="states" class="form-control">
-     {{#each getStatesFromCountries}}
-     <option value="{{state}}" {{stateSelected state}}> {{state}} </option>
-     {{/each}}
-   </select>  
- </div>
- <div class="col-md-4">
-   <label for="city">Ciudad <span class="text-purple">(Requerido)</span></label>
-   <select name="city" id="city" class="form-control">
-     {{#each getCitiesFromStates}}
-     <option value="{{city}}" {{citySelected city}}> {{city}} </option>
-     {{/each}}
-   </select>  
- </div>
-</div>
-
-<div class="spacer40"></div>
-<div class="row">
-  <div class="col">
-    <h2>Roles</h2>
-  </div>
-</div>
- {{#if hasPrimaryRole}}
- <div class="row">
-   <div class="col-lg-12">
-     Tus roles primarios son: <strong>{{getPrimaryRoles}}</strong>
-   </div>
- </div>
- {{/if}}
- <div class="spacer20"></div>
- <div class="row">
-   <div class="col-md-12">
-
-    <p>A continuación puedes seleccionar otros roles que tengas:</p>
-    <small>
-     <ul>
-      <li>En la lista de la izquierda, selecciona el departamento al cual pertenece tu rol.</li>
-      <li>En el recuadro de la derecha, haz doble clic sobre el rol para agregarlo a tu perfil.</li> 
-      <li>Puedes seleccionar tantos departamentos y roles como quieras.</li> 
-      <li>Para eliminar un rol de tu lista haciendo doble clic sobre él.</li>
-    </ul>
-  </small>
-</div>
-</div>
-
-<div class="spacer20"></div>
-<div class="row">
-  <div class="col-md-6">
-    <label for="oc">Departamentos </label>
-    <select name="category" id="category" class="form-control">
-     {{#each getCategories}}
-     <option value="{{title}}"> {{title}} </option>
-     {{/each}}
-   </select>
- </div>
- <div class="col-md-6">
-   <label for="Ocupation">Roles <span class="text-purple">(Selecciona con doble clic)</span></label>
-   <select multiple name="Ocupation" id="ocupation" class="form-control">
-     {{#each getOcupationsFromCategory}}
-     <option value="{{secondary}}" {{roleSelected secondary}}> {{secondary}} </option>
-     {{/each}}
-   </select>  
- </div>
-
-</div>
-
-<div class="spacer20"></div>
-<div class="row">
-  <div class="col-md-12">
-   <label for="Ocupation">Roles que has seleccionado <span class="text-purple">(Elimina con doble clic)</span></label>
-   <select name="Selection" multiple id="selection" class="form-control">
-     {{#each item in getRolesSelected}}
-     <option value="{{item}}" {{roleSelected item}}> {{item}} </option>
-     {{/each}}
-   </select>  
- </div>
-</div>
-
-<div class="spacer40"></div>
-
-<div class="row">
-  <div class="col">
-    <h2>En internet</h2>
-  </div>
-</div>
-<div class="form-group">
-  <label for="web">Página Web</label>
-  <div class="input-group">
-   <div class="input-group-prepend">
-     <div class="input-group-text"><i class="fa fa-globe fa-lg"></i></div>
-   </div>
-   <input type="text" class="form-control" id="web_page" value="{{webpage}}" placeholder="Ej: www.cinekomuna.com" maxlength="120">
- </div>
-</div>
-<div class="spacer20"></div>
-<div class="form-group">
-  <label for="">En la red <br> <small>Vincula tus cuentas de otros sitios en la red</small></label>
-</div>
-<div class="spacer20"></div>
-<div class="form-group">
-  <div class="input-group">
-   <div class="input-group-prepend">
-     <div class="input-group-text"><i class="fa fa-facebook fa-lg"></i></div>
-   </div>
-   <input  type="text" class="form-control" id="facebook_page" value="{{facebook}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120">
- </div>
-</div>
-<div class="form-group">
-  <div class="input-group">
-   <div class="input-group-prepend">
-     <div class="input-group-text"><i class="fa fa-twitter fa-lg"></i></div>
-   </div>
-   <input type="text" class="form-control" id="twitter_page" value="{{twitter}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
- </div>
-</div>
-<div class="form-group">
-  <div class="input-group">
-   <div class="input-group-prepend">
-     <div class="input-group-text"><i class="fa fa-vimeo fa-lg"></i></div>
-   </div>
-   <input type="text" class="form-control" id="vimeo_page" value="{{vimeo}}" placeholder="Ej. www.vimeo.com/cinekomuna" maxlength="120">
- </div>
-</div>
-<div class="form-group">
-  <div class="input-group">
-   <div class="input-group-prepend">
-     <div class="input-group-text"><i class="fa fa-youtube fa-lg"></i></div>
-   </div>
-   <input  type="text" class="form-control" id="youtube_page" value="{{youtube}}" placeholder="Ej. www.youtube.com/cinekomuna" maxlength="120">
- </div>
-</div>
-<div class="form-group">
-  <div class="input-group">
-   <div class="input-group-prepend">
-     <div class="input-group-text"><i class="fa fa-instagram fa-lg"></i></div>
-   </div>
-   <input type="text" class="form-control" id="instagram_page" value="{{instagram}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120">
- </div>
-</div>
-
-
-<div class="spacer40"></div>
-
-<div class="row">
-  <div class="col">
-    <h2>Imagen de perfil y de portada</h2>
-  </div>
-</div>
-<div class="row">
-  <div class="col">Esta es tu imagen de perfil actual</div>
-</div>
-<div class="row">
-  <div class="col">
-    {{#if getProfilePicture}}
-    <img src="{{getProfilePicture}}"/>
-    {{else}}
-    <div id="profileImageLarge">{{getInitials}}</div>
-    {{/if}}
-  </div>
-</div>
-<div class="row">
-  <div class="col">
-    <br>
-    <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal1">Seleccionar otra</button>
-  </div>
-</div>
-<div class="spacer20"></div>
-<div class="row">
-  <div class="col">Esta es tu imagen de portada actual</div>
-</div>
-<div class="row">
-  <div class="col">
-    {{#if getCoverPicture}}
-    <img id="image" src="{{getCoverPicture}}" class="thumbnail-project"/>
-    {{else}}
-    <img id="image" src="/images/c4.jpg" class="thumbnail-project"/>
-    {{/if}}
-  </div>
-</div>
-<div class="row">
-  <div class="col">
-    <br>
-    <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal2">Seleccionar otra</button>
-  </div>
-</div>
+    <div class="row">
+      <div class="col-lg-3 rounded background-verylightgray p-3">
+        <div class="sticky-top">
+          <div class="row">
+            <div class="col d-flex justify-content-center">
+              {{#if getProfilePicture}}
+              <img src="{{getProfilePicture}}"/>
+              {{else}}
+              <div id="profileImageLarge">{{getInitials}}</div>
+              {{/if}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-14 text-purple text-center">
+              <a href="#" class="text-purple" data-toggle="modal" data-target="#modal1">Cambiar <i class="fa fa-pencil"></i></a>
+            </div>
+          </div>
+          <div class="spacer20"></div>
+          <div class="row">
+            <div class="col text-center text-16">
+              <strong>¡Te damos la bienvenida, {{name}}!</strong>
+            </div>
+          </div>
+          <div class="spacer40"></div>
+          <div><hr></div>
+          <div class="row">
+            <div class="col text-14">
+              <a href="#" class="text-purple" id="goProfile"><i class="fa fa-eye"></i> Tu perfil</a>    
+            </div>
+          </div>
+          {{#if hasTopRole}}
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col text-14">
+              <a href="/viewProjects/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-briefcase"></i> Tus proyectos</a>
+            </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col text-14">
+              <a href="/viewIndustries/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-building"></i> Tus industrias</a>
+            </div>
+          </div>
+          {{/if}}
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col text-14">
+              <a href="/editProfileActor/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-user"></i> Crear perfil de cast</a>
+            </div>
+          </div>
+          <div class="spacer40"></div>
+          <div><hr></div>
+          <div class="row">
+            <div class="col text-14">Portada <a href="#" class="text-purple" data-toggle="modal" data-target="#modal2">Cambiar <i class="fa fa-pencil"></i></a></div>
+          </div>
+          <div class="row">
+            <div class="col">
+              {{#if getCoverPicture}}
+              <img id="image" src="{{getCoverPicture}}" class="thumbnail-project"/>
+              {{else}}
+              <img id="image" src="/images/c4.jpg" class="thumbnail-project"/>
+              {{/if}}
+            </div>
+          </div>
           
-<div class="row">
-  <div class="col"><hr></div>
-</div>
-<div class="spacer20"></div>
-<div class="form-group row">
-  <div class="col text-center">
-   <button class="btn btn-purple" id="goProfile" type="button" role="button">VER MI PERFIL</button>
-   {{#if hasTopRole}}
-   <a href="/viewProjects/{{currentUser._id}}" class="btn btn-purple" id="mis_proyectos" type="button" role="button">VER MIS PROYECTOS</a>
-   {{/if}}
- </div>
-</div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div class="container">
+          <div class="row">
+            <!-- Inicia contenido -->
+            <div class="col-md-12">
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col">
+                  <h2>Datos personales</h2>
+                </div>
+              </div>
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col form-group">
+                  <label for="nombre">Nombre <span class="text-purple">(Requerido)</span></label>
+                  <input type="text" class="form-control" id="personName" placeholder="Nombres" value="{{name}}" maxlength="30">
+                </div>
+                <div class="col form-group">
+                  <label for="nombre">Apellido Paterno <span class="text-purple">(Requerido)</span></label>
+                  <input type="text" class="form-control" id="personLastName" placeholder="Apellido paterno" value="{{lastname}}" maxlength="20">
+                </div>
+                <div class="col form-group">
+                  <label for="nombre">Apellido Materno</label>
+                  <input type="text" class="form-control" id="personLastName2" placeholder="Apellido materno" value="{{lastname2}}" maxlength="20">
+                </div>
+              </div>
+              <div class="spacer20"></div>
+              <div class="row">
+                <div class="col form-group">
+                  <label for="resumen">Resumen </label>
+                  <textarea class="form-control" rows="5" id="resume" value="" placeholder="Cuéntanos de ti (450 caracteres máx)." maxlength="450">{{resume}}</textarea><small>Caracteres restantes: <div id="max"></div></small>
+                </div>
+              </div>
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col">
+                  <h2>Ubicación</h2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <label for="country">País <span class="text-purple">(Requerido)</span></label>
+                  <select name="country" id="country" class="form-control">
+                    {{#each getCountries}}
+                    <option value="{{country}}" {{countrySelected country}}> {{country}} </option>
+                    {{/each}}
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="state">Estado <span class="text-purple">(Requerido)</span></label>
+                  <select name="state" id="states" class="form-control">
+                    {{#each getStatesFromCountries}}
+                    <option value="{{state}}" {{stateSelected state}}> {{state}} </option>
+                    {{/each}}
+                  </select>  
+                </div>
+                <div class="col-md-4">
+                  <label for="city">Ciudad <span class="text-purple">(Requerido)</span></label>
+                  <select name="city" id="city" class="form-control">
+                    {{#each getCitiesFromStates}}
+                    <option value="{{city}}" {{citySelected city}}> {{city}} </option>
+                    {{/each}}
+                  </select>  
+                </div>
+              </div>
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col">
+                  <h2>Roles</h2>
+                </div>
+              </div>
+              {{#if hasPrimaryRole}}
+              <div class="row">
+                <div class="col-lg-12">
+                  Tus roles primarios son: <strong>{{getPrimaryRoles}}</strong>
+                </div>
+              </div>
+              {{/if}}
+              <div class="spacer20"></div>
+              <div class="row">
+                <div class="col-md-12">
 
-</form>
+                  <p>A continuación puedes seleccionar otros roles que tengas:</p>
+                  <small>
+                    <ul>
+                      <li>En la lista de la izquierda, selecciona el departamento al cual pertenece tu rol.</li>
+                      <li>En el recuadro de la derecha, haz doble clic sobre el rol para agregarlo a tu perfil.</li> 
+                      <li>Puedes seleccionar tantos departamentos y roles como quieras.</li> 
+                      <li>Para eliminar un rol de tu lista haciendo doble clic sobre él.</li>
+                    </ul>
+                  </small>
+                </div>
+              </div>
+
+              <div class="spacer20"></div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="oc">Departamentos </label>
+                  <select name="category" id="category" class="form-control">
+                    {{#each getCategories}}
+                    <option value="{{title}}"> {{title}} </option>
+                    {{/each}}
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="Ocupation">Roles <span class="text-purple">(Selecciona con doble clic)</span></label>
+                  <select multiple name="Ocupation" id="ocupation" class="form-control">
+                    {{#each getOcupationsFromCategory}}
+                    <option value="{{secondary}}" {{roleSelected secondary}}> {{secondary}} </option>
+                    {{/each}}
+                  </select>  
+                </div>
+              </div>
+              <div class="spacer20"></div>
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="Ocupation">Roles que has seleccionado <span class="text-purple">(Elimina con doble clic)</span></label>
+                  <select name="Selection" multiple id="selection" class="form-control">
+                    {{#each item in getRolesSelected}}
+                    <option value="{{item}}" {{roleSelected item}}> {{item}} </option>
+                    {{/each}}
+                  </select>  
+                </div>
+              </div>
+
+              <div class="spacer40"></div>
+
+              <div class="row">
+                <div class="col">
+                  <h2>En internet</h2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col form-group">
+                  <label for="web">Página Web</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fa fa-globe"></i></div>
+                    </div>
+                    <input type="text" class="form-control" id="web_page" value="{{webpage}}" placeholder="Ej: www.cinekomuna.com" maxlength="120">
+                  </div>
+                </div>
+              </div>   
+              <div class="spacer20"></div>
+              <div class="row">
+                <div class="col form-group">
+                  <label for="">En la red <br> <small>Vincula tus cuentas de otros sitios en la red</small></label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fa fa-facebook"></i></div>
+                    </div>
+                    <input  type="text" class="form-control" id="facebook_page" value="{{facebook}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120">
+                  </div>
+                </div>
+              </div>
+              <div class="spacer10"></div>
+              <div class="row">
+                <div class="col form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fa fa-twitter"></i></div>
+                    </div>
+                    <input type="text" class="form-control" id="twitter_page" value="{{twitter}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
+                  </div>
+                </div>
+              </div>
+              <div class="spacer10"></div>
+              <div class="row">
+                <div class="col form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fa fa-twitter"></i></div>
+                    </div>
+                    <input type="text" class="form-control" id="twitter_page" value="{{twitter}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
+                  </div>
+                </div>
+              </div>
+              <div class="spacer10"></div>
+              <div class="row">
+                <div class="col form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fa fa-vimeo"></i></div>
+                    </div>
+                    <input type="text" class="form-control" id="vimeo_page" value="{{vimeo}}" placeholder="Ej. www.vimeo.com/cinekomuna" maxlength="120">
+                  </div>
+                </div>
+              </div>
+              <div class="spacer10"></div>
+              <div class="row">
+                <div class="col form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fa fa-youtube"></i></div>
+                    </div>
+                    <input  type="text" class="form-control" id="youtube_page" value="{{youtube}}" placeholder="Ej. www.youtube.com/cinekomuna" maxlength="120">
+                  </div>
+                </div>
+              </div>
+              <div class="spacer10"></div>
+              <div class="row">
+                <div class="col form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fa fa-instagram"></i></div>
+                    </div>
+                    <input type="text" class="form-control" id="instagram_page" value="{{instagram}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120">
+                  </div>
+                </div>
+              </div>
+              <div class="spacer40"></div>
+            </div>
+            <!-- Termina contenido -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   
+
 
 
    <!--Modal: Name-->
@@ -403,106 +435,5 @@
     $('#myModal').show();
   </script>
   {{/if}}
-
-</template> 
-
-<!--
-
-<template name="acreditation">
-                  <div class="row">
-                     <div class="col form-group">¿Eres el <strong>{{firstName}} {{lastName}} {{lastName2}}</strong> acreditado en los siguientes proyectos?</div>
-                     
-                  </div>
-
-                  <div class="row">
-                     <div class="col">
-                           <table class="table table-bordered">
-                            <tbody>
-                              <tr>
-                                <td>
-                                    Nombre: <strong>De día y de noche</strong> <br>
-                                    Actividades(es): <strong>Productora, Casting</strong> <br>
-                                    
-                                    <label class="custom-control custom-radio">
-                                      <input id="radio1" name="radio" type="radio" class="custom-control-input">
-                                      <span class="custom-control-indicator"></span>
-                                      <span class="custom-control-description">Si</span>
-                                    </label>
-                                    <label class="custom-control custom-radio">
-                                      <input id="radio2" name="radio" type="radio" class="custom-control-input">
-                                      <span class="custom-control-indicator"></span>
-                                      <span class="custom-control-description">No</span>
-                                    </label> <br>
-                                    <a href="#" class="text-purple">Ver proyecto</a> 
-                                </td>
-                                <td>
-                                   <img src="../images/cover1.jpg" alt="" width="150" height="100" class="img-tumbnail">
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                    Nombre: <strong>De día y de noche</strong> <br>
-                                    Actividades(es): <strong>Productora, Casting</strong> <br>
-                                    <label class="custom-control custom-radio">
-                                      <input id="radio3" name="radio" type="radio" class="custom-control-input">
-                                      <span class="custom-control-indicator"></span>
-                                      <span class="custom-control-description">Si</span>
-                                    </label>
-                                    <label class="custom-control custom-radio">
-                                      <input id="radio4" name="radio" type="radio" class="custom-control-input">
-                                      <span class="custom-control-indicator"></span>
-                                      <span class="custom-control-description">No</span>
-                                    </label><br>
-                                    <a href="#" class="text-purple">Ver proyecto</a>
-                                </td>
-                                <td>
-                                   <img src="../images/cover2.jpg" alt="" width="150" height="100" class="img-tumbnail">
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                    Nombre: <strong>De día y de noche</strong> <br>
-                                    Actividades(es): <strong>Productora, Casting</strong> <br>
-                                    <label class="custom-control custom-radio">
-                                      <input id="radio5" name="radio" type="radio" class="custom-control-input">
-                                      <span class="custom-control-indicator"></span>
-                                      <span class="custom-control-description">Si</span>
-                                    </label>
-                                    <label class="custom-control custom-radio">
-                                      <input id="radio6" name="radio" type="radio" class="custom-control-input">
-                                      <span class="custom-control-indicator"></span>
-                                      <span class="custom-control-description">No</span>
-                                    </label><br>
-                                    <a href="#" class="text-purple">Ver proyecto</a> 
-                                </td>
-                                <td>
-                                   <img src="../images/cover3.jpg" alt="" width="150" height="100" class="img-tumbnail">
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                    Nombre: <strong>De día y de noche</strong> <br>
-                                    Actividades(es): <strong>Productora, Casting</strong> <br>
-                                    <label class="custom-control custom-radio">
-                                      <input id="radio7" name="radio" type="radio" class="custom-control-input">
-                                      <span class="custom-control-indicator"></span>
-                                      <span class="custom-control-description">Si</span>
-                                    </label>
-                                    <label class="custom-control custom-radio">
-                                      <input id="radio8" name="radio" type="radio" class="custom-control-input">
-                                      <span class="custom-control-indicator"></span>
-                                      <span class="custom-control-description">No</span> 
-                                    </label><br>
-                                    <a href="#" class="text-purple">Ver proyecto</a>
-                                </td>
-                                <td>
-                                   <img src="../images/cover4.jpg" alt="" width="150" height="100" class="img-tumbnail">
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                     </div>
-                  </div>   
+  {{/if}}
 </template>
--->
-

@@ -1,0 +1,45 @@
+.bgText{
+  height: 360px;
+  background-image: url("/images/text-bg-slogan-536.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.modal-backdrop{
+  background-color: #000 !important;
+  opacity:0.9 !important;
+}
+.background-verydarkgray{
+   background-color: #111;
+}
+
+
+.background-darkgray{
+   background-color: #666;
+}
+
+.background-lightgray{
+   background-color: #CCC;
+}
+
+.background-verylightgray{
+   background-color: #eee;
+}
+.dark-bg{
+   background-color: #343a40;
+   height: 70px;
+}
+.purple-background{
+   background-color: #ED1567;
+   color:#fff;
+   font-family: Avenir-Black;
+}
+@media screen and (min-width: 100px) {
+    #bgText{
+      height: 360px;
+      background-image: url("/images/text-bg-slogan-536.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+   }
+}

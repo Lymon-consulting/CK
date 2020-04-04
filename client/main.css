@@ -1,120 +1,3 @@
-h4{
-  background-color: #ccc;
-}
-
-h3{
-  color:#666;
-}
-
-hr{
-  border-color:#ccc;
-}
-
-footer{
-  color:#666;
-  font-weight: bold;
-}
-
-a:link, a.text-purple:hover
-{
-  color: #ED1567;
-}
-
-a.text-button{
-  font-family: "Avenir-Heavy";
-}
-
-a.text-gray{
-   color: #999;
-}
-
-a.text-black{
-   color: #000;
-}
-
-input,
-input::-webkit-input-placeholder {
-  font-size: 12px;
-  line-height: 1;
-}
-
-div.vertical-line{
-  width: 1px; 
-  background-color: black;
-}
-
-div.vertical-line-white{
-  width: 1px; 
-  background-color: white;
-}
-
-td.low-padding{
-  margin: 0 !important;  
-  padding: 5px !important;
-}
-
-blockquote{
-  font-size: 30px;
-  background: #f9f9f9;
-  border-left: 10px solid #ccc;
-  margin: .5em 10px;
-  padding: 0 10px;
-  quotes: "\201C""\201D""\2018""\2019";
-  padding: 10px 20px;
-  line-height: 1.4;
-}
-
-blockquote:before {
-  content: open-quote;
-  display: inline;
-  height: 0;
-  line-height: 0;
-  left: -10px;
-  position: relative;
-  top: 30px;
-  color: #ccc;
-  font-size: 3em;
-}
-
-p{
-  margin: 0;
-}
-
-footer{
-  margin:0;
-  text-align: right;
-  vertical-align: bottom;
-  font-size: 1em;
-  font-style: italic;
-
-}
-
-
-.carousel-item{
-   width: 600px;
-   /*height: 500px;*/
-
-   /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
-   object-fit:scale-down;
-}
-
-.carousel{
-  width: 600px; 
-  
-}
-
-.carousel-thumb{
-  width: 200px; 
-  
-}
-.carousel-item-thumb{
-   width: 200px;
-   /*height: 500px;*/
-
-   /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
-   object-fit:scale-down;
-}
-
 #searchBox{
   display: block;
   width: 100%;
@@ -127,7 +10,6 @@ footer{
   line-height: 1.5;
   font-size: 12px;
 }
-
 .box{
     height:100px;
     width:150px;
@@ -136,7 +18,6 @@ footer{
     align-items: center;
     justify-content: center;
 }
-
 .dropzone {
     line-height:100px;
     border:5px dashed #ccc;
@@ -149,7 +30,6 @@ footer{
 .drag-over {
   border:5px dashed #34bdeb;
 }
-
 .modal-body {
     max-height: calc(100vh - 143px);
     overflow-y: auto; 
@@ -162,7 +42,7 @@ footer{
 }
 .h1-title{
    font-family: "AvenirNext-Bold";  
-   font-size: 36px;
+   font-size: 30px;
    color:#333;
    margin-top: 45px;
 }
@@ -170,24 +50,8 @@ footer{
    font-family: "Sans-serif";
    font-size: 36px;
    color:#333;
+}
 
-}
-.bgText{
-  height: 360px;
-  background-image: url("/images/text-bg-slogan-536.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-}
-.imageDivHeight{
-    width: 100%;
-    max-width: 100%;
-    height:500px;
-    background-position: center;
-    background-image: url("/images/intro-bg3.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-}
 .nine-columns {
     vertical-align: middle;
     margin: 20px;
@@ -197,7 +61,6 @@ footer{
     -moz-column-count: 10; /* Firefox */
     column-count: 10;
 }
-
 .four-columns {
     margin: 20px;
     margin: 2rem;
@@ -205,8 +68,6 @@ footer{
       -moz-column-count: 4; /* Firefox */
       column-count: 4;
 }
-
-
 /*** Inician estilos para pantallas de tablets */
 @media (max-width: 900px){
   .nine-columns{
@@ -252,72 +113,12 @@ footer{
 }
 /***Terminan estilos para dispositivos móviles*/
 
-.img-thumbnail{
-  padding: 0.25rem;
-  background-color: #ccc;
-  border: 2px solid #fff;
-  border-radius: 0.25rem;
-  max-width: none;
-  height: auto;
-}
-
-.media-thumb{
-   width: 200px;
-   height: 100px;
-
-   /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
-   object-fit:scale-down;
-}
-
-.media-preview{
-   width: 400px;
-   height: 200px;
-
-   /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
-   object-fit:scale-down;
-}
-
-
-.media-portlet img{
-   width: 1024px !important;
-   height: 1024px;
-
-
-   /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
-   object-fit:scale-down;
-}
-
-.zoom {
-  transition: transform .2s; /* Animation */
-  cursor: pointer;
-  z-index: 1;
-  position: relative;
-
-}
-
-.zoom:hover {
-  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-}
-
 .item {
   display: block;
   padding: 5px;
   margin: 5px;
   cursor: move;
 }
-
-#profileImage {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background: #666;
-  font-size: 15px;
-  color: #fff;
-  text-align: center;
-  line-height: 35px;
-  margin: 10px 0;
-}
-
 #iconInitials {
   width: 35px;
   height: 35px;
@@ -329,52 +130,6 @@ footer{
   line-height: 35px;
   /*margin: 10px 0;*/
 }
-
-#profileImageSmall {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: #666;
-  /*border:solid;*/
-  font-size: 25px;
-  color: #fff;
-  text-align: center;
-  line-height: 80px;
-  /*margin: 10px 0;*/
-}
-
-#profileImageLarge {
-  width: 100px;
-  height: auto;
-  border-radius: 50%;
-  background: #666;
-  /*border:solid;*/
-  font-size: 45px;
-  color: #fff;
-  text-align: center;
-  line-height: 100px;
-  /*margin: 10px 0;*/
-}
-
-#profileImageLarge200 {
-  width: 200px;
-  height: auto;
-  border-radius: 50%;
-  background: #666;
-  /*border:solid;*/
-  font-size: 45px;
-  color: #fff;
-  text-align: center;
-  line-height: 100px;
-  margin-left: 20px;
-}
-
-#companyLogo {
-  width: 150px;
-  height: 50px;
-  
-}
-
 .selectedElement{
   background-color: aqua;
 }
@@ -382,16 +137,13 @@ footer{
   background-color: white;
 }
 
-.modal-backdrop{
-  background-color: #000 !important;
-  opacity:0.9 !important;
-}
-
 .modal-content{
   background-color: #fff !important;
   opacity:0.9 !important;
 }
-
+.form-control{
+  font-size: 14px;
+}
 .file-upload-container {
     width: 100%;
     height: 50px;
@@ -405,12 +157,10 @@ footer{
     font-weight: 300;
     font-size: 20px;
 }
-
 .file-upload-container:hover {
     cursor: pointer;
     background: #3949AB;
 }
-
 .badge{
    font-size: 12px;
    font-family: verdana;
@@ -420,108 +170,47 @@ footer{
   border-color: #fff;
   border-width: 2px;
 }
-
 .col{
    width: 0%;
 }
-
 .modal-dialog{
     overflow-y: initial !important
 }
-/*
-.modal-body{
-    height: 450px;
-    overflow-y: auto;
-}*/
-
 .uppercase {
   text-transform: uppercase;
 }
-
-.thumbnail-cover{
-  /*Las portadas tienen un aspectRatio de 2:1*/
-   width: 200px;
-   height: 100px; 
-}
-
-.logo{
-  width: 40px;
-  height: 40px;
-}
-
-.thumbnail-logo{
-   height: 50px; 
-   width: 50px;
-}
-.thumbnail-project{
-  /*Las portadas tienen un aspectRatio de 2:1*/
-   width: 300px;
-   height: 150px; 
-   
-}
-
 #forgot-password-link{
    color: #666
 }
-
 #signup-link{
    color: #666;
 }
-
-.thumbnail{
-   background: transparent;
-}
-
-.thumbs{
-   background: transparent;
-   width: 50px;
-   height: 50px;
-}
-.larger_thumbs{
-   background: transparent;
-   width: 120px;
-   height: 80px;
-}
-
-
-
-
 .btn-fixed-width {
   width: 150px !important;
 }
-
 .btn-fixed-width-big {
     width: 300px !important;
 }
-
 .text-title-gray{
    font-family: "AvenirNext-Medium";
    font-size: 16px;
    color:#999;
 }
-
 .text-body-gray{
    font-family: "AvenirNext-Medium";
    font-size: 14px;
    color:#999;
 }
-
-
-
 .h2-title{
    font-family: "AvenirNext-Bold";  
    font-size: 30px;
    color:#666;
 }
-
-
-
 .h5-name{
    font-family: "Avenir-Medium";
    font-size: 28px;
    color:#ED1567; 
 }
-
 .subtitle-underline{
    font-family: "AvenirNext-Heavy";
    font-size: 14px;
@@ -535,37 +224,30 @@ footer{
    color:#000; 
    text-decoration: underline;
 }
-
 .numbers{
    font-family: "Avenir-MediumOblique";
    font-size: 12px;
    color:#333; 
 }
-
 .hidden {
   display: none;
 }
-
-
 .clasification-text{
    color: #fff;
    font-size: 20px;
    font-style: italic;
 }
-
 .project-title-text{
    color: #fff;
    font-size: 40px;
    font-weight: bold;
 }
-
 .people-name-text{
    color: #fff;
    font-size: 25px;
    font-family: "Avenir-Book";
    text-decoration: underline;
 }
-
 .people-name-text-circle{
    color: #333;
    font-size: 18px;
@@ -577,33 +259,11 @@ footer{
    text-decoration: underline;
    font-weight: bold;
 }
-
 .vertical-center-row {
  display: block;  
   margin-right: auto;  
   margin-left: auto;
 }
-
-/*
-.card {
-  float: left;
-  width: 33.333%;
-  padding: .75rem;
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
-  margin-right: 2rem;
-  border: 0;
-}
-
-.card > img {
-  margin-bottom: .75rem;
-}
-
-.card-text {
-  font-size: 85%;
-}*/
-
- 
 .hr-gray {
   border-color: #fff;
 }
@@ -623,11 +283,6 @@ footer{
   width:100%;
   height:auto;
 }
-.card-img-top{
-  width:100%;
-  height:auto;
-}
-
 .card-title{
   text-align: center;
   text-transform: uppercase;
@@ -655,7 +310,6 @@ footer{
   padding: 2rem;
 
 }
-
 .black_border{
   outline: 1px solid black !important;
    padding: 0px; 
@@ -706,38 +360,7 @@ footer{
     align-items: center;
 }
 
-.cover-thumbnail{
-   width: 140px;
-   height: 70px; 
-}
 
-
-.cover-top{
-   width: 100%;
-   height: auto; 
-}
-
-.cover-large{
-   height: 300px; 
-   width: 1080px;
-}
-
-.background-verydarkgray{
-   background-color: #111;
-}
-
-
-.background-darkgray{
-   background-color: #666;
-}
-
-.background-lightgray{
-   background-color: #CCC;
-}
-
-.background-verylightgray{
-   background-color: #eee;
-}
 
 .banner-table{
    padding: 20px;
@@ -774,18 +397,12 @@ footer{
    width: 600px;
 }
 
-
 .agreements{
    font-size: 12px;
    color:#666;
    font-family: "Avenir-Roman";
 }
 
-
-.title-banner{
-   font-size: 36px;
-   font-weight: bold;
-}
 .text-banner{
    font-size: 34px;
    font-weight: bold;
@@ -797,6 +414,14 @@ footer{
 
 .text-purple{
    color: #ED1567;
+}
+
+.text-14{
+  font-size: 14px;
+}
+
+.text-16{
+  font-size: 16px;
 }
 
 .input-required-purple{
@@ -821,14 +446,13 @@ footer{
    color: #000;
 }
 
-
-
 .button_white{
    border-width: 1px;
    border-color: #fff;
    background: transparent;
    color: #fff;
 }
+
 .button_white a, a:hover {
    text-decoration: none;
    color:#fff;
@@ -937,7 +561,6 @@ footer{
     display: none;
 }
 
-
 .btn-purple {
    border-width: 1px;
    border-color: #ED1567;
@@ -979,7 +602,6 @@ footer{
    text-decoration: italic;
 }
 
-
 .pagination ul {
   display: inline-block;
   padding: 0;
@@ -1009,7 +631,6 @@ footer{
 .center-cropped {
   width: 100%;
   height: 200px;
-  
   background-repeat: no-repeat;
 }
 
@@ -1072,46 +693,13 @@ footer{
   font-family: 'Glyphicons Halflings';
 }
 
-
-
 [class*="col-"] {
     width: 100%;
 }
 
-@media screen and (min-width: 100px) {
-    
 
-    #bannerBack{
-      width: 100%;
-        height:220px;
-        background-image: url("/images/bb.jpg");
-        background-repeat: no-repeat;
-        background-size: cover;
-   }
-   /*
-   #bannerProject{
-      width: 100%;
-        height:670px;
-        background-image: url("/images/background-dark.jpg");
-        background-repeat: no-repeat;
-        background-size: cover;
-   }*/
-}
 
-@media screen and (min-width: 100px) {
-    #bgText{
-      height: 360px;
-      background-image: url("/images/text-bg-slogan-536.png");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-   }
-}
 
-.dark-bg{
-   background-color: #343a40;
-   height: 70px;
-}
 
 .padding-0 {
     padding: 0;
@@ -1123,24 +711,7 @@ footer{
   height: auto;
 }
 
-@media screen and (min-width: 100px) {
-    #imageBanner{
-        /*max-width:100%; */
-        /*max-height:100%;*/
-        display:block;
-        /*height: 230px;*/
-        background-image: url("/images/banner-david.jpg");
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-}
-
 .border-cell {
    border: 1px solid #000000;
 }
 
-.purple-background{
-   background-color: #ED1567;
-   color:#fff;
-   font-family: Avenir-Black;
-}
