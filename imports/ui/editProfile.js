@@ -281,7 +281,24 @@ getURL(mediaId){
   var url = "";
   url = Meteor.settings.public.CLOUDINARY_RES_URL + "/" + mediaId;
   return url;
-}
+},
+showCreateCastLink(){
+    var result = true;
+    if(Meteor.user()){
+      if(Meteor.user().profileType){
+        if(Meteor.user().profileType==="cast"){ //si ya es cast ya no mostrar el link
+          result = false;
+        }
+        else if(Meteor.user().profileType==="both"){ //si es tanto cast como crew ya no mostrar el link
+          result = false; 
+        }
+        else{
+          result = true;
+        }
+      }
+    }
+    return result;
+  }
 
 
 
@@ -379,7 +396,8 @@ Template.editProfile.events({
 
 'click .goMediaLibrary': function(event,template){
   event.preventDefault();
-  $('.modal').modal('hide'); 
+  $('#modal1').modal('hide');
+  $('body').removeClass('modal-open');
   $('.modal-backdrop').remove();
   FlowRouter.go("/mediaEditor/" + Meteor.userId());
 },
@@ -396,8 +414,9 @@ Template.editProfile.events({
   mediaId
   );
 
- $('.modal').modal('hide'); 
- $('.modal-backdrop').remove();
+  $('#modal2').modal('hide');
+  $('body').removeClass('modal-open');
+  $('.modal-backdrop').remove();
 
 },
 
@@ -411,8 +430,9 @@ Template.editProfile.events({
   mediaId
   );
 
- $('.modal').modal('hide'); 
- $('.modal-backdrop').remove();
+  $('#modal2').modal('hide');
+  $('body').removeClass('modal-open');
+  $('.modal-backdrop').remove();
 
 },
 
@@ -525,6 +545,18 @@ else{
             console.log("Upload Error:"  + err); //no output on console
           }
         });
+    },
+    'click #addCastProfile':function(event, template){
+      event.preventDefault();
+
+      Meteor.call('updateProfileType', Meteor.userId(),"both");
+
+      $('#castModal').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+      Session.set("viewAs","cast");
+      window.scrollTo(0, 0);
+      FlowRouter.go("/editProfileActor/" + Meteor.userId());
     }
     
   });

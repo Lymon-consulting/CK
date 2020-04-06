@@ -183,16 +183,17 @@ Template.mediaEditor.events({
     var name = files[0].name;
     var data = event.target.result;
     reader.readAsBinaryString(files[0]);
-  },
+  },/*
   'change #type': function(event, template){
     event.preventDefault();
     var public_id = $(event.currentTarget).attr("data-id");
     var type = event.target.value;
     console.log(type);
-    //$('.modal').modal('hide'); 
+    $('#castModal').modal('hide');
+    $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
     FlowRouter.go('/editMedia/' + public_id+'/'+type);
-  },
+  },*/
   'click #sendToEditor': function(event, template){
     event.preventDefault();
     var mediaId = $(event.target).attr('data-id');

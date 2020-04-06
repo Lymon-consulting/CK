@@ -434,12 +434,41 @@
    color: #999;
 }
 
+/*Estilos para el menú desplegable*/
+.dropdown-menu{
+  width: 300px;
+}
+.dropdown-item{
+   font-size: 16px;
+}
 .dropdown-item a{
    color:#000;
 }
+.dropdown-header{
+  font-size: 14px;
+}
+.dropdown-toggle::after{
+  display: none;
+}
+/*Termina estilos para el menú desplegable*/
+
+/*Inician estilos para los botones de crew y cast en la barra superior*/
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #ED1567;
+}
+
+.nav-pills a{
+  color:#c6c6c6;
+}
+/*Terminan estilos para los botones de crew y cast en la barra superior*/
 
 .text-white{
    color: #fff;
+}
+
+.text-lightgray{
+   color: #bbb !important;
 }
 
 .text-black{
@@ -557,9 +586,7 @@
    font-size: 20px;
 }
 
-.dropdown-toggle::after{
-    display: none;
-}
+
 
 .btn-purple {
    border-width: 1px;

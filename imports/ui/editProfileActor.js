@@ -545,6 +545,23 @@ Template.editProfileActor.helpers({
         url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.userId() + "/" + media.mediaId;    
       }
     return url;
+  },
+  showCreateCrewLink(){
+    var result = true;
+    if(Meteor.user()){
+      if(Meteor.user().profileType){
+        if(Meteor.user().profileType==="crew"){ //si ya es crew ya no mostrar el link
+          result = false;
+        }
+        else if(Meteor.user().profileType==="both"){ //si es tanto cast como crew ya no mostrar el link
+          result = false; 
+        }
+        else{
+          result = true;
+        }
+      }
+    }
+    return result;
   }
 });
 
@@ -751,8 +768,9 @@ Template.editProfileActor.events({
       mediaId
       );
 
-     $('.modal').modal('hide'); 
-     $('.modal-backdrop').remove();
+      $('#modal1').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
   },
   'click #selectCoverPicture': function(event,template){
    event.preventDefault();
@@ -763,13 +781,15 @@ Template.editProfileActor.events({
     mediaId
     );
 
-   $('.modal').modal('hide'); 
-   $('.modal-backdrop').remove();
+    $('#modal2').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
 
   },
   'click .goMediaLibrary': function(event,template){
     event.preventDefault();
-    $('.modal').modal('hide'); 
+    $('#modal2').modal('hide');
+    $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
     FlowRouter.go("/mediaEditor/" + Meteor.userId());
   },
@@ -799,5 +819,17 @@ Template.editProfileActor.events({
   'click #goToMedia': function(event,template){
     event.preventDefault();
     FlowRouter.go("/mediaEditor/"+Meteor.userId());
-  }
+  },
+  'click #addCrewProfile':function(event, template){
+      event.preventDefault();
+
+      Meteor.call('updateProfileType', Meteor.userId(),"both");
+
+      $('#crewModal').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+      Session.set("viewAs","crew");
+      window.scrollTo(0, 0);
+      FlowRouter.go("/editProfile/" + Meteor.userId());
+    }
 });

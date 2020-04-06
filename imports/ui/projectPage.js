@@ -1109,7 +1109,8 @@ if (Meteor.isClient) {
             $('#imageModal').hide();
             $('#imagesAttr').hide();
             $('#imagesGrid').show();
-            $('.modal').modal('hide'); 
+            $('#imageModal').modal('hide');
+            $('body').removeClass('modal-open');
             $('.modal-backdrop').remove();
 
             Session.set("selectedImg",null);

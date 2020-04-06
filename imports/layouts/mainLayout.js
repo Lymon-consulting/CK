@@ -32,15 +32,90 @@ Template.registerHelper('lastName2', function(){
  return Meteor.user().profile.lastname2;
 });
 
-Template.registerHelper('isActor', function(){
+Template.registerHelper('isCast', function(){
+  var result = false;
   if(Meteor.user()){
-    if(Meteor.user().profileType && Meteor.user().profileType==="cast"){
-      return true;
+    if(Session.get("viewAs")!=null){//Existe la variable en sesión
+      if(Session.get("viewAs")==="cast"){//El usuario eligió ver como cast
+        result = true;
+      }
+      else{//El usuario NO eligió ver como crew
+        result = false;
+      }
+    }
+    else{ //no existe la variable en sesión, consultar en la BD
+      if(Meteor.user().profileType){
+        if(Meteor.user().profileType==="cast"){ //El valor en la BD es cast
+          result = true;
+        }
+        else if(Meteor.user().profileType==="both"){//El valor en la BD es both
+          result = true;
+        }
+      }
+      else{//El valor en la BD no es crew ni both, debe ser crew
+        result = false;
+      }
+    }
+  }
+  return result;
+});
+
+Template.registerHelper('isCrew', function(){
+  var result = false;
+  if(Meteor.user()){
+    if(Session.get("viewAs")!=null){//Existe la variable en sesión
+      if(Session.get("viewAs")==="crew"){//El usuario eligió ver como crew
+        result = true;
+      }
+      else{//El usuario NO eligió ver como crew
+        result = false;
+      }
+    }
+    else{ //no existe la variable en sesión, consultar en la BD
+      if(Meteor.user().profileType){
+        if(Meteor.user().profileType==="crew"){ //El valor en la BD es crew
+          result = true;
+        }
+        else if(Meteor.user().profileType==="both"){//El valor en la BD es both
+          result = true;
+        }
+      }
+      else{//El valor en la BD no es crew ni both, debe ser cast
+        result = false;
+      }
+    }
+  }
+  return result;
+});
+
+Template.registerHelper('isBoth', function(){
+  var result = false;
+  if(Meteor.user()){
+    if(Meteor.user().profileType){
+      if(Meteor.user().profileType==="both"){
+        result = true;
+      }
     }
     else{
       return false;
     }
   }
+  return result;
+});
+
+Template.registerHelper('viewAs',function(){
+  var userPreference = null;
+  console.log("A--->"+Session.get("viewAs"));
+
+  if(Session.get("viewAs")!=null){
+    userPreference = Session.get("viewAs");
+  }
+  else{
+    userPreference = Meteor.user().profileType;
+
+  }
+  console.log("B--->"+userPreference);
+  return userPreference;
 });
 
 Template.registerHelper('fullName', function(){

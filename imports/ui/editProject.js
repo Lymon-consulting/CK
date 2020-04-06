@@ -318,7 +318,8 @@ if (Meteor.isClient) {
            mediaId
          );
 
-        $('.modal').modal('hide'); 
+        $('#modal1').modal('hide');
+        $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
 
       },/*
@@ -350,7 +351,8 @@ if (Meteor.isClient) {
       },*/
       'click .goMediaLibrary': function(event,template){
         event.preventDefault();
-        $('.modal').modal('hide'); 
+        $('#modal1').modal('hide');
+        $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
         FlowRouter.go("/mediaEditor/" + Meteor.userId());
       },

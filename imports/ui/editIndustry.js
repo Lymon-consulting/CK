@@ -262,7 +262,8 @@ return false;
   },
   'click .goMediaLibrary': function(event,template){
     event.preventDefault();
-    $('.modal').modal('hide'); 
+    $('#modal1').modal('hide');
+    $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
     FlowRouter.go("/mediaEditor/" + Meteor.userId());
   },
@@ -277,7 +278,8 @@ return false;
         mediaId
       );
 
-    $('.modal').modal('hide'); 
+    $('#modal1').modal('hide');
+    $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
 
   },
@@ -291,7 +293,8 @@ return false;
         mediaId
       );
 
-    $('.modal').modal('hide'); 
+    $('#modal2').modal('hide');
+    $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
 
   }

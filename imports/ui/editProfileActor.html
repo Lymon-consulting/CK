@@ -48,13 +48,15 @@
               <a href="#" class="text-purple" id="goProfile"><i class="fa fa-eye"></i> Tu perfil</a>    
             </div>
           </div>
-          
+          {{#if showCreateCrewLink}}
           <div class="spacer10"></div>
           <div class="row">
             <div class="col text-14">
-              <a href="/editProfile/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-user"></i> Crear perfil de crew</a>
+              <a href="#" class="text-purple" data-toggle="modal" data-target="#crewModal"><i class="fa fa-user"></i> Crear perfil de crew</a>
             </div>
           </div>
+          {{/if}}
+
           <div class="spacer40"></div>
           <div><hr></div>
           <div class="row">
@@ -445,6 +447,45 @@
   
   <div class="spacer40"></div>
 
+
+
+  <!--Modal: Name-->
+  <div class="modal fade" id="crewModal" tabindex="-1" role="dialog" aria-labelledby="castModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <!--Content-->
+      <div class="modal-content">
+        <!--Body-->
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">
+              <div class="col text-center">¿Quieres crear un perfil de Crew?</div>
+            </div>
+            <div class="row">
+              <div class="col"><div class="spacer40"></div></div>
+            </div>
+            <div class="row">
+              <div class="col"><small>Actualmente eres <strong>Cast</strong>, si agregas un perfil de Crew deberás llenar información sobre tu rol dentro de la industria audiovisual. Aparecerás en el buscador de Crew, para que otras personas puedan invitarte a sus proyectos.</small>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col"><div class="spacer40"></div></div>
+            </div>
+          </div>
+        </div>
+        <!--Footer-->
+        <div class="modal-footer justify-content-center">
+          <div class="row">
+            <div class="col">
+              <button type="button" class="btn btn-purple" id="addCrewProfile">Sí, quiero agregar un perfil de crew</button>
+              <button class="btn btn-purple" data-dismiss="modal">En otro momento</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/.Content-->
+    </div>
+  </div>
+  <!--Modal: Name-->
 
   <!--Modal: Name-->
    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
