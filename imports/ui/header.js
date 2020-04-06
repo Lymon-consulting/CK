@@ -72,25 +72,41 @@ Template.header.helpers({
           }
       }
       return strResult;
+   },
+   getActiveCrew(){
+     var result = "";
+     if(Session.get("viewAs")!=null){
+       if(Session.get("viewAs")==="crew"){
+         result = "active";
+       }
+     }
+     else{
+       if(Meteor.user()){
+         if(Meteor.user().profileType==="crew" || Meteor.user().profileType==="both"){
+           result = "active";
+         }
+       }
+     }
+     return result;
+   },
+   getActiveCast(){
+     var result = "";
+     if(Session.get("viewAs")!=null){
+       if(Session.get("viewAs")==="cast"){
+         result = "active";
+       }
+     }
+     else{
+       if(Meteor.user()){
+         if(Meteor.user().profileType==="cast"){
+           result = "active";
+         }
+       }
+     }
+     return result;
    }
 
-  /*,
-  hasTopRole(){
-    var array = new Array();
-    var result = false;
-    if(Meteor.user().role!=null){
-      array = Meteor.user().role;
-      for (var i = array.length - 1; i >= 0; i--) {
-        if(array[i]==="Director"){
-          result = true;  
-        }
-        if(array[i]==="Productor"){
-          result = true;  
-        }
-      }
-    }
-    return result;
-}*/
+  
 
 });
 
@@ -240,16 +256,27 @@ Template.header.events({
       Session.set("viewAs","crew");
       $("#viewAsCast").removeClass("active");
       $("#viewAsCrew").addClass("active");
-      window.scrollTo(0, 0);
-      FlowRouter.go("/profilePage/"+Meteor.userId());
+      
+      var url = window.location.href;
+      //Si está en su perfil de cast o en la edición de perfil de cast y se cambia a crew mandarlo al home
+      
+      if(url.indexOf("/editProfileActor/")>0){
+        window.scrollTo(0, 0);
+        FlowRouter.go("/editProfile/"+Meteor.userId());
+      }
     },
     'click #viewAsCast':function(event,template){
       event.preventDefault();
       Session.set("viewAs","cast");
       $("#viewAsCrew").removeClass("active");
       $("#viewAsCast").addClass("active");
-      window.scrollTo(0, 0);
-      FlowRouter.go("/profilePageActor/"+Meteor.userId());
+      var url = window.location.href;
+      //Si está en su perfil de crew o en la edición de perfil de crew y se cambia a cast mandarlo al home
+      
+      if(url.indexOf("/editProfile/")>0){
+        window.scrollTo(0, 0);
+        FlowRouter.go("/editProfileActor/"+Meteor.userId());
+      }
     }
 
 });
