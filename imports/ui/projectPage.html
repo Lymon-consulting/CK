@@ -196,6 +196,8 @@
       <div class="spacer80"></div>
       {{>crew}}  
       <div class="spacer40"></div>
+      {{>cast}}
+      <div class="spacer40"></div>
       {{>companies}}
       <div class="spacer40"></div>
 
@@ -252,41 +254,49 @@
             </div>
          </div>
          <div class="row">
+            <div class="col">
+               ¿Qué tipo de colaborador deseas agregar?
+            </div>
+         </div>
+         <div class="row">
             <div class="col spacer20"></div>
          </div>
 
-        <!-- Esta era la pantalla anterior de colaboradores
-         <div class="row">
-            <div class="col">
-               Nombre: {{> inputAutocomplete settings=settings id="msg" class="form-control form-control-sm" placeholder="Nombre..."}}
-            </div>
-            <div class="col">
-               Rol:
-               <select id="oficio" class="form-control form-control-sm">
-                  {{#each getAllOcupations}}
-                  <option value="{{secondary}}"> {{secondary}} </option>
-               {{/each}}
-               </select>
-            </div>
-            
-         </div>
-         <div class="row">
-            <div class="col">
-               <button type="button" id="add_collaborator" class="btn btn-purple">Agregar</button>
-               <input type="hidden" id="userId">
-               <input type="hidden" id="userMail">
-            </div>
-         </div>
-         <div class="spacer40"></div>
-         {{>selectedUsers}}
-
-
-       -->
-
         <!-- esto es nuevo -->
         <div class="row">
+          <div class="col">
+            <div class="row">
+
+              <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                  <a href="#" id="search"><img class="card-img-top" data-answer='crew' src="/images/crew_thumb.jpg" alt=""></a>
+                  
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                  <a href="#" id="searchCast"><img class="card-img-top" data-answer='cast' src="/images/cast_thumb.jpg" alt=""></a>
+                  
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                  <a href="#" id="searchCompany" ><img class="card-img-top" data-answer='industry' src="/images/industry_thumb.jpg" alt=""></a>
+                  
+                </div>
+              </div>
+
+              
+
+            </div>
+          </div>
+        </div>
+        <!--
+        <div class="row">
             <div class="col">
-               <button type="button" id="search" class="btn btn-purple"><i class="fa fa-users fa-sm"></i> Agregar personas</button>
+               <button type="button" id="search" class="btn btn-purple"><i class="fa fa-users fa-sm"></i> Agregar crew</button>
             </div>
          </div>
          <div class="row">
@@ -298,7 +308,7 @@
             <div class="col">
                <button type="button" id="searchCompany" class="btn btn-purple"><i class="fa fa-building fa-sm"></i> Agregar empresas u organizaciones</button>
             </div>
-         </div>
+         </div>-->
 
       </div>
       <div class="modal-footer">
@@ -906,7 +916,7 @@
 <template name="crew">
   {{#if getCrew.project_staff}}
      <div class="container text-center">
-        <h3 class="h1-title">COLABORADORES</h3>
+        <h3 class="h1-title">CREW</h3>
         <hr>
      </div>
      
@@ -922,6 +932,32 @@
                  {{/if}}
                  </a>
                   <span class="people-name-text-circle"><a href="/profilePage/{{this._id}}" class="text-title-gray">{{this.name}}</a></span> <br><span class="people-role-text-circle uppercase">{{this.role}}</span> 
+              </div>
+           {{/if}}
+        {{/each}}
+     </div>
+   {{/if}}
+</template>
+
+<template name="cast">
+  {{#if getCast.project_cast}}
+     <div class="container text-center">
+        <h3 class="h1-title">CAST</h3>
+        <hr>
+     </div>
+     
+     <div class="d-flex justify-content-around text-center">
+        {{#each getCast.project_cast}}
+           {{#if this.confirmed}}
+              <div class="p-2">
+                <a href="{{getPersonalURL this._id}}/{{this._id}}">
+                 {{#if getProfilePicture this._id}}
+                    <img src="{{getProfilePicture this._id}}" border="0" class="rounded-circle" /><br/>
+                 {{else}}
+                    <div id="profileImageLarge">{{getInitials this._id}}</div>
+                 {{/if}}
+                 </a>
+                  <span class="people-name-text-circle"><a href="/profilePageActor/{{this._id}}" class="text-title-gray">{{getName this._id}}</a></span> <br><span class="people-role-text-circle uppercase">{{categories this._id}}</span> 
               </div>
            {{/if}}
         {{/each}}

@@ -5,16 +5,16 @@ import { Project } from '../api/project.js';
 import { Media } from '../api/media.js';
 import { UsersIndex } from '/lib/common.js';
 
-import './searchCollaboratorForProject.html';
+import './searchCastForProject.html';
 import '/lib/common.js';
 
-Template.searchCollaboratorForProject.rendered = function(){
-  UsersIndex.getComponentMethods().addProps('profileType', 'crew');
+Template.searchCastForProject.rendered = function(){
+  UsersIndex.getComponentMethods().addProps('profileType', 'cast');
   Session.set("selected_category",null);
 }
 
 Meteor.subscribe("otherUsers");
-Template.searchCollaboratorForProject.helpers({
+Template.searchCastForProject.helpers({
    usersIndex: () => UsersIndex, // instanceof EasySearch.Index
    inputAttributes: function () {
      return { 
@@ -29,9 +29,44 @@ Template.searchCollaboratorForProject.helpers({
     // get the total count of search results, useful when displaying additional information
     return dict.get('count')
    },
+   getName(userId){
+      var name = "";
+      var user = Meteor.users.findOne({'_id':userId});
+      if(user){
+        if(user.showArtisticName){
+          name = user.artistic;
+        }
+        else{
+          if(user.profile.name!=null && user.profile.name!=""){
+            name = user.profile.name;  
+          }
+          if(user.profile.lastname!=null && user.profile.lastname!=""){
+            name = name + " " + user.profile.lastname;
+          }
+          if(user.profile.lastname2!=null && user.profile.lastname2!=""){
+            name = name + " " + user.profile.lastname2;
+          }
+        }
+      }
+      return name;
+    },
    getAllOcupations(){
     return Ocupation.find({},{sort:{"secondary":1}}).fetch();
   },
+  categories(userId){
+      var strResult = "";
+      var user = Meteor.users.findOne({'_id': userId});
+      var result = new Array();
+      
+      if(user && user.categories){
+         result = user.categories;
+         for (var i = 0; i < result.length; i++) {
+           strResult = strResult + ", " + result[i];
+         }
+         strResult = strResult.substring(2,strResult.length);
+      }
+      return strResult;      
+   },
   getAvailableYears(){
    var years = new Array();
 
@@ -118,10 +153,10 @@ checkParticipation(userId){
     var project = Project.findOne({'_id': FlowRouter.getParam('id')});
     var result="";
     if(project){
-      var staff = project.project_staff;
-      if(staff!=null && staff!=""){
-        for (var i = staff.length - 1; i >= 0; i--) {
-          if(staff[i]._id === userId){
+      var cast = project.project_cast;
+      if(cast!=null && cast.length>0){
+        for (var i = cast.length - 1; i >= 0; i--) {
+          if(cast[i]._id === userId){
             result="checked";
             break;
           }
@@ -137,20 +172,18 @@ checkParticipation(userId){
   getRole(userId){
     Meteor.subscribe('myProjects');
     var project = Project.findOne({'_id': FlowRouter.getParam('id')});
-    var result="";
+    var result=false;
     if(project){
-      var staff = project.project_staff;
-      if(staff!=null && staff!=""){
-        for (var i = staff.length - 1; i >= 0; i--) {
-          if(staff[i]._id === userId){
-            result=staff[i].role;
+      var cast = project.project_cast;
+      if(cast!=null && cast.length>0){
+        for (var i = cast.length - 1; i >= 0; i--) {
+          if(cast[i]._id === userId){
+            result=true;
             break;
           }
         }
       }
-      if(userId === project.userId){
-        result="Dueño del proyecto";
-      }
+      
     }
     return result;
   },
@@ -230,7 +263,7 @@ return url;
 
 });
 
-Template.searchCollaboratorForProject.events({
+Template.searchCastForProject.events({
  'click input': function(event) {
     if(event.target.checked){
       $("#sel_"+event.target.value).removeAttr('disabled');
@@ -397,6 +430,114 @@ Template.searchCollaboratorForProject.events({
 
      $("#but_"+e.target.value).html('Enviar invitación');
      $("#sel_"+e.target.value).prop('selectedIndex',0);
+     $("#chk_"+e.target.value).prop( "checked", false );
+     $("#chk_"+e.target.value).removeAttr('disabled');
+     $("#rem_"+e.target.value).hide();
+   }
+
+
+ },
+ 'click .add_cast' : function(e, template, doc){
+  e.preventDefault();
+
+  var projectId = FlowRouter.getParam('id');
+  var userId = e.target.value;
+
+  var user = Meteor.users.findOne({'_id':userId});
+  if(user){
+    var email="";
+    user.emails.forEach(function(element) {
+      if(element.address != ""){ 
+        email=element.address;
+      }
+    });
+
+    var name="";
+    if(user.profile.name!=null && user.profile.name!=""){
+      name = user.profile.name;  
+    }
+    if(user.profile.lastname!=null && user.profile.lastname!=""){
+      name = name + " " + user.profile.lastname;
+    }
+    if(user.profile.lastname2!=null && user.profile.lastname2!=""){
+      name = name + " " + user.profile.lastname2;
+    }
+    console.log("el colaborador se va a armar con los datos siguientes:");
+
+    var collaborator = {
+      "_id" : user._id,
+      "email": email,
+      "name" : name,
+      "confirmed": true, /*Cambiar esto para activar las notificaciones*/
+      "invite_sent": true /*Cambiar esto para activar las notificaciones*/
+    };
+    console.log(collaborator);
+
+    var exists = Project.find({$and:[{"_id":projectId},{ project_cast: {$elemMatch:{"email":email}}}]});
+    if(exists.count()===0){
+      console.log("SE va a agregar al colaborador en el proyecto "+projectId);
+
+      Project.upsert(
+       {'_id': projectId},
+       { $push: { project_cast: collaborator }
+     });
+      $("#but_"+e.target.value).html('Invitación enviada');
+      $("#but_"+e.target.value).attr('disabled', 'disabled');
+      $("#chk_"+e.target.value).attr('disabled', 'disabled');
+      $("#rem_"+e.target.value).show();
+    }
+  }
+},
+'click .remove_cast' : function(e, template, doc){
+  e.preventDefault();
+  var projectId = FlowRouter.getParam('id');
+  var userId = e.target.value;
+  var user = Meteor.users.findOne({'_id': userId});
+  var name="";
+  if(user.profile.name!=null && user.profile.name!=""){
+    name = user.profile.name;  
+  }
+  if(user.profile.lastname!=null && user.profile.lastname!=""){
+    name = name + " " + user.profile.lastname;
+  }
+  if(user.profile.lastname2!=null && user.profile.lastname2!=""){
+    name = name + " " + user.profile.lastname2;
+  }
+  if(confirm("¿Eliminar la colaboración de " + name + " de este proyecto?")){
+
+      var email="";
+      user.emails.forEach(function(element) {
+        if(element.address != ""){ 
+          email=element.address;
+        }
+      });
+
+/*
+      var project = Project.findOne({'_id': projectId});
+      var rol="";
+      if(project){
+        var cast = project.project_cast;
+        if(cast!=null && cast!=""){
+          for (var i = cast.length - 1; i >= 0; i--) {
+            if(cast[i]._id === userId){
+              rol=cast[i].role;
+              break;
+            }
+          }
+        }
+      }*/
+
+      var collaborator = {
+       "email": email,
+       "name" : name
+     };
+
+     Project.upsert(
+      {'_id': projectId},
+      { $pull: { project_cast: collaborator }
+    });
+
+     $("#but_"+e.target.value).html('Enviar invitación');
      $("#chk_"+e.target.value).prop( "checked", false );
      $("#chk_"+e.target.value).removeAttr('disabled');
      $("#rem_"+e.target.value).hide();

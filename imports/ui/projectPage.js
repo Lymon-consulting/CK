@@ -805,6 +805,15 @@ if (Meteor.isClient) {
               })
               .modal('hide');
         },
+        'click #searchCast': function(event,template,doc){
+            /*$('#collabModal').modal('toggle');
+            FlowRouter.go('/searchCollaborator/' + FlowRouter.getParam('id')); */
+            $('#collabModal')
+              .on('hidden.bs.modal', function() {
+                  FlowRouter.go('/searchCastForProject/' + FlowRouter.getParam('id'));
+              })
+              .modal('hide');
+        },
         'click #searchCompany': function(event,template,doc){
             /*$('#collabModal').modal('toggle');
             FlowRouter.go('/searchCollaborator/' + FlowRouter.getParam('id')); */
@@ -1370,12 +1379,7 @@ if (Meteor.isClient) {
       var result = "";
       var user = Meteor.users.findOne({'_id':userId});
       if(user){
-        if(user.profileType==="cast"){
-          result = "/profilePageActor";
-        }
-        else{
-          result = "/profilePage";
-        }
+        result = "/profilePage";
       }
       return result;
 
@@ -1419,6 +1423,93 @@ if (Meteor.isClient) {
    });   
 
 }
+
+
+Template.cast.helpers({
+      getCast(){
+         var cast = null;
+         var proj = Project.findOne({"_id": FlowRouter.getParam('id')});
+         if(proj){
+            cast = proj.project_cast;
+         }
+         return proj;
+      },
+      getPersonalURL(userId){
+      var result = "";
+      var user = Meteor.users.findOne({'_id':userId});
+      if(user){
+        result = "/profilePageActor";
+      }
+      return result;
+
+    },
+    getName(userId){
+      var name = "";
+      var user = Meteor.users.findOne({'_id':userId});
+      if(user){
+        if(user.showArtisticName){
+          name = user.artistic;
+        }
+        else{
+          if(user.profile.name!=null && user.profile.name!=""){
+            name = user.profile.name;  
+          }
+          if(user.profile.lastname!=null && user.profile.lastname!=""){
+            name = name + " " + user.profile.lastname;
+          }
+          if(user.profile.lastname2!=null && user.profile.lastname2!=""){
+            name = name + " " + user.profile.lastname2;
+          }
+        }
+      }
+      return name;
+    },
+    categories(userId){
+      var strResult = "";
+      var user = Meteor.users.findOne({'_id': userId});
+      var result = new Array();
+      
+      if(user && user.categories){
+         result = user.categories;
+         for (var i = 0; i < result.length; i++) {
+           strResult = strResult + ", " + result[i];
+         }
+         strResult = strResult.substring(2,strResult.length);
+      }
+      return strResult;      
+   },
+      profilePicture(userId){
+         return Images.find({'owner': userId});
+      },
+      getProfilePicture(userId) {
+        Meteor.subscribe("allMedia");
+        var user = Meteor.users.findOne({'_id':userId});
+        var url;
+        if(user!=null && user.profilePictureID!=null){
+          var profile = Media.findOne({'mediaId':user.profilePictureID});
+          if(profile!=null){
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_100,h_100,c_thumb,r_max" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+          }
+          
+        }
+        return url;
+       
+      },
+      getInitials(userId){
+        var name = "";
+        var lastname = "";
+        var initials = "";      
+        var user = Meteor.users.findOne({'_id':userId});
+        if(user){
+          name = user.profile.name;
+          lastname = user.profile.lastname;
+          initials = name.charAt(0) + lastname.charAt(0);  
+        }
+        return initials;
+      }
+   });   
+
+
 
 
 Template.companies.helpers({

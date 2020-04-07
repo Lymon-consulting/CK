@@ -40,6 +40,7 @@ import '../imports/ui/profilePage.js';
 import '../imports/ui/profilePageActor.js';
 import '../imports/ui/projectPage.js';
 import '../imports/ui/searchCollaboratorForProject.js';
+import '../imports/ui/searchCastForProject.js';
 import '../imports/ui/searchCollaboratorForIndustry.js';
 import '../imports/ui/searchIndustryForProject.js';
 import '../imports/ui/contact.js';

@@ -1,6 +1,191 @@
 <template name="searchCollaboratorForProject">
+  <div class="container text-center">
+    <h1 class="h1-title">CREW</h1>
+    <hr>
+    <div class="spacer40"></div>
+  </div>
   <div class="container">
-    {{getSecret}}
+    <div class="row">
+      <div class="col-lg-3 rounded background-verylightgray p-3">
+        <div class="sticky-top">
+          <div class="row">
+            <div class="col agreements">Nombre</div>
+          </div>
+          <div class="row">
+            <div class="col agreements">
+              {{> EasySearch.Input index=usersIndex event="enter" attributes=inputAttributes}}
+            </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col">
+              <label for="oc" class="agreements">Departamento </label>
+              <select name="category" id="category" class="form-control agreements">
+                <option value="cualquier"> Cualquier departamento </option>
+               {{#each getCategories}}
+               <option value="{{title}}"> {{title}} </option>
+               {{/each}}
+             </select>
+            </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col">
+              <label class="agreements" for="eyes">Ocupación </label>
+              <select class="form-control agreements" id="role">
+                <option value="cualquier"> Cualquier ocupación </option>
+                {{#each getOcupationsFromCategory}}
+                <option value="{{secondary}}"> {{secondary}} </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">País</div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <select class="form-control agreements" id="country">
+                <option value="cualquier"> Cualquier país </option>
+                {{#each getCountries}}
+                <option value="{{country}}"> {{country}} </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">Estado</div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <select class="form-control agreements" id="state">
+                <option value="cualquier"> Cualquier estado </option>
+                {{#each getStatesFromCountries}}
+                <option value="{{state}}"> {{state}} </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">Ciudad</div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <select class="form-control agreements" id="city">
+                <option value="cualquier"> Cualquier ciudad </option>
+                {{#each getCitiesFromStates}}
+                <option value="{{city}}"> {{city}} </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div class="container">
+          <div class="row">
+          
+            <!-- Inicia contenido -->
+            <div class="col-md-12">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-12"><hr></div>
+                </div>
+                {{#EasySearch.Each index=usersIndex}}
+                <div class="row">
+                  <div class="col-lg-1">
+                    {{#if getRole this.__originalId}}
+                    <input type="checkbox" id="chk_{{this.__originalId}}" value="{{this.__originalId}}" {{checkParticipation this.__originalId}} disabled>
+                    {{else}}
+                    <input type="checkbox" id="chk_{{this.__originalId}}" value="{{this.__originalId}}" {{checkParticipation this.__originalId}}>
+                    {{/if}}
+                  </div>
+                  <div class="col-lg-1 vertical-align-top">
+                    <a href="/profilePage/{{this.__originalId}}">
+                      {{#if getProfilePicture this.__originalId 35 35}}
+                      <img src="{{getProfilePicture this.__originalId 35 35}}" /> 
+                      {{else}}
+                      <div id="iconInitials">{{getInitials this.__originalId}}</div>
+                      {{/if}}
+                    </a>
+                  </div>
+                  <div class="col-lg-4 vertical-align-top">
+                    <small><a href="/profilePage/{{this.__originalId}}">{{this.profile.name}} {{this.profile.lastname}} {{this.profile.lastname2}}</a> <br/> {{#if this.role}}{{this.role}}{{/if}} <br/>{{#if this.city}}{{this.city}}, {{this.state}}{{/if}}</small>
+                  </div>
+               
+                  <div class="col-lg-3">
+                    <small>
+                      {{#unless getRole this.__originalId}}
+                      <select class="form-control agreements" id="sel_{{this.__originalId}}" name="sel_{{this.__originalId}}" disabled >
+                        {{#each getAllOcupations}}
+                        <option value="{{secondary}}"> {{secondary}} </option>
+                        {{/each}}
+                      </select> 
+                      {{else}}
+                        {{getRole this.__originalId}}
+                      {{/unless}}
+                    </small>
+                  </div>
+                  <div class="col-lg-3">
+                    {{#unless getRole this.__originalId}}
+                    <button class="btn button-follow mx-auto add_collaborator" id="but_{{this.__originalId}}" value="{{this.__originalId}}" disabled> Enviar invitación </button>
+                    {{/unless}}
+                    {{#if getRole this.__originalId}}
+                     {{#if notSameUser this.__originalId}}
+                    <button class="btn button-follow mx-auto remove_collaborator" id="rem_{{this.__originalId}}" value="{{this.__originalId}}"> Eliminar colaboración </button>
+                    {{/if}}
+                    {{else}}
+                    <button class="btn button-follow mx-auto remove_collaborator hidden" id="rem_{{this.__originalId}}" value="{{this.__originalId}}"> Eliminar colaboración </button>
+                    {{/if}}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12"><hr></div>
+                </div>
+                {{/EasySearch.Each}}
+                {{> EasySearch.LoadMore index=usersIndex}}
+                {{#EasySearch.IfNoResults index=usersIndex}}
+                <div class="no-results">No se encontraron resultados</div>
+                {{/EasySearch.IfNoResults}}
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <a class="btn btn-purple" href="/projectPage/{{getProjectID}}" role="button">Regresar al proyecto</a>
+                  </div>
+                </div>
+              </div>
+            <!-- Fin contenido -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="spacer80"></div>
+</template>
+
+<template name="searchCollabP">
+  {{> EasySearch.Input index=usersIndex}}
+  <ul>
+    {{#EasySearch.Each index=usersIndex}}
+    <li>{{fullname}}</li>
+    {{/EasySearch.Each}}
+  </ul>
+  {{> EasySearch.LoadMore index=usersIndex content="Mostrar más"}}
+  {{#EasySearch.IfNoResults index=usersIndex}}
+    <div class="no-results">No se encontraron resultados</div>
+  {{/EasySearch.IfNoResults}}
+  {{#EasySearch.IfSearching index=usersIndex}}
+       <div>Buscando...</div>
+  {{/EasySearch.IfSearching}}
+  {{> EasySearch.Pagination index=usersIndex maxPages=10 prevAndNext=true}}
+</template>
+
+
+<template name="old1">
+  <div class="container">
     <div class="spacer40"></div>
     <div class="row">
       <div class="col">
@@ -215,7 +400,7 @@
   <div class="spacer80"></div>
 </template>
 
-<template name="searchCollabP">
+<template name="old2">
 
   {{> EasySearch.Input index=usersIndex}}
 
