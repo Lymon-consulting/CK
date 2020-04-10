@@ -94,7 +94,7 @@ Meteor.publish("userData", function () {
 //const Users = new Mongo.Collection('users');
 export const UsersIndex = new Index({
     collection: Meteor.users,
-    fields: ['profile.name', 'profile.lastname', 'profile.lastname2', 'emails', 'profileType'],
+    fields: ['profile.name', 'profile.lastname', 'profile.lastname2', 'emails'],
     engine: new MongoDBEngine({
 
     selectorPerField: function (field, searchString) {
@@ -116,8 +116,11 @@ export const UsersIndex = new Index({
         const selector = this.defaultConfiguration().selector(searchObject, options, aggregation)
 
         // modify the selector to only match documents where region equals "New York"
-        if (options.search.props.profileType) {
-          selector.profileType = options.search.props.profileType;
+        if (options.search.props.isCrew) {
+          selector.isCrew = options.search.props.isCrew;
+        }
+        if (options.search.props.isCast) {
+          selector.isCast = options.search.props.isCast;
         }
         if (options.search.props.city) {
           selector.city = options.search.props.city;
@@ -261,7 +264,9 @@ Meteor.publish("otherUsers", function () {
       'skills': 1,
       'profileType': 1,
       'categories': 1,
-      'sex': 1
+      'sex': 1,
+      'isCrew': 1,
+      'isCast': 1
     }
   });
 });

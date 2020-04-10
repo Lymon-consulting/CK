@@ -193,7 +193,7 @@ Template.editMedia.events({
       var public_id = $(event.currentTarget).attr("data-id");
 
       /*Borrando el id de la imagen de los proyectos*/
-      var projectsUsingThisImage = Project.find('projectPictureID':public_id);
+      var projectsUsingThisImage = Project.find({'projectPictureID':public_id});
       projectsUsingThisImage.forEach(function(project){
           Meteor.call('saveProjectPictureID',
             project._id,
@@ -202,7 +202,7 @@ Template.editMedia.events({
       });
 
       /*Borrando el id de la imagen de las industrias que lo usan como logo*/
-      var companiesUsingThisImageAsLogo = Industry.find('companyLogoID':public_id);
+      var companiesUsingThisImageAsLogo = Industry.find({'companyLogoID':public_id});
       companiesUsingThisImageAsLogo.forEach(function(company){
           Meteor.call('saveCompanyLogoID',
             project._id,
@@ -211,7 +211,7 @@ Template.editMedia.events({
       });
 
       /*Borrando el id de la imagen de las industrias que lo usan como portada*/
-      var companiesUsingThisImageAsCover = Industry.find('companyCoverID':public_id);
+      var companiesUsingThisImageAsCover = Industry.find({'companyCoverID':public_id});
       companiesUsingThisImageAsCover.forEach(function(company){
           Meteor.call('saveCompanyCoverID',
             project._id,
@@ -220,7 +220,7 @@ Template.editMedia.events({
       });
 
       /*Borrando el id de la imagen de los usuarios que lo usan como foto de perfil*/
-      var usersUsingThisImageAsProfile = Meteor.users.find('profilePictureID':public_id);
+      var usersUsingThisImageAsProfile = Meteor.users.find({'profilePictureID':public_id});
       usersUsingThisImageAsProfile.forEach(function(user){
         Meteor.call('updateProfilePicture',
           user._id,
@@ -229,7 +229,7 @@ Template.editMedia.events({
       });
 
       /*Borrando el id de la imagen de los usuarios que lo usan como portada*/
-      var usersUsingThisImageAsCover = Meteor.users.find('profileCoverID':public_id);
+      var usersUsingThisImageAsCover = Meteor.users.find({'profileCoverID':public_id});
       usersUsingThisImageAsCover.forEach(function(user){
         Meteor.call('updateCoverPicture',
           user._id,

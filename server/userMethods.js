@@ -58,6 +58,16 @@ Accounts.onCreateUser(function(options, user) {
         $set:{"profileType":type}
       });
     },
+    setIsCrew(userId,val){
+      Meteor.users.update({'_id': userId},{
+        $set:{"isCrew":val}
+      });
+    },
+    setIsCast(userId,val){
+      Meteor.users.update({'_id': userId},{
+        $set:{"isCast":val}
+      });
+    },
     updateName(userId,name){
       Meteor.users.update({'_id': userId},{
         $set:{"profile.name":name}

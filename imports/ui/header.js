@@ -82,7 +82,7 @@ Template.header.helpers({
      }
      else{
        if(Meteor.user()){
-         if(Meteor.user().profileType==="crew" || Meteor.user().profileType==="both"){
+         if(Meteor.user().isCrew!=null && Meteor.user().isCrew){
            result = "active";
          }
        }
@@ -98,7 +98,7 @@ Template.header.helpers({
      }
      else{
        if(Meteor.user()){
-         if(Meteor.user().profileType==="cast"){
+         if(Meteor.user().isCast!=null && Meteor.user().isCast){
            result = "active";
          }
        }
@@ -264,6 +264,10 @@ Template.header.events({
         window.scrollTo(0, 0);
         FlowRouter.go("/editProfile/"+Meteor.userId());
       }
+      else if(url.indexOf("/profilePageActor/")>0){
+        window.scrollTo(0, 0);
+        FlowRouter.go("/profilePage/"+Meteor.userId());
+      }
     },
     'click #viewAsCast':function(event,template){
       event.preventDefault();
@@ -276,6 +280,10 @@ Template.header.events({
       if(url.indexOf("/editProfile/")>0){
         window.scrollTo(0, 0);
         FlowRouter.go("/editProfileActor/"+Meteor.userId());
+      }
+      else if(url.indexOf("/profilePage/")>0){
+        window.scrollTo(0, 0);
+        FlowRouter.go("/profilePageActor/"+Meteor.userId());
       }
     }
 

@@ -549,6 +549,10 @@ Template.editProfileActor.helpers({
   showCreateCrewLink(){
     var result = true;
     if(Meteor.user()){
+      if(Meteor.user().isCrew!=null && Meteor.user().isCrew){
+        result=false;
+      }
+      /*
       if(Meteor.user().profileType){
         if(Meteor.user().profileType==="crew"){ //si ya es crew ya no mostrar el link
           result = false;
@@ -559,7 +563,7 @@ Template.editProfileActor.helpers({
         else{
           result = true;
         }
-      }
+      }*/
     }
     return result;
   }
@@ -823,7 +827,8 @@ Template.editProfileActor.events({
   'click #addCrewProfile':function(event, template){
       event.preventDefault();
 
-      Meteor.call('updateProfileType', Meteor.userId(),"both");
+      //Meteor.call('updateProfileType', Meteor.userId(),"both");
+      Meteor.call('setIsCrew', Meteor.userId(),true);
 
       $('#crewModal').modal('hide');
       $('body').removeClass('modal-open');

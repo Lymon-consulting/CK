@@ -12,7 +12,7 @@ import '/lib/common.js';
 Meteor.subscribe("otherUsers");
 
 Template.peopleListCast.rendered = function(){
-  UsersIndex.getComponentMethods().addProps('profileType', 'cast');
+  UsersIndex.getComponentMethods().addProps('isCast', true);
 }
 
 Template.peopleListCast.helpers({

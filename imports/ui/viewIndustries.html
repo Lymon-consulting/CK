@@ -1,6 +1,6 @@
 <template name="viewIndustries">
    <div class="container text-center">
-      <h1 class="h1-title">TUS INDUSTRIAS</h1>
+      <h1 class="h1-title">TUS EMPRESAS</h1>
       <h2>{{fullName}}</h2>
       <hr class="hr_width_600">
    </div>
@@ -25,10 +25,10 @@
   
   {{#if myIndustries}}
      <small>
-        <p>Esta es tu lista de industrias. Desde aquí puedes:</p>
+        <p>Esta es tu lista de empresas. Desde aquí puedes:</p>
         <ul>
-           <li>Ver la página de cada una de tus industrias, haciendo clic en su nombre o en el ícono <i class="fa fa-search">&nbsp;</i>.</li> 
-           <li>Editar una industria, haciendo clic sobre el ícono <i class="fa fa-edit">&nbsp;</i></li>
+           <li>Ver la página de cada una de tus empresas, haciendo clic en su nombre o en el ícono <i class="fa fa-search">&nbsp;</i>.</li> 
+           <li>Editar una empresa, haciendo clic sobre el ícono <i class="fa fa-edit">&nbsp;</i></li>
         </ul>
      </small>
 
@@ -51,7 +51,7 @@
                     </div>
                  {{/if}}
                 <div class="card-body">
-                  <h5 class="card-title"><a href="/industryPage/{{this._id}}">{{this.company_name}}</a></h5>
+                  <h5 class="card-title"><a href="/industryPage/{{this._id}}" class="text-purple">{{this.company_name}}</a></h5>
                   <!--<p class="card-text"><a href="/projectPage/{{this._id}}">{{this.company_name}}</a></p>-->
                   <p class="card-text agreements">{{this.company_type}}</p>
                   <p class="card-text agreements">{{this.company_year}}</p>
@@ -59,8 +59,8 @@
                 </div>
                 <div class="card-footer">
                    <div class="row">
-                      <div class="col"><a href="/industryPage/{{this._id}}"><i class="fa fa-search">&nbsp;</i></a></div>
-                      <div class="col text-right"><a href="/editIndustry/{{this._id}}"><i class="fa fa-edit">&nbsp;</i></a></div>
+                      <div class="col"><a href="/industryPage/{{this._id}}" class="text-purple"><i class="fa fa-search">&nbsp;</i></a></div>
+                      <div class="col text-right"><a href="/editIndustry/{{this._id}}" class="text-purple"><i class="fa fa-edit">&nbsp;</i></a></div>
                    </div>
                  </div>
               </div>
@@ -76,7 +76,7 @@
      <table class="table">
         <tr>
            <td colspan="9">
-              No tienes industrias, agrega tu primera industria
+              No tienes empresas, agrega tu primera empresa u organización
            </td>
         </tr>
      </table>

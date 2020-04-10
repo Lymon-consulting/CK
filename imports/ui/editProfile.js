@@ -285,7 +285,9 @@ getURL(mediaId){
 showCreateCastLink(){
     var result = true;
     if(Meteor.user()){
-      if(Meteor.user().profileType){
+      if(Meteor.user().isCast!=null && Meteor.user().isCast){
+        result=false;
+        /*
         if(Meteor.user().profileType==="cast"){ //si ya es cast ya no mostrar el link
           result = false;
         }
@@ -294,7 +296,8 @@ showCreateCastLink(){
         }
         else{
           result = true;
-        }
+        }*/
+
       }
     }
     return result;
@@ -549,7 +552,9 @@ else{
     'click #addCastProfile':function(event, template){
       event.preventDefault();
 
-      Meteor.call('updateProfileType', Meteor.userId(),"both");
+      //Meteor.call('updateProfileType', Meteor.userId(),"both");
+      Meteor.call('setIsCast', Meteor.userId(),true);
+      
 
       $('#castModal').modal('hide');
       $('body').removeClass('modal-open');

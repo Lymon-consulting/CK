@@ -9,7 +9,7 @@ import './searchCollaboratorForProject.html';
 import '/lib/common.js';
 
 Template.searchCollaboratorForProject.rendered = function(){
-  UsersIndex.getComponentMethods().addProps('profileType', 'crew');
+  UsersIndex.getComponentMethods().addProps('isCrew', true);
   Session.set("selected_category",null);
 }
 

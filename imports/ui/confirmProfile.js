@@ -98,10 +98,11 @@ Template.confirmProfile.events({
         console.log("check4"); 
         Meteor.call('addRole', Meteor.userId(),"Legal");
     }
+    /*
     if (check5) { 
         console.log("check5"); 
         Meteor.call('addRole', Meteor.userId(),"Ejecutivo");
-    }
+    }*/
 
     FlowRouter.go('/editProfile/' + Meteor.userId());
 

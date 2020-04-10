@@ -11,7 +11,7 @@ import '/lib/common.js';
 Meteor.subscribe("otherUsers");
 
 Template.peopleList.rendered = function(){
-  UsersIndex.getComponentMethods().addProps('profileType', 'crew');
+  UsersIndex.getComponentMethods().addProps('isCrew', true);
   Session.set("selected_category",null);
 }
 

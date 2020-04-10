@@ -9,12 +9,22 @@ Template.mainlayout.helpers({
 });
 
 Template.registerHelper('isVerified', function(){
-  let result = false;
+  var result = false;
   user = Meteor.user();
-
-
-  if(user!=null && user.emails[0]!=null && user.emails[0].verified){
-    result = true;
+  
+  if(user!=null){
+    if(user.emails[0]!=null && user.emails[0].verified){
+      result = true;
+    }
+    else{
+      if(user.isCrew!=null && !user.isCrew){
+        result = true;  
+      }
+      if(user.isCast!=null && !user.isCast){
+        result = true;
+      }
+    }
+      
   }
   return result;
 });
@@ -44,6 +54,10 @@ Template.registerHelper('isCast', function(){
       }
     }
     else{ //no existe la variable en sesión, consultar en la BD
+      if(Meteor.user().isCast!=null && Meteor.user().isCast){
+        result=true;
+      }
+      /*
       if(Meteor.user().profileType){
         if(Meteor.user().profileType==="cast"){ //El valor en la BD es cast
           result = true;
@@ -54,7 +68,9 @@ Template.registerHelper('isCast', function(){
       }
       else{//El valor en la BD no es crew ni both, debe ser crew
         result = false;
-      }
+      }*/
+
+
     }
   }
   return result;
@@ -72,6 +88,10 @@ Template.registerHelper('isCrew', function(){
       }
     }
     else{ //no existe la variable en sesión, consultar en la BD
+      if(Meteor.user().isCrew!=null && Meteor.user().isCrew){
+        result=true;
+      }
+      /*
       if(Meteor.user().profileType){
         if(Meteor.user().profileType==="crew"){ //El valor en la BD es crew
           result = true;
@@ -83,6 +103,7 @@ Template.registerHelper('isCrew', function(){
       else{//El valor en la BD no es crew ni both, debe ser cast
         result = false;
       }
+      */
     }
   }
   return result;
@@ -90,7 +111,12 @@ Template.registerHelper('isCrew', function(){
 
 Template.registerHelper('isBoth', function(){
   var result = false;
-  if(Meteor.user()){
+  var user = Meteor.user();
+  if(user){
+    if(user.isCrew!=null && user.isCrew && user.isCast!=null && user.isCast){
+      result = true;
+    }
+    /*
     if(Meteor.user().profileType){
       if(Meteor.user().profileType==="both"){
         result = true;
@@ -99,22 +125,25 @@ Template.registerHelper('isBoth', function(){
     else{
       return false;
     }
+    */
   }
   return result;
 });
 
 Template.registerHelper('viewAs',function(){
   var userPreference = null;
-  console.log("A--->"+Session.get("viewAs"));
 
   if(Session.get("viewAs")!=null){
     userPreference = Session.get("viewAs");
   }
   else{
-    userPreference = Meteor.user().profileType;
-
+    if(Meteor.user().isCrew!=null && Meteor.user().isCrew){
+      userPreference = "crew";
+    }
+    else if(Meteor.user().isCast!=null && Meteor.user().isCast){
+      userPreference = "cast";
+    }
   }
-  console.log("B--->"+userPreference);
   return userPreference;
 });
 
@@ -143,10 +172,21 @@ Template.registerHelper('hasTopRole', function(){
     for (var i = array.length - 1; i >= 0; i--) {
       if(array[i]==="Director"){
         result = true;  
+        break;
       }
       if(array[i]==="Productor"){
         result = true;  
+        break;
       }
+      if(array[i]==="Dueño"){
+        result = true;  
+        break;
+      }
+      if(array[i]==="Legal"){
+        result = true;  
+        break;
+      }
+
     }
   }
   return result;

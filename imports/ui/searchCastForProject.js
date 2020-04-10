@@ -9,7 +9,7 @@ import './searchCastForProject.html';
 import '/lib/common.js';
 
 Template.searchCastForProject.rendered = function(){
-  UsersIndex.getComponentMethods().addProps('profileType', 'cast');
+  UsersIndex.getComponentMethods().addProps('isCast', true);
   Session.set("selected_category",null);
 }
 

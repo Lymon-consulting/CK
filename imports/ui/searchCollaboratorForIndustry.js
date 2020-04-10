@@ -2,11 +2,17 @@ import { Template } from 'meteor/templating';
 import { Ocupation } from '../api/ocupations.js';
 import { City } from '../api/city.js';
 import { Industry } from '../api/industry.js';
+import { Media } from '../api/media.js';
 import { UsersIndex } from '/lib/common.js';
 
 import './searchCollaboratorForIndustry.html';
 import '/lib/common.js';
 
+Template.searchCollaboratorForIndustry.rendered = function(){
+  UsersIndex.getComponentMethods().addProps('isCrew', true);
+  //UsersIndex.getComponentMethods().addProps('isCast', true);
+  Session.set("selected_category",null);
+}
 
 Meteor.subscribe("otherUsers");
 Template.searchCollaboratorForIndustry.helpers({
@@ -125,12 +131,64 @@ checkParticipation(userId){
     return (plocation === value) ? 'selected' : '' ;
   },
   getProfilePicture(userId, size) {
-   var url = "";
-   var user = Meteor.users.findOne({'_id':userId});
-   if(user.profilePictureID!=null && user.profilePictureID!=""){
-    url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",h_"+size+",c_thumb,r_max/" + user.profilePictureID;
+   Meteor.subscribe("allMedia");
+    var user = Meteor.users.findOne({'_id':userId});
+    if(user!=null && user.profilePictureID!=null){
+      var profile = Media.findOne({'mediaId':user.profilePictureID});
+      if(profile!=null){
+        return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+      }
+
+    }
+},
+getCategories(){
+   var data = Ocupation.find({},{sort:{'title':1}}).fetch();
+   return _.uniq(data, false, function(transaction) {return transaction.title});
+ },
+ getOcupationsFromCategory(){
+  var allOcupations;
+  if(Session.get("selected_category")!=null){
+    allOcupations = Ocupation.find({'title': Session.get("selected_category")}).fetch();
+    if(Session.get("selected_category")==="Dirección"){
+      allOcupations.push({'title':'Dirección', 'secondary':'Director'});
+    }
+    else if(Session.get("selected_category")==="Producción"){
+      allOcupations.push({'title':'Producción', 'secondary':'Productor'});
+    }
   }
-  return url;
+  else{
+    allOcupations = Ocupation.find({'title': "Animacion y arte digital"}).fetch();
+  }
+  return allOcupations;
+},
+getCountries(){
+ var data = City.find().fetch();
+ return _.uniq(data, false, function(transaction) {return transaction.country});
+},
+getStatesFromCountries(){
+  var country;
+  if(Session.get("selected_country")!=null){
+    country = City.find({'country': Session.get("selected_country")}).fetch();
+    return _.uniq(country, false, function(transaction) {return transaction.state});
+  }
+  else{
+   country = City.find({'country': 'México'}).fetch(); 
+   return _.uniq(country, false, function(transaction) {return transaction.state});
+ }
+
+},
+getCitiesFromStates(){
+  if(Session.get("selected_state")!=null){
+    return City.find({'state': Session.get("selected_state")}).fetch();
+  }
+  else{
+    if(Meteor.user() && Meteor.user().state){
+      return City.find({'state': Meteor.user().state}).fetch();    
+    }
+    else{
+      return City.find({'state': 'Aguascalientes'}).fetch();    
+    }
+  }
 },
 getInitials(userId){
   var name = "";
@@ -309,7 +367,54 @@ Template.searchCollaboratorForIndustry.events({
    }
 
 
+ },
+ 'change #category':function(e, template){
+ e.preventDefault();
+ if($(e.target).val()!="cualquier"){
+   Session.set("selected_category", $(e.target).val()); 
  }
+ else{
+   Session.set("selected_category", null);
+   UsersIndex.getComponentMethods().removeProps('role');  
+   Session.set("role_selected",null);
+ }
+
+},
+'change #country': function (e) {
+      Session.set("selected_country", e.target.value);
+      if($(e.target).val()!="cualquier"){
+       UsersIndex.getComponentMethods().addProps('country', $(e.target).val());
+       Session.set("country_selected",$(e.target).val());
+     }
+     else{
+       UsersIndex.getComponentMethods().removeProps('country');  
+       UsersIndex.getComponentMethods().removeProps('state');  
+       UsersIndex.getComponentMethods().removeProps('city'); 
+       Session.set("country_selected",null);
+     }
+   },
+   'change #state': function (e) {
+    Session.set("selected_state", e.target.value);
+    if($(e.target).val()!="cualquier"){
+     UsersIndex.getComponentMethods().addProps('state', $(e.target).val());
+     Session.set("state_selected",$(e.target).val());
+   }
+   else{
+     UsersIndex.getComponentMethods().removeProps('state');  
+     UsersIndex.getComponentMethods().removeProps('city'); 
+     Session.set("state_selected",null);
+   }
+ },
+ 'change #city': function (e) {
+  if($(e.target).val()!="cualquier"){
+   UsersIndex.getComponentMethods().addProps('city', $(e.target).val());
+   Session.set("city_selected",$(e.target).val());
+ }
+ else{
+   UsersIndex.getComponentMethods().removeProps('city');  
+   Session.set("city_selected",null);
+ }
+},
 
 });
 

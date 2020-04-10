@@ -31,11 +31,12 @@ Template.profilePage.helpers({
       var result = "";
       var user = Meteor.users.findOne({'_id':userId});
       if(user){
-        if(user.profileType==="cast"){
-          result = "/profilePageActor";
-        }
-        else{
+        if(user.isCrew!=null && user.isCrew){
           result = "/profilePage";
+
+        }
+        else if(user.isCast!=null && user.isCast){
+          result = "/profilePageActor";
         }
       }
       return result;
