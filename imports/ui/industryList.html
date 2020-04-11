@@ -97,9 +97,9 @@
                   <div class="col-md-2 vertical-align-top">
                     <a href="/industryPage/{{this.__originalId}}">
                     {{#if logoPicture this.__originalId 100}}
-                    <img src="{{logoPicture this.__originalId 100}}" class="rounded-circle" />
+                    <img src="{{logoPicture this.__originalId 100}}" class="logo" />
                     {{else}}
-                    <img src="/images/nologo.png" class="rounded-circle">
+                    <img src="/images/nologo.png" class="logo">
                     {{/if}}
                     </a>
                   </div>
@@ -111,7 +111,7 @@
                             <tbody>
                               <tr>
                                 <td class="no-padding text-no-wrap">
-                                  <a href="/industryPage/{{this.__originalId}}"><h5 class="h5-name">{{this.company_name}}</h5></a>
+                                  <a href="/industryPage/{{this.__originalId}}" class="text-purple"><strong>{{this.company_name}}</strong></a>
                                 </td>
                               </tr>
                               <tr>

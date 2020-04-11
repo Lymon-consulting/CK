@@ -6,78 +6,81 @@ import './addIndustry.html';
 import '/lib/common.js';
 
 
-if (Meteor.isClient) {
- Meteor.subscribe("fileUploads");
+Meteor.subscribe("fileUploads");
 
+Template.industries.helpers({
+ getAvailableYears(){
+  var years = new Array();
 
-
- Template.industries.helpers({
-   getAvailableYears(){
-    var years = new Array();
-
-    for(i=2018; i>1970; i--){
-      years.push(i);
-    }
-    return years;
-  },
-  getCompanyType(){
-    var type = new Array();
-    type.push("Agencia de casting");
-    type.push("Agencia de extras");
-    type.push("Agencia de modelos");
-    type.push("Agencia de publicidad");
-    type.push("Agencia fotográfica");
-    type.push("Animales adiestrados para cine y televisión");
-    type.push("Armero para cine y televisión");
-    type.push("Aseguradora para cine y televisión");
-    type.push("Baños portatiles");
-    type.push("Catering");
-    type.push("Bodega de arte");
-    type.push("Bodega de vestuario");
-    type.push("Canal de television");
-    type.push("Casa productora");
-    type.push("Casa post–productora (Imagen)");
-    type.push("Casa post-productora (Audio)");
-    type.push("Compañía teatral");
-    type.push("Contabilidad");
-    type.push("Copywriter");
-    type.push("Despacho legal");
-    type.push("Diseño grafico (Posters, postales ,tipografia)");
-    type.push("Diseño web");
-    type.push("Distribuidora");
-    type.push("Doblaje");
-    type.push("Drone/ Fotografía aerea");
-    type.push("Editorial");
-    type.push("Efectos especiales (Explosiones)");
-    type.push("Escuelas (Cine/ medios audiovisuales)");
-    type.push("Estación de radio");
-    type.push("Estudio de animacion");
-    type.push("Estudio de grabacion");
-    type.push("Estudio de grabacion (Audio/ follys/ etc)");
-    type.push("Estudio de grabación (Música)");
-    type.push("Exhibicion (Cine/espacios )");
-    type.push("Festivales de cine");
-    type.push("Locaciones");
-    type.push("Maquillaje y peinados");
-    type.push("Musicalizacion");
-    type.push("Plantas de luz");
-    type.push("Relaciones públicas");
-    type.push("Renta de campers");
-    type.push("Renta de equipo");
-    type.push("Renta de foro");
-    type.push("Renta de transporte ( Vans/ camiones)");
-    type.push("Renta de video assist");
-    type.push("Renta picture cars");
-    type.push("Servicio de subtitulaje");
-    type.push("Stunts");
-    type.push("Utilería y props");
-    type.push("Viveros");
-    return type;
+  for(i=2018; i>1970; i--){
+    years.push(i);
   }
+  return years;
+},
+getCompanyType(){
+  var type = new Array();
+  type.push("");
+  type.push("PRINCIPALES");
+  type.push("-----------");
+  type.push("Agencia de casting");
+  type.push("Catering");
+  type.push("Bodega de arte");
+  type.push("Bodega de vestuario");
+  type.push("Canal de television");
+  type.push("Casa productora");
+  type.push("Casa post–productora (Imagen)");
+  type.push("Casa post-productora (Audio)");
+  type.push("Compañía teatral");
+  type.push("Distribuidora");
+  type.push("Escuelas (Cine/ medios audiovisuales)");
+  type.push("Estudio de animacion");
+  type.push("Estudio de grabacion");
+  type.push("Exhibicion (Cine/espacios )");
+  type.push("Festivales de cine");
+  type.push("Musicalizacion");
+  type.push("Renta de equipo");
+  type.push("Renta de foro");
+  type.push("Renta picture cars");
+  type.push("");
+  type.push("SECUNDARIAS");
+  type.push("-----------");
+  type.push("Agencia de extras");
+  type.push("Agencia de modelos");
+  type.push("Agencia de publicidad");
+  type.push("Agencia fotográfica");
+  type.push("Animales adiestrados para cine y televisión");
+  type.push("Armero para cine y televisión");
+  type.push("Aseguradora para cine y televisión");
+  type.push("Baños portatiles");
+  type.push("Contabilidad");
+  type.push("Copywriter");
+  type.push("Despacho legal");
+  type.push("Diseño web");
+  type.push("Diseño grafico (Posters, postales ,tipografia)");
+  type.push("Doblaje");
+  type.push("Drone/ Fotografía aerea");
+  type.push("Editorial");
+  type.push("Efectos especiales (Explosiones)");
+  type.push("Estación de radio");
+  type.push("Estudio de grabación (Música)");
+  type.push("Estudio de grabacion (Audio/ follys/ etc)");
+  type.push("Locaciones");
+  type.push("Maquillaje y peinados");
+  type.push("Plantas de luz");
+  type.push("Utilería y props");
+  type.push("Relaciones públicas");
+  type.push("Renta de campers");
+  type.push("Renta de transporte ( Vans/ camiones)");
+  type.push("Renta de video assist");
+  type.push("Stunts");
+  type.push("Servicio de subtitulaje");
+  type.push("Viveros");
+  return type;
+}
 });
 
 
- Template.industries.events({
+Template.industries.events({
   'keyup #company_desc' : function(event){
    event.preventDefault();
 
@@ -140,42 +143,45 @@ if (Meteor.isClient) {
               'saveCompanyLogoID',
               result,
               res_logo.public_id
-            );
+              );
             Cloudinary.upload(file_cover, options, function(err_cover,res_cover){
               if(!err_cover){
                 Meteor.call(
                   'saveCompanyCoverID',
                   result,
                   res_cover.public_id
-                );
-
+                  );
               }
               else{
                 console.log("Upload Cover Error:"  + err); //no output on console
               }
             });
-            
           }
           else{
               console.log("Upload Logo:"  + err); //no output on console
-          }
-        });
+            }
+          });
         Bert.alert({message: 'La empresa ha sido agregada', type: 'success', icon: 'fa fa-check'});
         //FlowRouter.go('/industryPage/' + result);       
       }
       else{
        console.log("Ocurrió el siguiente error: " +err);
      }
-   }
-   );
+   });
 
-
-}
-return false;
-}
+  }
+  return false;
+  },
+  'change #company_name': function(event,template){
+    event.preventDefault();
+    var name = "";
+    if(isNotEmpty(event.target.value)){
+      name = trimInput(event.target.value);
+      Meteor.call('addCompanyName',name,Meteor.userId());
+    }
+  }
 });
 
-}
 
 var trimInput= function(val){
   if(val!=null && val!=""){
@@ -192,20 +198,3 @@ var isNotEmpty=function(val){
 Bert.alert({message: 'Por favor completa todos los campos obligatorios', type: 'danger', icon: 'fa fa-exclamation'});
 return false;
 }
-
-/*
-if (Meteor.isServer) {
-  Images.allow({
-     'insert': function (userId, doc) {
-       // add custom authentication code here
-       return true;
-     },
-     'remove': function (userId, doc) {
-       return true;
-     },
-     'download': function (userId, doc) {
-       return true;
-     }
-   });
-}
-*/

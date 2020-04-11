@@ -67,6 +67,14 @@ Meteor.methods({
           "companyCoverID": null
         }
     }); 
+  },
+  addCompanyName(company_name, userId){
+    Industry.insert({
+      "company_name": company_name,
+      "userId": userId
+    },function(error,result){
+      return result;
+    });
   }
   
 });

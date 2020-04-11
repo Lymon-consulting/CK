@@ -47,7 +47,7 @@
       <label for="proj_type">Tipo de empresa: <span class="text-purple">(Requerido)</span></label>
     </div>
     <div class="col">
-     <select name="company_type" id="company_type" class="form-control">
+     <select name="company_type" id="company_type" class="form-control agreements">
       <option value="" disabled selected style='display:none;'> Seleccione </option>
       {{#each getCompanyType}}
       <option value="{{this}}"> {{this}} </option>
@@ -61,7 +61,7 @@
   <div class="row">
     <div class="col"><label for="proj_desc">Descripción de la empresa: <span class="text-purple">(Requerido)</span></label></div>
     <div class="col">
-     <textarea class="form-control" rows="5" id="company_desc" value="" placeholder="Descripción de la empresa (450 caracteres máx)." maxlength="450"></textarea><small>Caracteres restantes:</small> <div id="max">450</div>
+     <textarea class="form-control" rows="5" id="company_desc" value="" placeholder="Descripción de la empresa (450 caracteres máx)." maxlength="450"></textarea><small>Caracteres restantes:</small> <div id="max" class="agreements">450</div>
    </div>
   </div>
 
@@ -69,7 +69,7 @@
   <div class="row">
     <div class="col"><label for="company_year">Año de fundación: <span class="text-purple">(Requerido)</span></label></div>
     <div class="col">
-     <select name="company_year" id="company_year" class="form-control">
+     <select name="company_year" id="company_year" class="form-control agreements">
       <option value="" disabled selected style='display:none;'> Seleccione </option>
       {{#each getAvailableYears}}
       <option value="{{this}}"> {{this}} </option>   

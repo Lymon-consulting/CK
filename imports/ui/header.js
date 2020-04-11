@@ -98,7 +98,12 @@ Template.header.helpers({
      }
      else{
        if(Meteor.user()){
-         if(Meteor.user().isCast!=null && Meteor.user().isCast){
+         //Si tiene crew ya activó el botón de crew, no activar el botón de cast
+         if(Meteor.user().isCrew!=null && Meteor.user().isCrew){ 
+           result="";
+         }
+         //Si no tiene crew averiguar si es cast y activar el botón de cast
+         else if(Meteor.user().isCast!=null && Meteor.user().isCast){
            result = "active";
          }
        }
