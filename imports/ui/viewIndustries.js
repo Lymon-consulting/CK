@@ -24,3 +24,12 @@ Template.industryList.helpers({
     return url;
   }
 });
+
+Template.industryList.events({
+  'click .editIndustry':function(event, template){
+    var companyID = $(event.target).attr('data-answer');
+    console.log(companyID);
+    Session.set("companyID",companyID);
+    FlowRouter.go("/editIndustry");
+  }
+});

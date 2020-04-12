@@ -2,8 +2,8 @@
 
 
  <div class="container text-center">
-  <h1 class="h1-title">MODIFICAR UNA EMPRESA U ORGANIZACIÓN</h1>
-  <h2>{{fullName}}</h2>
+  <h1 class="h1-title">DATOS DE LA EMPRESA U ORGANIZACIÓN</h1>
+  <h2>{{companyData.company_name}}</h2>
   <hr class="hr_width_600">
 </div>
 
@@ -15,21 +15,7 @@
    <div class="tab-content">
      <div role="tabpanel" class="tab-pane active" id="persona_panel">    
        {{#if currentUser}}
-       {{> editIndustries }}
-       {{/if}}
-     </div>       
-   </div>
- </div>
-</div>
-</template>
-
-
-
-
-<template name="editIndustries">
- <form>
-
-<div class="row">
+       <div class="row">
    <div class="col-md-12">
      <div class="row">
       <div class="col">
@@ -50,7 +36,7 @@
      <select name="company_type" id="company_type" class="form-control">
       <option value="" disabled selected style='display:none;'> Seleccione </option>
       {{#each getCompanyType}}
-      <option value="{{this}}" {{typeSelected this companyData.company_type}}> {{this}} </option>
+      <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
       {{/each}}
     </select>
     </div>
@@ -64,6 +50,33 @@
      <textarea class="form-control" rows="5" id="company_desc" value="" placeholder="Descripción de la empresa (450 caracteres máx)." maxlength="450">{{companyData.company_desc}}</textarea><small>Caracteres restantes:</small> <div id="max" class="agreements">{{resumeCount companyData.company_desc}}</div>
    </div>
   </div>
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col-md-4">
+      <label for="country">País <span class="text-purple">(Requerido)</span></label>
+      <select name="country" id="country" class="form-control">
+        {{#each getCountries}}
+        <option value="{{country}}" {{countrySelected country}}> {{country}} </option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="state">Estado <span class="text-purple">(Requerido)</span></label>
+      <select name="state" id="states" class="form-control">
+        {{#each getStatesFromCountries}}
+        <option value="{{state}}" {{stateSelected state}}> {{state}} </option>
+        {{/each}}
+      </select>  
+    </div>
+    <div class="col-md-4">
+      <label for="city">Ciudad <span class="text-purple">(Requerido)</span></label>
+      <select name="city" id="city" class="form-control">
+        {{#each getCitiesFromStates}}
+        <option value="{{city}}" {{citySelected city}}> {{city}} </option>
+        {{/each}}
+      </select>  
+    </div>
+  </div>
 
   <div class="spacer20"></div>
   <div class="row">
@@ -72,7 +85,7 @@
      <select name="company_year" id="company_year" class="form-control">
       <option value="" disabled selected style='display:none;'> Seleccione </option>
       {{#each getAvailableYears}}
-      <option value="{{this}}" {{yearSelected this companyData.company_year}}> {{this}} </option>   
+      <option value="{{this}}" {{yearSelected this}}> {{this}} </option>   
       {{/each}}
     </select>
   </div>
@@ -212,7 +225,6 @@
    
 
 
-</form>
 
 <!--Modal: Name-->
         <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -311,4 +323,10 @@
           </div>
         </div>
         <!--Modal: Name-->
-</template> 
+       {{/if}}
+     </div>       
+   </div>
+ </div>
+</div>
+</template>
+

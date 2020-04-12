@@ -1,28 +1,34 @@
 import { Template } from 'meteor/templating';
 import { Industry } from '../api/industry.js';
 import { Ocupation } from '../api/ocupations.js';
+import { City } from '../api/city.js';
 import { Media } from '../api/media.js';
 
 import './editIndustry.html';
 import '/lib/common.js';
 
 
-if (Meteor.isClient) {
- Meteor.subscribe("fileUploads");
+var trimInput= function(val){
+  if(val!=null && val!=""){
+    return val.replace(/^\s*|\s*$/g, "");  
+  }
+  return false;
+}
 
+var isNotEmpty=function(val){
+  if(val && val!== ""){
+    return true;
+  }
+//  Bert.alert("", "danger", "growl-top-right");
+Bert.alert({message: 'Por favor completa todos los campos obligatorios', type: 'danger', icon: 'fa fa-exclamation'});
+return false;
+}
 
-
- Template.editIndustries.helpers({
+Template.editIndustry.helpers({
   companyData(){
-    return Industry.findOne({'_id': FlowRouter.getParam('id')});
-  },
-  typeSelected: function(value, company_type){
-    var ptype = company_type;
-    return (ptype === value) ? 'selected' : '' ;
-  },
-  yearSelected: function(value, company_year){
-    var pyear = company_year;
-    return (pyear == value) ? 'selected' : '' ;
+    if(Session.get("companyID")!=null){
+      return Industry.findOne({'_id':Session.get("companyID")});
+    }
   },
   getAvailableYears(){
     var years = new Array();
@@ -32,90 +38,190 @@ if (Meteor.isClient) {
     }
     return years;
   },
-  getCompanyType(){
-    var type = new Array();
-    type.push("Agencia de Casting");
-    type.push("Casa Productora");
-    type.push("Festival");
-    type.push("Renta de Equipo");
-    return type;
-  },
-  getIndustryLogo() {
-    Meteor.subscribe("allMedia");
-    var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
-    var url;
-    if(data!=null && data.companyLogoID!=null){
-      var cover = Media.findOne({'mediaId':data.companyLogoID});
-      if(cover!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_250,c_scale" + "/v" + cover.media_version + "/" + Meteor.userId() + "/" + data.companyLogoID;    
-      }
-      
-    }
-    return url;
-    /*
-    var url = "";
-    var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
-    if(data!=null && data.companyLogoID!=null){
-      url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_250,c_scale/" + data.companyLogoID;
-    }
-    return url;*/
-  },
-  getLogoPublicID(){
-    var companyLogoID="";
-    var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
-    if(data!=null){
-      companyLogoID = data.companyLogoID;
-    }
-
-    return companyLogoID;
-    
-  },
-  getIndustryCover() {
-    Meteor.subscribe("allMedia");
-    var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
-    var url;
-    if(data!=null && data.companyCoverID!=null){
-      var cover = Media.findOne({'mediaId':data.companyCoverID});
-      if(cover!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_250,c_scale" + "/v" + cover.media_version + "/" + Meteor.userId() + "/" + data.companyCoverID;    
-      }
-      
-    }
-    return url;
-    /*
-    var url = "";
-    var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
-    if(data!=null && data.companyCoverID!=null){
-      url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_250,c_scale/" + data.companyCoverID;
-    }
-    return url;*/
-  },
   getMedia(type) {
     Meteor.subscribe("allMedia");
     var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
     return media;
   },
-  getCoverPublicID(){
-    var companyCoverID="";
-    var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
-    if(data!=null){
-      companyCoverID = data.companyCoverID;
-    }
-
-    return companyCoverID;
-    
+  getCompanyType(){
+    var type = new Array();
+    type.push("");
+    type.push("PRINCIPALES");
+    type.push("-----------");
+    type.push("Agencia de casting");
+    type.push("Catering");
+    type.push("Bodega de arte");
+    type.push("Bodega de vestuario");
+    type.push("Canal de television");
+    type.push("Casa productora");
+    type.push("Casa post–productora (Imagen)");
+    type.push("Casa post-productora (Audio)");
+    type.push("Compañía teatral");
+    type.push("Distribuidora");
+    type.push("Escuelas (Cine/ medios audiovisuales)");
+    type.push("Estudio de animacion");
+    type.push("Estudio de grabacion");
+    type.push("Exhibicion (Cine/espacios )");
+    type.push("Festivales de cine");
+    type.push("Musicalizacion");
+    type.push("Renta de equipo");
+    type.push("Renta de foro");
+    type.push("Renta picture cars");
+    type.push("");
+    type.push("SECUNDARIAS");
+    type.push("-----------");
+    type.push("Agencia de extras");
+    type.push("Agencia de modelos");
+    type.push("Agencia de publicidad");
+    type.push("Agencia fotográfica");
+    type.push("Animales adiestrados para cine y televisión");
+    type.push("Armero para cine y televisión");
+    type.push("Aseguradora para cine y televisión");
+    type.push("Baños portatiles");
+    type.push("Contabilidad");
+    type.push("Copywriter");
+    type.push("Despacho legal");
+    type.push("Diseño web");
+    type.push("Diseño grafico (Posters, postales ,tipografia)");
+    type.push("Doblaje");
+    type.push("Drone/ Fotografía aerea");
+    type.push("Editorial");
+    type.push("Efectos especiales (Explosiones)");
+    type.push("Estación de radio");
+    type.push("Estudio de grabación (Música)");
+    type.push("Estudio de grabacion (Audio/ follys/ etc)");
+    type.push("Locaciones");
+    type.push("Maquillaje y peinados");
+    type.push("Plantas de luz");
+    type.push("Utilería y props");
+    type.push("Relaciones públicas");
+    type.push("Renta de campers");
+    type.push("Renta de transporte ( Vans/ camiones)");
+    type.push("Renta de video assist");
+    type.push("Stunts");
+    type.push("Servicio de subtitulaje");
+    type.push("Viveros");
+    return type;
   },
-  resumeCount(data){
-    var result = 0;
-    if(data!=null && data.length!=null){
-      result = (450 - data.length);
+  typeSelected: function(value){
+    var result="";
+    var company = Industry.findOne({'_id':Session.get('companyID')});
+    var company_type="";
+    if(company){
+      company_type = company.company_type.trim();
+      if(company_type){
+        var elem = company_type.indexOf(value.trim());
+        if(elem >= 0){
+          result = 'selected';
+        }
+        else{
+          result = "";
+        } 
+      }
     }
     return result;
+  },
+  yearSelected: function(value){
+    var result="";
+    var company = Industry.findOne({'_id':Session.get('companyID')});
+    var year="";
+    if(company){
+      year = company.company_year;
+      if(year){
+        var elem = year.indexOf(value);
+        if(elem >= 0){
+          result = 'selected';
+        }
+        else{
+          result = "";
+        } 
+      }
+    }
+    return result;
+  },
+  getCountries(){
+   var data = City.find().fetch();
+   return _.uniq(data, false, function(transaction) {return transaction.country});
+  },
+  getStatesFromCountries(){
+    var country;
+    if(Session.get("selected_country")!=null){
+      country = City.find({'country': Session.get("selected_country")}).fetch();
+      return _.uniq(country, false, function(transaction) {return transaction.state});
+    }
+    else{
+      country = City.find({'country': 'México'}).fetch(); 
+      return _.uniq(country, false, function(transaction) {return transaction.state});
+    }
+  },
+  getCitiesFromStates(){
+    var company = Industry.find({'_id':Session.get('companyID')});
+    if(Session.get("selected_state")!=null){
+      return City.find({'state': Session.get("selected_state")}).fetch();
+    }
+    else{
+      if(company.state){
+        return City.find({'state': Meteor.user().state}).fetch();    
+      }
+      else{
+        return City.find({'state': 'Aguascalientes'}).fetch();    
+      }
+    }
+  },
+  citySelected: function(value){
+  var result="";
+  var company = Industry.find({'_id':Session.get('companyID')});
+  var city = company.city;
+  if(city){
+   var elem = city.indexOf(value);
+   if(elem >= 0){
+     result = 'selected';
    }
+   else{
+     result = "";
+   } 
+ }
+ return result;
+},
+stateSelected: function(value){
+  var result="";
+  var company = Industry.find({'_id':Session.get('companyID')});
+  var state = company.state;
+  if(state){
+   var elem = state.indexOf(value);
+   if(elem >= 0){
+     result = 'selected';
+   }
+   else{
+     result = "";
+   } 
+ }
+ return result;
+},
+countrySelected: function(value){
+  var result="";
+  var company = Industry.find({'_id':Session.get('companyID')});
+  var country = company.country;
+  if(country){
+   var elem = country.indexOf(value);
+   if(elem >= 0){
+     result = 'selected';
+   }
+   else{
+     result = "";
+   } 
+ }
+ return result;
+},
+resumeCount(company_desc){
+    if(company_desc!=null){
+     return company_desc.length;
+    }
+  }
 });
 
 
- Template.editIndustries.events({
+Template.editIndustry.events({
   'keyup #company_desc' : function(event){
    event.preventDefault();
 
@@ -147,8 +253,8 @@ if (Meteor.isClient) {
     isNotEmpty(company_desc) &&
     isNotEmpty(company_year)){
     Meteor.call(
-     'updateCompany',
-     FlowRouter.getParam('id'),
+     'insertCompany',
+     Meteor.userId(),
      company_name,
      company_type,
      company_desc, 
@@ -161,177 +267,167 @@ if (Meteor.isClient) {
      company_instagram_page,
      function(err,result){
        if(!err){
-        Bert.alert({message: 'Los datos de la empresa han sido modificados', type: 'success', icon: 'fa fa-check'});
-        FlowRouter.go('/industryPage/' + FlowRouter.getParam('id'));
+        $.cloudinary.config({
+          cloud_name:"drhowtsxb"
+        });
+
+        var options = {
+          folder: Meteor.userId()
+        };
+
+        var file_logo = document.getElementById('company-logo-upload').files[0];
+        var file_cover = document.getElementById('company-cover-upload').files[0];
+
+        Cloudinary.upload(file_logo, options, function(err_logo,res_logo){
+          if(!err_logo){
+            Meteor.call(
+              'saveCompanyLogoID',
+              result,
+              res_logo.public_id
+              );
+            Cloudinary.upload(file_cover, options, function(err_cover,res_cover){
+              if(!err_cover){
+                Meteor.call(
+                  'saveCompanyCoverID',
+                  result,
+                  res_cover.public_id
+                  );
+              }
+              else{
+                console.log("Upload Cover Error:"  + err); //no output on console
+              }
+            });
+          }
+          else{
+              console.log("Upload Logo:"  + err); //no output on console
+            }
+          });
+        Bert.alert({message: 'La empresa ha sido agregada', type: 'success', icon: 'fa fa-check'});
+        //FlowRouter.go('/industryPage/' + result);       
       }
       else{
        console.log("Ocurrió el siguiente error: " +err);
      }
-   }
-   );
+   });
 
-
-}
-return false;
-},
-'change #company-logo-upload': function(event, template){
-  var file = event.target.files[0];
-
-  $.cloudinary.config({
-    cloud_name:"drhowtsxb"
-  });
-
-  var options = {
-    folder: Meteor.userId()
-  };
-
-  Cloudinary.upload(file, options, function(err,res_logo){
-    if(!err){
-      Meteor.call(
-        'saveCompanyLogoID',
-        FlowRouter.getParam('id'),
-        res_logo.public_id
-      );
-    }
-    else{
-      console.log("Upload Error:"  + err); //no output on console
-    }
-  });
-},
-'click #deleteLogoButton ': function (event) {
-     //console.log("deleteFile button ", this);
-     event.preventDefault();
-     if(confirm("¿Eliminar logo de empresa?")){
-        //Cover.remove({_id:this._id}); 
-         var public_id = $(event.target).attr('data-id');
-         console.log("Borrando "+ public_id);
-         console.log(Cloudinary);
-         Cloudinary.delete(public_id,function(res){
-           console.log(res);
-         });
-         Meteor.call(
-          'deleteCompanyLogo',
-          FlowRouter.getParam('id'),
-          public_id
-          );
-     }
-     
-  },
-  'change #company-cover-upload': function(event, template){
-  var file = event.target.files[0];
-
-  $.cloudinary.config({
-    cloud_name:"drhowtsxb"
-  });
-
-  var options = {
-    folder: Meteor.userId()
-  };
-
-  Cloudinary.upload(file, options, function(err,res_cover){
-    if(!err){
-      Meteor.call(
-        'saveCompanyCoverID',
-        FlowRouter.getParam('id'),
-        res_cover.public_id
-      );
-    }
-    else{
-      console.log("Upload Error:"  + err); //no output on console
-    }
-  });
-},
-  'click #deleteCoverButton ': function (event) {
-     //console.log("deleteFile button ", this);
-     event.preventDefault();
-     if(confirm("¿Eliminar foto de portada?")){
-        //Cover.remove({_id:this._id}); 
-         var public_id = $(event.target).attr('data-id');
-         console.log("Borrando "+ public_id);
-         console.log(Cloudinary);
-         Cloudinary.delete(public_id,function(res){
-           console.log(res);
-         });
-         Meteor.call(
-          'deleteCompanyCover',
-          FlowRouter.getParam('id'),
-          public_id
-          );
-     }
-     
-  },
-  'click .goMediaLibrary': function(event,template){
-    event.preventDefault();
-    $('#modal1').modal('hide');
-    $('body').removeClass('modal-open');
-    $('.modal-backdrop').remove();
-    FlowRouter.go("/mediaEditor/" + Meteor.userId());
-  },
-
-  'click #selectLogo': function(event,template){
-     event.preventDefault();
-     var mediaId = $(event.currentTarget).attr("data-id");
-
-     Meteor.call(
-        'saveCompanyLogoID',
-        FlowRouter.getParam('id'),
-        mediaId
-      );
-
-    $('#modal1').modal('hide');
-    $('body').removeClass('modal-open');
-    $('.modal-backdrop').remove();
-
-  },
-  'click #selectCoverIndustry': function(event,template){
-     event.preventDefault();
-     var mediaId = $(event.currentTarget).attr("data-id");
-
-     Meteor.call(
-        'saveCompanyCoverID',
-        FlowRouter.getParam('id'),
-        mediaId
-      );
-
-    $('#modal2').modal('hide');
-    $('body').removeClass('modal-open');
-    $('.modal-backdrop').remove();
-
-  }
-
-});
-
-}
-
-var trimInput= function(val){
-  if(val!=null && val!=""){
-    return val.replace(/^\s*|\s*$/g, "");  
   }
   return false;
-}
+  },
+  'change #company_name': function(event,template){
+    event.preventDefault();
+    var name = "";
+    if(isNotEmpty(event.target.value)){
+      name = trimInput(event.target.value);
+      var id = Meteor.call('addCompanyName',name,Meteor.userId(), function(error, response){
+        if(!error){
+          Session.set("companyID",response);
+        }
+      });
+      
+    }
+  },
+  'change #company_type': function(event,template){
+    event.preventDefault();
+    var company_type = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(company_type!="PRINCIPALES" && company_type!="SECUNDARIAS" && company_type.indexOf("---")<0 && company_type!=""){
+        Meteor.call('updateCompanyType', Session.get("companyID"), company_type);
+      }
+    }
+  },
+  'change #company_desc': function(event,template){
+    event.preventDefault();
+    var company_desc = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(isNotEmpty(company_desc)){
+        Meteor.call('updateCompanyDesc',Session.get("companyID"), trimInput(company_desc));
+      }
+    }
+  },
+  'change #company_year': function(event,template){
+    event.preventDefault();
+    var company_year = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(company_year!=null){
+        Meteor.call('updateCompanyYear',Session.get("companyID"), company_year);
+      }
+    }
+  },
+  'change #company_web_page': function(event,template){
+    event.preventDefault();
+    var company_web_page = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(isNotEmpty(company_web_page)){
+        Meteor.call('updateCompanyWeb',Session.get("companyID"), company_web_page);
+      }
+    }
+  },
+  'change #facebook_page': function(event,template){
+    event.preventDefault();
+    var facebook_page = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(isNotEmpty(facebook_page)){
+        Meteor.call('updateCompanyFacebook',Session.get("companyID"), facebook_page);
+      }
+    }
+  },
+  'change #twitter_page': function(event,template){
+    event.preventDefault();
+    var twitter_page = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(isNotEmpty(twitter_page)){
+        Meteor.call('updateCompanyTwitter',Session.get("companyID"), twitter_page);
+      }
+    }
+  },
+  'change #vimeo_page': function(event,template){
+    event.preventDefault();
+    var vimeo_page = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(isNotEmpty(vimeo_page)){
+        Meteor.call('updateCompanyVimeo',Session.get("companyID"), vimeo_page);
+      }
+    }
+  },
+  'change #youtube_page': function(event,template){
+    event.preventDefault();
+    var youtube_page = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(isNotEmpty(youtube_page)){
+        Meteor.call('updateCompanyYoutube',Session.get("companyID"), youtube_page);
+      }
+    }
+  },
+  'change #instagram_page': function(event,template){
+    event.preventDefault();
+    var instagram_page = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(isNotEmpty(instagram_page)){
+        Meteor.call('updateCompanyInstagram',Session.get("companyID"), instagram_page);
+      }
+    }
+  },
+  'change #country': function(event,template){
+    var country = trimInput(event.target.value);
+    if(Session.get("companyID")!=null){
+      Meteor.call('updateCompanyCountry', Session.get("companyID"), country);
+      Session.set("selected_country", event.target.value);
+    }
+  },
+  'change #states': function(event,template){
+    var state = trimInput(event.target.value);
+    if(Session.get("companyID")!=null){
+      Meteor.call('updateCompanyState', Session.get("companyID"), state);
+      Meteor.call('updateCompanyCountry', Session.get("companyID"), "México");
+      Session.set("selected_state", state);
+      var firstCity = City.findOne({'state': state}).city;
+      Meteor.call('updateCompanyCity', Session.get("companyID"), firstCity);    
+    }
+  },
+  'change #city': function(event,template){
+    var city = trimInput(event.target.value);
+    Meteor.call('updateCompanyCity', Session.get("companyID"), city);
+    Meteor.call('updateCompanyCountry', Session.get("companyID"), "México");
+  },
+});
 
-var isNotEmpty=function(val){
-  if(val && val!== ""){
-    return true;
-  }
-//  Bert.alert("", "danger", "growl-top-right");
-Bert.alert({message: 'Por favor completa todos los campos obligatorios', type: 'danger', icon: 'fa fa-exclamation'});
-return false;
-}
-
-/*
-if (Meteor.isServer) {
-  Images.allow({
-     'insert': function (userId, doc) {
-       // add custom authentication code here
-       return true;
-     },
-     'remove': function (userId, doc) {
-       return true;
-     },
-     'download': function (userId, doc) {
-       return true;
-     }
-   });
-}
-*/

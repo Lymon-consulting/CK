@@ -1,6 +1,8 @@
 import { Template } from 'meteor/templating';
 import { Industry } from '../api/industry.js';
 import { Ocupation } from '../api/ocupations.js';
+import { City } from '../api/city.js';
+import { Media } from '../api/media.js';
 
 import './addIndustry.html';
 import '/lib/common.js';
@@ -9,74 +11,148 @@ import '/lib/common.js';
 Meteor.subscribe("fileUploads");
 
 Template.industries.helpers({
- getAvailableYears(){
-  var years = new Array();
+  getAvailableYears(){
+    var years = new Array();
 
-  for(i=2018; i>1970; i--){
-    years.push(i);
-  }
-  return years;
+    for(i=2018; i>1970; i--){
+      years.push(i);
+    }
+    return years;
+  },
+  getCompanyType(){
+    var type = new Array();
+    type.push("");
+    type.push("PRINCIPALES");
+    type.push("-----------");
+    type.push("Agencia de casting");
+    type.push("Catering");
+    type.push("Bodega de arte");
+    type.push("Bodega de vestuario");
+    type.push("Canal de television");
+    type.push("Casa productora");
+    type.push("Casa post–productora (Imagen)");
+    type.push("Casa post-productora (Audio)");
+    type.push("Compañía teatral");
+    type.push("Distribuidora");
+    type.push("Escuelas (Cine/ medios audiovisuales)");
+    type.push("Estudio de animacion");
+    type.push("Estudio de grabacion");
+    type.push("Exhibicion (Cine/espacios )");
+    type.push("Festivales de cine");
+    type.push("Musicalizacion");
+    type.push("Renta de equipo");
+    type.push("Renta de foro");
+    type.push("Renta picture cars");
+    type.push("");
+    type.push("SECUNDARIAS");
+    type.push("-----------");
+    type.push("Agencia de extras");
+    type.push("Agencia de modelos");
+    type.push("Agencia de publicidad");
+    type.push("Agencia fotográfica");
+    type.push("Animales adiestrados para cine y televisión");
+    type.push("Armero para cine y televisión");
+    type.push("Aseguradora para cine y televisión");
+    type.push("Baños portatiles");
+    type.push("Contabilidad");
+    type.push("Copywriter");
+    type.push("Despacho legal");
+    type.push("Diseño web");
+    type.push("Diseño grafico (Posters, postales ,tipografia)");
+    type.push("Doblaje");
+    type.push("Drone/ Fotografía aerea");
+    type.push("Editorial");
+    type.push("Efectos especiales (Explosiones)");
+    type.push("Estación de radio");
+    type.push("Estudio de grabación (Música)");
+    type.push("Estudio de grabacion (Audio/ follys/ etc)");
+    type.push("Locaciones");
+    type.push("Maquillaje y peinados");
+    type.push("Plantas de luz");
+    type.push("Utilería y props");
+    type.push("Relaciones públicas");
+    type.push("Renta de campers");
+    type.push("Renta de transporte ( Vans/ camiones)");
+    type.push("Renta de video assist");
+    type.push("Stunts");
+    type.push("Servicio de subtitulaje");
+    type.push("Viveros");
+    return type;
+  },
+  getCountries(){
+   var data = City.find().fetch();
+   return _.uniq(data, false, function(transaction) {return transaction.country});
+  },
+  getStatesFromCountries(){
+    var country;
+    if(Session.get("selected_country")!=null){
+      country = City.find({'country': Session.get("selected_country")}).fetch();
+      return _.uniq(country, false, function(transaction) {return transaction.state});
+    }
+    else{
+      country = City.find({'country': 'México'}).fetch(); 
+      return _.uniq(country, false, function(transaction) {return transaction.state});
+    }
+  },
+  getCitiesFromStates(){
+    var company = Industry.find({'_id':Session.get('companyID')});
+    if(Session.get("selected_state")!=null){
+      return City.find({'state': Session.get("selected_state")}).fetch();
+    }
+    else{
+      if(company.state){
+        return City.find({'state': Meteor.user().state}).fetch();    
+      }
+      else{
+        return City.find({'state': 'Aguascalientes'}).fetch();    
+      }
+    }
+  },
+  citySelected: function(value){
+  var result="";
+  var company = Industry.find({'_id':Session.get('companyID')});
+  var city = company.city;
+  if(city){
+   var elem = city.indexOf(value);
+   if(elem >= 0){
+     result = 'selected';
+   }
+   else{
+     result = "";
+   } 
+ }
+ return result;
 },
-getCompanyType(){
-  var type = new Array();
-  type.push("");
-  type.push("PRINCIPALES");
-  type.push("-----------");
-  type.push("Agencia de casting");
-  type.push("Catering");
-  type.push("Bodega de arte");
-  type.push("Bodega de vestuario");
-  type.push("Canal de television");
-  type.push("Casa productora");
-  type.push("Casa post–productora (Imagen)");
-  type.push("Casa post-productora (Audio)");
-  type.push("Compañía teatral");
-  type.push("Distribuidora");
-  type.push("Escuelas (Cine/ medios audiovisuales)");
-  type.push("Estudio de animacion");
-  type.push("Estudio de grabacion");
-  type.push("Exhibicion (Cine/espacios )");
-  type.push("Festivales de cine");
-  type.push("Musicalizacion");
-  type.push("Renta de equipo");
-  type.push("Renta de foro");
-  type.push("Renta picture cars");
-  type.push("");
-  type.push("SECUNDARIAS");
-  type.push("-----------");
-  type.push("Agencia de extras");
-  type.push("Agencia de modelos");
-  type.push("Agencia de publicidad");
-  type.push("Agencia fotográfica");
-  type.push("Animales adiestrados para cine y televisión");
-  type.push("Armero para cine y televisión");
-  type.push("Aseguradora para cine y televisión");
-  type.push("Baños portatiles");
-  type.push("Contabilidad");
-  type.push("Copywriter");
-  type.push("Despacho legal");
-  type.push("Diseño web");
-  type.push("Diseño grafico (Posters, postales ,tipografia)");
-  type.push("Doblaje");
-  type.push("Drone/ Fotografía aerea");
-  type.push("Editorial");
-  type.push("Efectos especiales (Explosiones)");
-  type.push("Estación de radio");
-  type.push("Estudio de grabación (Música)");
-  type.push("Estudio de grabacion (Audio/ follys/ etc)");
-  type.push("Locaciones");
-  type.push("Maquillaje y peinados");
-  type.push("Plantas de luz");
-  type.push("Utilería y props");
-  type.push("Relaciones públicas");
-  type.push("Renta de campers");
-  type.push("Renta de transporte ( Vans/ camiones)");
-  type.push("Renta de video assist");
-  type.push("Stunts");
-  type.push("Servicio de subtitulaje");
-  type.push("Viveros");
-  return type;
-}
+stateSelected: function(value){
+  var result="";
+  var company = Industry.find({'_id':Session.get('companyID')});
+  var state = company.state;
+  if(state){
+   var elem = state.indexOf(value);
+   if(elem >= 0){
+     result = 'selected';
+   }
+   else{
+     result = "";
+   } 
+ }
+ return result;
+},
+countrySelected: function(value){
+  var result="";
+  var company = Industry.find({'_id':Session.get('companyID')});
+  var country = company.country;
+  if(country){
+   var elem = country.indexOf(value);
+   if(elem >= 0){
+     result = 'selected';
+   }
+   else{
+     result = "";
+   } 
+ }
+ return result;
+},
 });
 
 
@@ -177,11 +253,118 @@ Template.industries.events({
     var name = "";
     if(isNotEmpty(event.target.value)){
       name = trimInput(event.target.value);
-      Meteor.call('addCompanyName',name,Meteor.userId());
+      var id = Meteor.call('addCompanyName',name,Meteor.userId(), function(error, response){
+        if(!error){
+          Session.set("companyID",response);
+        }
+      });
+      
     }
-  }
+  },
+  'change #company_type': function(event,template){
+    event.preventDefault();
+    var company_type = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(company_type!="PRINCIPALES" && company_type!="SECUNDARIAS" && company_type.indexOf("---")<0 && company_type!=""){
+        Meteor.call('updateCompanyType', Session.get("companyID"), company_type);
+      }
+    }
+  },
+  'change #company_desc': function(event,template){
+    event.preventDefault();
+    var company_desc = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(isNotEmpty(company_desc)){
+        Meteor.call('updateCompanyDesc',Session.get("companyID"), trimInput(company_desc));
+      }
+    }
+  },
+  'change #company_year': function(event,template){
+    event.preventDefault();
+    var company_year = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(company_year!=null){
+        Meteor.call('updateCompanyYear',Session.get("companyID"), company_year);
+      }
+    }
+  },
+  'change #company_web_page': function(event,template){
+    event.preventDefault();
+    var company_web_page = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(isNotEmpty(company_web_page)){
+        Meteor.call('updateCompanyWeb',Session.get("companyID"), company_web_page);
+      }
+    }
+  },
+  'change #facebook_page': function(event,template){
+    event.preventDefault();
+    var facebook_page = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(isNotEmpty(facebook_page)){
+        Meteor.call('updateCompanyFacebook',Session.get("companyID"), facebook_page);
+      }
+    }
+  },
+  'change #twitter_page': function(event,template){
+    event.preventDefault();
+    var twitter_page = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(isNotEmpty(twitter_page)){
+        Meteor.call('updateCompanyTwitter',Session.get("companyID"), twitter_page);
+      }
+    }
+  },
+  'change #vimeo_page': function(event,template){
+    event.preventDefault();
+    var vimeo_page = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(isNotEmpty(vimeo_page)){
+        Meteor.call('updateCompanyVimeo',Session.get("companyID"), vimeo_page);
+      }
+    }
+  },
+  'change #youtube_page': function(event,template){
+    event.preventDefault();
+    var youtube_page = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(isNotEmpty(youtube_page)){
+        Meteor.call('updateCompanyYoutube',Session.get("companyID"), youtube_page);
+      }
+    }
+  },
+  'change #instagram_page': function(event,template){
+    event.preventDefault();
+    var instagram_page = event.target.value;
+    if(Session.get("companyID")!=null){
+      if(isNotEmpty(instagram_page)){
+        Meteor.call('updateCompanyInstagram',Session.get("companyID"), instagram_page);
+      }
+    }
+  },
+  'change #country': function(event,template){
+    var country = trimInput(event.target.value);
+    if(Session.get("companyID")!=null){
+      Meteor.call('updateCompanyCountry', Session.get("companyID"), country);
+      Session.set("selected_country", event.target.value);
+    }
+  },
+  'change #states': function(event,template){
+    var state = trimInput(event.target.value);
+    if(Session.get("companyID")!=null){
+      Meteor.call('updateCompanyState', Session.get("companyID"), state);
+      Meteor.call('updateCompanyCountry', Session.get("companyID"), "México");
+      Session.set("selected_state", state);
+      var firstCity = City.findOne({'state': state}).city;
+      Meteor.call('updateCompanyCity', Session.get("companyID"), firstCity);    
+    }
+  },
+  'change #city': function(event,template){
+    var city = trimInput(event.target.value);
+    Meteor.call('updateCompanyCity', Session.get("companyID"), city);
+    Meteor.call('updateCompanyCountry', Session.get("companyID"), "México");
+  },
 });
-
 
 var trimInput= function(val){
   if(val!=null && val!=""){

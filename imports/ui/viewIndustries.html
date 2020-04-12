@@ -16,7 +16,7 @@
   <div class="row">
      <div class="col-md-12">
         {{#if isVerified}}
-           <a href="/addIndustry/{{currentUser._id}}" class="btn btn-purple">+</a>
+           <a href="/industryName" class="btn btn-purple">+</a>
         {{/if}}
      </div>
   </div>
@@ -60,7 +60,7 @@
                 <div class="card-footer">
                    <div class="row">
                       <div class="col"><a href="/industryPage/{{this._id}}" class="text-purple"><i class="fa fa-search">&nbsp;</i></a></div>
-                      <div class="col text-right"><a href="/editIndustry/{{this._id}}" class="text-purple"><i class="fa fa-edit">&nbsp;</i></a></div>
+                      <div class="col text-right"><a href="#" class="text-purple editIndustry" ><i class="fa fa-edit" data-answer="{{this._id}}">&nbsp;</i></a></div>
                    </div>
                  </div>
               </div>

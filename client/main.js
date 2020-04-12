@@ -32,6 +32,7 @@ import '../imports/ui/viewIndustries.js';
 import '../imports/ui/industryList.js';
 import '../imports/ui/industryPage.js';
 import '../imports/ui/addIndustry.js';
+import '../imports/ui/industryName.js';
 import '../imports/ui/editIndustry.js';
 import '../imports/ui/peopleList.js';
 import '../imports/ui/peopleListCast.js';
