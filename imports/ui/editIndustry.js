@@ -109,7 +109,7 @@ Template.editIndustry.helpers({
     var company_type="";
     if(company){
       company_type = company.company_type.trim();
-      if(company_type){
+      if(company_type!="" && value!=""){
         var elem = company_type.indexOf(value.trim());
         if(elem >= 0){
           result = 'selected';
@@ -127,7 +127,7 @@ Template.editIndustry.helpers({
     var year="";
     if(company){
       year = company.company_year;
-      if(year){
+      if(year!=null && year!="" && value!=""){
         var elem = year.indexOf(value);
         if(elem >= 0){
           result = 'selected';
@@ -155,13 +155,13 @@ Template.editIndustry.helpers({
     }
   },
   getCitiesFromStates(){
-    var company = Industry.find({'_id':Session.get('companyID')});
+    var company = Industry.findOne({'_id':Session.get('companyID')});
     if(Session.get("selected_state")!=null){
       return City.find({'state': Session.get("selected_state")}).fetch();
     }
     else{
-      if(company.state){
-        return City.find({'state': Meteor.user().state}).fetch();    
+      if(company!=null && company.state!=null){
+        return City.find({'state': company.state}).fetch();    
       }
       else{
         return City.find({'state': 'Aguascalientes'}).fetch();    
@@ -170,52 +170,71 @@ Template.editIndustry.helpers({
   },
   citySelected: function(value){
   var result="";
-  var company = Industry.find({'_id':Session.get('companyID')});
-  var city = company.city;
-  if(city){
-   var elem = city.indexOf(value);
-   if(elem >= 0){
-     result = 'selected';
-   }
-   else{
-     result = "";
-   } 
- }
+  var company = Industry.findOne({'_id':Session.get('companyID')});
+  if(company){
+    if(value!="" && company.city!=null){
+      var city = company.city.trim();
+      var elem = city.indexOf(value.trim());
+      if(city.trim()===value.trim()){
+        result = 'selected';
+      }
+      else{
+        result = "";
+      } 
+    }
+  }
  return result;
 },
 stateSelected: function(value){
   var result="";
-  var company = Industry.find({'_id':Session.get('companyID')});
-  var state = company.state;
-  if(state){
-   var elem = state.indexOf(value);
-   if(elem >= 0){
-     result = 'selected';
-   }
-   else{
-     result = "";
-   } 
- }
- return result;
+  var company = Industry.findOne({'_id':Session.get('companyID')});
+  if(company){
+    if(value!="" && company.state!=null){
+      var state = company.state.trim();
+      var elem = state.indexOf(value.trim());
+      if(elem >= 0){
+        result = 'selected';
+      }
+      else{
+        result = "";
+      } 
+    }
+  }
+  return result;
 },
-countrySelected: function(value){
-  var result="";
-  var company = Industry.find({'_id':Session.get('companyID')});
-  var country = company.country;
-  if(country){
-   var elem = country.indexOf(value);
-   if(elem >= 0){
-     result = 'selected';
-   }
-   else{
-     result = "";
-   } 
- }
- return result;
-},
-resumeCount(company_desc){
-    if(company_desc!=null){
-     return company_desc.length;
+  countrySelected: function(value){
+    var result="";
+    var company = Industry.findOne({'_id':Session.get('companyID')});
+    if(company){
+      if(company.country!=null && value!=""){
+        var country = company.country.trim();
+        var elem = country.indexOf(value.trim());
+        if(elem >= 0){
+          result = 'selected';
+        }
+        else{
+          result = "";
+        }   
+      }
+    }
+   return result;
+  },
+  resumeCount(){
+    var result=0;
+    var company = Industry.findOne({'_id':Session.get('companyID')});
+    if(company){
+      if(company.company_desc!=null){
+        result = company.company_desc.length;
+      }
+    }
+    return result;
+  },
+  description(){
+    var company = Industry.findOne({'_id':Session.get('companyID')});
+
+    if(company){
+      $('#max').text(Meteor.settings.public.MAX_CHAR_IN_TEXTAREA - company.company_desc.length);
+      return company.company_desc;
     }
   }
 });
@@ -226,11 +245,11 @@ Template.editIndustry.events({
    event.preventDefault();
 
    var len = $('#company_desc').val().length;
-   if(len > 450){
-    val.value= val.value.substring(0,450);
+   if(len > Meteor.settings.public.MAX_CHAR_IN_TEXTAREA){
+    val.value= val.value.substring(0,Meteor.settings.public.MAX_CHAR_IN_TEXTAREA);
   }
   else{
-    $('#max').text(450-len);
+    $('#max').text(Meteor.settings.public.MAX_CHAR_IN_TEXTAREA-len);
   }
 },
 'click #guardar_empresa': function(event, template) {
