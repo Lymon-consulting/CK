@@ -42,9 +42,16 @@
 					<small>Cambiar uso (Actualmente <strong>"{{getUse getMedia.mediaId}}"</strong>):</small><br>
 					<select class="form-control form-control-sm" id="type" data-id="{{getMedia.mediaId}}">
 						<option>--- Sin definir ---</option>
-						<option value="gallery">Galería</option>
-						<option value="profile">Foto de perfil o logo de empresa</option>
+						<option value="profile">Foto de perfil</option>
 						<option value="cover">Foto de portada</option>
+						{{#if hasTopRole}}
+						<option value="logo">Logo de empresa</option>
+						<option value="gallery_industry">Galería de empresa</option>
+						<option value="gallery_project">Galería de proyecto</option>
+						{{/if}}
+						{{#if isCast}}
+						<option value="gallery_cast">Galería de perfil</option>
+						{{/if}}
 					</select>
 					</p>
 					<p><a href="" class="delete" data-id="{{getMedia.mediaId}}"><small>Borrar permanentemente</small></a> </p>

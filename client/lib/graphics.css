@@ -160,8 +160,8 @@
 }
 .thumbnail-project{
   /*Las portadas tienen un aspectRatio de 2:1*/
-   width: 500px;
-   /*height: 100px;*/
+   width: 200px;
+   height: 100px;
    object-fit:scale-down;
    
 }

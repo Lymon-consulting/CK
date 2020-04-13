@@ -62,13 +62,22 @@ Template.editMedia.helpers({
     var use;
     if(media!=null){
       if(media.media_use==='profile'){
-        use = "Foto de perfil o logo";
+        use = "Foto de perfil";
       }
       else if(media.media_use==='cover'){
         use = "Foto de portada";
       }
-      else if(media.media_use==='gallery'){
+      else if(media.media_use==='logo'){
+        use = "Logo";
+      }
+      else if(media.media_use==='gallery_industry'){
+        use = "Galería de empresa";
+      }
+      else if(media.media_use==='gallery_project'){
         use = "Galería de proyecto";
+      }
+      else if(media.media_use==='gallery_cast'){
+        use = "Galería personal";
       }
       else{
         use = "Sin definir";
@@ -136,7 +145,7 @@ Template.editMedia.events({
       cropper.destroy();
     }
     
-    if(type==="profile"){
+    if(type==="profile" || type==="logo"){
       params.aspectRatio = 1/1;
       cropper = new Cropper(image, params);
       $("#crop").removeAttr('disabled');
@@ -146,7 +155,7 @@ Template.editMedia.events({
       cropper = new Cropper(image, params);
       $("#crop").removeAttr('disabled');
     }
-    else if(type==="gallery"){
+    else if(type==="gallery_industry" || type==="gallery_project" || type==="gallery_cast"){
       params.aspectRatio = 4/3;
       cropper = new Cropper(image, params);
       $("#crop").removeAttr('disabled');

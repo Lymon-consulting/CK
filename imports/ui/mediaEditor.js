@@ -132,34 +132,54 @@ Template.mediaEditor.helpers({
     
   },
   translateUse(media_use){
-    var result = "";
-    if(media_use==="profile"){
-      result = "Perfil";
+    use = "Sin definir";
+    if(media_use!=null){
+      if(media_use==='profile'){
+        use = "Foto de perfil";
+      }
+      else if(media_use==='cover'){
+        use = "Foto de portada";
+      }
+      else if(media_use==='logo'){
+        use = "Logo";
+      }
+      else if(media_use==='gallery_industry'){
+        use = "Galería de empresa";
+      }
+      else if(media_use==='gallery_project'){
+        use = "Galería de proyecto";
+      }
+      else if(media_use==='gallery_cast'){
+        use = "Galería personal";
+      }
+      else{
+        use = "Sin definir";
+      }
     }
-    else if(media_use==="cover"){
-      result = "Portada";
-    }
-    else if(media_use==="gallery"){
-      result = "Galería";
-    }
-    else{
-      result = "Sin definir";
-    }
-    return result;
+    return use;
   },
   getUse(mediaId){
     Meteor.subscribe("allMedia");
     var media = Media.findOne({'userId': Meteor.userId(), 'mediaId' : mediaId});
-    var use;
+    var use = "Sin definir";
     if(media!=null){
       if(media.media_use==='profile'){
-        use = "Foto de perfil o logo";
+        use = "Foto de perfil";
       }
       else if(media.media_use==='cover'){
         use = "Foto de portada";
       }
-      else if(media.media_use==='gallery'){
+      else if(media.media_use==='logo'){
+        use = "Logo";
+      }
+      else if(media.media_use==='gallery_industry'){
+        use = "Galería de empresa";
+      }
+      else if(media.media_use==='gallery_project'){
         use = "Galería de proyecto";
+      }
+      else if(media.media_use==='gallery_cast'){
+        use = "Galería personal";
       }
       else{
         use = "Sin definir";
@@ -186,17 +206,7 @@ Template.mediaEditor.events({
     var name = files[0].name;
     var data = event.target.result;
     reader.readAsBinaryString(files[0]);
-  },/*
-  'change #type': function(event, template){
-    event.preventDefault();
-    var public_id = $(event.currentTarget).attr("data-id");
-    var type = event.target.value;
-    console.log(type);
-    $('#castModal').modal('hide');
-    $('body').removeClass('modal-open');
-    $('.modal-backdrop').remove();
-    FlowRouter.go('/editMedia/' + public_id+'/'+type);
-  },*/
+  },
   'click #sendToEditor': function(event, template){
     event.preventDefault();
     var mediaId = $(event.target).attr('data-id');

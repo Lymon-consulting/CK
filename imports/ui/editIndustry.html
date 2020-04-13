@@ -4,10 +4,289 @@
    <div class="container text-center">
     <h1 class="h1-title">DATOS DE LA EMPRESA U ORGANIZACIÓN</h1>
     <h2>{{companyData.company_name}}</h2>
-    <hr class="hr_width_600">
+    <hr>
   </div>
 
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 rounded background-verylightgray p-3">
+        <div class="sticky-top">
+          <div class="row">
+            <div class="col d-flex justify-content-center">
+              {{#if getIndustryLogo 80}}
+              <img src="{{getIndustryLogo 80}}" class="thumbnail-logo"/>
+              {{else}}
+              <img src="/images/nologo.png" class="thumbnail-logo" />
+              {{/if}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-14 text-purple text-center">
+              <a href="#" class="text-purple" data-toggle="modal" data-target="#modal1">Cambiar <i class="fa fa-pencil"></i></a>
+            </div>
+          </div>
+          <div class="spacer20"></div>
+          <div class="row">
+            <div class="col text-center text-16">
+              <strong>{{companyData.company_name}}</strong>
+            </div>
+          </div>
+          <div class="spacer40"></div>
+          <div><hr></div>
+          <div class="row">
+            <div class="col text-14">
+              <a href="/industryPage/{{companyData._id}}" class="text-purple"><i class="fa fa-eye"></i> Perfil de empresa</a>    
+            </div>
+          </div>
+          <div class="spacer40"></div>
+          <div><hr></div>
+          <div class="row">
+            <div class="col text-14">Portada <a href="#" class="text-purple" data-toggle="modal" data-target="#modal2">Cambiar <i class="fa fa-pencil"></i></a></div>
+          </div>
+          <div class="row">
+            <div class="col">
+              {{#if getCoverPicture}}
+              <img id="image" src="{{getCoverPicture}}" class="thumbnail-project"/>
+              {{else}}
+              <img id="image" src="/images/nocover.jpg" class="thumbnail-project"/>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div class="spacer40"></div>
+        <div class="row">
+          <div class="col">
+            <h2>Datos generales</h2>
+          </div>
+        </div>
+        <div class="spacer40"></div>
+        <div class="row">
+         <div class="col-md-12">
+           <div class="row">
+            <div class="col">
+             <label for="company_name">Nombre comercial de la empresa: <span class="text-purple">(Requerido)</span></label>
+           </div>
+           <div class="col">
+             <input type="text" id="company_name" class="form-control" placeholder="Empresa" value="{{companyData.company_name}}" maxlength="150">
+           </div>
+         </div>
 
+        <div class="spacer20"></div>
+
+        <div class="row">
+          <div class="col">
+            <label for="proj_type">Tipo de empresa: <span class="text-purple">(Requerido)</span></label>
+          </div>
+          <div class="col">
+           <select name="company_type" id="company_type" class="form-control">
+            <option value="" disabled selected style='display:none;'> Seleccione </option>
+            {{#each getCompanyType}}
+            <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
+            {{/each}}
+          </select>
+          </div>
+        </div>
+        
+        <div class="spacer20"></div>
+
+        <div class="row">
+          <div class="col"><label for="proj_desc">Descripción de la empresa: <span class="text-purple">(Requerido)</span></label></div>
+          <div class="col">
+           <textarea class="form-control" rows="5" id="company_desc" placeholder="Descripción de la empresa (450 caracteres máx)." maxlength="450">{{description}}</textarea><small>Caracteres restantes:</small> <div id="max" class="agreements"></div>
+         </div>
+        </div>
+        <div class="spacer20"></div>
+        <div class="row">
+          <div class="col"><label for="company_year">Año de fundación: <span class="text-purple">(Requerido)</span></label></div>
+          <div class="col">
+           <select name="company_year" id="company_year" class="form-control">
+            <option value="" disabled selected style='display:none;'> Seleccione </option>
+            {{#each getAvailableYears}}
+            <option value="{{this}}" {{yearSelected this}}> {{this}} </option>   
+            {{/each}}
+          </select>
+        </div>
+        </div>
+        <div class="spacer40"></div>
+        <div class="row">
+          <div class="col"><h2>Ubicación</h2></div>
+        </div>
+        <div class="spacer20"></div>
+        <div class="row">
+          <div class="col-md-4">
+            <label for="country">País <span class="text-purple">(Requerido)</span></label>
+            <select name="country" id="country" class="form-control">
+              {{#each getCountries}}
+              <option value="{{country}}" {{countrySelected country}}> {{country}} </option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="state">Estado <span class="text-purple">(Requerido)</span></label>
+            <select name="state" id="states" class="form-control">
+              {{#each getStatesFromCountries}}
+              <option value="{{state}}" {{stateSelected state}}> {{state}} </option>
+              {{/each}}
+            </select>  
+          </div>
+          <div class="col-md-4">
+            <label for="city">Ciudad <span class="text-purple">(Requerido)</span></label>
+            <select name="city" id="city" class="form-control">
+              {{#each getCitiesFromStates}}
+              <option value="{{city}}" {{citySelected city}}> {{city}} </option>
+              {{/each}}
+            </select>  
+          </div>
+        </div>
+
+        
+        <div class="spacer40"></div>
+        <div class="row">
+          <div class="col"><h2>En la red</h2></div>
+        </div>
+        
+
+        <div class="spacer20"></div>
+        <div class="row">
+          <div class="col"><label for="web">Página Web de la empresa:</label></div>
+        </div>
+        <div class="spacer20"></div>
+        <div class="row">
+          <div class="col">
+           <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fa fa-globe fa-lg"></i></div>
+            </div>
+            <input type="text" class="form-control" id="company_web_page" value="{{companyData.company_web_page}}" placeholder="Ej: www.cinekomuna.com" maxlength="120">
+          </div>
+        </div>
+        </div>
+        <div class="spacer20"></div>
+        
+        <div class="row">
+         <div class="col">
+          <div class="input-group">
+           <div class="input-group-prepend">
+             <div class="input-group-text"><i class="fa fa-facebook fa-lg"></i></div>
+           </div>
+           <input  type="text" class="form-control" id="facebook_page" value="{{companyData.company_facebook_page}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120">
+         </div>
+        </div>
+        </div>
+
+        <div class="spacer20"></div>
+        <div class="row">
+         <div class="col">
+          <div class="input-group">
+           <div class="input-group-prepend">
+             <div class="input-group-text"><i class="fa fa-twitter fa-lg"></i></div>
+           </div>
+           <input type="text" class="form-control" id="twitter_page" value="{{companyData.company_twitter_page}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
+         </div>
+        </div>
+        </div>
+        <div class="spacer20"></div>
+        <div class="row">
+         <div class="col">
+          <div class="input-group">
+           <div class="input-group-prepend">
+             <div class="input-group-text"><i class="fa fa-vimeo fa-lg"></i></div>
+           </div>
+           <input type="text" class="form-control" id="vimeo_page" value="{{companyData.company_vimeo_page}}" placeholder="Ej. www.vimeo.com/cinekomuna" maxlength="120">
+         </div>
+        </div>
+        </div>
+        <div class="spacer20"></div>
+        <div class="row">
+         <div class="col">
+          <div class="input-group">
+           <div class="input-group-prepend">
+             <div class="input-group-text"><i class="fa fa-youtube fa-lg"></i></div>
+           </div>
+           <input  type="text" class="form-control" id="youtube_page" value="{{companyData.company_youtube_page}}" placeholder="Ej. www.youtube.com/cinekomuna" maxlength="120">
+         </div>
+        </div>
+        </div>
+        <div class="spacer20"></div>
+        <div class="row">
+         <div class="col">
+          <div class="input-group">
+           <div class="input-group-prepend">
+             <div class="input-group-text"><i class="fa fa-instagram fa-lg"></i></div>
+           </div>
+           <input type="text" class="form-control" id="instagram_page" value="{{companyData.company_instagram_page}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120">
+         </div>
+        </div>
+        </div>
+        <div class="spacer40"></div>
+        <div class="row">
+          <div class="col"><h2>Configuración de la página de perfil</h2></div>
+        </div>
+        <div class="spacer20"></div>
+        <div class="row">
+          <div class="col">
+            <label for="company_name">Título para la sección de colaboradores:</label>
+          </div>
+          <div class="col">
+            <input type="text" id="collaborator_section_title" class="form-control" placeholder="Título colaboradores" value="{{companyData.collaborator_section_title}}" maxlength="150">
+          </div>
+        </div>
+        <div class="spacer20"></div>
+        <div class="row">
+          <div class="col">
+            <label for="company_name">Título para la sección de proyectos:</label>
+          </div>
+          <div class="col">
+            <input type="text" id="project_section_title" class="form-control" placeholder="Título proyectos" value="{{companyData.project_section_title}}" maxlength="150">
+          </div>
+        </div>
+        {{#if getGallery}}
+        <div class="spacer40"></div>
+        <div class="row">
+          <div class="col-lg-12">Galería de imágenes <a href="#" class="text-purple" id="goToMedia" ><br>Agregar <i class="fa fa-pencil"></i></a></div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <!--Inicia carrousel -->
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                {{#each getGallery}}
+                  {{#if isFirstElement this.position}}
+                <div class="carousel-item active">
+                  <img class="d-block w-100" src="{{getURL this.mediaId}}" alt="First slide">
+                </div>
+                  {{else}}
+                <div class="carousel-item carousel-item-thumb">
+                  <img class="d-block w-100" src="{{getURL this.mediaId}}" alt="Not first slide">
+                </div>
+                  {{/if}}
+                {{/each}}
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Anterior</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Siguiente</span>
+              </a>
+            </div>
+            <!--Termina carrousel -->
+              
+          </div>
+        </div>
+       
+        {{/if}}
+        <div class="row">
+          <div class="col spacer80"></div>
+        </div>
+       </div>
+      </div>
+      </div>
+    </div>
+  </div>
 
   <div class="container">
     <div class="col-md-8 mx-auto">
@@ -15,245 +294,7 @@
      <div class="tab-content">
        <div role="tabpanel" class="tab-pane active" id="persona_panel">    
          {{#if currentUser}}
-         <div class="row">
-     <div class="col-md-12">
-       <div class="row">
-        <div class="col">
-         <label for="company_name">Nombre comercial de la empresa: <span class="text-purple">(Requerido)</span></label>
-       </div>
-       <div class="col">
-         <input type="text" id="company_name" class="form-control" placeholder="Empresa" value="{{companyData.company_name}}" maxlength="150">
-       </div>
-     </div>
-
-    <div class="spacer20"></div>
-
-    <div class="row">
-      <div class="col">
-        <label for="proj_type">Tipo de empresa: <span class="text-purple">(Requerido)</span></label>
-      </div>
-      <div class="col">
-       <select name="company_type" id="company_type" class="form-control">
-        <option value="" disabled selected style='display:none;'> Seleccione </option>
-        {{#each getCompanyType}}
-        <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
-        {{/each}}
-      </select>
-      </div>
-    </div>
-    
-    <div class="spacer20"></div>
-
-    <div class="row">
-      <div class="col"><label for="proj_desc">Descripción de la empresa: <span class="text-purple">(Requerido)</span></label></div>
-      <div class="col">
-       <textarea class="form-control" rows="5" id="company_desc" placeholder="Descripción de la empresa (450 caracteres máx)." maxlength="450">{{description}}</textarea><small>Caracteres restantes:</small> <div id="max" class="agreements"></div>
-     </div>
-    </div>
-    <div class="spacer20"></div>
-    <div class="row">
-      <div class="col-md-4">
-        <label for="country">País <span class="text-purple">(Requerido)</span></label>
-        <select name="country" id="country" class="form-control">
-          {{#each getCountries}}
-          <option value="{{country}}" {{countrySelected country}}> {{country}} </option>
-          {{/each}}
-        </select>
-      </div>
-      <div class="col-md-4">
-        <label for="state">Estado <span class="text-purple">(Requerido)</span></label>
-        <select name="state" id="states" class="form-control">
-          {{#each getStatesFromCountries}}
-          <option value="{{state}}" {{stateSelected state}}> {{state}} </option>
-          {{/each}}
-        </select>  
-      </div>
-      <div class="col-md-4">
-        <label for="city">Ciudad <span class="text-purple">(Requerido)</span></label>
-        <select name="city" id="city" class="form-control">
-          {{#each getCitiesFromStates}}
-          <option value="{{city}}" {{citySelected city}}> {{city}} </option>
-          {{/each}}
-        </select>  
-      </div>
-    </div>
-
-    <div class="spacer20"></div>
-    <div class="row">
-      <div class="col"><label for="company_year">Año de fundación: <span class="text-purple">(Requerido)</span></label></div>
-      <div class="col">
-       <select name="company_year" id="company_year" class="form-control">
-        <option value="" disabled selected style='display:none;'> Seleccione </option>
-        {{#each getAvailableYears}}
-        <option value="{{this}}" {{yearSelected this}}> {{this}} </option>   
-        {{/each}}
-      </select>
-    </div>
-    </div>
-  <div class="spacer40"></div>
-    <div class="row">
-      <div class="col"><strong>En la red:</strong></div>
-    </div>
-    
-
-    <div class="spacer20"></div>
-    <div class="row">
-      <div class="col"><label for="web">Página Web de la empresa:</label></div>
-    </div>
-    <div class="spacer20"></div>
-    <div class="row">
-      <div class="col">
-       <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text"><i class="fa fa-globe fa-lg"></i></div>
-        </div>
-        <input type="text" class="form-control" id="company_web_page" value="{{companyData.company_web_page}}" placeholder="Ej: www.cinekomuna.com" maxlength="120">
-      </div>
-    </div>
-    </div>
-    <div class="spacer20"></div>
-    
-    <div class="row">
-     <div class="col">
-      <div class="input-group">
-       <div class="input-group-prepend">
-         <div class="input-group-text"><i class="fa fa-facebook fa-lg"></i></div>
-       </div>
-       <input  type="text" class="form-control" id="facebook_page" value="{{companyData.company_facebook_page}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120">
-     </div>
-    </div>
-    </div>
-
-    <div class="spacer20"></div>
-    <div class="row">
-     <div class="col">
-      <div class="input-group">
-       <div class="input-group-prepend">
-         <div class="input-group-text"><i class="fa fa-twitter fa-lg"></i></div>
-       </div>
-       <input type="text" class="form-control" id="twitter_page" value="{{companyData.company_twitter_page}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
-     </div>
-    </div>
-    </div>
-    <div class="spacer20"></div>
-    <div class="row">
-     <div class="col">
-      <div class="input-group">
-       <div class="input-group-prepend">
-         <div class="input-group-text"><i class="fa fa-vimeo fa-lg"></i></div>
-       </div>
-       <input type="text" class="form-control" id="vimeo_page" value="{{companyData.company_vimeo_page}}" placeholder="Ej. www.vimeo.com/cinekomuna" maxlength="120">
-     </div>
-    </div>
-    </div>
-    <div class="spacer20"></div>
-    <div class="row">
-     <div class="col">
-      <div class="input-group">
-       <div class="input-group-prepend">
-         <div class="input-group-text"><i class="fa fa-youtube fa-lg"></i></div>
-       </div>
-       <input  type="text" class="form-control" id="youtube_page" value="{{companyData.company_youtube_page}}" placeholder="Ej. www.youtube.com/cinekomuna" maxlength="120">
-     </div>
-    </div>
-    </div>
-    <div class="spacer20"></div>
-    <div class="row">
-     <div class="col">
-      <div class="input-group">
-       <div class="input-group-prepend">
-         <div class="input-group-text"><i class="fa fa-instagram fa-lg"></i></div>
-       </div>
-       <input type="text" class="form-control" id="instagram_page" value="{{companyData.company_instagram_page}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120">
-     </div>
-    </div>
-    </div>
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col"><strong>Configuración de la página de perfil</strong></div>
-    </div>
-    <div class="spacer20"></div>
-    <div class="row">
-      <div class="col">
-        <label for="company_name">Título para la sección de colaboradores:</label>
-      </div>
-      <div class="col">
-        <input type="text" id="collaborator_section_title" class="form-control" placeholder="Título colaboradores" value="{{companyData.collaborator_section_title}}" maxlength="150">
-      </div>
-    </div>
-    <div class="spacer20"></div>
-    <div class="row">
-      <div class="col">
-        <label for="company_name">Título para la sección de proyectos:</label>
-      </div>
-      <div class="col">
-        <input type="text" id="project_section_title" class="form-control" placeholder="Título proyectos" value="{{companyData.project_section_title}}" maxlength="150">
-      </div>
-    </div>
-    <div class="spacer40"></div>
-    <div class="row">
-      <div class="col"><strong>Logo y portada</strong></div>
-    </div>
-    <div class="spacer20"></div>
-    <div class="row">
-              <div class="col">Este es tu logo actual</div>
-            </div>
-            <div class="row">
-              <div class="col">
-                {{#if getIndustryLogo 80}}
-                <img src="{{getIndustryLogo 80}}" class="thumbnail-logo"/>
-                {{else}}
-                <img src="/images/nologo.png" class="thumbnail-logo" />
-                {{/if}}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <br>
-                <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal1">Seleccionar otro</button>
-              </div>
-           </div>
-           <div class="spacer20"></div>
-           <div class="row">
-              <div class="col">Esta es tu imagen de portada actual</div>
-           </div>
-           <div class="row">
-              <div class="col">
-                {{#if getCoverPicture}}
-                <img id="image" src="{{getCoverPicture}}" class="thumbnail-project"/>
-                {{else}}
-                <img id="image" src="/images/nocover.jpg" class="thumbnail-project"/>
-                {{/if}}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <br>
-                <button type="button" class="btn btn-purple" data-toggle="modal" data-target="#modal2">Seleccionar otra</button>
-              </div>
-           </div>
-    
-    <div class="row">
-     <div class="col"><hr></div>
-    </div>
-    <div class="spacer20"></div>
-    <div class="row">
-      <div class="col text-center">
-        <a class="btn btn-purple" href="/industryPage/{{companyData._id}}">VER PERFIL DE EMPRESA</a>   
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col spacer80"></div>
-    </div>
-
-   </div>
-  </div>
-     
-
-
-
-  <!--Modal: Name-->
+          <!--Modal: Name-->
           <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
 

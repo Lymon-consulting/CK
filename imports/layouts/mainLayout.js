@@ -167,7 +167,7 @@ Template.registerHelper('fullName', function(){
 Template.registerHelper('hasTopRole', function(){
   var array = new Array();
   var result = false;
-  if(Meteor.user().role!=null){
+  if(Meteor.user()!=null && Meteor.user().role!=null){
     array = Meteor.user().role;
     for (var i = array.length - 1; i >= 0; i--) {
       if(array[i]==="Director"){
