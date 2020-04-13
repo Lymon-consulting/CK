@@ -125,14 +125,18 @@ getProfilePicture(userId) {
     
   }
   return url;
-  /*
- var url = "";
- var user = Meteor.users.findOne({'_id':userId});
- if(user!=null && user.profilePictureID!=null && user.profilePictureID!=""){
-  url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_100,h_100,c_thumb,r_max/" + user.profilePictureID;
-}
-return url;*/
 },
+getCollaboratorTitle(){
+  var result = Meteor.settings.public.DEFAULT_COLLABORATOR_TITLE_FOR_COMPANY_PAGE;
+  var company = Industry.findOne({"_id": FlowRouter.getParam('id')});
+  if(company){
+    if(company.collaborator_section_title!=null && company.collaborator_section_title!=""){
+      result = company.collaborator_section_title;
+    }
+  }
+  return result;
+},
+
 getInitials(userId){
   var name = "";
   var lastname = "";
@@ -152,7 +156,6 @@ Template.company_projects.helpers({
   getCompanyProjects(){
     Meteor.subscribe("allProjects");
     var companyProjects = Project.find({ 'companies._id': { $all : [FlowRouter.getParam('id')]}});
-    console.log(companyProjects);
     return companyProjects;
   },
   getProjectPicture(projectId, size) {
@@ -167,14 +170,18 @@ Template.company_projects.helpers({
       
     }
     return url;
-    /*
-    var url = "";
-    var data = Project.findOne({'_id' : projectId});
-    if(data!=null && data.projectPictureID!=null){
-      url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_limit/" + data.projectPictureID;
+    
+  },
+  getProjectTitle(){
+  var result = Meteor.settings.public.DEFAULT_PROJECT_TITLE_FOR_COMPANY_PAGE;
+  var company = Industry.findOne({"_id": FlowRouter.getParam('id')});
+  if(company){
+    if(company.project_section_title!=null && company.project_section_title!=""){
+      result = company.project_section_title;
     }
-    return url;*/
   }
+  return result;
+},
 });
 
 Template.industryPage.events({
@@ -182,12 +189,18 @@ Template.industryPage.events({
     $('#collabModal').modal('toggle');
   },
   'click #search': function(event,template,doc){
-            /*$('#collabModal').modal('toggle');
-            FlowRouter.go('/searchCollaborator/' + FlowRouter.getParam('id')); */
-            $('#collabModal')
-            .on('hidden.bs.modal', function() {
-              FlowRouter.go('/searchCollaboratorForIndustry/' + FlowRouter.getParam('id'));
-            })
-            .modal('hide');
-          }
-        });
+    /*$('#collabModal').modal('toggle');
+    FlowRouter.go('/searchCollaborator/' + FlowRouter.getParam('id')); */
+    $('#collabModal')
+    .on('hidden.bs.modal', function() {
+      FlowRouter.go('/searchCollaboratorForIndustry/' + FlowRouter.getParam('id'));
+    })
+    .modal('hide');
+  },
+  'click .editIndustry':function(event, template){
+    var companyID = $(event.target).attr('data-answer');
+    console.log(companyID);
+    Session.set("companyID",companyID);
+    FlowRouter.go("/editIndustry");
+  }
+});

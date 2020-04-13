@@ -236,7 +236,33 @@ stateSelected: function(value){
       $('#max').text(Meteor.settings.public.MAX_CHAR_IN_TEXTAREA - company.company_desc.length);
       return company.company_desc;
     }
-  }
+  },
+  getIndustryLogo(size) {
+    Meteor.subscribe("allMedia");
+    var data = Industry.findOne({'_id' : Session.get('companyID')});
+    var url;
+    if(data!=null && data.companyLogoID!=null){
+      var cover = Media.findOne({'mediaId':data.companyLogoID});
+      if(cover!=null){
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_fill/" + "/v" + cover.media_version + "/" + data.userId + "/" + data.companyLogoID;    
+      }
+      
+    }
+    return url;
+  },
+  getCoverPicture() {
+    Meteor.subscribe("allMedia");
+    var data = Industry.findOne({'_id' : Session.get('companyID')});
+    var url;
+    if(data!=null && data.companyCoverID!=null){
+      var cover = Media.findOne({'mediaId':data.companyCoverID});
+      if(cover!=null){
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_1200,h_250,c_fill/" + "/v" + cover.media_version + "/" + data.userId + "/" + data.companyCoverID;    
+      }
+      
+    }
+    return url;
+  },
 });
 
 
@@ -448,5 +474,50 @@ Template.editIndustry.events({
     Meteor.call('updateCompanyCity', Session.get("companyID"), city);
     Meteor.call('updateCompanyCountry', Session.get("companyID"), "México");
   },
+  'change #collaborator_section_title': function(event,template){
+    var section_title = trimInput(event.target.value);
+    Meteor.call('updateCompanyCollaboratorTitle', Session.get('companyID'), section_title);
+  },
+  'change #project_section_title': function(event,template){
+    var project_title = trimInput(event.target.value);
+    if(Session.get("companyID")!=null){
+      Meteor.call('updateCompanyProjectTitle', Session.get('companyID'), project_title);  
+    }
+    
+  },
+  'click .goMediaLibrary': function(event,template){
+    event.preventDefault();
+    $('#modal1').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+    FlowRouter.go("/mediaEditor/" + Meteor.userId());
+  },
+  'click #selectLogo': function(event,template){
+     event.preventDefault();
+     var mediaId = $(event.currentTarget).attr("data-id");
+     console.log(mediaId);
+     Meteor.call(
+      'saveCompanyLogoID',
+      Session.get('companyID'),
+      mediaId
+      );
+      $('#modal1').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+    },
+    'click #selectCoverIndustry': function(event,template){
+     event.preventDefault();
+     var mediaId = $(event.currentTarget).attr("data-id");
+     console.log(mediaId);
+     Meteor.call(
+      'saveCompanyCoverID',
+      Session.get('companyID'),
+      mediaId
+      );
+      $('#modal2').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+    },
+    
 });
 

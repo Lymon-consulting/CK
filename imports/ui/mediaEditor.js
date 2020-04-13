@@ -142,6 +142,9 @@ Template.mediaEditor.helpers({
     else if(media_use==="gallery"){
       result = "Galería";
     }
+    else{
+      result = "Sin definir";
+    }
     return result;
   },
   getUse(mediaId){

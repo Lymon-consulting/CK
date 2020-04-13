@@ -161,4 +161,14 @@ Meteor.methods({
       $set:{"city":city}
     });
   },
+  updateCompanyCollaboratorTitle(companyId,title){
+    Industry.update({'_id': companyId},{
+      $set:{"collaborator_section_title":title}
+    });
+  },
+  updateCompanyProjectTitle(companyId,title){
+    Industry.update({'_id': companyId},{
+      $set:{"project_section_title":title}
+    });
+  },
 });
