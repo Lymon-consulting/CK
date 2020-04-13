@@ -242,11 +242,28 @@
             <input type="text" id="project_section_title" class="form-control" placeholder="Título proyectos" value="{{companyData.project_section_title}}" maxlength="150">
           </div>
         </div>
-        {{#if getGallery}}
         <div class="spacer40"></div>
         <div class="row">
-          <div class="col-lg-12">Galería de imágenes <a href="#" class="text-purple" id="goToMedia" ><br>Agregar <i class="fa fa-pencil"></i></a></div>
+          <div class="col-lg-8 form-group">
+            <label for="nombre">Video de muestra </label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-play"></i></div>
+              </div>
+              <input type="text" class="form-control" id="video" placeholder="URL de youtube, vimeo, etc." value="{{video}}" maxlength="150">
+            </div>
+          </div>
         </div>
+        <div class="spacer40"></div>
+        <div class="row">
+          <div class="col">
+            <h2>Galería</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12"><a href="#" class="text-purple" data-toggle="modal" data-target="#modal3"><br>Agregar <i class="fa fa-pencil"></i></a></div>
+        </div>
+        {{#if getGallery}}
         <div class="row">
           <div class="col-lg-12">
             <!--Inicia carrousel -->
@@ -258,7 +275,7 @@
                   <img class="d-block w-100" src="{{getURL this.mediaId}}" alt="First slide">
                 </div>
                   {{else}}
-                <div class="carousel-item carousel-item-thumb">
+                <div class="carousel-item">
                   <img class="d-block w-100" src="{{getURL this.mediaId}}" alt="Not first slide">
                 </div>
                   {{/if}}
@@ -274,11 +291,16 @@
               </a>
             </div>
             <!--Termina carrousel -->
-              
           </div>
         </div>
-       
+        {{else}}
+        <div class="row">
+          <div class="col agreements">
+            Aún no agregas imágenes a tu galería de empresa
+          </div>
+        </div>
         {{/if}}
+
         <div class="row">
           <div class="col spacer80"></div>
         </div>
@@ -314,7 +336,7 @@
                     </div>
                     
                     <div class="row background-verylightgray light-padding">
-                      {{#each getMedia "profile"}}
+                      {{#each getMedia "logo"}}
                       <div class="col-lg-3 col-sm-6 align-self-center">
                         <a href="#" id="selectLogo" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image"></a>
                       </div>
@@ -366,6 +388,55 @@
                       {{#each getMedia "cover"}}
                       <div class="col-lg-3 col-sm-6 align-self-center">
                         <a href="#" id="selectCoverIndustry" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image"></a>
+                      </div>
+                      {{/each}}
+                    </div>
+                  </div>
+                  
+
+                </div>
+
+                <!--Footer-->
+                <div class="modal-footer justify-content-center">
+                  <div class="row">
+                    <div class="col"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+                    <div class="col"><button class="btn btn-purple goMediaLibrary">Ir a la biblioteca de imágenes</button></div>
+                  </div>
+                  
+                  
+
+                </div>
+
+              </div>
+              <!--/.Content-->
+
+            </div>
+          </div>
+          <!--Modal: Name-->
+
+          <!--Modal: Name-->
+          <div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+
+              <!--Content-->
+              <div class="modal-content">
+
+                <!--Body-->
+                <div class="modal-body">
+                  
+                  <div class="container">
+                    <div class="row">
+                      <div class="col text-center">Elige las fotos para la galería de tu empresa</div>
+                    </div>
+                    <div class="row">
+                      <div class="col text-center"><small>Se muestran únicamente las imágenes definidas como <strong>"Galería de empresa"</strong> en la biblioteca de imágenes. Selecciona las que usarás o ve a la biblioteca de imágenes para definir otras imágenes como Galería de empresa.</small>
+                      </div>
+                    </div>
+                    
+                    <div class="row background-verylightgray light-padding">
+                      {{#each getMedia "gallery_industry"}}
+                      <div class="col-lg-3 col-sm-6 align-self-center justify-content-center">
+                        <input type="checkbox" class="check" data-id="{{this.mediaId}}" {{verifyChecked this.mediaId}}><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image">
                       </div>
                       {{/each}}
                     </div>

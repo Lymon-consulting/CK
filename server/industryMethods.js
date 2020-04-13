@@ -171,4 +171,30 @@ Meteor.methods({
       $set:{"project_section_title":title}
     });
   },
+  addGallery(companyId,mediaId){
+    Industry.update({'_id': companyId}, 
+      {
+        $addToSet: {
+          "gallery": mediaId
+        }
+      });
+  },
+  removeGallery(companyId,mediaId){
+    Industry.update({'_id': companyId}, 
+      {
+        $pull: {
+          "gallery": mediaId
+        }
+      });
+  },
+  updateVimeoForIndustry(companyId,vimeo_page){
+    Industry.update({'_id': companyId},{
+      $set:{"vimeo":vimeo_page}
+    });
+  },
+  updateYoutubeForIndustry(companyId,youtube_page){
+    Industry.update({'_id': companyId},{
+      $set:{"youtube":youtube_page}
+    });
+  },
 });

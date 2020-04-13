@@ -24,6 +24,15 @@ Bert.alert({message: 'Por favor completa todos los campos obligatorios', type: '
 return false;
 }
 
+function formatURL(url){
+  if(url!=""){
+    if (!/^https?:\/\//i.test(url)) {
+      url = 'http://' + url;  
+    }
+  }
+  return url;
+}
+
 Template.editIndustry.helpers({
   companyData(){
     if(Session.get("companyID")!=null){
@@ -44,6 +53,29 @@ Template.editIndustry.helpers({
     return media;
   },
   getGallery(){
+    var data = Industry.findOne({'_id' : Session.get('companyID')});
+    var array = new Array();
+    
+    if(data){
+      if(data.gallery){
+        for (var i = 0; i < data.gallery.length; i++) {
+          var obj = {};
+          obj.mediaId = data.gallery[i];
+
+          if(i==0){
+            obj.position = 1;
+          }
+          else{
+            obj.position = 2;
+          }
+           array.push(obj);
+          
+        }
+      }
+    }
+    console.log(array);
+    return array;
+/*
     var media = Media.find({"userId": Meteor.userId(), "media_use":"gallery"}).fetch();
     var array = new Array();
     if(media){
@@ -55,14 +87,13 @@ Template.editIndustry.helpers({
         else{
           array[i].position = 2;
         }
-        //array[i]
       }
     }
-    return array;
+    return array;*/
   },
   isFirstElement(position){
     var result = false;
-    if(position===1){
+    if(position==1){
       result = true;
     }
     else{
@@ -77,6 +108,19 @@ Template.editIndustry.helpers({
         url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.userId() + "/" + media.mediaId;    
       }
     return url;
+  },
+  video(){
+    var video = "";
+    var data = Industry.findOne({'_id' : Session.get('companyID')});
+    if(data){
+      if(data.vimeo){
+        video = data.vimeo;
+      }
+      else if(data.youtube){
+        video = data.youtube;
+      } 
+    }
+    return video;
   },
   getCompanyType(){
     var type = new Array();
@@ -298,6 +342,24 @@ stateSelected: function(value){
     }
     return url;
   },
+  verifyChecked(mediaId){
+    var data = Industry.findOne({'_id' : Session.get('companyID')});
+    var gallery = new Array();
+    var result="";
+    if(data){
+      if(data.gallery){
+        gallery = data.gallery;
+        for (var i = 0; i < gallery.length; i++) {
+          if(mediaId===gallery[i]){
+            result="checked";
+            break;
+          }
+        }
+      }
+      
+    }
+    return result;
+  }
 });
 
 
@@ -552,6 +614,38 @@ Template.editIndustry.events({
       $('#modal2').modal('hide');
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();
+    },
+    'change .check':function(event,template){
+      event.preventDefault();
+      var mediaId = $(event.currentTarget).attr("data-id");
+      if(event.target.checked){
+        Meteor.call('addGallery',Session.get('companyID'), mediaId);
+      }
+      else{
+        Meteor.call('removeGallery',Session.get('companyID'), mediaId); 
+      }
+    },
+    'change #video': function(event,template){
+      event.preventDefault();
+      var video = trimInput(event.target.value);
+      if(isNotEmpty(video)){
+        if(video.indexOf("vimeo")>0){
+          Meteor.call('updateVimeoForIndustry', Session.get('companyID'), formatURL(video)); 
+          Meteor.call('updateYoutubeForIndustry', Session.get('companyID'), null); 
+        } 
+        else if(video.indexOf("youtube")>0){
+          Meteor.call('updateYoutubeForIndustry', Session.get('companyID'), formatURL(video)); 
+          Meteor.call('updateVimeoForIndustry', Session.get('companyID'), null); 
+        }
+        else{
+          Bert.alert({message: 'Por el momento únicamente aceptamos videos de vimeo o youtube', type: 'danger', icon: 'fa fa-exclamation'});
+        }
+        
+      }
+      else{
+        Meteor.call('updateYoutubeForIndustry', Session.get('companyID'), null); 
+        Meteor.call('updateVimeoForIndustry', Session.get('companyID'), null); 
+      }
     },
     
 });

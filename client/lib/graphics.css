@@ -11,6 +11,11 @@
   
 }
 
+.carousel-item.active, .carousel-item-next, .carousel-item-prev {
+    width: 600px; 
+    
+}
+
 .carousel-thumb{
   width: 200px; 
   
@@ -41,7 +46,7 @@
 }
 
 .media-thumb{
-   width: 200px;
+   /*width: 200px;*/
    height: 100px;
 
    /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/

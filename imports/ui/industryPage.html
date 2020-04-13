@@ -4,17 +4,10 @@
       /**Estilo para que la foto de perfil aparezca sobre la foto de fondo de portada*/
       .bg-overlay {
           background: url({{getCoverPicture}});
-          /*
-          background-image: 
-             linear-gradient(
-               rgba(0, 0, 0, 0.5),
-               rgba(0, 0, 0, 0.5)
-             ),
-             url({{getCoverPicture}});*/
           background-repeat: no-repeat;
           background-size: cover;
           background-position: center center;
-          height: 350px;          
+          height: 400px;          
       }
       
       {{else}}
@@ -23,20 +16,144 @@
           background-repeat: no-repeat;
           background-size: cover;
           background-position: center center;
-          height: 350px;          
+          
       }
       {{/if}}
    </style>
    <!-- Inicia bloque para desplegar la foto de perfil -->
    <div class="container-fluid bg-overlay">
       <div class="spacer280"></div>
-      {{#if getLogoPicture}}
-      <img src="{{getLogoPicture 100}}" class="img-thumbnail">
+      {{#if getLogoPicture 500}}
+      <img src="{{getLogoPicture 500}}" id="profileImageLarge200">
       {{else}}
       <img class="thumbnail-logo" src="/images/nologo.png">
       {{/if}}
    </div>
    <!-- Termina bloque para desplegar la foto de perfil -->
+
+
+   <!-- Inicia bloque con los datos personales y de contacto del perfil -->
+   <div class="container-fluid">
+      <div class="spacer40"></div>
+      <div class="row">
+         <div class="col-lg-3 col-md-3 col-sm-2 text-left">
+            <div class="row">
+               <div class="col text-nowrap"><i class="fa fa-thumbs-up fa-sm"></i>
+                  <span class="numbers">{{#if getCompany.likes}}
+                     {{getCompany.likes}}
+                  {{else}}
+                     0
+                  {{/if}}</span>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col text-nowrap"><i class="fa fa-eye fa-sm"></i>
+                  <span class="numbers">{{#if getCompany.views}}
+                     {{getCompany.views}}
+                  {{else}}
+                     0
+                  {{/if}}</span>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col text-nowrap"><i class="fa fa-user fa-sm"></i>&nbsp;<i class="fa fa-angle-left fa-sm"></i>
+                  <span class="numbers">
+                     {{getCompanyFollowersCount}}
+                  </span>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col text-nowrap"><i class="fa fa-user fa-sm"></i>&nbsp;<i class="fa fa-angle-right fa-sm"></i>
+                  <span class="numbers">
+                     {{getCompanyFollowingCount}}</span>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-8 col-md-8 col-sm-9 text-left">
+            <div class="row">
+              <div class="col">
+                <h1 class="h3-title">{{getCompany.company_name}}</h1>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="row">
+                   <div class="col uppercase text-left">
+                      
+                    {{getCompany.company_type}}
+                      
+                   </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="row">
+                   <div class="col">
+                      {{#if getCompany.city}}
+                         <i class="fa fa-map-marker fa-sm"></i> <small>{{getCompany.city}}, {{getCompany.state}}</small>
+                      {{/if}}
+                   </div>
+                </div>
+              </div>
+            </div>
+         </div>
+         <div class="col-lg-1 col-md-1 col-sm-1 text-right">
+          {{#if isOwner}}
+             {{#if hasTopRole}}
+          <a href="#" class="text-purple editIndustry" data-answer="{{getCompany._id}}"><i class="fa fa-pencil text-purple" aria-hidden="true"></i></a>
+             {{/if}}
+          {{/if}}
+         </div>
+      </div>
+      
+      <div class="row">
+         <div class="col-lg-3 col-md-3 col-sm-2">
+            &nbsp;
+         </div>
+         <div class="col-lg-8 col-md-8 col-sm-9 text-left">
+            <div class="row">
+               <div class="col-md-12">
+                  <table class="table table-responsive borderless">
+                     <tr>
+                        {{#if getCompany.company_web_page}}
+                        <td><a href="{{formatURL getCompany.company_web_page}}" target="_blank"> <i class="fa fa-sm fa-globe text-purple"></i></a></td>
+                        {{/if}}
+                        {{#if getCompany.company_facebook_page}}
+                        <td><a href="{{formatURL getCompany.company_facebook_page}}" target="_blank"> <i class="fa fa-sm fa-facebook text-purple"></i></a></td>
+                        {{/if}}
+                        {{#if getCompany.company_instagram_page}}
+                        <td><a href="{{formatURL getCompany.company_instagram_page}}" target="_blank"><i class="fa fa-sm fa-instagram text-purple"></i></a></td>
+                        {{/if}}                        
+                        {{#if getCompany.company_twitter_page}}
+                        <td><a href="{{formatURL getCompany.company_twitter_page}}" target="_blank"><i class="fa fa-sm fa-twitter text-purple"></i></a></td>
+                        {{/if}}
+                        {{#if getCompany.company_youtube_page}}
+                        <td><a href="{{formatURL getCompany.company_youtube_page}}" target="_blank"><i class="fa fa-sm fa-youtube text-purple"></i></a></td>
+                        {{/if}}
+                        {{#if getCompany.company_vimeo_page}}
+                        <td><a href="{{formatURL getCompany.company_vimeo_page}}" target="_blank"><i class="fa fa-sm fa-vimeo text-purple"></i></a></td>
+                        {{/if}}
+                     </tr>
+                  </table>
+                </div>
+              </div>
+            <div class="row">
+               <div class="col">
+                  
+                <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-1 col-md-1 col-sm-1 text-right">
+            &nbsp;
+         </div>
+      </div>
+   </div>
+   
+   <!-- Termina bloque con los datos personales y de contacto del perfil -->
+
+   
    
 
   
@@ -51,71 +168,7 @@
        </div>
        {{/if}}
      <div class="spacer40"></div>
-      <div class="row">
-         <div class="col-md-9 col-sm-12 text-left">
-            <h1 class="h3-title">{{getCompany.company_name}}</h1>
-         </div>
-         <div class="col-md-3 col-sm-12">
-            {{#if isOwner}}
-               {{#if hasTopRole}}
-            <a href="#" class="text-purple editIndustry" data-answer="{{getCompany._id}}"><i class="fa fa-pencil-square" aria-hidden="true"></i>&nbsp;Editar información</a>
-               {{/if}}
-            {{/if}}
-         </div>
-      </div>
-      <div class="row">
-         <div class="col-md-9 col-sm-10 text-left">
-            <div class="row">
-               <div class="col text-left">
-                  {{getCompany.company_type}}      
-               </div>
-            </div>
-         </div>
-         <div class="col-md-1 col-sm-1 text-right">
-            &nbsp;
-         </div>
-      </div>
-      <div class="row">
-         <div class="col-md-9 col-sm-10 text-left">
-            <div class="row">
-               <div class="col text-left">
-                  Año de fundación: {{getCompany.company_year}}   
-               </div>
-            </div>
-            <div class="row">
-               <div class="col text-left">
-                  <a target="_blank" href="{{formatURL getCompany.company_web_page}}">{{getCompany.company_web_page}}</a>
-               </div>
-            </div>
-         </div>
-         <div class="col-md-1 col-sm-1 text-right">
-            &nbsp;
-         </div>
-      </div>
       
-      <div class="row">
-         <div class="col-md-12">
-            <table class="table table-responsive borderless">
-               <tr>
-                  {{#if getCompany.company_facebook_page}}
-                  <td><a href="{{formatURL getCompany.company_facebook_page}}" target="_blank"> <i class="fa fa-sm fa-facebook text-purple"></i></a></td>
-                  {{/if}}
-                  {{#if getCompany.company_twitter_page}}
-                  <td><a href="{{formatURL getCompany.company_twitter_page}}"><i class="fa fa-sm fa-twitter text-purple"></i></a></td>
-                  {{/if}}
-                  {{#if getCompany.company_vimeo_page}}
-                  <td><a href="{{formatURL getCompany.company_vimeo_page}}"><i class="fa fa-sm fa-vimeo text-purple"></i></a></td>
-                  {{/if}}
-                  {{#if getCompany.company_youtube_page}}
-                  <td><a href="{{formatURL getCompany.company_youtube_page}}"><i class="fa fa-sm fa-youtube text-purple"></i></a></td>
-                  {{/if}}
-                  {{#if getCompany.company_instagram_page}}
-                  <td><a href="{{formatURL getCompany.company_instagram_page}}"><i class="fa fa-sm fa-instagram text-purple"></i></a></td>
-                  {{/if}}
-               </tr>
-            </table>
-         </div>
-      </div>
       <div class="row">
          <div class="col-md-9 col-sm-10 text-left">
             <div class="row">
@@ -123,11 +176,23 @@
                   <div class="spacer20"></div>
                </div>
             </div>
+            {{#if getCompany.company_desc}}
             <div class="row">
-               <div class="col text-left">
-                  {{getCompany.company_desc}}      
+               <div class="col-md-12 text-left">
+                  <strong class="uppercase">ACERCA DE</strong>
                </div>
             </div>
+            <div class="row">
+               <div class="col">
+                  <hr>
+               </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                {{getCompany.company_desc}}
+              </div>
+            </div>
+            {{/if}}
          </div>
          <div class="col-md-1 col-sm-1 text-right">
             &nbsp;
