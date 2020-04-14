@@ -264,7 +264,7 @@ Template.header.events({
       
       var url = window.location.href;
       //Si está en su perfil de cast o en la edición de perfil de cast y se cambia a crew mandarlo al home
-      
+      /*
       if(url.indexOf("/editProfileActor/")>0){
         window.scrollTo(0, 0);
         FlowRouter.go("/editProfile/"+Meteor.userId());
@@ -272,7 +272,8 @@ Template.header.events({
       else if(url.indexOf("/profilePageActor/")>0){
         window.scrollTo(0, 0);
         FlowRouter.go("/profilePage/"+Meteor.userId());
-      }
+      }*/
+      FlowRouter.go("/profilePage/"+Meteor.userId());
     },
     'click #viewAsCast':function(event,template){
       event.preventDefault();
@@ -281,7 +282,7 @@ Template.header.events({
       $("#viewAsCast").addClass("active");
       var url = window.location.href;
       //Si está en su perfil de crew o en la edición de perfil de crew y se cambia a cast mandarlo al home
-      
+      /*
       if(url.indexOf("/editProfile/")>0){
         window.scrollTo(0, 0);
         FlowRouter.go("/editProfileActor/"+Meteor.userId());
@@ -289,7 +290,8 @@ Template.header.events({
       else if(url.indexOf("/profilePage/")>0){
         window.scrollTo(0, 0);
         FlowRouter.go("/profilePageActor/"+Meteor.userId());
-      }
+      }*/
+      FlowRouter.go("/profilePageActor/"+Meteor.userId());
     }
 
 });
