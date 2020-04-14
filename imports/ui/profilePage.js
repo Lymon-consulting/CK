@@ -161,13 +161,7 @@ Template.profilePage.helpers({
 
       return result;
    },
-   notSameUser(){
-      val = true;
-      if(FlowRouter.getParam('id')=== Meteor.userId()){
-         val = false;
-      }
-      return val;
-   },
+   
    showButtonFollow(follow){
       var following = Meteor.users.find({$and : [ {'_id' : Meteor.userId()} , {"follows": follow }]});
 

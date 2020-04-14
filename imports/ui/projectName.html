@@ -1,0 +1,44 @@
+<template name="projectName">
+
+
+ <div class="container text-center">
+  <h1 class="h1-title">AGREGAR UN PROYECTO</h1>
+  <h2>{{fullName}}</h2>
+  <hr class="hr_width_600">
+</div>
+
+
+
+<div class="container">
+  <div class="col-lg-12 mx-auto">
+   <!-- Tab panes -->
+   <div class="tab-content">
+     <div role="tabpanel" class="tab-pane active" id="persona_panel">    
+       {{#if currentUser}}
+       <div class="row">
+        <div class="col-lg-12">
+          <div class="row">
+            <div class="col-lg-4">
+             <label for="proj_name">¿Cuál es el nombre del proyecto que deseas agregar? <span class="text-purple">(Requerido)</span></label>
+            </div>
+            <div class="col-lg-8">
+              <input type="text" id="project_title" class="form-control" placeholder="Nombre del proyecto" value="" maxlength="150">
+            </div>
+          </div>
+          <div class="spacer20"></div>
+          <div class="row">
+            <div class="col-lg-12 text-center">
+              <button class="btn btn-purple" id="continuar" type="button" role="button">CONTINUAR</button>   
+            </div>
+          </div>
+          <div class="row">
+            <div class="col spacer80"></div>
+          </div>
+       </div>
+      </div>
+       {{/if}}
+     </div>       
+   </div>
+ </div>
+</div>
+</template>

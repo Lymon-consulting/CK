@@ -1,5 +1,5 @@
 <template name="editProfile">
-
+{{#if hasPermission}}
   <style>
     img {
       display: block;
@@ -465,4 +465,11 @@
   </script>
   {{/if}}
   {{/if}}
+{{else}}
+  <div class="contanier text-center">
+    <div class="spacer80"></div>
+    No tienes permiso de ver esta página
+    <div class="spacer80"></div>
+  </div>  
+{{/if}}
 </template>

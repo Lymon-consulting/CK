@@ -31,6 +31,21 @@ Template.registerHelper('isVerified', function(){
   return result;
 });
 
+Template.registerHelper('notSameUser', function(){
+  val = true;
+  if(FlowRouter.getParam('id')=== Meteor.userId()){
+     val = false;
+  }
+  return val;
+});
+
+Template.registerHelper('hasPermission', function(){
+  var val = false;
+  if(FlowRouter.getParam('id')=== Meteor.userId()){
+     val = true;
+  }
+  return val;
+});
 
 Template.registerHelper('firstName', function(){
  return Meteor.user().profile.name;
@@ -58,21 +73,7 @@ Template.registerHelper('isCast', function(){
     else{ //no existe la variable en sesión, consultar en la BD
       if(Meteor.user().isCast!=null && Meteor.user().isCast){
         result=true;
-      }
-      /*
-      if(Meteor.user().profileType){
-        if(Meteor.user().profileType==="cast"){ //El valor en la BD es cast
-          result = true;
-        }
-        else if(Meteor.user().profileType==="both"){//El valor en la BD es both
-          result = true;
-        }
-      }
-      else{//El valor en la BD no es crew ni both, debe ser crew
-        result = false;
-      }*/
-
-
+      }      
     }
   }
   return result;
@@ -93,19 +94,6 @@ Template.registerHelper('isCrew', function(){
       if(Meteor.user().isCrew!=null && Meteor.user().isCrew){
         result=true;
       }
-      /*
-      if(Meteor.user().profileType){
-        if(Meteor.user().profileType==="crew"){ //El valor en la BD es crew
-          result = true;
-        }
-        else if(Meteor.user().profileType==="both"){//El valor en la BD es both
-          result = true;
-        }
-      }
-      else{//El valor en la BD no es crew ni both, debe ser cast
-        result = false;
-      }
-      */
     }
   }
   return result;
@@ -118,16 +106,6 @@ Template.registerHelper('isBoth', function(){
     if(user.isCrew!=null && user.isCrew && user.isCast!=null && user.isCast){
       result = true;
     }
-    /*
-    if(Meteor.user().profileType){
-      if(Meteor.user().profileType==="both"){
-        result = true;
-      }
-    }
-    else{
-      return false;
-    }
-    */
   }
   return result;
 });
@@ -202,8 +180,6 @@ Template.registerHelper('formatURL', function(url){
   }
   return url;
 });
-
-
 
 
 Template.mainlayout.events({

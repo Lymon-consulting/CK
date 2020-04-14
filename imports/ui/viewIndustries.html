@@ -1,4 +1,5 @@
 <template name="viewIndustries">
+{{#if hasPermission}}
    <div class="container text-center">
       <h1 class="h1-title">TUS EMPRESAS</h1>
       <h2>{{fullName}}</h2>
@@ -9,6 +10,13 @@
          {{> industryList }}
       </div>
    </div>
+{{else}}
+  <div class="contanier text-center">
+    <div class="spacer80"></div>
+    No tienes permiso de ver esta página
+    <div class="spacer80"></div>
+  </div>
+{{/if}}
 </template>
 
 <template name="industryList">
@@ -59,7 +67,7 @@
                 </div>
                 <div class="card-footer">
                    <div class="row">
-                      <div class="col"><a href="/industryPage/{{this._id}}" class="text-purple"><i class="fa fa-search">&nbsp;</i></a></div>
+                      <div class="col"><a href="/industryPage/{{this._id}}" class="text-purple"><i class="fa fa-search">&nbsp;</i></a></div>                      
                       <div class="col text-right"><a href="#" class="text-purple editIndustry" ><i class="fa fa-edit" data-answer="{{this._id}}">&nbsp;</i></a></div>
                    </div>
                  </div>
@@ -82,5 +90,5 @@
      </table>
   {{/if}}
   <div class="spacer80"></div>
-   
+
 </template>

@@ -243,6 +243,100 @@ Meteor.methods({
     for ( let book of books ) {
       Potlet.update( { _id: book._id }, { $set: { order: book.order } } );
     }
-  }
+  },
+  addProjectName(project_title, userId){
+    return Project.insert({
+      "project_title": project_title,
+      "userId": userId
+    });
+  },
+  'updateProjectTitle'(projectId, project_title){
+    Project.update({'_id':projectId},{
+      $set:
+      {
+        "project_title":project_title
+      }
+    });
+  },
+  'updateProjectType'(projectId, project_type){
+    Project.update({'_id':projectId},{
+      $set:
+      {
+        "project_type":project_type
+      }
+    });
+  },
+  'updateProjectGenre'(projectId, project_genre){
+    Project.update({'_id':projectId},{
+      $set:
+      {
+        "project_genre":project_genre
+      }
+    });
+  },
+  'updateProjectDescription'(projectId, project_desc){
+    Project.update({'_id':projectId},{
+      $set:
+      {
+        "project_desc":project_desc
+      }
+    });
+  },
+  'updateProjectYear'(projectId, project_year){
+    Project.update({'_id':projectId},{
+      $set:
+      {
+        "project_year":project_year
+      }
+    });
+  },
+  'updateProjectWeb'(projectId, project_web_page){
+    Project.update({'_id':projectId},{
+      $set:
+      {
+        "project_web_page":project_web_page
+      }
+    });
+  },
+  'updateProjectFacebook'(projectId, project_facebook_page){
+    Project.update({'_id':projectId},{
+      $set:
+      {
+        "project_facebook_page":project_facebook_page
+      }
+    });
+  },
+  'updateProjectTwitter'(projectId, project_twitter_page){
+    Project.update({'_id':projectId},{
+      $set:
+      {
+        "project_twitter_page":project_twitter_page
+      }
+    });
+  },
+  'updateProjectVimeo'(projectId, proj_vimeo_page){
+    Project.update({'_id':projectId},{
+      $set:
+      {
+        "proj_vimeo_page":proj_vimeo_page
+      }
+    });
+  },
+  'updateProjectYoutube'(projectId, proj_youtube_page){
+    Project.update({'_id':projectId},{
+      $set:
+      {
+        "proj_youtube_page":proj_youtube_page
+      }
+    });
+  },
+  'updateProjectInstagram'(projectId, proj_instagram_page){
+    Project.update({'_id':projectId},{
+      $set:
+      {
+        "proj_instagram_page":proj_instagram_page
+      }
+    });
+  },
   
 });

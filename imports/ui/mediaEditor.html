@@ -1,4 +1,5 @@
 <template name="mediaEditor">
+{{#if hasPermission}}
     <div class="container">
         <h1 class="h1-title text-center">BIBLIOTECA DE IMÁGENES</h1>
         <br>
@@ -48,6 +49,13 @@
         </div>
     </div>
     <div class="spacer60"></div>
+{{else}}
+  <div class="contanier text-center">
+    <div class="spacer80"></div>
+    No tienes permiso de ver esta página
+    <div class="spacer80"></div>
+  </div>  
+{{/if}}    
 </template>
 
 <template name="dragZone">
