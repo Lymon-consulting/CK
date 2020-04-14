@@ -74,6 +74,14 @@ Meteor.methods({
       "userId": userId
     });
   },
+  'updateCompanyName'(companyId, name){
+    Industry.update({'_id':companyId},{
+      $set:
+      {
+        "company_name":name
+      }
+    });
+  },
   'updateCompanyType'(companyId, type){
     Industry.update({'_id':companyId},{
       $set:

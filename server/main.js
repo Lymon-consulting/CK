@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Params } from '../imports/api/params.js';
 import { Project } from '../imports/api/project.js';
 import { Industry } from '../imports/api/industry.js';
 import { Portlet } from '../imports/api/portlet.js';
@@ -286,6 +287,10 @@ Meteor.publish('myIndustries', function(userId) {
 
 Meteor.publish('projectData', function(projId){
    return Project.find();
+});
+
+Meteor.publish('params', function(){
+   return Params.find();
 });
 
 Meteor.publish('myMainProject', function(userId) {

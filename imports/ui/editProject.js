@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { Project } from '../api/project.js';
 import { Ocupation } from '../api/ocupations.js';
 import { Media } from '../api/media.js';
+import { getParam } from '/lib/functions.js';
 
 import './editProject.html';
 import '/lib/common.js';
@@ -89,12 +90,13 @@ if (Meteor.isClient) {
         return type;
      },
      getAvailableYears(){
-        var years = new Array();
-
-        for(i=2018; i>1970; i--){
-          years.push(i);
-        }
-        return years;
+      var years = new Array();
+      var MIN_YEAR = getParam("MIN_YEAR");
+      var MAX_YEAR = getParam("MAX_YEAR");
+      for(i=MAX_YEAR; i>MIN_YEAR; i--){
+        years.push(i);
+      }
+      return years;
      },
      getCategories(){
          var data = Ocupation.find({},{sort:{'title':1}}).fetch();

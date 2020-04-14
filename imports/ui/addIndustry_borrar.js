@@ -3,6 +3,7 @@ import { Industry } from '../api/industry.js';
 import { Ocupation } from '../api/ocupations.js';
 import { City } from '../api/city.js';
 import { Media } from '../api/media.js';
+import { getParam } from '/lib/functions.js';
 
 import './addIndustry.html';
 import '/lib/common.js';
@@ -13,8 +14,9 @@ Meteor.subscribe("fileUploads");
 Template.industries.helpers({
   getAvailableYears(){
     var years = new Array();
-
-    for(i=2018; i>1970; i--){
+    var MIN_YEAR = getParam("MIN_YEAR");
+    var MAX_YEAR = getParam("MAX_YEAR");
+    for(i=MAX_YEAR; i>MIN_YEAR; i--){
       years.push(i);
     }
     return years;

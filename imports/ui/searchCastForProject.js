@@ -4,6 +4,7 @@ import { City } from '../api/city.js';
 import { Project } from '../api/project.js';
 import { Media } from '../api/media.js';
 import { UsersIndex } from '/lib/common.js';
+import { getParam } from '/lib/functions.js';
 
 import './searchCastForProject.html';
 import '/lib/common.js';
@@ -69,11 +70,12 @@ Template.searchCastForProject.helpers({
    },
   getAvailableYears(){
    var years = new Array();
-
-   for(i=2018; i>1970; i--){
-     years.push(i);
-   }
-   return years;
+    var MIN_YEAR = getParam("MIN_YEAR");
+    var MAX_YEAR = getParam("MAX_YEAR");
+    for(i=MAX_YEAR; i>MIN_YEAR; i--){
+      years.push(i);
+    }
+    return years;
  },
  getCitiesFromCountries(){
   return City.find({'country': 'México'},{sort:{'city':1}}).fetch(); 

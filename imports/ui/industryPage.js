@@ -88,7 +88,68 @@ getProjects(){
     url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_fill/" + company.companyLogoID;
   }
   return url;*/
-}
+},
+getGallery(){
+    var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
+    var array = new Array();
+    
+    if(data){
+      if(data.gallery){
+        console.log(data.gallery);
+        for (var i = 0; i < data.gallery.length; i++) {
+          var obj = {};
+          obj.mediaId = data.gallery[i];
+
+          if(i==0){
+            obj.position = 1;
+          }
+          else{
+            obj.position = 2;
+          }
+           array.push(obj);
+          
+        }
+      }
+    }
+    return array;
+  },
+  isFirstElement(position){
+    var result = false;
+    if(position==1){
+      result = true;
+    }
+    else{
+      result = false;
+    }
+    return result;
+  },
+  getURL(mediaId){
+    var url = "";
+    var media = Media.findOne({'mediaId':mediaId});
+      if(media!=null){
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.userId() + "/" + media.mediaId;    
+      }
+    return url;
+  },
+  getVideo(vimeo, youtube){
+      var url = "";
+
+      if(vimeo && vimeo.length>0){
+        url = vimeo;
+        if(url.indexOf("//vimeo.com")>1){/*Parseo de la URL para extraer el ID del video en vimeo*/
+          var vimeoVideoID = url.substring(url.indexOf(".com/")+5, url.length);
+          url = "https://player.vimeo.com/video/" + vimeoVideoID+"?portrait=0";
+        }
+      }
+      else if(youtube && youtube.length>0){
+        url = youtube;        
+        if(url.indexOf("youtube.com/watch?v=")>1){/*Parseo de la URL para extraer el ID del video en youtube*/
+          var youtubeVideoID = url.substring(url.indexOf("?v=")+3, url.length);
+          url = "https://www.youtube.com/embed/" + youtubeVideoID;
+        }
+      }
+      return url;
+    },
 });
 
 Template.company_crew.helpers({
@@ -182,6 +243,7 @@ Template.company_projects.helpers({
   }
   return result;
 },
+
 });
 
 Template.industryPage.events({
@@ -198,7 +260,8 @@ Template.industryPage.events({
     .modal('hide');
   },
   'click .editIndustry':function(event, template){
-    var companyID = $(event.target).attr('data-answer');
+    //var companyID = $(event.target).attr('data-answer');
+    var companyID = FlowRouter.getParam("id");
     console.log(companyID);
     Session.set("companyID",companyID);
     FlowRouter.go("/editIndustry");

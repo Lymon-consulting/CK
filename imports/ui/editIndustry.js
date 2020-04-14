@@ -3,6 +3,7 @@ import { Industry } from '../api/industry.js';
 import { Ocupation } from '../api/ocupations.js';
 import { City } from '../api/city.js';
 import { Media } from '../api/media.js';
+import { getParam } from '/lib/functions.js';
 
 import './editIndustry.html';
 import '/lib/common.js';
@@ -41,8 +42,9 @@ Template.editIndustry.helpers({
   },
   getAvailableYears(){
     var years = new Array();
-
-    for(i=2018; i>1970; i--){
+    var MIN_YEAR = getParam("MIN_YEAR");
+    var MAX_YEAR = getParam("MAX_YEAR");
+    for(i=MAX_YEAR; i>MIN_YEAR; i--){
       years.push(i);
     }
     return years;
@@ -73,7 +75,6 @@ Template.editIndustry.helpers({
         }
       }
     }
-    console.log(array);
     return array;
 /*
     var media = Media.find({"userId": Meteor.userId(), "media_use":"gallery"}).fetch();
@@ -451,7 +452,6 @@ Template.editIndustry.events({
        console.log("Ocurrió el siguiente error: " +err);
      }
    });
-
   }
   return false;
   },
@@ -460,12 +460,9 @@ Template.editIndustry.events({
     var name = "";
     if(isNotEmpty(event.target.value)){
       name = trimInput(event.target.value);
-      var id = Meteor.call('addCompanyName',name,Meteor.userId(), function(error, response){
-        if(!error){
-          Session.set("companyID",response);
-        }
-      });
-      
+      if(Session.get("companyID")!=null){
+        Meteor.call('updateCompanyName', Session.get("companyID"), name);
+      }
     }
   },
   'change #company_type': function(event,template){

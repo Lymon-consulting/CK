@@ -3,6 +3,7 @@ import { Ocupation } from '../api/ocupations.js';
 import { City } from '../api/city.js';
 import { Media } from '../api/media.js';
 import { UsersIndex } from '/lib/common.js';
+import { getParam } from '/lib/functions.js';
 import { catHeights, catAges, catPhysical, catEthnics, catEyes, catHair, catHairType, catLanguages, catCategories } from '/lib/globals.js';
 
 import './peopleListCast.html';
@@ -85,11 +86,12 @@ Template.peopleListCast.helpers({
    },
    getAvailableYears(){
      var years = new Array();
-
-     for(i=2018; i>1970; i--){
-       years.push(i);
-     }
-     return years;
+    var MIN_YEAR = getParam("MIN_YEAR");
+    var MAX_YEAR = getParam("MAX_YEAR");
+    for(i=MAX_YEAR; i>MIN_YEAR; i--){
+      years.push(i);
+    }
+    return years;
   },
   getCountries(){
     var data = City.find().fetch();

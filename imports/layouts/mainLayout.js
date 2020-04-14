@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { Params } from '../api/params.js';
 import './mainLayout.html';
 
 
@@ -7,6 +8,7 @@ Template.mainlayout.helpers({
     return Meteor.userId();
   }
 });
+
 
 Template.registerHelper('isVerified', function(){
   var result = false;

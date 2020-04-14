@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Project } from '../api/project.js';
 import { Ocupation } from '../api/ocupations.js';
+import { getParam } from '/lib/functions.js';
 
 import './userProjects.html';
 import '/lib/common.js';
@@ -14,8 +15,9 @@ if (Meteor.isClient) {
    Template.projects.helpers({
      getAvailableYears(){
         var years = new Array();
-
-        for(i=2018; i>1970; i--){
+        var MIN_YEAR = getParam("MIN_YEAR");
+        var MAX_YEAR = getParam("MAX_YEAR");
+        for(i=MAX_YEAR; i>MIN_YEAR; i--){
           years.push(i);
         }
         return years;
