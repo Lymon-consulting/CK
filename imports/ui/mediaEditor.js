@@ -72,6 +72,10 @@ Template.mediaEditor.onRendered = function(){
   $("#dragzone").css({
     "display": "none",
   });
+
+
+  
+
 };
 
 Template.dragZone.helpers({
@@ -120,6 +124,24 @@ Template.dragZone.events({
 
 
 Template.mediaEditor.helpers({
+  getReturnButton(){
+    var result="";
+    if(FlowRouter.getParam("from")!=null){
+      if(FlowRouter.getParam("from")==="cast"){
+        result = "<a class='btn btn-purple' href='/editProfileActor/"+Meteor.userId()+"'>Regresar a tus datos de perfil</a>";
+      }
+      else if(FlowRouter.getParam("from")==="crew"){
+        result = "<a class='btn btn-purple' href='/editProfile/"+Meteor.userId()+"'>Regresar a tus datos de perfil</a>";
+      }
+      else if(FlowRouter.getParam("from")==="industry"){
+        result = "<a class='btn btn-purple' href='/editIndustry/"+FlowRouter.getParam("returnTo")+"'>Regresar a los datos de la empresa</a>";
+      }
+      else if(FlowRouter.getParam("from")==="project"){
+        result = "<a class='btn btn-purple' href='/editProject/"+FlowRouter.getParam("returnTo")+"'>Regresar a los datos del proyecto</a>";
+      }
+    }
+    return result;
+  },
   getMedia() {
     Meteor.subscribe("allMedia");
     var media = Media.find({'userId': Meteor.userId()});
@@ -186,7 +208,8 @@ Template.mediaEditor.helpers({
       }
     }
     return use;
-  }
+  },
+
 });
 
 Template.mediaEditor.events({
@@ -211,6 +234,12 @@ Template.mediaEditor.events({
     event.preventDefault();
     var mediaId = $(event.target).attr('data-id');
     console.log("Va a editar la imagen "+mediaId);
-    FlowRouter.go("/editMedia/"+mediaId+"/gallery");
+    if(FlowRouter.getParam("returnTo")!=null){
+      FlowRouter.go("/editMediaObject/"+mediaId+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo"));  
+    }
+    else{
+      FlowRouter.go("/editMedia/"+mediaId+"/"+FlowRouter.getParam("from"));  
+    }
+    
   }
 });

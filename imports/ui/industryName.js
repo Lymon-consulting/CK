@@ -33,7 +33,7 @@ Template.industryName.events({
       var id = Meteor.call('addCompanyName', name, Meteor.userId(), function(error, response){
         if(!error){
           Session.set("companyID",response);
-          FlowRouter.go("/editIndustry");
+          FlowRouter.go("/editIndustry/"+response);
         }
       });
       

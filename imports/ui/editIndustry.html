@@ -1,5 +1,5 @@
 <template name="editIndustry">
-
+{{#if isOwner}}
 
    <div class="container text-center">
     <h1 class="h1-title">DATOS DE LA EMPRESA U ORGANIZACIÓN</h1>
@@ -467,5 +467,12 @@
      </div>
    </div>
   </div>
+  {{else}}
+  <div class="contanier text-center">
+    <div class="spacer80"></div>
+    No tienes permiso de ver esta página
+    <div class="spacer80"></div>
+  </div>  
+  {{/if}}
   </template>
 

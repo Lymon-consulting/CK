@@ -35,10 +35,18 @@ function formatURL(url){
 }
 
 Template.editIndustry.helpers({
-  companyData(){
-    if(Session.get("companyID")!=null){
-      return Industry.findOne({'_id':Session.get("companyID")});
+  isOwner(){
+    var result = false;
+    var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
+    if(data!=null && data.userId!=null){
+      if(data.userId === Meteor.userId()){
+        result = true;
+      }
     }
+    return result;
+  },
+  companyData(){    
+    return Industry.findOne({'_id':FlowRouter.getParam("id")});    
   },
   getAvailableYears(){
     var years = new Array();
@@ -55,7 +63,7 @@ Template.editIndustry.helpers({
     return media;
   },
   getGallery(){
-    var data = Industry.findOne({'_id' : Session.get('companyID')});
+    var data = Industry.findOne({'_id' : FlowRouter.getParam("id")});
     var array = new Array();
     
     if(data){
@@ -112,7 +120,7 @@ Template.editIndustry.helpers({
   },
   video(){
     var video = "";
-    var data = Industry.findOne({'_id' : Session.get('companyID')});
+    var data = Industry.findOne({'_id' : FlowRouter.getParam("id")});
     if(data){
       if(data.vimeo){
         video = data.vimeo;
@@ -185,7 +193,7 @@ Template.editIndustry.helpers({
   },
   typeSelected: function(value){
     var result="";
-    var company = Industry.findOne({'_id':Session.get('companyID')});
+    var company = Industry.findOne({'_id': FlowRouter.getParam("id")});
     var company_type="";
     if(company){
       company_type = company.company_type.trim();
@@ -203,7 +211,7 @@ Template.editIndustry.helpers({
   },
   yearSelected: function(value){
     var result="";
-    var company = Industry.findOne({'_id':Session.get('companyID')});
+    var company = Industry.findOne({'_id': FlowRouter.getParam("id")});
     var year="";
     if(company){
       year = company.company_year;
@@ -235,7 +243,7 @@ Template.editIndustry.helpers({
     }
   },
   getCitiesFromStates(){
-    var company = Industry.findOne({'_id':Session.get('companyID')});
+    var company = Industry.findOne({'_id':FlowRouter.getParam("id")});
     if(Session.get("selected_state")!=null){
       return City.find({'state': Session.get("selected_state")}).fetch();
     }
@@ -250,7 +258,7 @@ Template.editIndustry.helpers({
   },
   citySelected: function(value){
   var result="";
-  var company = Industry.findOne({'_id':Session.get('companyID')});
+  var company = Industry.findOne({'_id': FlowRouter.getParam("id")});
   if(company){
     if(value!="" && company.city!=null){
       var city = company.city.trim();
@@ -267,7 +275,7 @@ Template.editIndustry.helpers({
 },
 stateSelected: function(value){
   var result="";
-  var company = Industry.findOne({'_id':Session.get('companyID')});
+  var company = Industry.findOne({'_id': FlowRouter.getParam("id")});
   if(company){
     if(value!="" && company.state!=null){
       var state = company.state.trim();
@@ -284,7 +292,7 @@ stateSelected: function(value){
 },
   countrySelected: function(value){
     var result="";
-    var company = Industry.findOne({'_id':Session.get('companyID')});
+    var company = Industry.findOne({'_id': FlowRouter.getParam("id")});
     if(company){
       if(company.country!=null && value!=""){
         var country = company.country.trim();
@@ -301,7 +309,7 @@ stateSelected: function(value){
   },
   resumeCount(){
     var result=0;
-    var company = Industry.findOne({'_id':Session.get('companyID')});
+    var company = Industry.findOne({'_id': FlowRouter.getParam("id")});
     if(company){
       if(company.company_desc!=null){
         result = company.company_desc.length;
@@ -310,7 +318,7 @@ stateSelected: function(value){
     return result;
   },
   description(){
-    var company = Industry.findOne({'_id':Session.get('companyID')});
+    var company = Industry.findOne({'_id': FlowRouter.getParam("id")});
 
     if(company){
       $('#max').text(Meteor.settings.public.MAX_CHAR_IN_TEXTAREA - company.company_desc.length);
@@ -319,7 +327,7 @@ stateSelected: function(value){
   },
   getIndustryLogo(size) {
     Meteor.subscribe("allMedia");
-    var data = Industry.findOne({'_id' : Session.get('companyID')});
+    var data = Industry.findOne({'_id' : FlowRouter.getParam("id")});
     var url;
     if(data!=null && data.companyLogoID!=null){
       var cover = Media.findOne({'mediaId':data.companyLogoID});
@@ -332,7 +340,7 @@ stateSelected: function(value){
   },
   getCoverPicture() {
     Meteor.subscribe("allMedia");
-    var data = Industry.findOne({'_id' : Session.get('companyID')});
+    var data = Industry.findOne({'_id' : FlowRouter.getParam("id")});
     var url;
     if(data!=null && data.companyCoverID!=null){
       var cover = Media.findOne({'mediaId':data.companyCoverID});
@@ -344,7 +352,7 @@ stateSelected: function(value){
     return url;
   },
   verifyChecked(mediaId){
-    var data = Industry.findOne({'_id' : Session.get('companyID')});
+    var data = Industry.findOne({'_id' : FlowRouter.getParam("id")});
     var gallery = new Array();
     var result="";
     if(data){
@@ -460,139 +468,113 @@ Template.editIndustry.events({
     var name = "";
     if(isNotEmpty(event.target.value)){
       name = trimInput(event.target.value);
-      if(Session.get("companyID")!=null){
-        Meteor.call('updateCompanyName', Session.get("companyID"), name);
-      }
+      Meteor.call('updateCompanyName', FlowRouter.getParam("id"), name);      
     }
   },
   'change #company_type': function(event,template){
     event.preventDefault();
     var company_type = event.target.value;
-    if(Session.get("companyID")!=null){
       if(company_type!="PRINCIPALES" && company_type!="SECUNDARIAS" && company_type.indexOf("---")<0 && company_type!=""){
-        Meteor.call('updateCompanyType', Session.get("companyID"), company_type);
+        Meteor.call('updateCompanyType', FlowRouter.getParam("id"), company_type);
       }
-    }
   },
   'change #company_desc': function(event,template){
     event.preventDefault();
-    var company_desc = event.target.value;
-    if(Session.get("companyID")!=null){
+    var company_desc = event.target.value;    
       if(isNotEmpty(company_desc)){
-        Meteor.call('updateCompanyDesc',Session.get("companyID"), trimInput(company_desc));
-      }
-    }
+        Meteor.call('updateCompanyDesc', FlowRouter.getParam("id"), trimInput(company_desc));
+      }    
   },
   'change #company_year': function(event,template){
     event.preventDefault();
-    var company_year = event.target.value;
-    if(Session.get("companyID")!=null){
+    var company_year = event.target.value;    
       if(company_year!=null){
-        Meteor.call('updateCompanyYear',Session.get("companyID"), company_year);
-      }
-    }
+        Meteor.call('updateCompanyYear', FlowRouter.getParam("id"), company_year);
+      }    
   },
   'change #company_web_page': function(event,template){
     event.preventDefault();
-    var company_web_page = event.target.value;
-    if(Session.get("companyID")!=null){
+    var company_web_page = event.target.value;    
       if(isNotEmpty(company_web_page)){
-        Meteor.call('updateCompanyWeb',Session.get("companyID"), company_web_page);
-      }
-    }
+        Meteor.call('updateCompanyWeb', FlowRouter.getParam("id"), company_web_page);
+      }    
   },
   'change #facebook_page': function(event,template){
     event.preventDefault();
-    var facebook_page = event.target.value;
-    if(Session.get("companyID")!=null){
+    var facebook_page = event.target.value;    
       if(isNotEmpty(facebook_page)){
-        Meteor.call('updateCompanyFacebook',Session.get("companyID"), facebook_page);
-      }
-    }
+        Meteor.call('updateCompanyFacebook', FlowRouter.getParam("id"), facebook_page);
+      }    
   },
   'change #twitter_page': function(event,template){
     event.preventDefault();
-    var twitter_page = event.target.value;
-    if(Session.get("companyID")!=null){
+    var twitter_page = event.target.value;    
       if(isNotEmpty(twitter_page)){
-        Meteor.call('updateCompanyTwitter',Session.get("companyID"), twitter_page);
+        Meteor.call('updateCompanyTwitter', FlowRouter.getParam("id"), twitter_page);
       }
-    }
   },
   'change #vimeo_page': function(event,template){
     event.preventDefault();
     var vimeo_page = event.target.value;
-    if(Session.get("companyID")!=null){
       if(isNotEmpty(vimeo_page)){
-        Meteor.call('updateCompanyVimeo',Session.get("companyID"), vimeo_page);
-      }
-    }
+        Meteor.call('updateCompanyVimeo', FlowRouter.getParam("id"), vimeo_page);
+      }    
   },
   'change #youtube_page': function(event,template){
     event.preventDefault();
-    var youtube_page = event.target.value;
-    if(Session.get("companyID")!=null){
+    var youtube_page = event.target.value;  
       if(isNotEmpty(youtube_page)){
-        Meteor.call('updateCompanyYoutube',Session.get("companyID"), youtube_page);
-      }
-    }
+        Meteor.call('updateCompanyYoutube', FlowRouter.getParam("id"), youtube_page);
+      }    
   },
   'change #instagram_page': function(event,template){
     event.preventDefault();
-    var instagram_page = event.target.value;
-    if(Session.get("companyID")!=null){
+    var instagram_page = event.target.value;    
       if(isNotEmpty(instagram_page)){
-        Meteor.call('updateCompanyInstagram',Session.get("companyID"), instagram_page);
-      }
-    }
+        Meteor.call('updateCompanyInstagram', FlowRouter.getParam("id"), instagram_page);
+      }    
   },
   'change #country': function(event,template){
-    var country = trimInput(event.target.value);
-    if(Session.get("companyID")!=null){
-      Meteor.call('updateCompanyCountry', Session.get("companyID"), country);
-      Session.set("selected_country", event.target.value);
-    }
+    var country = trimInput(event.target.value);    
+    Meteor.call('updateCompanyCountry', FlowRouter.getParam("id"), country);
+    Session.set("selected_country", event.target.value);    
   },
   'change #states': function(event,template){
     var state = trimInput(event.target.value);
-    if(Session.get("companyID")!=null){
-      Meteor.call('updateCompanyState', Session.get("companyID"), state);
-      Meteor.call('updateCompanyCountry', Session.get("companyID"), "México");
-      Session.set("selected_state", state);
-      var firstCity = City.findOne({'state': state}).city;
-      Meteor.call('updateCompanyCity', Session.get("companyID"), firstCity);    
-    }
+    
+    Meteor.call('updateCompanyState', FlowRouter.getParam("id"), state);
+    Meteor.call('updateCompanyCountry', FlowRouter.getParam("id"), "México");
+    Session.set("selected_state", state);
+    var firstCity = City.findOne({'state': state}).city;
+    Meteor.call('updateCompanyCity', FlowRouter.getParam("id"), firstCity);    
+    
   },
   'change #city': function(event,template){
     var city = trimInput(event.target.value);
-    Meteor.call('updateCompanyCity', Session.get("companyID"), city);
-    Meteor.call('updateCompanyCountry', Session.get("companyID"), "México");
+    Meteor.call('updateCompanyCity', FlowRouter.getParam("id"), city);
+    Meteor.call('updateCompanyCountry', FlowRouter.getParam("id"), "México");
   },
   'change #collaborator_section_title': function(event,template){
     var section_title = trimInput(event.target.value);
-    Meteor.call('updateCompanyCollaboratorTitle', Session.get('companyID'), section_title);
+    Meteor.call('updateCompanyCollaboratorTitle', FlowRouter.getParam("id"), section_title);
   },
   'change #project_section_title': function(event,template){
-    var project_title = trimInput(event.target.value);
-    if(Session.get("companyID")!=null){
-      Meteor.call('updateCompanyProjectTitle', Session.get('companyID'), project_title);  
-    }
-    
+    var project_title = trimInput(event.target.value);   
+    Meteor.call('updateCompanyProjectTitle', FlowRouter.getParam("id"), project_title);          
   },
   'click .goMediaLibrary': function(event,template){
     event.preventDefault();
     $('#modal1').modal('hide');
     $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
-    FlowRouter.go("/mediaEditor/" + Meteor.userId());
+    FlowRouter.go("/mediaEditorObject/" + Meteor.userId()+"/industry/"+FlowRouter.getParam("id"));
   },
   'click #selectLogo': function(event,template){
      event.preventDefault();
-     var mediaId = $(event.currentTarget).attr("data-id");
-     console.log(mediaId);
+     var mediaId = $(event.currentTarget).attr("data-id");     
      Meteor.call(
       'saveCompanyLogoID',
-      Session.get('companyID'),
+      FlowRouter.getParam("id"),
       mediaId
       );
       $('#modal1').modal('hide');
@@ -601,11 +583,10 @@ Template.editIndustry.events({
     },
     'click #selectCoverIndustry': function(event,template){
      event.preventDefault();
-     var mediaId = $(event.currentTarget).attr("data-id");
-     console.log(mediaId);
+     var mediaId = $(event.currentTarget).attr("data-id");     
      Meteor.call(
       'saveCompanyCoverID',
-      Session.get('companyID'),
+      FlowRouter.getParam("id"),
       mediaId
       );
       $('#modal2').modal('hide');
@@ -616,10 +597,10 @@ Template.editIndustry.events({
       event.preventDefault();
       var mediaId = $(event.currentTarget).attr("data-id");
       if(event.target.checked){
-        Meteor.call('addGallery',Session.get('companyID'), mediaId);
+        Meteor.call('addGallery', FlowRouter.getParam("id"), mediaId);
       }
       else{
-        Meteor.call('removeGallery',Session.get('companyID'), mediaId); 
+        Meteor.call('removeGallery', FlowRouter.getParam("id"), mediaId); 
       }
     },
     'change #video': function(event,template){
@@ -627,12 +608,12 @@ Template.editIndustry.events({
       var video = trimInput(event.target.value);
       if(isNotEmpty(video)){
         if(video.indexOf("vimeo")>0){
-          Meteor.call('updateVimeoForIndustry', Session.get('companyID'), formatURL(video)); 
-          Meteor.call('updateYoutubeForIndustry', Session.get('companyID'), null); 
+          Meteor.call('updateVimeoForIndustry', FlowRouter.getParam("id"), formatURL(video)); 
+          Meteor.call('updateYoutubeForIndustry', FlowRouter.getParam("id"), null); 
         } 
         else if(video.indexOf("youtube")>0){
-          Meteor.call('updateYoutubeForIndustry', Session.get('companyID'), formatURL(video)); 
-          Meteor.call('updateVimeoForIndustry', Session.get('companyID'), null); 
+          Meteor.call('updateYoutubeForIndustry', FlowRouter.getParam("id"), formatURL(video)); 
+          Meteor.call('updateVimeoForIndustry', FlowRouter.getParam("id"), null); 
         }
         else{
           Bert.alert({message: 'Por el momento únicamente aceptamos videos de vimeo o youtube', type: 'danger', icon: 'fa fa-exclamation'});
@@ -640,8 +621,8 @@ Template.editIndustry.events({
         
       }
       else{
-        Meteor.call('updateYoutubeForIndustry', Session.get('companyID'), null); 
-        Meteor.call('updateVimeoForIndustry', Session.get('companyID'), null); 
+        Meteor.call('updateYoutubeForIndustry', FlowRouter.getParam("id"), null); 
+        Meteor.call('updateVimeoForIndustry', FlowRouter.getParam("id"), null); 
       }
     },
     

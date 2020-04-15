@@ -263,11 +263,11 @@ Meteor.publish("otherUsers", function () {
       'beard': 1,
       'peculiarities': 1,
       'skills': 1,
-      'profileType': 1,
       'categories': 1,
       'sex': 1,
       'isCrew': 1,
-      'isCast': 1
+      'isCast': 1,
+      'gallery': 1
     }
   });
 });

@@ -394,11 +394,10 @@
                 </div>
               </div>
               <div class="spacer40"></div>
-              {{#if getGallery}}
-              <div class="spacer40"></div>
               <div class="row">
-                <div class="col-lg-12">Galería de imágenes <a href="#" class="text-purple" id="goToMedia" ><br>Agregar <i class="fa fa-pencil"></i></a></div>
+                <div class="col-lg-12">Galería de imágenes <a href="#" class="text-purple" data-toggle="modal" data-target="#modal3"><br>Agregar <i class="fa fa-pencil"></i></a></div>
               </div>
+              {{#if getGallery}}
               <div class="row">
                 <div class="col-lg-12">
                   <!--Inicia carrousel -->
@@ -429,8 +428,15 @@
                     
                 </div>
               </div>
+              {{else}}
+              <div class="row">
+                <div class="col agreements">
+                  Aún no agregas imágenes a tu galería
+                </div>
+              </div>
              
               {{/if}}
+
               <div class="spacer40"></div>
 
 
@@ -576,6 +582,55 @@
           </div>
 
 
+
+        </div>
+
+      </div>
+      <!--/.Content-->
+
+    </div>
+  </div>
+  <!--Modal: Name-->
+
+  <!--Modal: Name-->
+  <div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+
+      <!--Content-->
+      <div class="modal-content">
+
+        <!--Body-->
+        <div class="modal-body">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col text-center">Elige las imágenes para tu galería de fotos</div>
+            </div>
+            <div class="row">
+              <div class="col text-center"><small>Se muestran únicamente las imágenes definidas como <strong>"Galería personal"</strong> en la biblioteca de imágenes. Selecciona las que usarás o ve a la biblioteca de imágenes para definir otras imágenes como Galería personal.</small>
+              </div>
+            </div>
+            
+            <div class="row background-verylightgray light-padding">
+              {{#each getMedia "gallery_cast"}}
+              <div class="col-lg-3 col-sm-6 align-self-center justify-content-center">
+                <input type="checkbox" class="check" data-id="{{this.mediaId}}" {{verifyChecked this.mediaId}}><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image">
+              </div>
+              {{/each}}
+            </div>
+          </div>
+          
+
+        </div>
+
+        <!--Footer-->
+        <div class="modal-footer justify-content-center">
+          <div class="row">
+            <div class="col"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+            <div class="col"><button class="btn btn-purple goMediaLibrary">Ir a la biblioteca de imágenes</button></div>
+          </div>
+          
+          
 
         </div>
 

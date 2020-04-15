@@ -129,7 +129,12 @@ Template.editMedia.events({
 
           cropper.destroy();
 
-          FlowRouter.go("/mediaEditor/"+Meteor.userId());
+          if(FlowRouter.getParam("returnTo")!=null){
+            FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo"));
+          }
+          else{
+            FlowRouter.go("/mediaEditor/"+Meteor.userId()+"/"+FlowRouter.getParam("from"));
+          }
 
         }
         else{
@@ -265,10 +270,20 @@ Template.editMedia.events({
       );
     
     }
-    FlowRouter.go("/mediaEditor/"+Meteor.userId());
+    if(FlowRouter.getParam("returnTo")!=null){
+      FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo"));
+    }
+    else{
+      FlowRouter.go("/mediaEditor/"+Meteor.userId()+"/"+FlowRouter.getParam("from"));
+    }
   },
   'click #goBack':function(e,t){
     e.preventDefault();
-    FlowRouter.go("/mediaEditor/"+Meteor.userId());
+    if(FlowRouter.getParam("returnTo")!=null){
+      FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo"));
+    }
+    else{
+      FlowRouter.go("/mediaEditor/"+Meteor.userId()+"/"+FlowRouter.getParam("from"));
+    }
   }
 });

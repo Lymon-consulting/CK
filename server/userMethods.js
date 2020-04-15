@@ -356,7 +356,23 @@ Accounts.onCreateUser(function(options, user) {
           "likesProject": projectId
         }
       });    
-    }
+    },
+    addGalleryCast(userId,mediaId){
+      Meteor.users.update({'_id': userId}, 
+      {
+        $addToSet: {
+          "gallery": mediaId
+        }
+      });
+    },
+    removeGalleryCast(userId,mediaId){
+      Meteor.users.update({'_id': userId}, 
+        {
+          $pull: {
+            "gallery": mediaId
+          }
+        });
+    },
     
 
 

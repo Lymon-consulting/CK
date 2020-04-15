@@ -8,6 +8,8 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 mb-4 text-center">
                 <button class="btn btn-purple" id="toggleDropper">Agregar nueva imagen</button>
+                {{{getReturnButton}}}
+                <div id="from"></div>
             </div>
         </div>
         
@@ -36,14 +38,6 @@
                     </div>
                   <br>
                 </div>
-
-                <!-- Código original con la ventana modal
-                <div class="col-lg-3 col-md-4 col-6">
-                  <a href="#" id="setVariable" class="d-block mb-4 h-100" data-toggle="tooltip" data-placement="top" title="{{getUse this.mediaId}}">
-                    <img class="media-thumb img-thumbnail" src="{{this.media_url}}" alt="" data-toggle="modal" data-target="#modal{{@index}}">
-                  </a>
-                </div>-->
-               
             </div>      
             {{/each}}
         </div>
