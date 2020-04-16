@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Industry } from '../api/industry.js';
 import { Media } from '../api/media.js';
+import { City } from '../api/city.js';
 import { IndustryIndex } from '/lib/common.js';
 
 import './industryList.html';
@@ -34,14 +35,6 @@ Template.industryResults.helpers({
       
     }
     return url;
-    /*
-    Meteor.subscribe("allIndustries");
-      var url = "";
-      var data = Industry.findOne({'_id' : companyId});
-      if(data!=null && data.companyLogoID!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_limit/" + data.companyLogoID;
-      }
-     return url;*/
     },
    getIndustryType(){
         var type = new Array();
@@ -138,6 +131,36 @@ Template.industryResults.helpers({
         }
         return (pyear === value) ? 'selected' : '' ;
       },
+      getCountries(){
+       var data = City.find().fetch();
+       return _.uniq(data, false, function(transaction) {return transaction.country});
+      },
+      getStatesFromCountries(){
+        var country;
+        if(Session.get("selected_country")!=null){
+          country = City.find({'country': Session.get("selected_country")}).fetch();
+          return _.uniq(country, false, function(transaction) {return transaction.state});
+        }
+        else{
+         country = City.find({'country': 'México'}).fetch(); 
+         return _.uniq(country, false, function(transaction) {return transaction.state});
+       }
+
+      },
+      getCitiesFromStates(){
+
+        if(Session.get("selected_state")!=null){
+          return City.find({'state': Session.get("selected_state")}).fetch();
+        }
+        else{
+          /*if(Meteor.user() && Meteor.user().state){
+            return City.find({'state': Meteor.user().state}).fetch();    
+          }
+          else{*/
+            return City.find({'state': 'Aguascalientes'}).fetch();    
+          //}
+        }
+      },
 
 
    
@@ -191,6 +214,40 @@ Template.industryResults.events({
       Session.set("collaborator",companyId);
       FlowRouter.go('/addCollaboratorIndustry');
    },
-   
+   'change #country': function (e) {
+      Session.set("selected_country", e.target.value);
+      if($(e.target).val()!="cualquier"){
+       IndustryIndex.getComponentMethods().addProps('country', $(e.target).val());
+       Session.set("country_selected",$(e.target).val());
+     }
+     else{
+       IndustryIndex.getComponentMethods().removeProps('country');  
+       IndustryIndex.getComponentMethods().removeProps('state');  
+       IndustryIndex.getComponentMethods().removeProps('city'); 
+       Session.set("country_selected",null);
+     }
+   },
+   'change #state': function (e) {
+      Session.set("selected_state", e.target.value);
+      if($(e.target).val()!="cualquier"){
+       IndustryIndex.getComponentMethods().addProps('state', $(e.target).val());
+       Session.set("state_selected",$(e.target).val());
+     }
+     else{
+       IndustryIndex.getComponentMethods().removeProps('state');  
+       IndustryIndex.getComponentMethods().removeProps('city'); 
+       Session.set("state_selected",null);
+     }
+   },
+   'change #city': function (e) {
+    if($(e.target).val()!="cualquier"){
+     IndustryIndex.getComponentMethods().addProps('city', $(e.target).val());
+     Session.set("city_selected",$(e.target).val());
+   }
+   else{
+     IndustryIndex.getComponentMethods().removeProps('city');  
+     Session.set("city_selected",null);
+   }
+  },
 });
 

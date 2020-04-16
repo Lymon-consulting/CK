@@ -399,7 +399,7 @@ Template.editProject.events({
       $('#modal1').modal('hide');
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();
-      FlowRouter.go("/mediaEditor/" + Meteor.userId());
+      FlowRouter.go("/mediaEditorObject/" + Meteor.userId()+"/project/"+FlowRouter.getParam("id"));
   },
   'change #category':function(event, template){
     event.preventDefault();

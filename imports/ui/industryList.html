@@ -58,6 +58,9 @@
           </div>
           <div class="spacer10"></div>
           <div class="row">
+            <div class="col agreements">Tipo de empresa</div>
+          </div>
+          <div class="row">
             <div class="col">
               <select class="form-control agreements" id="type">
                 <option value="cualquier"> Cualquier tipo </option>
@@ -68,6 +71,51 @@
             </div>
           </div>
           <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">País</div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <select class="form-control agreements" id="country">
+                <option value="cualquier"> Cualquier país </option>
+                {{#each getCountries}}
+                <option value="{{country}}"> {{country}} </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">Estado</div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <select class="form-control agreements" id="state">
+                <option value="cualquier"> Cualquier estado </option>
+                {{#each getStatesFromCountries}}
+                <option value="{{state}}"> {{state}} </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">Ciudad</div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <select class="form-control agreements" id="city">
+                <option value="cualquier"> Cualquier ciudad </option>
+                {{#each getCitiesFromStates}}
+                <option value="{{city}}"> {{city}} </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">Año de fundación</div>
+          </div>
           <div class="row">
             <div class="col">
               <select class="form-control agreements" id="year">
@@ -96,8 +144,8 @@
                 <div class="row">
                   <div class="col-md-2 vertical-align-top">
                     <a href="/industryPage/{{this.__originalId}}">
-                    {{#if logoPicture this.__originalId 100}}
-                    <img src="{{logoPicture this.__originalId 100}}" class="logo" />
+                    {{#if logoPicture this.__originalId 80}}
+                    <img src="{{logoPicture this.__originalId 80}}" />
                     {{else}}
                     <img src="/images/nologo.png" class="logo">
                     {{/if}}
@@ -111,7 +159,12 @@
                             <tbody>
                               <tr>
                                 <td class="no-padding text-no-wrap">
-                                  <a href="/industryPage/{{this.__originalId}}" class="text-purple"><strong>{{this.company_name}}</strong></a>
+                                  <a href="/industryPage/{{this.__originalId}}" class="text-purple"><h5 class="h5-name">{{this.company_name}}</h5></a>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="no-padding text-no-wrap location-underline">
+                                  {{this.state}}, {{this.city}}
                                 </td>
                               </tr>
                               <tr>

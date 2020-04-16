@@ -262,8 +262,7 @@ Template.industryPage.events({
   'click .editIndustry':function(event, template){
     //var companyID = $(event.target).attr('data-answer');
     var companyID = FlowRouter.getParam("id");
-    console.log(companyID);
-    Session.set("companyID",companyID);
-    FlowRouter.go("/editIndustry");
+    //Session.set("companyID",companyID);
+    FlowRouter.go("/editIndustry/" + companyID);
   }
 });
