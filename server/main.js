@@ -273,7 +273,8 @@ Meteor.publish("otherUsers", function () {
       'sex': 1,
       'isCrew': 1,
       'isCast': 1,
-      'gallery': 1
+      'gallery': 1,
+      'alerts': 1
     }
   });
 });

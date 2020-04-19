@@ -29,6 +29,7 @@ import '../imports/ui/job.js';
 import '../imports/ui/join.js';
 import '../imports/ui/login.js';
 import '../imports/ui/mediaEditor.js';
+import '../imports/ui/notifications.js';
 import '../imports/ui/peopleList.js';
 import '../imports/ui/peopleListCast.js';
 import '../imports/ui/projectName.js';

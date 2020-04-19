@@ -24,6 +24,7 @@
       </li>
     </ul>
     {{/if}}
+    
     {{/if}}
   </div>
   {{#if currentUser}}
@@ -31,7 +32,7 @@
       
       <ul class="navbar-nav">
 
-        {{>notifications}}   
+        {{>notifications}}
 
         <li class="nav-item">
           <a class="nav-link" href="/peopleList">Descubre</a>
@@ -149,44 +150,5 @@
 </template>
 
 
-<template name="notifications">
-   <nav class="navbar navbar-default">
-       <!-- Collect the nav links, forms, and other content for toggling -->
-       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-         <ul class="nav navbar-nav navbar-right">
-           <li class="dropdown">
-             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell-o text-white">
-               {{#if getAlerts.length}}
-               <span class="badge badge-danger">{{getAlerts.length}}</span>
-               {{/if}}
-            </i></a>
-             <ul class="dropdown-menu notify-drop">
-               <div class="notify-drop-title">
-                  <div class="row">
-                     <div class="col-md-6 col-sm-6 col-xs-6">Notificaciones</div>
-                     <div class="col-md-6 col-sm-6 col-xs-6 text-right"><a href="" class="rIcon allRead" data-tooltip="tooltip" data-placement="bottom" title="Ver"><i class="fa fa-dot-circle-o"></i></a></div>
-                  </div>
-               </div>
-               <!-- end notify title -->
-               <!-- notify content -->
-               <div class="drop-content">
-                  {{#each value in getAlerts}}
-                     <li>
-                        <div class="col-md-9 col-sm-9 col-xs-9">
-                           <a href="/profilePage/{{value.ownerID}}">{{value.owner}}</a> ha indicado que participaste en <a href="/projectPage/{{value.projectID}}">{{value.title}}</a> como {{value.role}} <a href="" class="rIcon"><i class="fa fa-dot-circle-o"></i></a>
-                        <p>¿Eres tú?</p>
-                        <p class="time"><a href="#" class="confirmCollaboration" data-id="{{value.collabID}}" data-proj="{{value.projectID}}">Si participé</a> | <a href="#" class="denyColaboration" data-id="{{value.collabID}}" data-proj="{{value.projectID}}" data-ownerEmail="{{value.ownerEmail}}" data-collabEmail="{{value.collabEmail}}" data-title="{{value.title}}" data-collabRole="{{value.role}}">No participé</a></p>
-                        </div>
-                     </li>
-                  {{/each}}
-               </div>
-               <div class="notify-drop-footer text-center">
-                  <a href=""><i class="fa fa-eye"></i> Ver todas las notificaciones</a>
-               </div>
-             </ul>
-           </li>
-         </ul>
-       </div><!-- /.navbar-collapse -->
-   </nav>   
-</template>
+
 

@@ -137,6 +137,26 @@
   background-color: white;
 }
 
+.notificationNoRead{
+  background-color: #edf2fa;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.notificationNoRead:hover{
+  background: #d0e0e0;
+  cursor: pointer;
+}
+.notificationRead{
+  background-color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.notificationRead:hover{
+  background: #d0e0e0;
+  cursor: pointer;
+}
+
+
 .modal-content{
   background-color: #fff !important;
   opacity:0.9 !important;
@@ -450,7 +470,19 @@
 .dropdown-toggle::after{
   display: none;
 }
+.dropdown-menu-wide{
+  width: 400px !important;
+}
 /*Termina estilos para el menú desplegable*/
+
+.nav li ul {
+  margin-bottom: 20px;
+}
+
+.notify-drop-title{
+  padding-left: 10px !important; 
+  padding-right: 10px !important; 
+}
 
 /*Inician estilos para los botones de crew y cast en la barra superior*/
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {

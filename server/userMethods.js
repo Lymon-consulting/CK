@@ -1,3 +1,4 @@
+import { Random } from 'meteor/random'
 import { Ocupation } from '../imports/api/ocupations.js';
 
 Meteor.methods({
@@ -373,7 +374,32 @@ Accounts.onCreateUser(function(options, user) {
           }
         });
     },
-    
-
+    addAlert(userId,msg,from,type,projectId,companyId){
+      var date = new Date();
+      var alert = {
+        '_id': Random.id(),
+        'read': false,
+        'date': date,
+        'message': msg,
+        'from': from,
+        'type': type,
+        'projectId': projectId,
+        'companyId': companyId
+      }
+      Meteor.users.update({'_id': userId}, 
+        {
+          $addToSet: {
+            "alerts": alert
+          }
+        });
+    },
+    removeAlert(userId,alertId){
+      Meteor.users.update({'_id': userId}, 
+        {
+          $pull: {
+            "alerts": alertId
+          }
+        });
+    },
 
   });

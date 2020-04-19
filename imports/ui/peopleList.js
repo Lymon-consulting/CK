@@ -228,15 +228,15 @@ Template.peopleList.events({
  'click #pushFollow': function(event, template) {
   event.preventDefault();
 
-
-
       //var user = $("#thisUser").val();
       var user = $(event.target).attr("data-id");
-      console.log("Intentando seguir a "+ user);
+      //console.log("Intentando seguir a "+ user);
       Meteor.users.update(
        {'_id': Meteor.userId()},
        { $push: { 'follows': user } }
        );
+
+      Meteor.call('addAlert', user ,"Comenzó a seguirte", Meteor.userId(),2,null,null);
 
       $("#pushFollow").attr("disabled", true);
     },
