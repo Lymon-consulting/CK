@@ -274,7 +274,8 @@ Meteor.publish("otherUsers", function () {
       'isCrew': 1,
       'isCast': 1,
       'gallery': 1,
-      'alerts': 1
+      'alerts': 1,
+      'followCompany':1
     }
   });
 });
@@ -297,7 +298,13 @@ Meteor.publish('projectData', function(projId){
 });
 
 Meteor.publish('params', function(){
-   return Params.find();
+   return Params.find({},{
+    fields:{
+      'MIN_YEAR':1,
+      'MAX_YEAR':1,
+      'SEND_VERIFICATION_MAIL':1
+    }
+   });
 });
 
 Meteor.publish('myMainProject', function(userId) {

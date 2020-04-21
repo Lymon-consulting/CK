@@ -161,9 +161,19 @@ Template.industryResults.helpers({
           //}
         }
       },
-
-
-   
+      showButtonFollow(follow){
+         var result = true;
+         var following = Meteor.user().followCompany;
+         if(following){
+            for (var i = 0; i < following.length; i++) {
+             if(following[i]===follow){
+               result = false;
+               break;
+             }
+           } 
+         }
+        return result;
+      },
 });
 
 Template.industryResults.events({
@@ -249,5 +259,28 @@ Template.industryResults.events({
      Session.set("city_selected",null);
    }
   },
+  'click #pushFollow': function(event, template) {
+    event.preventDefault();
+    var companyId = $(event.target).attr("data-id");
+    Meteor.users.update(
+     {'_id': Meteor.userId()},
+     { $push: { 'followCompany': companyId } }
+    );
+
+    var company = Industry.findOne({'_id':companyId});
+
+    Meteor.call('addAlert', company.userId ,"", Meteor.userId(),3,null,companyId);
+
+    //$(event.target).attr("disabled", true);
+  },
+  'click #stopFollowing': function(event,template){
+    event.preventDefault();
+    var companyId = $(event.target).attr("data-id");
+    Meteor.users.update(
+     {'_id': Meteor.userId()},
+     { $pull: { 'followCompany': companyId } }
+    );
+    //Meteor.call('removeAlert', company.userId ,);
+  }
 });
 

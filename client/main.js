@@ -46,6 +46,7 @@ import '../imports/ui/selectProfile.js';
 import '../imports/ui/terms.js';
 import '../imports/ui/thanksRegister.js';
 import '../imports/ui/userProjects.js';
+import '../imports/ui/verify.js';
 import '../imports/ui/viewIndustries.js';
 import '../imports/ui/viewProjects.js';
 

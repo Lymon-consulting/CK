@@ -401,5 +401,17 @@ Accounts.onCreateUser(function(options, user) {
           }
         });
     },
+    markAlertAsRead(userId,alertId,read){
+      /*var alert = {
+        '_id': alertId,
+        'read': read
+      }*/
+      Meteor.users.update({'_id': userId,'alerts._id':alertId}, 
+        {
+          $set: {
+            'alerts.$.read': read
+          }
+        });
+    },
 
   });

@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor'
 import { Project } from '../api/project.js';
 import { Media } from '../api/media.js';
+import { Industry } from '../api/industry.js';
 import { getPicture } from '/lib/functions.js';
 import { timeSince } from '/lib/functions.js';
 
@@ -36,9 +37,23 @@ getNameAndURL(userId){
     }
     else{
       url = "<a href='/profilePageActor/"+userId+"'>"; 
+      if(user.showArtisticName){
+        fullname = user.artistic;  
+      }
+      else{
+        fullname = user.fullname;
+      }
+      
     }
   } 
   return url + fullname + "</a>";
+},
+getInitials(userId){
+  var user = Meteor.users.findOne({'_id':userId});
+  var name = user.profile.name;
+  var lastname = user.profile.lastname;
+  var initials = name.charAt(0) + lastname.charAt(0);
+  return initials;
 },
 formatTime(date){
   return timeSince(date);
@@ -54,11 +69,11 @@ formatAlert(thisAlert){
      else if(thisAlert.type===1){ //like
 
      }
-     else if(thisAlert.type===2){//follow
+     else if(thisAlert.type===2){//follow profile
         msg = " ha comenzado a seguirte ";
     }
-     else if(thisAlert.type===3){//collaborator
-
+     else if(thisAlert.type===3){//follow company
+        msg = " sigue ahora a "
      }
      else if(thisAlert.type===4){//request
 
@@ -66,14 +81,13 @@ formatAlert(thisAlert){
      else if(thisAlert.type===5){//missing info
 
      }
-     else if(thisAlert.type===6){//
+     else if(thisAlert.type===6){//missing info
 
      }
      return msg;
    },
    isRead(value){
      var result = "";
-     console.log(value);
      if(value){
        result = "notificationRead";
      }
@@ -81,8 +95,44 @@ formatAlert(thisAlert){
        result = "notificationNoRead";
      }
      return result;
+   },
+   countAlerts(){
+    var alerts = new Array();
+    var count = null;
+    if(Meteor.user()){
+      alerts = Meteor.user().alerts;
+      if(alerts && alerts.length>0){
+        count=0;
+        for (var i = 0; i < alerts.length; i++) {
+          if(!alerts[i].read){
+            count++;
+          }
+        }
+      }
+      
+    }
+    if(count==0){
+      count=null;
+    }
+    return count;
+    
+   },
+   switch(type, value){
+      if(type===value){
+        return true;
+      }
+      else{
+        return false;
+      }
+   },
+   companyName(companyId){
+     var company = Industry.findOne({'_id':companyId});
+     var name="";
+     if(company){
+       name = company.company_name;
+     }
+     return name;
    }
-
  });
 
 Template.notifications.events({
@@ -141,6 +191,23 @@ Template.notifications.events({
      emailData
      );
  }
-
-}
+},
+ 'click .clickable':function(event,template){
+    event.preventDefault();
+    userId = $(event.currentTarget).attr("data-id")
+    var user = Meteor.users.findOne({'_id':userId});
+    if(user.isCrew){
+      url = "/profilePage/";
+    }
+    else{
+      url = "/profilePageActor/"; 
+    }
+    FlowRouter.go(url+userId);
+ },
+ 'click .fa-eye': function(event,template){
+   event.preventDefault();
+   alertId = $(event.currentTarget).attr("data-id")
+   console.log(alertId);
+   Meteor.call('markAlertAsRead',Meteor.userId(),alertId,true);
+ }
 });

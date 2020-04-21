@@ -188,8 +188,8 @@ Template.mainlayout.events({
       if ( error ) {
         console.log(error);
       } else {
-        let email = Meteor.user().emails[ 0 ].address;
-        Bert.alert({message: `El correo de verificación ha sido enviado a ${ email }`, type: 'success', icon: 'fa fa-check'});
+        //let email = Meteor.user().emails[ 0 ].address;
+        //Bert.alert({message: `El correo de verificación ha sido enviado a ${ email }`, type: 'success', icon: 'fa fa-check'});
       }
     });
   }
