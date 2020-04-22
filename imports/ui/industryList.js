@@ -174,6 +174,18 @@ Template.industryResults.helpers({
          }
         return result;
       },
+      notSameUser(companyId){
+        val = true;
+        var data = Industry.find({'userId' : Meteor.userId()}).fetch();
+        for (var i = 0; i < data.length; i++) {
+          if(data[0]._id === companyId){
+            val = false;
+            break;
+          }
+        }
+        
+        return val;
+      },
 });
 
 Template.industryResults.events({
