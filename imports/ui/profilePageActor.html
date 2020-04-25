@@ -360,7 +360,7 @@
                                     <div class="col-md-4">
                                        <a href="{{getPersonalURL this._id}}/{{this._id}}">
                                        {{#if getProfilePicture this._id 40}}
-                                       <img src="{{getProfilePicture this._id 40}}">
+                                       <img src="{{getProfilePicture this._id 40}}" data-toggle="tooltip" data-placement="top" title="{{this.fullname}}">
                                        {{else}}
                                        <div id="profileImage">{{getInitials this._id}}</div>
                                        {{/if}}
@@ -372,13 +372,12 @@
                            </div>
                         </div>
                         {{/if}}
-
-                        {{#if getFollowing}}
+                        {{#if getFollowingCrew}}
                         <div class="row">
                            <div class="col spacer40"></div>
                         </div>
                         <div class="row">
-                           <strong>SIGUIENDO</strong>
+                           <strong>CREW QUE SIGUE</strong>
                         </div>
                         <div class="row">
                            <div class="col"><hr></div>
@@ -387,13 +386,74 @@
                            <div class="col">
                               <div class="container">
                                  <div class="row">
-                                    {{#each getFollowing}}
+                                    {{#each getFollowingCrew}}
                                     <div class="col-md-4">
-                                        <a href="{{getPersonalURL this._id}}/{{this._id}}">
+                                        <a href="/profilePage/{{this._id}}">
                                        {{#if getProfilePicture this._id 40}}
-                                       <img src="{{getProfilePicture this._id 40}}">
+                                       <img src="{{getProfilePicture this._id 40}}" data-toggle="tooltip" data-placement="top" title="{{this.fullname}}">
                                        {{else}}
-                                       <div id="profileImage">{{getInitials this._id}}</div>
+                                       <div id="profileImage" data-toggle="tooltip" data-placement="top" title="{{this.fullname}}">{{getInitials this._id}}</div>
+                                       {{/if}}
+                                       </a>
+                                    </div>
+                                    {{/each}}
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        {{/if}}
+
+                        {{#if getFollowingCast}}
+                        <div class="row">
+                           <div class="col spacer40"></div>
+                        </div>
+                        <div class="row">
+                           <strong>CAST QUE SIGUE</strong>
+                        </div>
+                        <div class="row">
+                           <div class="col"><hr></div>
+                        </div>
+                        <div class="row">
+                           <div class="col">
+                              <div class="container">
+                                 <div class="row">
+                                    {{#each getFollowingCast}}
+                                    <div class="col-md-4">
+                                        <a href="/profilePageActor/{{this._id}}">
+                                       {{#if getProfilePicture this._id 40}}
+                                       <img src="{{getProfilePicture this._id 40}}" data-toggle="tooltip" data-placement="top" title="{{getName this._id}}">
+                                       {{else}}
+                                       <div id="profileImage" data-toggle="tooltip" data-placement="top" title="{{getName this._id}}">{{getInitials this._id}}</div>
+                                       {{/if}}
+                                       </a>
+                                    </div>
+                                    {{/each}}
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        {{/if}}
+                        {{#if getFollowingCompanies}}
+                        <div class="row">
+                           <div class="col spacer40"></div>
+                        </div>
+                        <div class="row">
+                           <strong>EMPRESAS QUE SIGUE</strong>
+                        </div>
+                        <div class="row">
+                           <div class="col"><hr></div>
+                        </div>
+                        <div class="row">
+                           <div class="col">
+                              <div class="container">
+                                 <div class="row">
+                                    {{#each getFollowingCompanies}}
+                                    <div class="col-md-4">
+                                        <a href="/industryPage/{{this}}">
+                                       {{#if getLogoPicture this 40}}
+                                       <img src="{{getLogoPicture this 40}}" data-toggle="tooltip" data-placement="top" title="{{getCompanyName this}}">
+                                       {{else}}
+                                       <img src="/images/nologo.png" class="logo" data-toggle="tooltip" data-placement="top" title="{{getCompanyName this}}">
                                        {{/if}}
                                        </a>
                                     </div>

@@ -255,7 +255,16 @@ Template.industryPage.events({
     FlowRouter.go('/searchCollaborator/' + FlowRouter.getParam('id')); */
     $('#collabModal')
     .on('hidden.bs.modal', function() {
-      FlowRouter.go('/searchCollaboratorForIndustry/' + FlowRouter.getParam('id'));
+      FlowRouter.go('/searchCollaboratorForIndustry/' + FlowRouter.getParam('id')+"/crew");
+    })
+    .modal('hide');
+  },
+  'click #searchAdmin': function(event,template,doc){
+    /*$('#collabModal').modal('toggle');
+    FlowRouter.go('/searchCollaborator/' + FlowRouter.getParam('id')); */
+    $('#collabModal')
+    .on('hidden.bs.modal', function() {
+      FlowRouter.go('/searchCollaboratorForIndustry/' + FlowRouter.getParam('id')+"/industry");
     })
     .modal('hide');
   },

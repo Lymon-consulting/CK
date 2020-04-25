@@ -63,16 +63,33 @@ getCompanyID(){
 checkParticipation(userId){
     var company = Industry.findOne({'_id': FlowRouter.getParam('id')});
     var result="";
+    var staff;
     if(company){
-      var staff = company.company_staff;
-      if(staff!=null && staff!=""){
-        for (var i = staff.length - 1; i >= 0; i--) {
-          if(staff[i]._id === userId){
-            result="checked";
-            break;
+      
+      if(FlowRouter.getParam("type")==="crew"){
+        staff = company.company_staff;
+        if(staff!=null && staff!=""){
+          for (var i = staff.length - 1; i >= 0; i--) {
+            if(staff[i]._id === userId){
+              result="checked";
+              break;
+            }
           }
-        }
+        }  
       }
+      else if(FlowRouter.getParam("type")==="industry"){
+        staff = company.company_admin;
+        if(staff!=null && staff!=""){
+          for (var i = staff.length - 1; i >= 0; i--) {
+            if(staff[i]._id === userId){
+              result="checked";
+              break;
+            }
+          }
+        } 
+      }
+      
+
 
       if(userId === company.userId){
         result="checked";
@@ -83,16 +100,31 @@ checkParticipation(userId){
   isCollaborator(userId){
     var company = Industry.findOne({'_id': FlowRouter.getParam('id')});
     var result="";
+    var staff;
     if(company){
-      var staff = company.company_staff;
-      if(staff!=null && staff!=""){
-        for (var i = staff.length - 1; i >= 0; i--) {
-          if(staff[i]._id === userId){
-            result=true;
-            break;
+      if(FlowRouter.getParam("type")==="crew"){
+        staff = company.company_staff;
+        if(staff!=null && staff!=""){
+          for (var i = staff.length - 1; i >= 0; i--) {
+            if(staff[i]._id === userId){
+              result=true;
+              break;
+            }
           }
         }
       }
+      else if(FlowRouter.getParam("type")==="industry"){
+        staff = company.company_admin;
+        if(staff!=null && staff!=""){
+          for (var i = staff.length - 1; i >= 0; i--) {
+            if(staff[i]._id === userId){
+              result=true;
+              break;
+            }
+          }
+        }
+      }
+
       if(userId === company.userId){
         result=true;
       }
@@ -281,6 +313,7 @@ Template.searchCollaboratorForIndustry.events({
 
   //var rol = $( "select#sel_"+e.target.value+" option:checked" ).val();
   var companyId = FlowRouter.getParam('id');
+  
   var userId = e.target.value;
 
   var user = Meteor.users.findOne({'_id':userId});
@@ -291,7 +324,9 @@ Template.searchCollaboratorForIndustry.events({
         email=element.address;
       }
     });
-
+    
+    console.log("{$and:[{'_id':'"+companyId+"'},{ 'company_staff': {$elemMatch:{'email':'"+email+"'}}}]}");
+    
     var name="";
     if(user.profile.name!=null && user.profile.name!=""){
       name = user.profile.name;  
@@ -302,7 +337,7 @@ Template.searchCollaboratorForIndustry.events({
     if(user.profile.lastname2!=null && user.profile.lastname2!=""){
       name = name + " " + user.profile.lastname2;
     }
-    console.log("el colaborador se va a armar con los datos siguientes:");
+    //console.log("el colaborador se va a armar con los datos siguientes:");
 
     var collaborator = {
       "_id" : user._id,
@@ -311,22 +346,42 @@ Template.searchCollaboratorForIndustry.events({
       "confirmed": true, /*Cambiar esto para activar las notificaciones*/
       "invite_sent": true /*Cambiar esto para activar las notificaciones*/
     };
-    console.log(collaborator);
+    //console.log(collaborator);
 
-    var exists = Industry.find({$and:[{"_id":companyId},{ company_staff: {$elemMatch:{"email":email}}}]});
-    if(exists.count()===0){
-      console.log("SE va a agregar al colaborador en la empresa "+companyId);
+    var exists;
 
-      Industry.upsert(
-       {'_id': companyId},
-       { $push: { company_staff: collaborator }
-     });
-      $("#but_"+e.target.value).html('Invitación enviada');
-      $("#but_"+e.target.value).attr('disabled', 'disabled');
-      $("#chk_"+e.target.value).attr('disabled', 'disabled');
-      $("#rem_"+e.target.value).show();
+    console.log(FlowRouter.getParam("type"));
+    
+    if(FlowRouter.getParam("type")==="crew"){
+      console.log("entra al type crew");
+      exists = Industry.findOne({$and:[{"_id":companyId},{ 'company_staff': {$elemMatch:{"email":email}}}]});
+      if(!exists){
+        Industry.upsert(
+          {'_id': companyId},
+          { $push: { company_staff: collaborator }
+        });  
+      }
     }
+    else if(FlowRouter.getParam("type")==="industry"){{
+      console.log("entra al type industry");
+      exists = Industry.findOne({$and:[{"_id":companyId},{ 'company_admin': {$elemMatch:{"email":email}}}]});
+      if(!exists){
+        Industry.upsert(
+          {'_id': companyId},
+          { $push: { company_admin: collaborator }
+        });  
+      }
+    }
+    
+    console.log("-->"+exists+"<--");
+    
+    $("#but_"+e.target.value).html('Invitación enviada');
+    $("#but_"+e.target.value).attr('disabled', 'disabled');
+    $("#chk_"+e.target.value).attr('disabled', 'disabled');
+    $("#rem_"+e.target.value).show();
+    
   }
+ }
 },
  'click .remove_collaborator' : function(e, template, doc){
   e.preventDefault();
@@ -356,11 +411,18 @@ Template.searchCollaboratorForIndustry.events({
        "email": email,
        "name" : name
      };
-
-     Industry.upsert(
-      {'_id': companyId},
-      { $pull: { company_staff: collaborator }
-    });
+     if(FlowRouter.getParam("type")==="crew"){
+        Industry.upsert(
+          {'_id': companyId},
+          { $pull: { company_staff: collaborator }
+        }); 
+     }
+     else if(FlowRouter.getParam("type")==="industry"){
+        Industry.upsert(
+          {'_id': companyId},
+          { $pull: { company_admin: collaborator }
+        }); 
+     }
 
      $("#but_"+e.target.value).html('Enviar invitación');
      $("#chk_"+e.target.value).prop( "checked", false );

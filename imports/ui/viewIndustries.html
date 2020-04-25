@@ -60,14 +60,21 @@
                  {{/if}}
                 <div class="card-body">
                   <h5 class="card-title"><a href="/industryPage/{{this._id}}" class="text-purple">{{this.company_name}}</a></h5>
-                  <!--<p class="card-text"><a href="/projectPage/{{this._id}}">{{this.company_name}}</a></p>-->
                   <p class="card-text agreements">{{this.company_type}}</p>
                   <p class="card-text agreements">{{this.company_year}}</p>
                   <p class="card-text agreements">{{this.company_desc}}</p>
+                 
                 </div>
                 <div class="card-footer">
                    <div class="row">
-                      <div class="col"><a href="/industryPage/{{this._id}}" class="text-purple"><i class="fa fa-search">&nbsp;</i></a></div>                      
+                      <div class="col"><a href="/industryPage/{{this._id}}" class="text-purple"><i class="fa fa-search">&nbsp;</i></a></div>
+                      {{#if ownerOfIndustry this.userId}}
+                      {{#if this.company_admin}}
+                      <div class="col"><a href="#" class="text-purple opendiag" ><i class="fa fa-user-circle" data-answer="{{this._id}}">&nbsp;</i></a></div>    
+                      {{/if}}
+                      {{else}}
+                      {{#if this.admin}}<span class="agreements">(Eres admin)</span>{{/if}}
+                      {{/if}}
                       <div class="col text-right"><a href="#" class="text-purple editIndustry" ><i class="fa fa-edit" data-answer="{{this._id}}">&nbsp;</i></a></div>
                    </div>
                  </div>
@@ -90,5 +97,75 @@
      </table>
   {{/if}}
   <div class="spacer80"></div>
+
+
+<!-- Collab Modal -->
+<div class="modal fade" id="adminModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        
+      </div>
+      <div class="modal-body">
+         <div class="row">
+            <div class="col">
+               <h4 class="modal-title" id="myModalLabel">ADMINISTRADORES</h4>          
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <hr>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               Estos son los administradores que agregaste a esta empresa
+            </div>
+         </div>
+         <div class="row">
+            <div class="col spacer20"></div>
+         </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="row">
+              {{#each showAdmins}}
+              <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                  <div class="row">
+                     {{#if getProfilePicture this._id 40}}
+                     <img src="{{getProfilePicture this._id 40}}" data-toggle="tooltip" data-placement="top" title="{{this.name}}">
+                     {{else}}
+                     <div id="profileImage" data-toggle="tooltip" data-placement="top" title="{{this.name}}">{{getInitials this._id}}</div>
+                     {{/if}}
+                  </div>
+                  <div class="card-body">
+
+                    <div class="card-text">
+                      <p>{{this.name}}</p>
+                      <p>&nbsp;</p>
+                      <p><button class="btn button-follow mx-auto remove_collaborator" value="{{this._id}}"> Eliminar administrador </button></p>
+                      
+                    </div>
+                  </div>  
+
+                </div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+         <div class="row">
+            <div class="col mx-auto">
+               <button type="button" id="cancel" class="btn btn-purple">Cancelar</button>
+            </div>
+         </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 </template>
