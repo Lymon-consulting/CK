@@ -1,5 +1,5 @@
 <template name="editIndustry">
-{{#if isOwner}}
+{{#if isOwnerOrAdmin}}
 
    <div class="container text-center">
     <h1 class="h1-title">DATOS DE LA EMPRESA U ORGANIZACIÓN</h1>
@@ -61,6 +61,13 @@
             <h2>Datos generales</h2>
           </div>
         </div>
+        <div class="row">
+          <div class="col">
+            <div class="alert alert-danger" role="alert">
+              Como administrador de la empresa puedes modificar algunos datos e imágenes, pero los datos principales de la empresa están reservados para la persona que la creó
+            </div>
+          </div>
+        </div>
         <div class="spacer40"></div>
         <div class="row">
          <div class="col-md-12">
@@ -69,7 +76,13 @@
              <label for="company_name">Nombre comercial de la empresa: <span class="text-purple">(Requerido)</span></label>
            </div>
            <div class="col">
+            {{#if hasEditPermission}}
              <input type="text" id="company_name" class="form-control" placeholder="Empresa" value="{{companyData.company_name}}" maxlength="150">
+            {{else}}
+             <input type="text" id="company_name" class="form-control" placeholder="Empresa" value="{{companyData.company_name}}" maxlength="150" disabled="">
+            {{/if}}
+            
+            
            </div>
          </div>
 
@@ -80,12 +93,21 @@
             <label for="proj_type">Tipo de empresa: <span class="text-purple">(Requerido)</span></label>
           </div>
           <div class="col">
+            {{#if hasEditPermission}}
            <select name="company_type" id="company_type" class="form-control">
             <option value="" disabled selected style='display:none;'> Seleccione </option>
             {{#each getCompanyType}}
             <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
             {{/each}}
           </select>
+            {{else}}
+            <select name="company_type" id="company_type" class="form-control" disabled>
+            <option value="" disabled selected style='display:none;'> Seleccione </option>
+            {{#each getCompanyType}}
+            <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
+            {{/each}}
+          </select>
+            {{/if}}
           </div>
         </div>
         
@@ -94,19 +116,32 @@
         <div class="row">
           <div class="col"><label for="proj_desc">Descripción de la empresa: <span class="text-purple">(Requerido)</span></label></div>
           <div class="col">
+            {{#if hasEditPermission}}
            <textarea class="form-control" rows="5" id="company_desc" placeholder="Descripción de la empresa (450 caracteres máx)." maxlength="450">{{description}}</textarea><small>Caracteres restantes:</small> <div id="max" class="agreements"></div>
+           {{else}}
+           <textarea class="form-control" rows="5" id="company_desc" placeholder="Descripción de la empresa (450 caracteres máx)." maxlength="450" disabled>{{description}}</textarea><small>Caracteres restantes:</small> <div id="max" class="agreements"></div>
+           {{/if}}
          </div>
         </div>
         <div class="spacer20"></div>
         <div class="row">
           <div class="col"><label for="company_year">Año de fundación: <span class="text-purple">(Requerido)</span></label></div>
           <div class="col">
+            {{#if hasEditPermission}}
            <select name="company_year" id="company_year" class="form-control">
             <option value="" disabled selected style='display:none;'> Seleccione </option>
             {{#each getAvailableYears}}
             <option value="{{this}}" {{yearSelected this}}> {{this}} </option>   
             {{/each}}
           </select>
+          {{else}}
+          <select name="company_year" id="company_year" class="form-control" disabled>
+            <option value="" disabled selected style='display:none;'> Seleccione </option>
+            {{#each getAvailableYears}}
+            <option value="{{this}}" {{yearSelected this}}> {{this}} </option>   
+            {{/each}}
+          </select>
+          {{/if}}
         </div>
         </div>
         <div class="spacer40"></div>
@@ -117,27 +152,51 @@
         <div class="row">
           <div class="col-md-4">
             <label for="country">País <span class="text-purple">(Requerido)</span></label>
+            {{#if hasEditPermission}}
             <select name="country" id="country" class="form-control">
               {{#each getCountries}}
               <option value="{{country}}" {{countrySelected country}}> {{country}} </option>
               {{/each}}
             </select>
+            {{else}}
+            <select name="country" id="country" class="form-control" disabled>
+              {{#each getCountries}}
+              <option value="{{country}}" {{countrySelected country}}> {{country}} </option>
+              {{/each}}
+            </select>
+            {{/if}}
           </div>
           <div class="col-md-4">
             <label for="state">Estado <span class="text-purple">(Requerido)</span></label>
+            {{#if hasEditPermission}}
             <select name="state" id="states" class="form-control">
               {{#each getStatesFromCountries}}
               <option value="{{state}}" {{stateSelected state}}> {{state}} </option>
               {{/each}}
             </select>  
+            {{else}}
+            <select name="state" id="states" class="form-control" disabled>
+              {{#each getStatesFromCountries}}
+              <option value="{{state}}" {{stateSelected state}}> {{state}} </option>
+              {{/each}}
+            </select>
+            {{/if}}
           </div>
           <div class="col-md-4">
             <label for="city">Ciudad <span class="text-purple">(Requerido)</span></label>
+            {{#if hasEditPermission}}
             <select name="city" id="city" class="form-control">
               {{#each getCitiesFromStates}}
               <option value="{{city}}" {{citySelected city}}> {{city}} </option>
               {{/each}}
             </select>  
+            {{else}}
+            <select name="city" id="city" class="form-control" disabled>
+              {{#each getCitiesFromStates}}
+              <option value="{{city}}" {{citySelected city}}> {{city}} </option>
+              {{/each}}
+            </select>
+            {{/if}}
           </div>
         </div>
 
@@ -159,7 +218,11 @@
             <div class="input-group-prepend">
               <div class="input-group-text"><i class="fa fa-globe fa-lg"></i></div>
             </div>
+            {{#if hasEditPermission}}
             <input type="text" class="form-control" id="company_web_page" value="{{companyData.company_web_page}}" placeholder="Ej: www.cinekomuna.com" maxlength="120">
+            {{else}}
+            <input type="text" class="form-control" id="company_web_page" value="{{companyData.company_web_page}}" placeholder="Ej: www.cinekomuna.com" maxlength="120" disabled>
+            {{/if}}
           </div>
         </div>
         </div>
@@ -171,7 +234,11 @@
            <div class="input-group-prepend">
              <div class="input-group-text"><i class="fa fa-facebook fa-lg"></i></div>
            </div>
+           {{#if hasEditPermission}}
            <input  type="text" class="form-control" id="facebook_page" value="{{companyData.company_facebook_page}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120">
+           {{else}}
+           <input  type="text" class="form-control" id="facebook_page" value="{{companyData.company_facebook_page}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120" disabled>
+           {{/if}}
          </div>
         </div>
         </div>
@@ -183,7 +250,11 @@
            <div class="input-group-prepend">
              <div class="input-group-text"><i class="fa fa-twitter fa-lg"></i></div>
            </div>
+           {{#if hasEditPermission}}
            <input type="text" class="form-control" id="twitter_page" value="{{companyData.company_twitter_page}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
+           {{else}}
+           <input type="text" class="form-control" id="twitter_page" value="{{companyData.company_twitter_page}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120" disabled>
+           {{/if}}
          </div>
         </div>
         </div>
@@ -194,7 +265,11 @@
            <div class="input-group-prepend">
              <div class="input-group-text"><i class="fa fa-vimeo fa-lg"></i></div>
            </div>
+           {{#if hasEditPermission}}
            <input type="text" class="form-control" id="vimeo_page" value="{{companyData.company_vimeo_page}}" placeholder="Ej. www.vimeo.com/cinekomuna" maxlength="120">
+           {{else}}
+           <input type="text" class="form-control" id="vimeo_page" value="{{companyData.company_vimeo_page}}" placeholder="Ej. www.vimeo.com/cinekomuna" maxlength="120" disabled>
+           {{/if}}
          </div>
         </div>
         </div>
@@ -205,7 +280,11 @@
            <div class="input-group-prepend">
              <div class="input-group-text"><i class="fa fa-youtube fa-lg"></i></div>
            </div>
+           {{#if hasEditPermission}}
            <input  type="text" class="form-control" id="youtube_page" value="{{companyData.company_youtube_page}}" placeholder="Ej. www.youtube.com/cinekomuna" maxlength="120">
+           {{else}}
+           <input  type="text" class="form-control" id="youtube_page" value="{{companyData.company_youtube_page}}" placeholder="Ej. www.youtube.com/cinekomuna" maxlength="120" disabled>
+           {{/if}}
          </div>
         </div>
         </div>
@@ -216,7 +295,11 @@
            <div class="input-group-prepend">
              <div class="input-group-text"><i class="fa fa-instagram fa-lg"></i></div>
            </div>
+           {{#if hasEditPermission}}
            <input type="text" class="form-control" id="instagram_page" value="{{companyData.company_instagram_page}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120">
+           {{else}}
+           <input type="text" class="form-control" id="instagram_page" value="{{companyData.company_instagram_page}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120" disabled>
+           {{/if}}
          </div>
         </div>
         </div>
@@ -230,7 +313,11 @@
             <label for="company_name">Título para la sección de colaboradores:</label>
           </div>
           <div class="col">
+            {{#if hasEditPermission}}
             <input type="text" id="collaborator_section_title" class="form-control" placeholder="Título colaboradores" value="{{companyData.collaborator_section_title}}" maxlength="150">
+            {{else}}
+            <input type="text" id="collaborator_section_title" class="form-control" placeholder="Título colaboradores" value="{{companyData.collaborator_section_title}}" maxlength="150" disabled>
+            {{/if}}
           </div>
         </div>
         <div class="spacer20"></div>
@@ -239,7 +326,11 @@
             <label for="company_name">Título para la sección de proyectos:</label>
           </div>
           <div class="col">
+            {{#if hasEditPermission}}
             <input type="text" id="project_section_title" class="form-control" placeholder="Título proyectos" value="{{companyData.project_section_title}}" maxlength="150">
+            {{else}}
+            <input type="text" id="project_section_title" class="form-control" placeholder="Título proyectos" value="{{companyData.project_section_title}}" maxlength="150" disabled>
+            {{/if}}
           </div>
         </div>
         <div class="spacer40"></div>

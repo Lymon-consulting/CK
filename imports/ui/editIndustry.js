@@ -34,14 +34,43 @@ function formatURL(url){
   return url;
 }
 
-Template.editIndustry.helpers({
-  isOwner(){
-    var result = false;
+function isOwner(){
+  var result = false;
     var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
     if(data!=null && data.userId!=null){
       if(data.userId === Meteor.userId()){
         result = true;
       }
+    }
+    return result;
+}
+
+function isAdmin(){
+  var result = false;
+    var adminOfCompanies = Industry.find({'_id' : FlowRouter.getParam('id'), 'company_admin._id': Meteor.userId()}).fetch();
+    if(adminOfCompanies!=null){
+       result = true;
+    }
+    return result;
+}
+
+Template.editIndustry.helpers({
+  isOwnerOrAdmin(){
+    if(isOwner() || isAdmin()){
+      return true;
+    }
+    else{
+      return false;
+    }
+
+  },
+  hasEditPermission(){
+    var result = false;
+    if(isOwner()){
+      result=true;
+    }
+    else if(isAdmin()){
+      result=false;
     }
     return result;
   },
@@ -114,7 +143,7 @@ Template.editIndustry.helpers({
     var url = "";
     var media = Media.findOne({'mediaId':mediaId});
       if(media!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.userId() + "/" + media.mediaId;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + media.userId + "/" + media.mediaId;    
       }
     return url;
   },
