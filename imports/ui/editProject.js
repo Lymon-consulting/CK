@@ -7,7 +7,8 @@ import { getParam } from '/lib/functions.js';
 import './editProject.html';
 import '/lib/common.js';
 
-
+var check1 = false;
+var check2 = false;
 
 Meteor.subscribe("fileUploads");
 
@@ -69,6 +70,42 @@ Template.editProject.helpers({
     }
     return data;
   },
+  verifyProductor(){
+    var data = Project.findOne({'_id': FlowRouter.getParam('id')});
+    var roles;
+    var result="";
+    if(data){
+      roles = data.project_role;
+    }
+    if(roles){
+      for (var i = 0; i < roles.length; i++) {
+        if('Productor'===roles[i]){
+          result="checked";
+          break;
+        }
+      }
+      
+    }
+    return result;
+  },
+  verifyDirector(){
+    var data = Project.findOne({'_id': FlowRouter.getParam('id')});
+    var roles;
+    var result="";
+    if(data){
+      roles = data.project_role;
+    }
+    if(roles){
+      for (var i = 0; i < roles.length; i++) {
+        if('Director'===roles[i]){
+          result="checked";
+          break;
+        }
+      }
+      
+    }
+    return result;
+  },
   roleSelected: function(value){
     var result="";
     var prole = Project.findOne({'_id': FlowRouter.getParam('id')}).project_role;
@@ -78,7 +115,7 @@ Template.editProject.helpers({
     }
     else{
       result = "";
-    } 
+    }     
     return result;
   },
   getProjectType(){
@@ -127,7 +164,7 @@ Template.editProject.helpers({
       return Ocupation.find({'title': Session.get("selected_category")}).fetch();
     }
     else{
-      return Ocupation.find({'title': "Actor"}).fetch();
+      return Ocupation.find({'title': "Animacion y arte digital"}).fetch();
     }
   },
   roleSelected: function(value){
@@ -137,7 +174,6 @@ Template.editProject.helpers({
     if(data!=null){
       prole = data.project_role;  
     }
-    
     if(prole){
       var elem = prole.indexOf(value);
       if(elem >= 0){
@@ -145,10 +181,12 @@ Template.editProject.helpers({
       }
       else{
         result = "";
-      } 
+      }
+
     }
     return result;
   },
+
   typeSelected: function(value){
     var result="";
     var prole;
@@ -399,7 +437,7 @@ Template.editProject.events({
       $('#modal1').modal('hide');
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();
-      FlowRouter.go("/mediaEditorObject/" + Meteor.userId()+"/project/"+FlowRouter.getParam("id"));
+      FlowRouter.go("/mediaEditorObject/" + Meteor.userId()+"/project/"+FlowRouter.getParam("id")+"/cover");
   },
   'change #category':function(event, template){
     event.preventDefault();
@@ -488,7 +526,47 @@ Template.editProject.events({
     else{
       $('#max').text(450-len);
     }
-  }
+  },
+  'change .profile'(event, instance) {
+    //console.log(event.target.id + " - " + event.target.checked);
+    if(event.target.id==="check1"){
+      if(event.target.checked){
+        check1 = true;
+        Meteor.call(
+          'addRoleToProject',
+          FlowRouter.getParam('id'),
+          'Productor'
+        );
+      }
+      else{
+        check1 = false;
+        Meteor.call(
+          'removeRoleFromProject',
+          FlowRouter.getParam('id'),
+          'Productor'
+        );
+      }
+    }
+    if(event.target.id==="check2"){
+      if(event.target.checked){
+        check2 = true;
+        Meteor.call(
+          'addRoleToProject',
+          FlowRouter.getParam('id'),
+          'Director'
+        );
+      }
+      else{
+        check2 = false;
+        Meteor.call(
+          'removeRoleFromProject',
+          FlowRouter.getParam('id'),
+          'Director'
+        );
+      }
+    }
+
+  },
 });
 
 

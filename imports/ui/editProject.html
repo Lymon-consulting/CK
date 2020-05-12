@@ -97,6 +97,22 @@
                        </select>
                     </div>
                  </div>
+                 {{#if hasTopRole}}
+                 <div class="spacer20"></div>
+                 <div class="row">
+                   <div class="col"><label for="proj_year">¿Fuiste el Productor, Director o ambos en este proyecto?</label></div>
+                 </div>
+                 <div class="row">
+                  <div class="col">
+                    <input type="checkbox" value="Productor" id="check1" class="profile" {{verifyProductor}}> Productor
+                  </div>
+                 </div>
+                 <div class="row">
+                   <div class="col">
+                     <input type="checkbox" value="Director" id="check2" class="profile" {{verifyDirector}}> Director
+                   </div>
+                 </div>
+                 {{/if}}
                  <div class="spacer20"></div>
                  <div class="row">
                     <div class="col-md-6">
@@ -261,8 +277,8 @@
                 <!--Footer-->
                 <div class="modal-footer justify-content-center">
                   <div class="row">
-                    <div class="col"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
-                    <div class="col"><button class="btn btn-purple goMediaLibrary">Ir a la biblioteca de imágenes</button></div>
+                    <div class="col-lg-6"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+                    <div class="col-lg-6"><button class="btn btn-purple goMediaLibrary">Ir a la biblioteca de imágenes</button></div>
                   </div>
                   
                   

@@ -130,10 +130,10 @@ Template.editMedia.events({
           cropper.destroy();
 
           if(FlowRouter.getParam("returnTo")!=null){
-            FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo"));
+            FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo")+"/"+FlowRouter.getParam("type"));
           }
           else{
-            FlowRouter.go("/mediaEditor/"+Meteor.userId()+"/"+FlowRouter.getParam("from"));
+            FlowRouter.go("/mediaEditor/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("type"));
           }
 
         }
@@ -271,19 +271,20 @@ Template.editMedia.events({
     
     }
     if(FlowRouter.getParam("returnTo")!=null){
-      FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo"));
+      FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo")+"/"+FlowRouter.getParam("type"));
     }
     else{
-      FlowRouter.go("/mediaEditor/"+Meteor.userId()+"/"+FlowRouter.getParam("from"));
+      
+      FlowRouter.go("/mediaEditor/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("type"));
     }
   },
   'click #goBack':function(e,t){
     e.preventDefault();
     if(FlowRouter.getParam("returnTo")!=null){
-      FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo"));
+      FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo")+"/"+FlowRouter.getParam("type"));
     }
     else{
-      FlowRouter.go("/mediaEditor/"+Meteor.userId()+"/"+FlowRouter.getParam("from"));
+      FlowRouter.go("/mediaEditor/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("type"));
     }
   }
 });

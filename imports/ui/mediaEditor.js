@@ -52,6 +52,91 @@ function uploadFiles(files, profileId) {
           res.url
         );
         Bert.alert({message: 'Tus archivos han sido cargados' , type: 'success', icon: 'fa fa-check'});
+
+        var type = FlowRouter.getParam("type"); // cover, logo, profile, gallery_industry, gallery_project, gallery_cast
+        
+        Meteor.call(
+            'updateMetaData',
+            Meteor.userId(),
+            public_id,
+            res.bytes,
+            res.width,
+            res.height,
+            res.version,
+            res.url,
+            type
+          );
+
+        if(FlowRouter.getParam("from")!=null){
+          if(FlowRouter.getParam("from")==="cast"){
+            if(FlowRouter.getParam("type")==="profile"){
+              Meteor.call(
+              'updateProfilePicture',
+              FlowRouter.getParam("returnTo"),
+              public_id
+              );
+            }
+            else if(FlowRouter.getParam("type")==="cover"){
+              Meteor.call(
+              'updateCoverPicture',
+              FlowRouter.getParam("returnTo"),
+              public_id
+              );
+            }
+            else if(FlowRouter.getParam("type")==="gallery_cast"){
+              Meteor.call(
+              'addGalleryCast',
+              FlowRouter.getParam("returnTo"),
+              public_id
+              );
+            }
+            FlowRouter.go("/editProfileActor/"+Meteor.userId());
+          }
+          else if(FlowRouter.getParam("from")==="crew"){
+            if(FlowRouter.getParam("type")==="profile"){
+              Meteor.call(
+              'updateProfilePicture',
+              FlowRouter.getParam("returnTo"),
+              public_id
+              );
+            }
+            else if(FlowRouter.getParam("type")==="cover"){
+              Meteor.call(
+              'updateCoverPicture',
+              FlowRouter.getParam("returnTo"),
+              public_id
+              );
+            }
+            FlowRouter.go("/editProfile/"+Meteor.userId());
+          }
+          else if(FlowRouter.getParam("from")==="industry"){
+            if(FlowRouter.getParam("type")==="logo"){
+              Meteor.call(
+              'saveCompanyLogoID',
+              FlowRouter.getParam("returnTo"),
+              public_id
+              );
+            }
+            else if(FlowRouter.getParam("type")==="cover"){
+              Meteor.call(
+              'saveCompanyCoverID',
+              FlowRouter.getParam("returnTo"),
+              public_id
+              ); 
+            }
+            FlowRouter.go("/editIndustry/"+FlowRouter.getParam("returnTo"));
+          }
+          else if(FlowRouter.getParam("from")==="project"){
+            if(FlowRouter.getParam("type")==="cover"){
+              Meteor.call(
+              'saveProjectPictureID',
+              FlowRouter.getParam("returnTo"),
+              public_id
+              );
+            }
+            FlowRouter.go("/editProject/"+FlowRouter.getParam("returnTo"));
+          }
+        }
       }
       else{
         console.log("Upload Error:"  + err); //no output on console
@@ -235,7 +320,7 @@ Template.mediaEditor.events({
     var mediaId = $(event.target).attr('data-id');
     console.log("Va a editar la imagen "+mediaId);
     if(FlowRouter.getParam("returnTo")!=null){
-      FlowRouter.go("/editMediaObject/"+mediaId+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo"));  
+      FlowRouter.go("/editMediaObject/"+mediaId+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo")+"/"+FlowRouter.getParam("type"));  
     }
     else{
       FlowRouter.go("/editMedia/"+mediaId+"/"+FlowRouter.getParam("from"));  

@@ -815,13 +815,29 @@ Template.editProfileActor.events({
     $('.modal-backdrop').remove();
 
   },
-  'click .goMediaLibrary': function(event,template){
+  'click .goMediaLibraryProfile': function(event,template){
     event.preventDefault();
     $('#modal2').modal('hide');
     $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
     //Session.set("from","cast");
-    FlowRouter.go("/mediaEditor/" + Meteor.userId()+"/cast");
+    FlowRouter.go("/mediaEditorObject/" + Meteor.userId()+"/cast/"+Meteor.userId()+"/profile");
+  },
+  'click .goMediaLibraryCover': function(event,template){
+    event.preventDefault();
+    $('#modal2').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+    //Session.set("from","cast");
+    FlowRouter.go("/mediaEditorObject/" + Meteor.userId()+"/cast/"+Meteor.userId()+"/cover");
+  },
+  'click .goMediaLibraryGallery': function(event,template){
+    event.preventDefault();
+    $('#modal3').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+    //Session.set("from","cast");
+    FlowRouter.go("/mediaEditorObject/" + Meteor.userId()+"/cast/"+Meteor.userId()+"/gallery_cast");
   },
   'click #goProfile': function(event,template){
     FlowRouter.go("/profilePageActor/"+Meteor.userId());

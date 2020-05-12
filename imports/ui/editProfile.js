@@ -397,14 +397,22 @@ Template.editProfile.events({
   //return false
 },
 
-'click .goMediaLibrary': function(event,template){
+'click .goMediaLibraryProfile': function(event,template){
   event.preventDefault();
   $('#modal1').modal('hide');
   $('body').removeClass('modal-open');
   $('.modal-backdrop').remove();
-  FlowRouter.go("/mediaEditor/" + Meteor.userId()+"/crew");
+  //FlowRouter.go("/mediaEditor/" + Meteor.userId()+"/crew/profile");
+  FlowRouter.go("/mediaEditorObject/" + Meteor.userId()+ "/crew/" + Meteor.userId() + "/profile");
 },
-
+'click .goMediaLibraryCover': function(event,template){
+  event.preventDefault();
+  $('#modal1').modal('hide');
+  $('body').removeClass('modal-open');
+  $('.modal-backdrop').remove();
+  //FlowRouter.go("/mediaEditor/" + Meteor.userId()+"/crew/cover");
+  FlowRouter.go("/mediaEditorObject/" + Meteor.userId() + "/crew/" + Meteor.userId() + "/cover");
+},
 'click #selectProfilePicture': function(event,template){
  event.preventDefault();
  var mediaId = $(event.currentTarget).attr("data-id");
