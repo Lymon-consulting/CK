@@ -355,18 +355,24 @@ Template.profilePageActor.helpers({
       
     },
     getGallery(){
-    var media = Media.find({"userId": FlowRouter.getParam('id'), "media_use":"gallery"}).fetch();
+    var data = Meteor.users.findOne({'_id' : FlowRouter.getParam("id")});
     var array = new Array();
-    if(media){
-      array = media;
-      for (var i = 0; i < array.length; i++) {
-        if(i==0){
-          array[i].position = 1;
+    
+    if(data){
+      if(data.gallery){
+        for (var i = 0; i < data.gallery.length; i++) {
+          var obj = {};
+          obj.mediaId = data.gallery[i];
+
+          if(i==0){
+            obj.position = 1;
+          }
+          else{
+            obj.position = 2;
+          }
+           array.push(obj);
+          
         }
-        else{
-          array[i].position = 2;
-        }
-        //array[i]
       }
     }
     return array;

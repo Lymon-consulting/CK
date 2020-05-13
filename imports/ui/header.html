@@ -99,7 +99,11 @@
             {{#if hasTopRole}}
             <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}">Mis empresas</a>
             {{/if}}
-            <a class="dropdown-item text-black" href="/mediaEditor/{{currentUser._id}}/{{currentUser._id}}">Mis imágenes</a>
+            {{#if isCrew}}
+            <a class="dropdown-item text-black" href="/mediaEditorObject/{{currentUser._id}}/crew/{{currentUser._id}}/global">Mis imágenes</a>
+            {{else}}
+            <a class="dropdown-item text-black" href="/mediaEditorObject/{{currentUser._id}}/cast/{{currentUser._id}}/global">Mis imágenes</a>
+            {{/if}}
             <div class="dropdown-divider"></div>
             <a class="dropdown-item text-black logout" href="#">Salir</a>
             <!--

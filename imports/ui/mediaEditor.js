@@ -145,21 +145,14 @@ function uploadFiles(files, profileId) {
   });
 }
 
-Template.header.created = function(){
-  $('#dropzone').removeClass('drag-over');
-  $("#dragzone").css({
-    "display": "none",
-  });
-};
 
-Template.mediaEditor.onRendered = function(){
-  $('#dropzone').removeClass('drag-over');
-  $("#dragzone").css({
-    "display": "none",
-  });
-
-
-  
+Template.mediaEditor.rendered = function(){
+  Meteor.setTimeout(function(){
+    $('#dropzone').removeClass('drag-over');
+    $("#dragzone").css({
+      "display": "none",
+    });
+  }, 1000);
 
 };
 
@@ -294,6 +287,55 @@ Template.mediaEditor.helpers({
     }
     return use;
   },
+  imageDetails(){
+    var image = Media.findOne({'mediaId' : Session.get("mediaId")});
+    return image;
+  },
+  
+  formatDate(date){
+    var d = new Date(date);
+    var month = d.toLocaleString('default', { month: 'long' });
+    var datestring = d.getDate()  + " " + month + " " + d.getFullYear();
+    return datestring;
+  },
+  formatSize(size){
+    if(size>0){
+      var i = Math.floor( Math.log(size) / Math.log(1024) );
+      return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
+    }
+    else{
+      return 0;
+    }
+  },
+  getUse(mediaId){
+    Meteor.subscribe("allMedia");
+    var media = Media.findOne({'userId': Meteor.userId(), 'mediaId' : mediaId});
+    var use;
+    if(media!=null){
+      if(media.media_use==='profile'){
+        use = "Foto de perfil";
+      }
+      else if(media.media_use==='cover'){
+        use = "Foto de portada";
+      }
+      else if(media.media_use==='logo'){
+        use = "Logo";
+      }
+      else if(media.media_use==='gallery_industry'){
+        use = "Galería de empresa";
+      }
+      else if(media.media_use==='gallery_project'){
+        use = "Galería de proyecto";
+      }
+      else if(media.media_use==='gallery_cast'){
+        use = "Galería personal";
+      }
+      else{
+        use = "Sin definir";
+      }
+    }
+    return use;
+  }
 
 });
 
@@ -326,5 +368,11 @@ Template.mediaEditor.events({
       FlowRouter.go("/editMedia/"+mediaId+"/"+FlowRouter.getParam("from"));  
     }
     
+  },
+  'click #openImageDetails': function(event,template){
+    event.preventDefault();
+    var mediaId = $(event.target).attr('data-id');
+    Session.set("mediaId",mediaId);
+    $('#modal1').modal('show');
   }
 });
