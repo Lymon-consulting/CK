@@ -15,18 +15,30 @@
       <br>
 
       <p class="text-description">
-      Desde aquí puedes agregar un título y/o descripción a la foto, así como elegir el uso que le vas a dar y recortarla a un tamaño recomendado.
+      Desde aquí puedes recortar la imagen a un tamaño más adecuado
       </p>
       <div class="spacer20"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 text-center">
 					<!-- Wrap the image or canvas element with a block element (container) -->
-					<div class="te">
-					  <img id="image" src="{{getMedia.media_url}}">
+					<div>
+						<div class="row">
+							<div class="container">
+								<img id="image" src="{{getMedia.media_url}}">			
+							</div>
+						</div>
+						<div class="spacer20"></div>
+						<div class="row">
+							<div class="col">
+								<button class="btn btn-purple" id="goBack">Regresar a biblioteca de imágenes</button>
+							</div>
+						</div>
+					  
 					</div>
 				</div>
-				<div class="col-lg-4 text-left">
+				<div class="col-lg-1">&nbsp;</div>
+				<div class="col-lg-3 text-left">
 					<p class="text-right"><small><span id="message"></span></small></p>
 					<p><small><strong>Nombre:</strong> {{getMedia.media_name}}</small></p>
 					<p><small><strong>Tipo:</strong> {{getMedia.media_type}}</small></p>
@@ -35,36 +47,99 @@
 					<p><small><strong>Dimensiones:</strong> {{getMedia.media_width}} por {{getMedia.media_height}} pixeles </small></p>
 					<p><small><strong>Uso:</strong> {{getUse getMedia.mediaId}}</small></p>
 					<p><hr></p>
-					<p><small>Título:</small> <input class="form-control" id="title{{getMedia.mediaId}}" type="text" placeholder="Título" value="{{getMedia.media_title}}"></p>
-					<p><small>Descripción:</small> <input class="form-control" id="descr{{getMedia.mediaId}}" type="text" placeholder="Descripción" value="{{getMedia.media_desc}}"></p>
-
-					
 					<p>
-					<small>Cambiar uso (Actualmente <strong>"{{getUse getMedia.mediaId}}"</strong>):</small><br>
-					<select class="form-control form-control-sm" id="type" data-id="{{getMedia.mediaId}}">
-						<option>--- Sin definir ---</option>
-						<option value="profile">Foto de perfil</option>
-						<option value="cover">Foto de portada</option>
-						{{#if hasTopRole}}
-						<option value="logo">Logo de empresa</option>
-						<option value="gallery_industry">Galería de empresa</option>
-						<option value="gallery_project">Galería de proyecto</option>
-						{{/if}}
-						{{#if isCast}}
-						<option value="gallery_cast">Galería personal</option>
-						{{/if}}
-					</select>
+					<div class="form-check">
+					  <input class="form-check-input" type="radio" name="cropRadio" id="setProfileCrop" value="profile">
+					  <label class="form-check-label" for="setProfileCrop">
+					    Foto de perfil o logo
+					  </label>
+					</div>
+					<div class="form-check">
+					  <input class="form-check-input" type="radio" name="cropRadio" id="setCoverCrop" value="cover">
+					  <label class="form-check-label" for="setCoverCrop">
+					    Foto de portada
+					  </label>
+					</div>
+					<div class="form-check disabled">
+					  <input class="form-check-input" type="radio" name="cropRadio" id="setGalleryCrop" value="gallery">
+					  <label class="form-check-label" for="setGalleryCrop">
+					    Galería de imágenes
+					  </label>
+					</div>
 					</p>
-					<p><a href="" class="delete" data-id="{{getMedia.mediaId}}"><small>Borrar permanentemente</small></a> </p>
 					<p>&nbsp;</p>
-					<p><button class="btn btn-purple" id="crop" disabled>Crop</button><button class="btn btn-purple" id="goBack">Regresar a biblioteca de imágenes</button></p>
+					<p><button class="btn btn-purple" id="crop" disabled>Recortar</button></p>
 				</div>
 			</div>
-	      	
-			
 		</div>
-		
    </div>      
 	</form>
    <div class="spacer60"></div>
+
+<!--Modal: Name-->
+   <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+
+      <!--Content-->
+      <div class="modal-content">
+
+        <!--Body-->
+        <div class="modal-body">
+
+          <div class="container">
+            <div class="row">
+              <div class="col text-center">Detalles de la imagen</div>
+            </div>
+            <div class="spacer20"></div>
+            <div class="row">
+              <div class="col">
+                Elige el tamaño adecuado para tu imagen, según el uso que le quieres dar
+              </div>
+            </div>
+            <div class="row">
+	          <div class="col">
+	            <div class="row">
+
+	              <div class="col-lg-4 col-md-6 mb-4">
+	                <div class="card h-100">
+	                  <a href="#" id="setProfileCrop">Imagen de perfil o logo</a>
+	                </div>
+	              </div>
+
+	              <div class="col-lg-4 col-md-6 mb-4">
+	                <div class="card h-100">
+	                  <a href="#" id="setCoverCrop" >Imagen de portada</a>
+	                </div>
+	              </div>
+
+	              <div class="col-lg-4 col-md-6 mb-4">
+	                <div class="card h-100">
+	                  <a href="#" id="setGalleryCrop" >Galería de imágenes</a>
+	                </div>
+	              </div>
+
+	              
+
+	            </div>
+	          </div>
+	        </div>
+          </div>
+        </div>
+        <!--Footer-->
+        <div class="modal-footer justify-content-center">
+          <div class="row">
+            <div class="col-lg-12"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+          </div>
+
+
+
+        </div>
+
+      </div>
+      <!--/.Content-->
+
+    </div>
+  </div>
+  <!--Modal: Name-->
+
 </template>

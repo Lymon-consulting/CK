@@ -1,3 +1,8 @@
+.bordered-image{
+  border-width: 3px;
+  border-color: blue;
+}
+
 .carousel-item{
    width: 600px;
    /*height: 500px;*/
@@ -55,7 +60,7 @@
 
 .media-preview{
    width: 400px;
-   height: 200px;
+   /*height: 200px;*/
 
    /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
    object-fit:scale-down;

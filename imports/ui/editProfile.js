@@ -272,9 +272,10 @@ getPublicID(type){
   }
   
 },
-getMedia(type) {
+getMedia() {
   Meteor.subscribe("allMedia");
-  var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
+  //var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
+  var media = Media.find({'userId': Meteor.userId()},{sort:{'media_date':-1}});
   return media;
 },
 getURL(mediaId){
@@ -413,11 +414,25 @@ Template.editProfile.events({
   //FlowRouter.go("/mediaEditor/" + Meteor.userId()+"/crew/cover");
   FlowRouter.go("/mediaEditorObject/" + Meteor.userId() + "/crew/" + Meteor.userId() + "/cover");
 },
+'click #openMediaGallery': function(event,template){
+  event.preventDefault();
+  $(".media-thumb").css('border','none');
+  $('#modal1').modal('show');
+},
 'click #selectProfilePicture': function(event,template){
- event.preventDefault();
- var mediaId = $(event.currentTarget).attr("data-id");
+  event.preventDefault();
+  var mediaId = $(event.currentTarget).attr("data-id");
 
- console.log(mediaId);
+  Session.set("mediaId",mediaId);
+
+ $(".media-thumb").css('border','none');
+ $(event.target).css('border', "solid 3px blue");
+ $("#setProfilePicture").removeAttr('disabled');
+
+},
+'click #setProfilePicture': function(event,template){
+ event.preventDefault();
+ var mediaId = Session.get("mediaId");
 
  Meteor.call(
   'updateProfilePicture',
@@ -425,15 +440,25 @@ Template.editProfile.events({
   mediaId
   );
 
-  $('#modal2').modal('hide');
+  $('#modal1').modal('hide');
   $('body').removeClass('modal-open');
   $('.modal-backdrop').remove();
 
 },
-
 'click #selectCoverPicture': function(event,template){
  event.preventDefault();
- var mediaId = $(event.currentTarget).attr("data-id");
+  var mediaId = $(event.currentTarget).attr("data-id");
+
+  Session.set("mediaId",mediaId);
+
+ $(".media-thumb").css('border','none');
+ $(event.target).css('border', "solid 3px blue");
+ $("#setCoverPicture").removeAttr('disabled');
+
+},
+'click #setCoverPicture': function(event,template){
+ event.preventDefault();
+ var mediaId = Session.get("mediaId");
 
  Meteor.call(
   'updateCoverPicture',

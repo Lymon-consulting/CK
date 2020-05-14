@@ -3,14 +3,12 @@
     <div class="container">
         <h1 class="h1-title text-center">BIBLIOTECA DE IMÁGENES</h1>
         <br>
-        
-
         <div class="row">
-            <div class="col-lg-12 col-md-12 mb-4 text-center">
-                <button class="btn btn-purple" id="toggleDropper">Agregar nueva imagen</button>
-                {{{getReturnButton}}}
-                <div id="from"></div>
-            </div>
+          <div class="col-lg-12 col-md-12 mb-4 text-center">
+            <button class="btn btn-purple" id="toggleDropper">Agregar nueva imagen</button>
+            {{{getReturnButton}}}
+            <div id="from"></div>
+          </div>
         </div>
         
         <div id="dragzone">
@@ -32,11 +30,12 @@
                             </a>            
                         </div>
                     </div>
+                    <!--
                     <div class="row d-flex justify-content-center">
                         <div class="col d-flex justify-content-center agreements">
-                            {{translateUse this.media_use}}
+                            <input type="radio">Elegir
                         </div>
-                    </div>
+                    </div>-->
                   <br>
                 </div>
             </div>      
@@ -74,7 +73,7 @@
                       </div>
                       <div class="row">
                         <div class="col">
-                          Editar imagen
+                          <a href="#" id="sendToEditor" data-id="{{imageDetails.mediaId}}"><small>Editar imagen</small></a>
                         </div>
                       </div>
                       
@@ -90,9 +89,7 @@
                       <p><hr></p>
                       <p><small>Título:</small> <input class="form-control" id="title{{imageDetails.mediaId}}" type="text" placeholder="Título" value="{{imageDetails.media_title}}"></p>
                       <p><small>Descripción:</small> <input class="form-control" id="descr{{imageDetails.mediaId}}" type="text" placeholder="Descripción" value="{{imageDetails.media_desc}}"></p>
-                      
                       <p><a href="" class="delete" data-id="{{imageDetails.mediaId}}"><small>Borrar permanentemente</small></a> </p>
-                      
                     </div>
                   </div>
                 </div>
@@ -100,12 +97,10 @@
             </div>
           </div>
         </div>
-
         <!--Footer-->
         <div class="modal-footer justify-content-center">
           <div class="row">
-            <div class="col-lg-6"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
-            <div class="col-lg-6"><button class="btn btn-purple goMediaLibraryProfile">Ir a la biblioteca de imágenes</button></div>
+            <div class="col-lg-12"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
           </div>
 
 

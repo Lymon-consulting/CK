@@ -91,7 +91,7 @@ Template.editMedia.events({
   'click #crop':function(event,template){
     event.preventDefault();
 
-    var public_id = FlowRouter.getParam("id");
+    var public_id = Session.get("mediaId");
     var folder = Meteor.userId();
 
     cropper.getCroppedCanvas().toBlob((blob) => {
@@ -100,41 +100,62 @@ Template.editMedia.events({
         cloud_name: Meteor.settings.public.CLOUD
       });
 
+      /*Para cambiar la imagen original descomentar esto*/
+      /*
       var options = {
         folder: Meteor.userId(),
         public_id: public_id
       };
+      */
+
+      /*Para crear una nueva imagen a partir de la original*/
+      var options = {
+        folder: Meteor.userId()
+      };
 
       Cloudinary.upload(blob, options, function(err,res){
         if(!err){
-          console.log(res);
+          //console.log(res);
       
-          var composedId = folder+"/"+public_id;
-          console.log("Ahora va a actualizar los meta datos de la imagen con "+composedId);
+          //var composedId = folder+"/"+public_id;
+          //console.log("Ahora va a actualizar los meta datos de la imagen con "+composedId);
 
-          var type = $("#type").children("option:selected").val();
-          console.log("Cambiando el tipo a "+type);
+          //var type = $("#type").children("option:selected").val();
+          //console.log("Cambiando el tipo a "+type);
 
+          /*
           Meteor.call(
             'updateMetaData',
             Meteor.userId(),
-            public_id,
+            res.public_id,
             res.bytes,
             res.width,
             res.height,
             res.version,
             res.url,
-            type
+            null
+          );*/
+          var public_id = res.public_id;
+          public_id = public_id.substring(public_id.indexOf("/")+1,public_id.length);
+
+          Meteor.call(
+            'saveMedia',
+            Meteor.userId(),
+            public_id,
+            blob.size,
+            blob.type,
+            blob.name,
+            res.width,
+            res.height,
+            res.version,
+            res.url
           );
+
+          Bert.alert({message: 'Se ha creado una nueva imagen a partir de la original' , type: 'success', icon: 'fa fa-check'});
 
           cropper.destroy();
 
-          if(FlowRouter.getParam("returnTo")!=null){
-            FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo")+"/"+FlowRouter.getParam("type"));
-          }
-          else{
-            FlowRouter.go("/mediaEditor/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("type"));
-          }
+          FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo")+"/"+FlowRouter.getParam("type"));
 
         }
         else{
@@ -270,21 +291,44 @@ Template.editMedia.events({
       );
     
     }
-    if(FlowRouter.getParam("returnTo")!=null){
-      FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo")+"/"+FlowRouter.getParam("type"));
-    }
-    else{
-      
-      FlowRouter.go("/mediaEditor/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("type"));
-    }
+    FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo")+"/"+FlowRouter.getParam("type"));
   },
   'click #goBack':function(e,t){
     e.preventDefault();
-    if(FlowRouter.getParam("returnTo")!=null){
-      FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo")+"/"+FlowRouter.getParam("type"));
+    FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo")+"/"+FlowRouter.getParam("type"));
+  },
+  'click #setProfileCrop': function(e,t){
+    if(cropper){
+      cropper.destroy();
     }
-    else{
-      FlowRouter.go("/mediaEditor/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("type"));
+    params.aspectRatio = 1/1;
+    cropper = new Cropper(image, params);
+    $("#crop").removeAttr('disabled');
+    
+    //$('#modal1').modal('hide');
+    //$('body').removeClass('modal-open');
+    //$('.modal-backdrop').remove();
+  },
+  'click #setCoverCrop': function(e,t){
+    if(cropper){
+      cropper.destroy();
     }
+    params.aspectRatio = 2/1;
+    cropper = new Cropper(image, params);
+    $("#crop").removeAttr('disabled');
+    //$('#modal1').modal('hide');
+    //$('body').removeClass('modal-open');
+    //$('.modal-backdrop').remove();
+  },
+  'click #setGalleryCrop': function(e,t){
+    if(cropper){
+      cropper.destroy();
+    }
+    params.aspectRatio = 4/3;
+    cropper = new Cropper(image, params);
+    $("#crop").removeAttr('disabled');
+    //$('#modal1').modal('hide');
+    //$('body').removeClass('modal-open');
+    //$('.modal-backdrop').remove();
   }
 });
