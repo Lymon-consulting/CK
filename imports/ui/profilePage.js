@@ -263,7 +263,8 @@ Template.profilePage.helpers({
       if(user!=null && user.profilePictureID!=null){
         var profile = Media.findOne({'mediaId':user.profilePictureID});
         if(profile!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+          //url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
         }
         
       }
@@ -327,7 +328,7 @@ Template.profilePage.helpers({
       if(user!=null && user.profileCoverID!=null){
         var cover = Media.findOne({'mediaId':user.profileCoverID});
         if(cover!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_1200,h_600,c_fill/" + "/v" + cover.media_version + "/" + userId + "/" + user.profileCoverID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + userId + "/" + user.profileCoverID;    
         }
         
       }

@@ -2,13 +2,44 @@
    <style>
       {{#if getCoverPicture getProfile._id}}
       /**Estilo para que la foto de perfil aparezca sobre la foto de fondo de portada*/
-      .bg-overlay {
-          background: url({{getCoverPicture getProfile._id}});
-          background-repeat: no-repeat;
-          background-size: cover;
-          background-position: center center;
-                  
+      @media (min-width: 100px) and (max-width: 576px) {
+         .bg-overlay {
+             background: url({{getCoverPicture getProfile._id}});
+             background-repeat: no-repeat;
+             background-size: contain;
+             background-position: top center;
+                     
+         }
       }
+      @media (min-width: 577px) and (max-width: 768px) {
+         .bg-overlay {
+             background: url({{getCoverPicture getProfile._id}});
+             background-repeat: no-repeat;
+             background-size: contain;
+             background-position: top center;
+                     
+         }
+      }
+      @media (min-width: 769px) and (max-width: 992px) {
+         .bg-overlay {
+             background: url({{getCoverPicture getProfile._id}});
+             background-repeat: no-repeat;
+             background-size: cover;
+             background-position: top center;
+                     
+         }
+      }
+      @media (min-width: 993px) {
+         .bg-overlay {
+             background: url({{getCoverPicture getProfile._id}});
+             background-repeat: no-repeat;
+             background-size: cover;
+             background-position: top center;
+                     
+         }
+      }
+      
+      
       {{else}}
       .bg-overlay {
           background: url("/images/background-dark.jpg");
