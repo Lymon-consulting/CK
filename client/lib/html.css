@@ -1,3 +1,4 @@
+
 h4{
   background-color: #ccc;
 }
@@ -16,6 +17,13 @@ hr{
 
 label{
   font-size: 14px;
+}
+
+a.disabled {
+  /* Make the disabled links grayish*/
+  color: gray;
+  /* And disable the pointer events */
+  pointer-events: none;
 }
 
 a:link, a.text-purple:hover

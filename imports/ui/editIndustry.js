@@ -86,9 +86,10 @@ Template.editIndustry.helpers({
     }
     return years;
   },
-  getMedia(type) {
-    Meteor.subscribe("allMedia");
-    var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
+  getMedia() {
+     Meteor.subscribe("allMedia");
+    //var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
+    var media = Media.find({'userId': Meteor.userId()},{sort:{'media_date':-1}});
     return media;
   },
   getGallery(){
@@ -609,17 +610,42 @@ Template.editIndustry.events({
     $('.modal-backdrop').remove();
     FlowRouter.go("/mediaEditorObject/" + Meteor.userId()+"/industry/"+FlowRouter.getParam("id")+"/cover");
   },
+  'click #openMediaGallery': function(event,template){
+    event.preventDefault();
+    $(".media-thumb").css('border','none');
+    $("#setLogo").addClass('disabled');
+    $('#modal1').modal('show');
+  },
+  'click #openMediaCover': function(event,template){
+    event.preventDefault();
+    $(".media-thumb").css('border','none');
+    $("#setCoverPicture").addClass('disabled');
+    $('#modal2').modal('show');
+  },
   'click #selectLogo': function(event,template){
+      event.preventDefault();
+      var mediaId = $(event.currentTarget).attr("data-id");
+
+      Session.set("mediaId",mediaId);
+
+     $(".media-thumb").css('border','none');
+     $(event.target).css('border', "solid 3px blue");
+     $("#setLogo").removeClass('disabled');
+    },
+    'click #setLogo': function(event,template){
      event.preventDefault();
-     var mediaId = $(event.currentTarget).attr("data-id");     
+     var mediaId = Session.get("mediaId");
+
      Meteor.call(
       'saveCompanyLogoID',
       FlowRouter.getParam("id"),
       mediaId
       );
+
       $('#modal1').modal('hide');
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();
+
     },
     'click #selectCoverIndustry': function(event,template){
      event.preventDefault();
@@ -632,6 +658,33 @@ Template.editIndustry.events({
       $('#modal2').modal('hide');
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();
+    },
+    'click #selectCoverPicture': function(event,template){
+     event.preventDefault();
+      var mediaId = $(event.currentTarget).attr("data-id");
+
+      Session.set("mediaId",mediaId);
+
+     $(".media-thumb").css('border','none');
+     $(event.target).css('border', "solid 3px blue");
+     $("#setCoverPicture").removeClass('disabled');
+
+    },
+    'click #setCoverPicture': function(event,template){
+     event.preventDefault();
+     var mediaId = Session.get("mediaId");
+
+     Meteor.call(
+      'saveCompanyCoverID',
+      FlowRouter.getParam("id"),
+      mediaId
+      );
+
+      $('#modal2').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+      $("#setCoverPicture").removeClass('disabled');
+
     },
     'change .check':function(event,template){
       event.preventDefault();

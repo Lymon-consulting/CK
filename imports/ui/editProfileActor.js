@@ -792,7 +792,14 @@ Template.editProfileActor.events({
   'click #openMediaGallery': function(event,template){
     event.preventDefault();
     $(".media-thumb").css('border','none');
+    $("#setProfilePicture").addClass('disabled');
     $('#modal1').modal('show');
+  },
+  'click #openMediaCover': function(event,template){
+    event.preventDefault();
+    $(".media-thumb").css('border','none');
+    $("#setCoverPicture").addClass('disabled');
+    $('#modal2').modal('show');
   },
   'click #selectProfilePicture': function(event,template){
     event.preventDefault();
@@ -802,7 +809,7 @@ Template.editProfileActor.events({
 
    $(".media-thumb").css('border','none');
    $(event.target).css('border', "solid 3px blue");
-   $("#setProfilePicture").removeAttr('disabled');
+   $("#setProfilePicture").removeClass('disabled');
 
   },
   'click #setProfilePicture': function(event,template){
@@ -822,7 +829,19 @@ Template.editProfileActor.events({
   },
   'click #selectCoverPicture': function(event,template){
    event.preventDefault();
-   var mediaId = $(event.currentTarget).attr("data-id");
+    var mediaId = $(event.currentTarget).attr("data-id");
+
+    Session.set("mediaId",mediaId);
+
+   $(".media-thumb").css('border','none');
+   $(event.target).css('border', "solid 3px blue");
+   $("#setCoverPicture").removeClass('disabled');
+
+  },
+  'click #setCoverPicture': function(event,template){
+   event.preventDefault();
+   var mediaId = Session.get("mediaId");
+
    Meteor.call(
     'updateCoverPicture',
     Meteor.userId(),

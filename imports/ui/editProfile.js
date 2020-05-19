@@ -417,8 +417,16 @@ Template.editProfile.events({
 'click #openMediaGallery': function(event,template){
   event.preventDefault();
   $(".media-thumb").css('border','none');
+  $("#setProfilePicture").addClass('disabled');
   $('#modal1').modal('show');
 },
+'click #openMediaCover': function(event,template){
+  event.preventDefault();
+  $(".media-thumb").css('border','none');
+  $("#setCoverPicture").addClass('disabled');
+  $('#modal2').modal('show');
+},
+
 'click #selectProfilePicture': function(event,template){
   event.preventDefault();
   var mediaId = $(event.currentTarget).attr("data-id");
@@ -427,7 +435,7 @@ Template.editProfile.events({
 
  $(".media-thumb").css('border','none');
  $(event.target).css('border', "solid 3px blue");
- $("#setProfilePicture").removeAttr('disabled');
+ $("#setProfilePicture").removeClass('disabled');
 
 },
 'click #setProfilePicture': function(event,template){
@@ -453,7 +461,7 @@ Template.editProfile.events({
 
  $(".media-thumb").css('border','none');
  $(event.target).css('border', "solid 3px blue");
- $("#setCoverPicture").removeAttr('disabled');
+ $("#setCoverPicture").removeClass('disabled');
 
 },
 'click #setCoverPicture': function(event,template){
@@ -469,6 +477,7 @@ Template.editProfile.events({
   $('#modal2').modal('hide');
   $('body').removeClass('modal-open');
   $('.modal-backdrop').remove();
+  $("#setCoverPicture").removeClass('disabled');
 
 },
 
