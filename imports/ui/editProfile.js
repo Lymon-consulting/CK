@@ -6,17 +6,22 @@ import { Media } from '../api/media.js';
 import './editProfile.html';
 import '/lib/common.js';
 
-var trimInput= function(val){
+function trimInput(val){
   return val.replace(/^\s*|\s*$/g, "");
 }
 
-var isNotEmpty=function(val){
+function isNotEmpty(val){
   if(val && val!== ""){
     return true;
   }
-//  Bert.alert("", "danger", "growl-top-right");
-Bert.alert({message: 'Por favor completa todos los campos obligatorios', type: 'danger', icon: 'fa fa-exclamation'});
-return false;
+}
+function formatURL(url){
+  if(url!=""){
+    if (!/^https?:\/\//i.test(url)) {
+      url = 'http://' + url;  
+    }
+  }
+  return url;
 }
 
 
@@ -79,6 +84,11 @@ youtube(){
 instagram(){
  if(Meteor.user()){
   return Meteor.user().instagram;
+}
+},
+imdbCrew(){
+ if(Meteor.user()){
+  return Meteor.user().imdbCrew;
 }
 },
 wizard(){
@@ -386,6 +396,32 @@ Template.editProfile.events({
   'change #instagram_page': function(event,template){
     var instagram_page = trimInput(event.target.value);
     Meteor.call('updateInstagramPage', Meteor.userId(), instagram_page);
+  },
+  'change #imdb_page': function(event,template){
+    var imdb_page = trimInput(event.target.value);
+    Meteor.call('updateIMDBPage', Meteor.userId(), imdb_page);
+  },
+  'change #video': function(event,template){
+    event.preventDefault();
+    var video = trimInput(event.target.value);
+    if(isNotEmpty(video)){
+      if(video.indexOf("vimeo")>0){
+        Meteor.call('updateVimeoPageCrew', Meteor.userId(), formatURL(video)); 
+        Meteor.call('updateYoutubePageCrew', Meteor.userId(), null); 
+      } 
+      else if(video.indexOf("youtube")>0){
+        Meteor.call('updateYoutubePageCrew', Meteor.userId(), formatURL(video)); 
+        Meteor.call('updateVimeoPageCrew', Meteor.userId(), null); 
+      }
+      else{
+        Bert.alert({message: 'Por el momento únicamente aceptamos videos de vimeo o youtube', type: 'danger', icon: 'fa fa-exclamation'});
+      }
+      
+    }
+    else{
+      Meteor.call('updateYoutubePageCrew', Meteor.userId(), null); 
+      Meteor.call('updateVimeoPageCrew', Meteor.userId(), null); 
+    }
   },
 
   'click #goProfile': function(event, template){

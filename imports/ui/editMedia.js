@@ -167,6 +167,7 @@ Template.editMedia.events({
   'change #type': function(event, template){
     event.preventDefault();
     var type = event.target.value;
+    console.log(type);
     if(cropper){
       cropper.destroy();
     }
@@ -183,6 +184,12 @@ Template.editMedia.events({
     }
     else if(type==="gallery_industry" || type==="gallery_project" || type==="gallery_cast"){
       params.aspectRatio = 4/3;
+      cropper = new Cropper(image, params);
+      $("#crop").removeAttr('disabled');
+    }
+    else if(type==="poster"){
+      console.log("Aqui");
+      params.aspectRatio = 3/4;
       cropper = new Cropper(image, params);
       $("#crop").removeAttr('disabled');
     }
@@ -325,6 +332,17 @@ Template.editMedia.events({
       cropper.destroy();
     }
     params.aspectRatio = 4/3;
+    cropper = new Cropper(image, params);
+    $("#crop").removeAttr('disabled');
+    //$('#modal1').modal('hide');
+    //$('body').removeClass('modal-open');
+    //$('.modal-backdrop').remove();
+  },
+  'click #setPosterCrop': function(e,t){
+    if(cropper){
+      cropper.destroy();
+    }
+    params.aspectRatio = 3/4;
     cropper = new Cropper(image, params);
     $("#crop").removeAttr('disabled');
     //$('#modal1').modal('hide');

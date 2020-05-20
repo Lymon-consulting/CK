@@ -225,7 +225,8 @@ Meteor.publish("allProjects", function(){
   return Project.find({},{
     fields: {
       '_id':1,
-      'projectPictureID':1
+      'projectPictureID':1,
+      'projectPosterID':1
     }
   });
 });
@@ -247,6 +248,7 @@ Meteor.publish("otherUsers", function () {
       'facebook':1,
       'twitter':1,
       'imdb': 1,
+      'imdbCrew':1,
       'youtube':1,
       'vimeo':1,
       'instagram':1,
@@ -275,7 +277,9 @@ Meteor.publish("otherUsers", function () {
       'isCast': 1,
       'gallery': 1,
       'alerts': 1,
-      'followCompany':1
+      'followCompany':1,
+      'vimeoCrew':1,
+      'youtubeCrew':1
     }
   });
 });

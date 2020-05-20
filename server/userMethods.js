@@ -149,9 +149,24 @@ Accounts.onCreateUser(function(options, user) {
         $set:{"youtube":youtube_page}
       });
     },
+    updateVimeoPageCrew(userId,vimeo_page){
+      Meteor.users.update({'_id': userId},{
+        $set:{"vimeoCrew":vimeo_page}
+      });
+    },
+    updateYoutubePageCrew(userId,youtube_page){
+      Meteor.users.update({'_id': userId},{
+        $set:{"youtubeCrew":youtube_page}
+      });
+    },
     updateInstagramPage(userId,instagram_page){
       Meteor.users.update({'_id': userId},{
         $set:{"instagram":instagram_page}
+      });
+    },
+    updateIMDBPage(userId,imdb_page){
+      Meteor.users.update({'_id': userId},{
+        $set:{"imdbCrew":imdb_page}
       });
     },
     updateFullName(userId,value){

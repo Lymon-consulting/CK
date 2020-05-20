@@ -263,6 +263,19 @@ Template.editProject.helpers({
     }
     return url;
   },
+  getProjectPoster() {
+    Meteor.subscribe("allMedia");
+    var data = Project.findOne({'_id' : FlowRouter.getParam('id')});
+    var url;
+    if(data!=null && data.projectPosterID!=null){
+      var poster = Media.findOne({'mediaId':data.projectPosterID});
+      if(poster!=null){
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_250,c_scale" + "/v" + poster.media_version + "/" + Meteor.userId() + "/" + data.projectPosterID;    
+      }
+      
+    }
+    return url;
+  },
   getPublicID(){
     var projectPictureID="";
     var data = Project.findOne({'_id' : FlowRouter.getParam('id')});
@@ -335,6 +348,11 @@ Template.editProject.events({
     event.preventDefault();
     var proj_instagram_page = trimInput(event.target.value);
     Meteor.call('updateProjectInstagram', FlowRouter.getParam("id"), proj_instagram_page);  
+  },
+  'change #proj_external_view': function(event, template) {
+    event.preventDefault();
+    var proj_external_view = trimInput(event.target.value);
+    Meteor.call('updateProjectExternalView', FlowRouter.getParam("id"), proj_external_view);  
   },
   
 
@@ -446,6 +464,39 @@ Template.editProject.events({
     $("#setCoverPicture").addClass('disabled');
     $('#modal2').modal('show');
   },
+  'click #openMediaPoster': function(event,template){
+    event.preventDefault();
+    $(".media-thumb").css('border','none');
+    $("#setPosterPicture").addClass('disabled');
+    $('#modal3').modal('show');
+  },
+  'click #selectPosterPicture': function(event,template){
+     event.preventDefault();
+      var mediaId = $(event.currentTarget).attr("data-id");
+
+      Session.set("mediaId",mediaId);
+
+     $(".media-thumb").css('border','none');
+     $(event.target).css('border', "solid 3px blue");
+     $("#setPosterPicture").removeClass('disabled');
+
+    },
+    'click #setPosterPicture': function(event,template){
+     event.preventDefault();
+     var mediaId = Session.get("mediaId");
+
+      Meteor.call(
+        'saveProjectPosterID',
+        FlowRouter.getParam('id'),
+        mediaId
+      );
+
+      $('#modal3').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+      $("#setPosterPicture").removeClass('disabled');
+
+    },
   'click #selectCoverPicture': function(event,template){
      event.preventDefault();
       var mediaId = $(event.currentTarget).attr("data-id");

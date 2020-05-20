@@ -42,6 +42,25 @@ Template.profilePage.helpers({
       return result;
 
     },
+    getVideo(vimeo, youtube){
+      var url = "";
+
+      if(vimeo && vimeo.length>0){
+        url = vimeo;
+        if(url.indexOf("//vimeo.com")>1){/*Parseo de la URL para extraer el ID del video en vimeo*/
+          var vimeoVideoID = url.substring(url.indexOf(".com/")+5, url.length);
+          url = "https://player.vimeo.com/video/" + vimeoVideoID+"?portrait=0";
+        }
+      }
+      else if(youtube && youtube.length>0){
+        url = youtube;        
+        if(url.indexOf("youtube.com/watch?v=")>1){/*Parseo de la URL para extraer el ID del video en youtube*/
+          var youtubeVideoID = url.substring(url.indexOf("?v=")+3, url.length);
+          url = "https://www.youtube.com/embed/" + youtubeVideoID;
+        }
+      }
+      return url;
+    },
    ownerRole(){
       var u = Meteor.users.findOne({'_id': FlowRouter.getParam('id')});
       var result = new Array();

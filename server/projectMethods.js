@@ -207,6 +207,15 @@ Meteor.methods({
         }
     });
   },
+  saveProjectPosterID(projectId, projectPosterID){
+    //console.log("Guardando "+ projectPictureID + " en proyecto "+projectId);
+    Project.update({'_id': projectId}, {
+      $set:
+        {
+          "projectPosterID": projectPosterID
+        }
+    });
+  },
   savePortletPictureID(portletId, portletPictureID, version){
     //console.log("Guardando "+ projectPictureID + " en proyecto "+projectId);
     Portlet.update({'_id': portletId}, {
@@ -338,5 +347,12 @@ Meteor.methods({
       }
     });
   },
-  
+  'updateProjectExternalView'(projectId, proj_external_view){
+    Project.update({'_id':projectId},{
+      $set:
+      {
+        "proj_external_view":proj_external_view
+      }
+    });
+  },
 });

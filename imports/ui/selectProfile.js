@@ -43,7 +43,8 @@ Template.selectProfile.events({
     else if(optionSelected==='cast'){
       //Meteor.call('updateProfileType', Meteor.userId(), 'cast'); 
       Meteor.call('setIsCast', Meteor.userId(), true); 
-      FlowRouter.go('/editProfileActor/' + Meteor.userId());  
+      //FlowRouter.go('/editProfileActor/' + Meteor.userId());  
+      FlowRouter.go('/confirmProfile/cast' + Meteor.userId()); 
     }
 
   }

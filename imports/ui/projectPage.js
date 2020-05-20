@@ -48,6 +48,19 @@ if (Meteor.isClient) {
           }
          return url;*/
       },
+      getProjectPoster() {
+        Meteor.subscribe("allMedia");
+        var data = Project.findOne({'_id' : FlowRouter.getParam('id')});
+        var url;
+        if(data!=null && data.projectPosterID!=null){
+          var cover = Media.findOne({'mediaId':data.projectPosterID});
+          if(cover!=null){
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + data.userId + "/" + data.projectPosterID;    
+          }
+          
+        }
+        return url;
+      },
       isOwner(){
         project = Project.findOne({'_id': FlowRouter.getParam('id')});
         if(project!=null && project.userId === Meteor.userId()) {
