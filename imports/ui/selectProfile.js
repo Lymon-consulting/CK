@@ -33,18 +33,18 @@ Template.selectProfile.events({
     if(optionSelected==='crew'){
       //Meteor.call('updateProfileType', Meteor.userId(), 'crew'); 
       Meteor.call('setIsCrew', Meteor.userId(), true); 
-      FlowRouter.go('/confirmProfile/crew' + Meteor.userId());  
+      FlowRouter.go('/confirmProfile/' + Meteor.userId()+"/crew");  
     }
     else if(optionSelected==='industry'){
       //Meteor.call('updateProfileType', Meteor.userId(), 'crew'); 
       Meteor.call('setIsCast', Meteor.userId(), true); 
-      FlowRouter.go('/confirmProfile/industry' + Meteor.userId());  
+      FlowRouter.go('/confirmProfile/' + Meteor.userId()+"/industry");  
     }
     else if(optionSelected==='cast'){
       //Meteor.call('updateProfileType', Meteor.userId(), 'cast'); 
       Meteor.call('setIsCast', Meteor.userId(), true); 
       //FlowRouter.go('/editProfileActor/' + Meteor.userId());  
-      FlowRouter.go('/confirmProfile/cast' + Meteor.userId()); 
+      FlowRouter.go('/confirmProfile/' + Meteor.userId()+"/cast"); 
     }
 
   }

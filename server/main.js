@@ -175,12 +175,18 @@ export const UsersIndex = new Index({
 
 export const ProjectIndex = new Index({
     collection: Project,
-    fields: ['project_title', 'project_desc', 'project_genre', 'project_type'],
+    fields: ['project_title', 'project_desc', 'project_genre', 'project_type', 'project_family', 'project_status'],
     
     engine: new MongoDBEngine({
       selector: function (searchObject, options, aggregation) {
       const selector = this.defaultConfiguration().selector(searchObject, options, aggregation)
 
+        if (options.search.props.project_family) {
+          selector.project_family = options.search.props.project_family;
+        }
+        if (options.search.props.project_status) {
+          selector.project_status = options.search.props.project_status;
+        }
         if (options.search.props.project_type) {
           selector.project_type = options.search.props.project_type;
         }
@@ -226,7 +232,9 @@ Meteor.publish("allProjects", function(){
     fields: {
       '_id':1,
       'projectPictureID':1,
-      'projectPosterID':1
+      'projectPosterID':1,
+      'gallery':1,
+      'project_status':1
     }
   });
 });

@@ -10,6 +10,30 @@
   line-height: 1.5;
   font-size: 12px;
 }
+.accordion-section .panel-default > .panel-heading {
+    border: 0;
+    background: #f4f4f4;
+    padding: 0;
+}
+.accordion-section .panel-default .panel-title a {
+    display: block;
+    font-size: 14px;
+}
+.accordion-section .panel-default .panel-title a:after {
+    font-family: 'FontAwesome';
+    font-style: normal;
+    font-size: 32px;
+    content: "\f106";
+    color: #ED1567;
+    float: right;
+    margin-top: -12px;
+}
+.accordion-section .panel-default .panel-title a.collapsed:after {
+    content: "\f107";
+}
+.accordion-section .panel-default .panel-body {
+    font-size: 14px;
+}
 .box{
     height:100px;
     width:150px;

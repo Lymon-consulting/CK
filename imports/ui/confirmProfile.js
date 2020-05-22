@@ -104,7 +104,14 @@ Template.confirmProfile.events({
         Meteor.call('addRole', Meteor.userId(),"Ejecutivo");
     }*/
 
-    FlowRouter.go('/editProfile/' + Meteor.userId());
+    console.log(FlowRouter.getParam("type"));
+
+    if(FlowRouter.getParam("type")==="crew"){
+      FlowRouter.go('/editProfile/' + Meteor.userId());
+    }
+    else if(FlowRouter.getParam("type")==="cast"){
+      FlowRouter.go('/editProfileActor/' + Meteor.userId());
+    }
 
   }
 });

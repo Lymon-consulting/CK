@@ -85,6 +85,21 @@ Template.projList.helpers({
         type.push("Videoclip");
         return type;
      },
+     getProjectFamily(){
+      var type = new Array();
+      type.push("Proyectos");
+      type.push("Portafolios");
+      return type;
+    },
+     getProjectStatus(){
+      var type = new Array();
+      type.push("Desarrollo");
+      type.push("Pre-producción");
+      type.push("Producción");
+      type.push("Post-producción");
+      type.push("Distribución/exhibición ");
+      return type;
+    },
      getProjectGender(){
         var type = new Array();
         type.push("Cortometraje");
@@ -123,6 +138,29 @@ Template.projList.helpers({
           pgenre = "cualquier";
         }
         return (pgenre === value) ? 'selected' : '' ;
+      },
+      statusSelected: function(value){
+        var pstatus = "";
+        if(Session.get("status_selected")!=null){
+          pstatus = Session.get("status_selected");
+        }
+        else{
+          pstatus = "cualquier";
+        }
+        return (pstatus === value) ? 'selected' : '' ;
+      },
+      familySelected: function(value){
+        var pfamily = "";
+        if(Session.get("family_selected")!=null){
+          pfamily = Session.get("family_selected");
+        }
+        else{
+          pfamily = "cualquier";
+        }
+        return (pfamily === value) ? 'selected' : '' ;
+      },
+      removeLastChar:function(value){
+        return value.substring(0,value.length-1);
       }
 
    
@@ -168,6 +206,26 @@ Template.projList.events({
       else{
          ProjectIndex.getComponentMethods().removeProps('project_genre');  
          Session.set("genre_selected",null);
+      }
+  },
+  'change #status': function (e) {
+      if($(e.target).val()!="cualquier"){
+         ProjectIndex.getComponentMethods().addProps('project_status', $(e.target).val().trim());
+         Session.set("status_selected",$(e.target).val());
+      }
+      else{
+         ProjectIndex.getComponentMethods().removeProps('project_status');  
+         Session.set("status_selected",null);
+      }
+  },
+  'change #family': function (e) {
+      if($(e.target).val()!="cualquier"){
+         ProjectIndex.getComponentMethods().addProps('project_family', $(e.target).val());
+         Session.set("family_selected",$(e.target).val());
+      }
+      else{
+         ProjectIndex.getComponentMethods().removeProps('project_family');  
+         Session.set("family_selected",null);
       }
   }
    

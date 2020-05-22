@@ -50,6 +50,10 @@ Template.editProject.helpers({
     var pgenre = Project.findOne({'_id': FlowRouter.getParam('id')}).project_genre;
     return (pgenre === value) ? 'selected' : '' ;
   },
+  statusSelected: function(value){
+    var pstatus = Project.findOne({'_id': FlowRouter.getParam('id')}).project_status;
+    return (pstatus === value) ? 'selected' : '' ;
+  },
   yearSelected: function(value){
     var pyear = Project.findOne({'_id': FlowRouter.getParam('id')}).project_year;
     return (pyear === value) ? 'selected' : '' ;
@@ -146,6 +150,15 @@ Template.editProject.helpers({
     type.push("Suspenso/ misterio");
     return type;
   },
+  getProjectStatus(){
+    var type = new Array();
+    type.push("Desarrollo");
+    type.push("Pre-producción");
+    type.push("Producción");
+    type.push("Post-producción");
+    type.push("Distribución/exhibición ");
+    return type;
+  },
   getAvailableYears(){
     var years = new Array();
     var MIN_YEAR = getParam("MIN_YEAR");
@@ -225,6 +238,33 @@ Template.editProject.helpers({
     }
     return result;
   },
+  statusSelected: function(value){
+    var result="";
+    var pstatus;
+    var data = Project.findOne({'_id' : FlowRouter.getParam('id')});
+    if(data!=null){
+      pstatus = data.project_status;  
+    }
+
+    if(pstatus){
+
+      if(pstatus.trim()===value.trim()){
+        result = 'selected';
+      }
+    }
+    /*
+    if(pstatus){
+      var elem = pstatus.indexOf(value);
+      console.log(elem);
+      if(elem >= 0){
+        result = 'selected';
+      }
+      else{
+        result = "";
+      } 
+    }*/
+    return result;
+  },
   yearSelected: function(value){
     var result="";
     var prole;
@@ -246,9 +286,15 @@ Template.editProject.helpers({
   },
   getMedia() {
     Meteor.subscribe("allMedia");
-    //var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
-    var media = Media.find({'userId': Meteor.userId()},{sort:{'media_date':-1}});
-    return media;
+    var media = null;
+    media = Media.find({'userId': Meteor.userId()},{sort:{'media_date':-1}});
+    if(media.count()>0){
+      return media;  
+    }
+    else{
+      return null;
+    }
+    
   },
   getProjectPicture() {
     Meteor.subscribe("allMedia");
@@ -291,6 +337,67 @@ Template.editProject.helpers({
     }
     return result;
   },
+  getGallery(){
+    var data = Project.findOne({'_id' : FlowRouter.getParam('id')});
+    var array = new Array();
+    
+    if(data){
+      if(data.gallery){
+        for (var i = 0; i < data.gallery.length; i++) {
+          var obj = {};
+          obj.mediaId = data.gallery[i];
+
+          if(i==0){
+            obj.position = 1;
+          }
+          else{
+            obj.position = 2;
+          }
+           array.push(obj);
+          
+        }
+      }
+    }
+    return array;
+  },
+  isFirstElement(position){
+    var result = false;
+    if(position==1){
+      result = true;
+    }
+    else{
+      result = false;
+    }
+    return result;
+  },
+  getURL(mediaId){
+    var url = "";
+    var media = Media.findOne({'mediaId':mediaId});
+      if(media!=null){
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.userId() + "/" + media.mediaId;    
+      }
+    return url;
+  },
+  verifyChecked(mediaId){
+    var data = Project.findOne({'_id' : FlowRouter.getParam("id")});
+    var gallery = new Array();
+    var result="";
+    if(data){
+      if(data.gallery){
+        gallery = data.gallery;
+        if(gallery && gallery.length>0){
+          for (var i = 0; i < gallery.length; i++) {
+            if(mediaId===gallery[i]){
+              result="checked";
+              break;
+            }
+          }
+        }
+      }
+      
+    }
+    return result;
+  }
 });
 
 Template.editProject.events({
@@ -308,6 +415,11 @@ Template.editProject.events({
     event.preventDefault();
     var proj_gender = trimInput(event.target.value);
     Meteor.call('updateProjectGenre', FlowRouter.getParam("id"), proj_gender);  
+  },
+  'change #proj_status': function(event, template) {
+    event.preventDefault();
+    var proj_status = trimInput(event.target.value);
+    Meteor.call('updateProjectStatus', FlowRouter.getParam("id"), proj_status);  
   },
   'change #proj_desc': function(event, template) {
     event.preventDefault();
@@ -651,6 +763,16 @@ Template.editProject.events({
       }
     }
 
+  },
+  'change .check':function(event,template){
+    event.preventDefault();
+    var mediaId = $(event.currentTarget).attr("data-id");
+    if(event.target.checked){
+      Meteor.call('addGalleryProject', FlowRouter.getParam("id"), mediaId);
+    }
+    else{
+      Meteor.call('removeGalleryProject', FlowRouter.getParam("id"), mediaId); 
+    }
   },
 });
 

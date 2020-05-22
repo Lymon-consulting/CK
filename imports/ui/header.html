@@ -95,15 +95,13 @@
             <h4 class="dropdown-header">ADMINISTRAR</h4>
             {{#if hasTopRole}}
             <a class="dropdown-item text-black" href="/viewProjects/{{currentUser._id}}">Mis proyectos</a>
+            {{else}}
+            <a class="dropdown-item text-black" href="/viewProjects/{{currentUser._id}}">Mi portafolio</a>
             {{/if}}
             {{#if hasTopRole}}
             <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}">Mis empresas</a>
             {{/if}}
-            {{#if isCrew}}
             <a class="dropdown-item text-black" href="/mediaEditorObject/{{currentUser._id}}/crew/{{currentUser._id}}/global">Mis imágenes</a>
-            {{else}}
-            <a class="dropdown-item text-black" href="/mediaEditorObject/{{currentUser._id}}/cast/{{currentUser._id}}/global">Mis imágenes</a>
-            {{/if}}
             <div class="dropdown-divider"></div>
             <a class="dropdown-item text-black logout" href="#">Salir</a>
             <!--

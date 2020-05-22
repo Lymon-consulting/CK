@@ -253,10 +253,11 @@ Meteor.methods({
       Potlet.update( { _id: book._id }, { $set: { order: book.order } } );
     }
   },
-  addProjectName(project_title, userId){
+  addProjectName(project_title, userId, family){
     return Project.insert({
       "project_title": project_title,
-      "userId": userId
+      "userId": userId,
+      "project_family": family
     });
   },
   'updateProjectTitle'(projectId, project_title){
@@ -280,6 +281,14 @@ Meteor.methods({
       $set:
       {
         "project_genre":project_genre
+      }
+    });
+  },
+  'updateProjectStatus'(projectId, project_status){
+    Project.update({'_id':projectId},{
+      $set:
+      {
+        "project_status":project_status
       }
     });
   },
@@ -354,5 +363,21 @@ Meteor.methods({
         "proj_external_view":proj_external_view
       }
     });
+  },
+  addGalleryProject(projectId,mediaId){
+    Project.update({'_id': projectId}, 
+      {
+        $addToSet: {
+          "gallery": mediaId
+        }
+      });
+  },
+  removeGalleryProject(projectId,mediaId){
+    Project.update({'_id': projectId}, 
+      {
+        $pull: {
+          "gallery": mediaId
+        }
+      });
   },
 });

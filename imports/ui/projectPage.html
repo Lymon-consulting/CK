@@ -205,6 +205,7 @@
       
 
       {{#if projData.proj_external_view}}
+      <div class="spacer40"></div>
       <div class="row">
         <div class="col-lg-12 text-center">
           <a href="{{projData.proj_external_view}}" target="_blank" class="btn btn-primary"><i class="fa fa-play-circle fa-lg"></i> Ver Película</a>
@@ -212,29 +213,71 @@
       </div>
       {{/if}}
 
-      <div class="spacer80"></div>
+      {{#if getGallery}}
+      <div class="container text-center mx-auto justify-content-center">
+      <div class="spacer40"></div>
+      <div class="row">
+         <div class="col-lg-12">
+            <strong class="uppercase">GALERÍA</strong>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col">
+            <hr>
+         </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 d-flex justify-content-center text-center my-auto">
+          <!--Inicia carrousel -->
+          <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              {{#each getGallery}}
+                {{#if isFirstElement this.position}}
+              <div class="carousel-item active">
+                <img class="d-block w-100" src="{{getURL this.mediaId}}" alt="First slide">
+              </div>
+                {{else}}
+              <div class="carousel-item">
+                <img class="d-block w-100" src="{{getURL this.mediaId}}" alt="Not first slide">
+              </div>
+                {{/if}}
+              {{/each}}
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Anterior</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Siguiente</span>
+            </a>
+          </div>
+          <!--Termina carrousel -->
+        </div>
+      </div>
+      <div class="spacer40"></div>
+      </div>
+      {{/if}}
+
+      
       {{>crew}}  
-      <div class="spacer40"></div>
+      
       {{>cast}}
-      <div class="spacer40"></div>
+      
       {{>companies}}
-      <div class="spacer40"></div>
+      
   
   {{#if projData.project_desc}}
-   <div class="container text-center">
-      
-      <h3 class="h1-title">DESCRIPCIÓN</h3>
-      <hr>
-     
-   </div>
-
    <div class="spacer40"></div>
-
+   <div class="container text-center">
+      <h3 class="h1-title">DESCRIPCIÓN / SINÓPSIS</h3>
+      <hr>
+   </div>
+   <div class="spacer40"></div>
    <div class="container">
       <div id="demo">
           {{projData.project_desc}}
      </div>
-      
    </div>      
    <div class="spacer40"></div>   
    {{/if}}
@@ -937,6 +980,7 @@
 
 <template name="crew">
   {{#if getCrew.project_staff}}
+     <div class="spacer80"></div>
      <div class="container text-center">
         <h3 class="h1-title">CREW</h3>
         <hr>
@@ -963,6 +1007,7 @@
 
 <template name="cast">
   {{#if getCast.project_cast}}
+     <div class="spacer40"></div>
      <div class="container text-center">
         <h3 class="h1-title">CAST</h3>
         <hr>
@@ -989,6 +1034,7 @@
 
 <template name="companies">
   {{#if getCompanies.companies}}
+     <div class="spacer40"></div>
      <div class="container text-center">
         <h3 class="h1-title">EMPRESAS</h3>
         <hr>

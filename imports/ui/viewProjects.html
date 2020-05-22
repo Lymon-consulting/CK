@@ -1,7 +1,11 @@
 <template name="viewProjects">
 {{#if hasPermission}}
    <div class="container text-center">
+      {{#if hasTopRole}}
       <h1 class="h1-title">TUS PROYECTOS</h1>
+      {{else}}
+      <h1 class="h1-title">TU PORTAFOLIO</h1>
+      {{/if}}
       <h2>{{fullName}}</h2>
       <hr class="hr_width_600">
    </div>
@@ -33,6 +37,7 @@
 
       
       {{#if myProjects}}
+         {{#if hasTopRole}}
          <small>
             <p>Esta es tu lista de proyectos. Desde aquí puedes:</p>
             <ul>
@@ -40,6 +45,15 @@
                <li>Editar un proyecto, haciendo clic sobre el ícono <i class="fa fa-edit">&nbsp;</i></li>
             </ul>
          </small>
+         {{else}}
+          <small>
+            <p>Este es tu portafolio. Desde aquí puedes:</p>
+            <ul>
+               <li>Ver la página de cada trabajo, haciendo clic en su nombre o en el ícono <i class="fa fa-search">&nbsp;</i>.</li> 
+               <li>Editar un portafolio, haciendo clic sobre el ícono <i class="fa fa-edit">&nbsp;</i></li>
+            </ul>
+         </small>
+         {{/if}}
          
          <main role="main">
 
@@ -86,9 +100,15 @@
       {{else}}
          <table class="table">
             <tr>
+              {{#if hasTopRole}}
                <td colspan="9">
                   No tienes proyectos, agrega tu primer proyecto
                </td>
+               {{else}}
+               <td colspan="9">
+                  Tu portafolio está vacío, agrega tu primer trabajo
+               </td>
+               {{/if}}
             </tr>
          </table>
       {{/if}}

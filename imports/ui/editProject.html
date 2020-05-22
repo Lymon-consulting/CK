@@ -3,7 +3,11 @@
   {{#if currentUser}}
 
 <div class="container text-center">
+  {{#if hasTopRole}}
   <h1 class="h1-title">DATOS DEL PROYECTO</h1>
+  {{else}}
+  <h1 class="h1-title">DATOS DEL PORTAFOLIO</h1>
+  {{/if}}
   <h2>{{projData.project_title}}</h2>
   <hr>
 </div>
@@ -20,7 +24,11 @@
         <div><hr></div>
         <div class="row">
           <div class="col text-14">
+            {{#if hasTopRole}}
             <a href="/projectPage/{{projData._id}}" class="text-purple"><i class="fa fa-eye"></i> Ver proyecto</a>    
+            {{else}}
+            <a href="/projectPage/{{projData._id}}" class="text-purple"><i class="fa fa-eye"></i> Ver portafolio</a>    
+            {{/if}}
           </div>
         </div>
         <div class="spacer40"></div>
@@ -38,6 +46,7 @@
           </div>
         </div>
         <div class="spacer40"></div>
+        {{#if hasTopRole}}
         <div><hr></div>
         <div class="row">
           <div class="col text-14">Póster <a href="#" class="text-purple" id="openMediaPoster">Cambiar <i class="fa fa-pencil"></i></a></div>
@@ -47,10 +56,11 @@
             {{#if getProjectPoster}}
             <img id="image" src="{{getProjectPoster}}" class="thumbnail-poster"/>
             {{else}}
-            <img id="image" src="/images/c4.jpg" class="thumbnail-poster"/>
+            <img id="image" src="/images/no-poster.jpg" class="thumbnail-poster"/>
             {{/if}}
           </div>
         </div>
+        {{/if}}
       </div>
     </div>
     <div class="col-lg-9">
@@ -60,7 +70,7 @@
            <div class="col-md-12">
                  <div class="row">
                     <div class="col">
-                       <label for="proj_name">Título del proyecto: <span class="text-purple">(Requerido)</span></label>
+                       <label for="proj_name">Título: <span class="text-purple">(Requerido)</span></label>
                     </div>
                     <div class="col">
                        <input type="text" id="proj_name" class="form-control" placeholder="Proyecto" value="{{projData.project_title}}" maxlength="150">
@@ -68,7 +78,7 @@
                  </div>
                  <div class="spacer20"></div>
                  <div class="row">
-                    <div class="col"><label for="proj_type">Tipo de proyecto: <span class="text-purple">(Requerido)</span></label></div>
+                    <div class="col"><label for="proj_type">Tipo: <span class="text-purple">(Requerido)</span></label></div>
                     <div class="col">
                        <select name="proj_type" id="proj_type" class="form-control">
                           <option value="" disabled selected style='display:none;'> Seleccione </option>
@@ -94,7 +104,20 @@
                  </div>
                  <div class="spacer20"></div>
                  <div class="row">
-                    <div class="col"><label for="proj_desc">Descripción del proyecto/Sinopsis: <span class="text-purple">(Requerido)</span></label></div>
+                    <div class="col"><label for="proj_gender">Estatus: <span class="text-purple">(Requerido)</span></label></div>
+                    <div class="col">
+                       <select name="proj_status" id="proj_status" class="form-control">
+                          <option value="" disabled selected style='display:none;'> Seleccione </option>
+                          {{#each getProjectStatus}}
+                          <option value="{{this}}" {{statusSelected this}}> {{this}} </option>
+                          {{/each}}
+                          
+                       </select>
+                    </div>
+                 </div>
+                 <div class="spacer20"></div>
+                 <div class="row">
+                    <div class="col"><label for="proj_desc">Descripción / Sinopsis: <span class="text-purple">(Requerido)</span></label></div>
                     <div class="col">
                        <textarea class="form-control" rows="5" id="proj_desc" value="" placeholder="Descripción del proyecto (450 caracteres máx)." maxlength="450">{{projData.project_desc}}</textarea><small>Caracteres restantes:</small> <div id="max" class="agreements">{{resumeCount projData.project_desc}}</div>
                     </div>
@@ -138,7 +161,7 @@
                         </select>
                     </div>
                     <div class="col-md-6">
-                       <label for="Ocupation">Rol en el proyecto <span class="text-purple">(Selecciona con doble clic)</span></label>
+                       <label for="Ocupation">Rol: <span class="text-purple">(Selecciona con doble clic)</span></label>
                        <select multiple name="Ocupation" id="ocupation" class="form-control">
                          {{#each getOcupationsFromCategory}}
                             <option value="{{secondary}}" {{roleSelected secondary}}> {{secondary}} </option>
@@ -178,7 +201,7 @@
                -->
                  <div class="spacer20"></div>
                  <div class="row">
-                    <div class="col"><label for="web">Página Web del proyecto:</label></div>
+                    <div class="col"><label for="web">Página Web:</label></div>
                  </div>
                  <div class="spacer20"></div>
                  <div class="row">
@@ -250,6 +273,7 @@
                     </div>
                  </div>
               </div>
+              {{#if hasTopRole}}
               <div class="spacer20"></div>
                  <div class="row">
                     <div class="col"><label for="web">Ver película:</label></div>
@@ -265,6 +289,51 @@
                     </div>
                  </div>
               </div>
+              {{/if}}
+
+            <div class="spacer40"></div>
+              <div class="row">
+                <div class="col-lg-12">Galería de imágenes <a href="#" class="text-purple" data-toggle="modal" data-target="#modal4"><br>Agregar <i class="fa fa-pencil"></i></a></div>
+              </div>
+              {{#if getGallery}}
+              <div class="row">
+                <div class="col-lg-12">
+                  <!--Inicia carrousel -->
+                  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                      {{#each getGallery}}
+                        {{#if isFirstElement this.position}}
+                      <div class="carousel-item active">
+                        <img class="d-block w-100" src="{{getURL this.mediaId}}" alt="First slide">
+                      </div>
+                        {{else}}
+                      <div class="carousel-item carousel-item-thumb">
+                        <img class="d-block w-100" src="{{getURL this.mediaId}}" alt="Not first slide">
+                      </div>
+                        {{/if}}
+                      {{/each}}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Anterior</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Siguiente</span>
+                    </a>
+                  </div>
+                  <!--Termina carrousel -->
+                    
+                </div>
+              </div>
+              {{else}}
+              <div class="row">
+                <div class="col agreements">
+                  Aún no agregas imágenes a tu galería
+                </div>
+              </div>
+             
+              {{/if}}
              <div class="row">
                 <div class="col spacer80"></div>
              </div>
@@ -357,6 +426,67 @@
                 </div>
 
 
+
+              </div>
+
+            </div>
+            <!--/.Content-->
+
+          </div>
+        </div>
+        <!--Modal: Name-->
+
+        <!--Modal: Name-->
+        <div class="modal fade" id="modal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+
+            <!--Content-->
+            <div class="modal-content">
+
+              <!--Body-->
+              <div class="modal-body">
+                
+                <div class="container">
+                  <div class="row">
+                    <div class="col text-center">Elige las imágenes para tu galería de fotos</div>
+                  </div>
+
+                  {{#if getMedia}}
+                  
+                  <div class="row background-verylightgray p-3">
+                    {{#each getMedia}}
+                    <div class="col-lg-3 col-sm-6 align-self-center justify-content-center">
+                      <input type="checkbox" class="check" data-id="{{this.mediaId}}" {{verifyChecked this.mediaId}}><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image">
+                    </div>
+                    {{/each}}
+                  </div>
+                  {{else}}
+                  <div class="spacer20"></div>
+                  <div class="row">
+                    <div class="col">
+                      Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
+                    </div>
+                  </div>
+                  <div class="spacer20"></div>
+                  <div class="row">
+                    <div class="col text-center">
+                      <button class="btn btn-purple goMediaLibrary">Ir a biblioteca de imágenes</button>
+                    </div>
+                  </div>
+                  {{/if}}
+
+                </div>
+                
+
+              </div>
+
+              <!--Footer-->
+              <div class="modal-footer justify-content-center">
+                <div class="row">
+                  <div class="col-lg-6"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+                </div>
+                
+                
 
               </div>
 

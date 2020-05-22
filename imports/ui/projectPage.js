@@ -10,6 +10,7 @@ import '/lib/common.js';
 
 if (Meteor.isClient) {
    Meteor.subscribe('projectData');
+   Meteor.subscribe('allProjects');
    Meteor.subscribe('otherUsers');
    Meteor.subscribe("images");
    Meteor.subscribe("myPortlets");
@@ -244,7 +245,48 @@ if (Meteor.isClient) {
         Meteor.subscribe("allMedia");
         var media = Media.find({'userId': Meteor.userId()});
         return media;
-      }
+      },
+      getGallery(){
+        var data = Project.findOne({'_id' : FlowRouter.getParam('id')});
+        var array = new Array();
+        
+        if(data){
+          if(data.gallery){
+            for (var i = 0; i < data.gallery.length; i++) {
+              var obj = {};
+              obj.mediaId = data.gallery[i];
+
+              if(i==0){
+                obj.position = 1;
+              }
+              else{
+                obj.position = 2;
+              }
+               array.push(obj);
+              
+            }
+          }
+        }
+        return array;
+      },
+      isFirstElement(position){
+        var result = false;
+        if(position==1){
+          result = true;
+        }
+        else{
+          result = false;
+        }
+        return result;
+      },
+      getURL(mediaId){
+        var url = "";
+        var media = Media.findOne({'mediaId':mediaId});
+          if(media!=null){
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.userId() + "/" + media.mediaId;    
+          }
+        return url;
+      },
 
    });
 
@@ -280,7 +322,8 @@ if (Meteor.isClient) {
         else{
           return false;
         }
-      }
+      },
+
     });
 
    Template.items.events({
