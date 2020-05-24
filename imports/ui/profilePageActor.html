@@ -267,6 +267,127 @@
             
             <!-- Inicia grid de proyectos-->
               <!--No sabemos si va a haber algo aquí, en todo caso copiar de profilePage.html-->
+              <div class="container">
+               {{#if countProjects}}
+               <div class="spacer40"></div>
+               <div class="row">
+                 {{#if isDirectorOrProducer}}
+                 <strong class="uppercase">Proyectos</strong>
+                 {{else}}
+                 <strong class="uppercase">Portafolio</strong>
+                 {{/if}}
+                 
+               </div>
+               <div class="row">
+                 <div class="col">
+                    <hr>
+                 </div>
+               </div>
+               {{/if}}
+               <div class="row">
+               {{#if getProjects}}
+                  
+                  {{#each getProjects}}
+                  <!-- Inicia cada recuadro de cada proyecto -->
+                     <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="spacer20"></div>
+                        <div class="card w-100">
+                           {{#if getProjectImages this._id 175}}
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img class="card-img-top w-100" src="{{getProjectImages this._id 175}}" alt="Card image cap"></a>
+                           {{else}}
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/nocover.jpg" class="card-img-top w-100" alt=""></a>
+                           {{/if}}  
+
+                          <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a>{{#if ownerRole}}&nbsp;<a href="/editProject/{{this._id}}"><i class="fa fa-pencil fa-sm text-purple"></i></a>{{/if}}</div>
+                          <div class="agreements"><strong>{{this.project_year}}</strong></div>
+                          <div class="card-body">
+                            <p class="card-text"><strong>{{getProfile.profile.name}} {{getProfile.profile.lastname}}</strong></p>
+                            <p class="card-text">{{projectRole this._id}}</p>
+                          </div>
+                          <div class="card-footer">
+                            <div class="row">
+                               <div class="col"><i class="fa fa-thumbs-up fa-sm"></i><small>&nbsp;{{this.likes}}</small></div>
+                               <div class="col text-right"><i class="fa fa-eye fa-sm"></i><small>&nbsp;{{this.views}}</small></div>
+                            </div>
+                          </div>
+                        </div>      
+                     </div>
+                  <!-- Termina cada recuadro de cada proyecto -->
+                  {{/each}}
+               {{/if}}
+               </div>
+               <div class="spacer40"></div>
+               {{#if countCollaborations}}
+               <div class="row">
+                 <strong class="uppercase">Filmografía</strong>
+               </div>
+               <div class="row">
+                 <div class="col">
+                    <hr>
+                 </div>
+               </div>
+               {{/if}}
+               <div class="row">
+               {{#if getCastCollaborations}}
+                  
+                  {{#each getCastCollaborations}}
+                  <!-- Inicia cada recuadro de cada proyecto -->
+                     <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="spacer20"></div>
+                        <div class="card w-100">
+                           {{#if getProjectImages this._id 175}}
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img class="card-img-top w-100" src="{{getProjectImages this._id 175}}" alt="Card image cap"></a>
+                           {{else}}
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/nocover.jpg" class="card-img-top w-100" alt=""></a>
+                           {{/if}}  
+
+                          <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a></div>
+                          <div class="agreements"><strong>{{this.project_year}}</strong></div>
+                          <div class="card-body">
+                            <p class="agreements">{{this.project_desc}}</p>
+                          </div>
+                          <div class="card-footer">
+                            <div class="row">
+                               <div class="col"><i class="fa fa-thumbs-up fa-sm"></i><small>&nbsp;{{this.likes}}</small></div>
+                               <div class="col text-right"><i class="fa fa-eye fa-sm"></i><small>&nbsp;{{this.views}}</small></div>
+                            </div>
+                          </div>
+                        </div>      
+                     </div>
+                  <!-- Termina cada recuadro de cada proyecto -->
+                  {{/each}}
+               {{/if}}
+               {{#if getCrewCollaborations}}
+                  
+                  {{#each getCrewCollaborations}}
+                  <!-- Inicia cada recuadro de cada proyecto -->
+                     <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="spacer20"></div>
+                        <div class="card w-100">
+                           {{#if getProjectImages this._id 175}}
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img class="card-img-top w-100" src="{{getProjectImages this._id 175}}" alt="Card image cap"></a>
+                           {{else}}
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/nocover.jpg" class="card-img-top w-100" alt=""></a>
+                           {{/if}}  
+
+                          <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a></div>
+                          <div class="agreements"><strong>{{this.project_year}}</strong></div>
+                          <div class="card-body">
+                            <p class="agreements">{{this.project_desc}}</p>
+                          </div>
+                          <div class="card-footer">
+                            <div class="row">
+                               <div class="col"><i class="fa fa-thumbs-up fa-sm"></i><small>&nbsp;{{this.likes}}</small></div>
+                               <div class="col text-right"><i class="fa fa-eye fa-sm"></i><small>&nbsp;{{this.views}}</small></div>
+                            </div>
+                          </div>
+                        </div>      
+                     </div>
+                  <!-- Termina cada recuadro de cada proyecto -->
+                  {{/each}}
+               {{/if}}
+               </div>
+            </div>
             <!-- Termina grid de proyectos-->
             
          </div>

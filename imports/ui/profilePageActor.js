@@ -150,6 +150,42 @@ Template.profilePageActor.helpers({
       Meteor.subscribe("myMainProject", FlowRouter.getParam('id'));
       return Project.findOne({'userId': FlowRouter.getParam('id'), 'project_is_main' : 'true'});
    },
+   countProjects(){
+     Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
+     var count = Project.find({'userId' : FlowRouter.getParam('id')}).count();
+     if(count>0){
+       return true;
+     }
+     else{
+       return false;
+     }
+   },
+   countCollaborations(){
+     Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
+     var countCast = Project.find({"project_cast._id":  FlowRouter.getParam('id')}).count();
+     var countCrew = Project.find({"project_staff._id":  FlowRouter.getParam('id')}).count();
+
+     var result = false;
+
+     if(countCast>0){
+       result = true;
+     }
+     else if(countCrew>0){
+       result = true;
+     }
+     else{
+       result = false;
+     }
+     return result;
+   },
+   getCastCollaborations(){
+      Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
+      return Project.find({"project_cast._id":  FlowRouter.getParam('id')});
+   },
+   getCrewCollaborations(){
+      Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
+      return Project.find({"project_staff._id":  FlowRouter.getParam('id')});
+   },
    getProjectImages(projId, size){
     Meteor.subscribe("allMedia");
       var data = Project.findOne({'_id' : projId});

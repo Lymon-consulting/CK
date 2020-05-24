@@ -252,6 +252,7 @@ Meteor.publish("otherUsers", function () {
       'likes':1, 
       'views':1, 
       'resume':1,
+      'role':1,
       'webpage':1,
       'facebook':1,
       'twitter':1,

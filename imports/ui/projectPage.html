@@ -99,7 +99,12 @@
                        </div>
                        <div class="row justify-content-start align-items-center">
                           <div class="col-12 text-white uppercase">
+                          {{#if hasTopRole}}
                            {{projData.project_role}}
+                          {{else}}
+                            Portafolio
+                          {{/if}}
+                            
                           </div>
                       </div>
                    </div>
@@ -113,7 +118,7 @@
    <div class="container-fluid background-lightgray">
      <div class="spacer10"></div>
      <div class="row">
-       {{#if isCrew}}
+       {{#if isOwner}}
        {{#if isCollaborator}}
        <div class="col-lg-2">
           <div class="dropdown show">
@@ -133,10 +138,8 @@
        </div>
        {{/if}}
        {{/if}}
-       {{#if isCrew}}
-       {{#if isOwner}}
+       {{#if hasTopRole}}
        <div class="col-lg-2"><a href="#" class="text-black" data-toggle="modal" data-target="#collabModal"><i class="fa fa-user-circle text-purple" aria-hidden="true"></i> Colaboradores</a></div>
-       {{/if}}
        {{/if}}
      </div>
      <div class="spacer10"></div>

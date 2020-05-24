@@ -133,8 +133,43 @@ Template.profilePage.helpers({
    },*/
    getProjects(){
       Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
-      //return Project.find({$and : [ {'userId' : FlowRouter.getParam('id')} , {"project_is_main": '' }]});
       return Project.find({'userId' : FlowRouter.getParam('id')});
+   },
+   countProjects(){
+     Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
+     var count = Project.find({'userId' : FlowRouter.getParam('id')}).count();
+     if(count>0){
+       return true;
+     }
+     else{
+       return false;
+     }
+   },
+   countCollaborations(){
+     Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
+     var countCast = Project.find({"project_cast._id":  FlowRouter.getParam('id')}).count();
+     var countCrew = Project.find({"project_staff._id":  FlowRouter.getParam('id')}).count();
+
+     var result = false;
+
+     if(countCast>0){
+       result = true;
+     }
+     else if(countCrew>0){
+       result = true;
+     }
+     else{
+       result = false;
+     }
+     return result;
+   },
+   getCastCollaborations(){
+      Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
+      return Project.find({"project_cast._id":  FlowRouter.getParam('id')});
+   },
+   getCrewCollaborations(){
+      Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
+      return Project.find({"project_staff._id":  FlowRouter.getParam('id')});
    },
    getMainProject(){
       Meteor.subscribe("myMainProject", FlowRouter.getParam('id'));
@@ -179,6 +214,19 @@ Template.profilePage.helpers({
       }
 
       return result;
+   },
+   projectCollaboration(projId){
+      /*var u = Project.findOne({'_id': projId});
+      var result = "";
+      if(u){
+         for (var i = 0; i < u.project_cast.length; i++) {
+           if(u.project_cast[i]._id===FlowRouter.getParam("id")){
+             result = u.project_cast[i].
+           }
+         }
+      }
+
+      return result;*/
    },
    
    showButtonFollow(follow){
@@ -275,6 +323,38 @@ Template.profilePage.helpers({
         return [];
       }
    },
+
+isDirectorOrProducer(){
+   Meteor.subscribe("otherUsers");
+   var user = Meteor.users.findOne({'_id' : FlowRouter.getParam('id')});
+   var array = new Array();
+    var result = false;
+    console.log("Usuario "+user.role);
+    if(user!=null && user.role!=null){
+      array = user.role;
+      for (var i = array.length - 1; i >= 0; i--) {
+        if(array[i]==="Director"){
+          result = true;  
+          break;
+        }
+        if(array[i]==="Productor"){
+          result = true;  
+          break;
+        }
+        if(array[i]==="Dueño"){
+          result = true;  
+          break;
+        }
+        if(array[i]==="Legal"){
+          result = true;  
+          break;
+        }
+
+      }
+    }
+    console.log("Es top="+result);
+    return result;
+  },
    getProfilePicture(userId, size) {
       Meteor.subscribe("allMedia");
       var user = Meteor.users.findOne({'_id':userId});

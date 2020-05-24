@@ -74,14 +74,23 @@ if (Meteor.isClient) {
       },
       
       ownerName(owner){
-         
+         Meteor.subscribe("otherUsers");
          var u = Meteor.users.findOne({'_id': owner}); 
          var fullName = "";
          if(u){
-            fullName = u.profile.name + " " + u.profile.lastname;
-            if(u.profile.lastname2!=null){
-              fullName = fullName + " " + u.profile.lastname2;
+
+            if(u.showArtisticName){
+              fullName = u.artistic;
             }
+            else{
+
+              fullName = u.profile.name + " " + u.profile.lastname;
+              if(u.profile.lastname2!=null){
+                fullName = fullName + " " + u.profile.lastname2;
+              }
+            }
+
+
          }
          return fullName;
       },
