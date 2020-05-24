@@ -329,7 +329,6 @@ isDirectorOrProducer(){
    var user = Meteor.users.findOne({'_id' : FlowRouter.getParam('id')});
    var array = new Array();
     var result = false;
-    console.log("Usuario "+user.role);
     if(user!=null && user.role!=null){
       array = user.role;
       for (var i = array.length - 1; i >= 0; i--) {
@@ -352,7 +351,6 @@ isDirectorOrProducer(){
 
       }
     }
-    console.log("Es top="+result);
     return result;
   },
    getProfilePicture(userId, size) {

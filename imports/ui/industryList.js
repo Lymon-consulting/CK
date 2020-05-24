@@ -2,6 +2,8 @@ import { Template } from 'meteor/templating';
 import { Industry } from '../api/industry.js';
 import { Media } from '../api/media.js';
 import { City } from '../api/city.js';
+import { UsersIndex } from '/lib/common.js';
+import { ProjectIndex } from '/lib/common.js';
 import { IndustryIndex } from '/lib/common.js';
 
 import './industryList.html';
@@ -9,7 +11,7 @@ import '/lib/common.js';
 
 Meteor.subscribe("otherUsers");
 Template.industryResults.helpers({
-   industryIndex: () => IndustryIndex, // instanceof EasySearch.Index
+   usersIndex: () => UsersIndex, // instanceof EasySearch.Index
    inputAttributes: function () {
      return { 
          placeholder: 'Buscar', 
@@ -18,7 +20,42 @@ Template.industryResults.helpers({
    },
    searchCount: () => {
     // index instanceof EasySearch.index
+    let dict = UsersIndex.getComponentDict(/* optional name */);
+
+    // get the total count of search results, useful when displaying additional information
+    return dict.get('count')
+   },
+   projectIndex: () => ProjectIndex, // instanceof EasySearch.Index
+   inputAttributes: function () {
+     return { 
+       placeholder: 'Buscar', 
+       id: 'searchBox'
+     }; 
+   },
+   searchCount: () => {
+    // index instanceof EasySearch.index
+    let dict = ProjectIndex.getComponentDict(/* optional name */);
+
+    // get the total count of search results, useful when displaying additional information
+    return dict.get('count')
+  },
+  industryIndex: () => IndustryIndex, // instanceof EasySearch.Index
+   inputAttributes: function () {
+     return { 
+       placeholder: 'Buscar', 
+       id: 'searchBox'
+     }; 
+   },
+   searchCount: () => {
+    // index instanceof EasySearch.index
     let dict = IndustryIndex.getComponentDict(/* optional name */);
+
+    // get the total count of search results, useful when displaying additional information
+    return dict.get('count')
+  },
+   searchCount: () => {
+    // index instanceof EasySearch.index
+    let dict = ProjectIndex.getComponentDict(/* optional name */);
 
     // get the total count of search results, useful when displaying additional information
     return dict.get('count')
@@ -293,6 +330,51 @@ Template.industryResults.events({
      { $pull: { 'followCompany': companyId } }
     );
     //Meteor.call('removeAlert', company.userId ,);
-  }
+  },
+  'click #crewSearch': function(event,template){
+      event.preventDefault();
+      Session.set("selected_category", null);
+      Session.set("selected_country", null);
+      Session.set("selected_state", null);
+      Session.set("role_selected",null);
+      Session.set("location_selected",null);
+      Session.set("country_selected",null);
+      Session.set("state_selected",null);
+      Session.set("city_selected",null);
+      UsersIndex.getComponentMethods().removeProps(); 
+      
+      FlowRouter.go("/peopleList");
+    },
+    'click #castSearch': function(event,template){
+      event.preventDefault();
+      Session.set("country_selected",null);
+      Session.set("city_selected",null);
+      Session.set("state_selected",null);
+      Session.set("role_selected",null);
+      Session.set("category_selected",null);
+      Session.set("gender_selected",null);
+      Session.set("eyes_selected",null);
+      Session.set("hair_selected",null);
+      Session.set("hairType_selected",null);
+      Session.set("physical_selected",null);
+      Session.set("ethnicity_selected",null);
+      Session.set("ageRange_selected",null);
+      Session.set("height_selected",null);
+      Session.set("location_selected",null);
+      Session.set("selected_category", null);
+      Session.set("selected_country", null);
+      Session.set("selected_state", null);
+      UsersIndex.getComponentMethods().removeProps(); 
+      FlowRouter.go("/peopleListCast");
+    },
+    'click #projSearch': function(event,template){
+      event.preventDefault();
+      Session.set("type_selected",null);
+      Session.set("genre_selected",null);
+      Session.set("status_selected",null);
+      Session.set("family_selected",null);
+      ProjectIndex.getComponentMethods().removeProps(); 
+      FlowRouter.go("/projList");
+    },
 });
 

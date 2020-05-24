@@ -186,6 +186,35 @@ Template.profilePageActor.helpers({
       Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
       return Project.find({"project_staff._id":  FlowRouter.getParam('id')});
    },
+   isDirectorOrProducer(){
+   Meteor.subscribe("otherUsers");
+   var user = Meteor.users.findOne({'_id' : FlowRouter.getParam('id')});
+   var array = new Array();
+    var result = false;
+    if(user!=null && user.role!=null){
+      array = user.role;
+      for (var i = array.length - 1; i >= 0; i--) {
+        if(array[i]==="Director"){
+          result = true;  
+          break;
+        }
+        if(array[i]==="Productor"){
+          result = true;  
+          break;
+        }
+        if(array[i]==="Dueño"){
+          result = true;  
+          break;
+        }
+        if(array[i]==="Legal"){
+          result = true;  
+          break;
+        }
+
+      }
+    }
+    return result;
+  },
    getProjectImages(projId, size){
     Meteor.subscribe("allMedia");
       var data = Project.findOne({'_id' : projId});

@@ -18,18 +18,18 @@
         <div class="row">
           <div class="col-lg-4 col-md-6">
             <div class="card h-100">
-              <a href="/peopleList/"><img class="card-img-top" src="/images/crew_thumb.jpg" alt=""></a>
+              <a href="#" id="crewSearch"><img class="card-img-top" src="/images/crew_thumb.jpg" alt=""></a>
             </div>
           </div>
           <div class="col-lg-4 col-md-6">
             <div class="card h-100">
-              <a href="/peopleListCast/"><img class="card-img-top" src="/images/cast_thumb.jpg" alt=""></a>
+              <a href="#" id="castSearch"><img class="card-img-top" src="/images/cast_thumb.jpg" alt=""></a>
             </div>
           </div>
           
           <div class="col-lg-4 col-md-6">
             <div class="card h-100">
-              <a href="/industryList"><img class="card-img-top" src="/images/industry_thumb.jpg" alt=""></a>
+              <a href="#" id="industrySearch"><img class="card-img-top" src="/images/industry_thumb.jpg" alt=""></a>
             </div>
           </div>
         </div>
@@ -55,6 +55,8 @@
           <div class="row">
             <div class="col agreements">
               {{> EasySearch.Input index=projectIndex event="enter" attributes=inputAttributes}}
+              {{#EasySearch.IfSearching index=usersIndex}}{{/EasySearch.IfSearching}}
+              {{#EasySearch.IfSearching index=industryIndex}}{{/EasySearch.IfSearching}}
             </div>
           </div>
           <div class="spacer10"></div>

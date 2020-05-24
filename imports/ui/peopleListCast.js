@@ -3,6 +3,8 @@ import { Ocupation } from '../api/ocupations.js';
 import { City } from '../api/city.js';
 import { Media } from '../api/media.js';
 import { UsersIndex } from '/lib/common.js';
+import { ProjectIndex } from '/lib/common.js';
+import { IndustryIndex } from '/lib/common.js';
 import { getParam } from '/lib/functions.js';
 import { catHeights, catAges, catPhysical, catEthnics, catEyes, catHair, catHairType, catLanguages, catCategories } from '/lib/globals.js';
 
@@ -14,6 +16,8 @@ Meteor.subscribe("otherUsers");
 
 Template.peopleListCast.rendered = function(){
   UsersIndex.getComponentMethods().addProps('isCast', true);
+  ProjectIndex.getComponentMethods().removeProps(); 
+  IndustryIndex.getComponentMethods().removeProps();
 }
 
 Template.peopleListCast.helpers({
@@ -31,6 +35,34 @@ Template.peopleListCast.helpers({
     // get the total count of search results, useful when displaying additional information
     return dict.get('count')
    },
+   projectIndex: () => ProjectIndex, // instanceof EasySearch.Index
+   inputAttributes: function () {
+     return { 
+       placeholder: 'Buscar', 
+       id: 'searchBox'
+     }; 
+   },
+   searchCount: () => {
+    // index instanceof EasySearch.index
+    let dict = ProjectIndex.getComponentDict(/* optional name */);
+
+    // get the total count of search results, useful when displaying additional information
+    return dict.get('count')
+  },
+  industryIndex: () => IndustryIndex, // instanceof EasySearch.Index
+   inputAttributes: function () {
+     return { 
+       placeholder: 'Buscar', 
+       id: 'searchBox'
+     }; 
+   },
+   searchCount: () => {
+    // index instanceof EasySearch.index
+    let dict = IndustryIndex.getComponentDict(/* optional name */);
+
+    // get the total count of search results, useful when displaying additional information
+    return dict.get('count')
+  },
    heights(){
     return catHeights; //variable global en globals.js
     },
@@ -494,7 +526,39 @@ Template.peopleListCast.events({
       else if(newValue==="Crew"){
         FlowRouter.go('/peopleList');
       }
-   }
+   },
+   'click #crewSearch': function(event,template){
+      event.preventDefault();
+      Session.set("selected_category", null);
+      Session.set("selected_country", null);
+      Session.set("selected_state", null);
+      Session.set("role_selected",null);
+      Session.set("location_selected",null);
+      Session.set("country_selected",null);
+      Session.set("state_selected",null);
+      Session.set("city_selected",null);
+      UsersIndex.getComponentMethods().removeProps(); 
+      
+      FlowRouter.go("/peopleList");
+    },
+    'click #projSearch': function(event,template){
+      event.preventDefault();
+      Session.set("type_selected",null);
+      Session.set("genre_selected",null);
+      Session.set("status_selected",null);
+      Session.set("family_selected",null);
+      ProjectIndex.getComponentMethods().removeProps(); 
+      FlowRouter.go("/projList");
+    },
+    'click #industrySearch': function(event,template){
+      event.preventDefault();
+      Session.set("type_selected",null);
+      Session.set("year_selected",null);
+      Session.set("selected_country",null);
+      Session.set("selected_state",null);
+      IndustryIndex.getComponentMethods().removeProps(); 
+      FlowRouter.go("/industryList");
+    }
    
 });
 
