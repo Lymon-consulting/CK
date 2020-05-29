@@ -4,6 +4,11 @@
         <h1 class="h1-title text-center">BIBLIOTECA DE IMÁGENES</h1>
         <br>
         <div class="row">
+          <div class="col-lg-12 col-md-12 mb-4">
+            Desde aquí puedes subir imágenes, borrarlas y editarlas. Utiliza la herramienta de recorte para ajustar su tamaño y poderlas utilizar como foto de perfil, portada, galería o póster. Haz clic sobre alguna imagen para ver sus detalles y editarla.
+          </div>
+        </div>
+        <div class="row">
           <div class="col-lg-12 col-md-12 mb-4 text-center">
             <button class="btn btn-purple" id="toggleDropper">Agregar nueva imagen</button>
             {{{getReturnButton}}}
@@ -30,12 +35,12 @@
                             </a>            
                         </div>
                     </div>
-                    <!--
+                    
                     <div class="row d-flex justify-content-center">
                         <div class="col d-flex justify-content-center agreements">
-                            <input type="radio">Elegir
+                            {{this.media_title}}
                         </div>
-                    </div>-->
+                    </div>
                   <br>
                 </div>
             </div>      
@@ -66,16 +71,19 @@
                 <div class="container">
                   <div class="row">
                     <div class="col-lg-8 text-center">
+
+                      <div class="row">
+                        <div class="col">
+                          <a href="#" class="btn btn-purple btn-lg" id="sendToEditor" data-id="{{imageDetails.mediaId}}">Editar imagen</a>
+                        </div>
+                      </div>
+                      <div class="spacer10"></div>
                       <div class="row">
                         <div class="col">
                           <img id="image" src="{{imageDetails.media_url}}" class="media-preview z-depth-1">  
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col">
-                          <a href="#" id="sendToEditor" data-id="{{imageDetails.mediaId}}"><small>Editar imagen</small></a>
-                        </div>
-                      </div>
+                      
                       
                     </div>
                     <div class="col-lg-4 text-left">
@@ -85,11 +93,13 @@
                       <p><small><strong>Subido el:</strong> {{formatDate imageDetails.media_date}}</small></p>
                       <p><small><strong>Tamaño:</strong> {{formatSize imageDetails.media_size}}</small></p>
                       <p><small><strong>Dimensiones:</strong> {{imageDetails.media_width}} por {{imageDetails.media_height}} pixeles </small></p>
-                      <p><small><strong>Uso:</strong> {{getUse imageDetails.mediaId}}</small></p>
+                      <!--
+                      <p><small><strong>Uso:</strong> {{getUse imageDetails.mediaId}}</small></p>-->
                       <p><hr></p>
-                      <p><small>Título:</small> <input class="form-control" id="title{{imageDetails.mediaId}}" type="text" placeholder="Título" value="{{imageDetails.media_title}}"></p>
-                      <p><small>Descripción:</small> <input class="form-control" id="descr{{imageDetails.mediaId}}" type="text" placeholder="Descripción" value="{{imageDetails.media_desc}}"></p>
+                      <p><small>Título:</small> <input class="form-control" id="title{{imageDetails.mediaId}}" type="text" placeholder="Título" value="{{imageDetails.media_title}}" maxlength="20"></p>
+                      <p><small>Descripción:</small> <input class="form-control" id="descr{{imageDetails.mediaId}}" type="text" placeholder="Descripción" value="{{imageDetails.media_desc}}" maxlength="50"></p>
                       <p><a href="" class="delete" data-id="{{imageDetails.mediaId}}"><small>Borrar permanentemente</small></a> </p>
+                      
                     </div>
                   </div>
                 </div>

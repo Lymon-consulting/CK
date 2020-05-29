@@ -40,6 +40,12 @@
               <a href="/industryPage/{{companyData._id}}" class="text-purple"><i class="fa fa-eye"></i> Perfil de empresa</a>    
             </div>
           </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col text-14">
+              <a href="/mediaEditorObject/{{currentUser._id}}/industry/{{companyData._id}}/global" class="text-purple" id=""><i class="fa fa-camera"></i> Tus imágenes</a>
+            </div>
+          </div>
           <div class="spacer40"></div>
           <div><hr></div>
           {{#if hasEditPermission}}
@@ -123,9 +129,9 @@
           <div class="col"><label for="proj_desc">Descripción de la empresa: <span class="text-purple">(Requerido)</span></label></div>
           <div class="col">
             {{#if hasEditPermission}}
-           <textarea class="form-control" rows="5" id="company_desc" placeholder="Descripción de la empresa (450 caracteres máx)." maxlength="450">{{description}}</textarea><small>Caracteres restantes:</small> <div id="max" class="agreements"></div>
+           <textarea class="form-control" rows="5" id="company_desc" placeholder="Descripción de la empresa ({{maxLength}} caracteres máx)." maxlength="{{maxLength}}">{{description}}</textarea><small>Caracteres restantes:</small> <div id="max" class="agreements"></div>
            {{else}}
-           <textarea class="form-control" rows="5" id="company_desc" placeholder="Descripción de la empresa (450 caracteres máx)." maxlength="450" disabled>{{description}}</textarea><small>Caracteres restantes:</small> <div id="max" class="agreements"></div>
+           <textarea class="form-control" rows="5" id="company_desc" placeholder="Descripción de la empresa ({{maxLength}} caracteres máx)." maxlength="{{maxLength}}" disabled>{{description}}</textarea><small>Caracteres restantes:</small> <div id="max" class="agreements"></div>
            {{/if}}
          </div>
         </div>
@@ -433,6 +439,7 @@
               <div class="modal-body">
 
                 <div class="container">
+                  {{#if hasMedia}}
                   <div class="row background-verylightgray light-padding">
                     {{#each getMedia}}
                     <div class="col-lg-3 col-sm-6 align-self-center">
@@ -440,6 +447,20 @@
                     </div>
                     {{/each}}
                   </div>
+                  {{else}}
+                  <div class="spacer20"></div>
+                  <div class="row">
+                    <div class="col">
+                      Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
+                    </div>
+                  </div>
+                  <div class="spacer20"></div>
+                  <div class="row">
+                    <div class="col text-center">
+                      <button class="btn btn-purple goMediaLibraryLogo">Ir a biblioteca de imágenes</button>
+                    </div>
+                  </div>
+                  {{/if}}
                 </div>
               </div>
               <!--Footer-->
@@ -473,6 +494,7 @@
               <div class="modal-body">
 
                 <div class="container">
+                  {{#if hasMedia}}
                   <div class="row background-verylightgray light-padding">
                     {{#each getMedia}}
                     <div class="col-lg-3 col-sm-6 align-self-center">
@@ -480,6 +502,20 @@
                     </div>
                     {{/each}}
                   </div>
+                  {{else}}
+                  <div class="spacer20"></div>
+                  <div class="row">
+                    <div class="col">
+                      Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
+                    </div>
+                  </div>
+                  <div class="spacer20"></div>
+                  <div class="row">
+                    <div class="col text-center">
+                      <button class="btn btn-purple goMediaLibraryCover">Ir a biblioteca de imágenes</button>
+                    </div>
+                  </div>
+                  {{/if}}
                 </div>
 
 
@@ -518,7 +554,7 @@
                   <div class="row">
                     <div class="col text-center">Elige las imágenes para tu galería de fotos</div>
                   </div>
-                  
+                  {{#if hasMedia}}
                   <div class="row background-verylightgray p-3">
                     {{#each getMedia}}
                     <div class="col-lg-3 col-sm-6 align-self-center justify-content-center">
@@ -526,6 +562,20 @@
                     </div>
                     {{/each}}
                   </div>
+                  {{else}}
+                  <div class="spacer20"></div>
+                  <div class="row">
+                    <div class="col">
+                      Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
+                    </div>
+                  </div>
+                  <div class="spacer20"></div>
+                  <div class="row">
+                    <div class="col text-center">
+                      <button class="btn btn-purple goMediaLibraryLogo">Ir a biblioteca de imágenes</button>
+                    </div>
+                  </div>
+                  {{/if}}
                 </div>
                 
 

@@ -56,9 +56,9 @@ if (Meteor.isClient) {
          id = $(element).val();
          otherProjects = Project.find({userId: Meteor.userId()}).fetch();
          otherProjects.forEach(function(current_value) {
-            Project.update({_id: current_value._id},{$set:{"project_is_main": "" }});       
+            Project.update({_id: current_value._id},{$set:{"project_is_main": false }});       
          });
-         Project.update({_id: id},{$set:{"project_is_main": "true" }});       
+         Project.update({_id: id},{$set:{"project_is_main": true }});       
       },
       'click .closeModal ': function (event){
         event.preventDefault();

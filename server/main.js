@@ -298,8 +298,30 @@ Meteor.publish("follows", function (userId) {
    return cuantos;
 });
 
-Meteor.publish('myProjects', function(userId) {
-   return Project.find();
+Meteor.publish('myProjects', function() {
+   return Project.find({},{
+    fields:{
+      '_id':1,
+      'project_title':1,
+      'userId':1,
+      'project_type':1,
+      'project_genre':1,
+      'project_role':1,
+      'projectPictureID':1,
+      'project_is_main':1,
+      'project_year':1,
+      'project_family':1,
+      'views':1,
+      'likes':1,
+      'proj_external_view':1,
+      'project_desc':1,
+      'gallery':1,
+      'projectPosterID':1,
+      'project_status':1,
+      'project_staff':1,
+      'project_cast':1
+    }
+   });
 });
 
 Meteor.publish('myIndustries', function(userId) {

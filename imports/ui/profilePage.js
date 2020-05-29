@@ -132,11 +132,17 @@ Template.profilePage.helpers({
       return PersonalCover.find({'owner': userId});
    },*/
    getProjects(){
-      Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
-      return Project.find({'userId' : FlowRouter.getParam('id')});
+      Meteor.subscribe("myProjects");
+      //Meteor.users.find  ({$and : [ {'_id' : Meteor.userId()} ,            {"follows": follow      }]});
+      return Project.find({
+        $and : [ 
+          {'userId' : FlowRouter.getParam('id')},
+          {'project_is_main':false}
+        ]
+      });
    },
    countProjects(){
-     Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
+     Meteor.subscribe("myProjects");
      var count = Project.find({'userId' : FlowRouter.getParam('id')}).count();
      if(count>0){
        return true;
@@ -146,7 +152,7 @@ Template.profilePage.helpers({
      }
    },
    countCollaborations(){
-     Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
+     Meteor.subscribe("myProjects");
      var countCast = Project.find({"project_cast._id":  FlowRouter.getParam('id')}).count();
      var countCrew = Project.find({"project_staff._id":  FlowRouter.getParam('id')}).count();
 
@@ -164,16 +170,21 @@ Template.profilePage.helpers({
      return result;
    },
    getCastCollaborations(){
-      Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
+      Meteor.subscribe("myProjects");
       return Project.find({"project_cast._id":  FlowRouter.getParam('id')});
    },
    getCrewCollaborations(){
-      Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
+      Meteor.subscribe("myProjects");
       return Project.find({"project_staff._id":  FlowRouter.getParam('id')});
    },
    getMainProject(){
-      Meteor.subscribe("myMainProject", FlowRouter.getParam('id'));
-      return Project.findOne({'userId': FlowRouter.getParam('id'), 'project_is_main' : 'true'});
+      Meteor.subscribe("myProjects");
+      return Project.findOne({
+        $and : [ 
+          {'userId' : FlowRouter.getParam('id')},
+          {'project_is_main':true}
+        ]
+      });
    },
    getProjectImages(projId, size){
     Meteor.subscribe("allMedia");

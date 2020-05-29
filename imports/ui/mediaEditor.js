@@ -405,4 +405,74 @@ Template.mediaEditor.events({
       $("#message").html(""); 
     }, 1500);    
   },
+  'click .delete' : function(event,template){
+    if(confirm("Si la imagen se usa en alguno de tus proyectos, empresas o perfil será removida de ellos ¿Desea continuar con la eliminación?")){
+      var public_id = $(event.currentTarget).attr("data-id");
+
+      /*Borrando el id de la imagen de los proyectos*/
+      var projectsUsingThisImage = Project.find({'projectPictureID':public_id});
+      projectsUsingThisImage.forEach(function(project){
+          Meteor.call('saveProjectPictureID',
+            project._id,
+            null
+          );
+      });
+
+      /*Borrando el id de la imagen de las industrias que lo usan como logo*/
+      var companiesUsingThisImageAsLogo = Industry.find({'companyLogoID':public_id});
+      companiesUsingThisImageAsLogo.forEach(function(company){
+          Meteor.call('saveCompanyLogoID',
+            project._id,
+            null
+          );
+      });
+
+      /*Borrando el id de la imagen de las industrias que lo usan como portada*/
+      var companiesUsingThisImageAsCover = Industry.find({'companyCoverID':public_id});
+      companiesUsingThisImageAsCover.forEach(function(company){
+          Meteor.call('saveCompanyCoverID',
+            project._id,
+            null
+          );
+      });
+
+      /*Borrando el id de la imagen de los usuarios que lo usan como foto de perfil*/
+      var usersUsingThisImageAsProfile = Meteor.users.find({'profilePictureID':public_id});
+      usersUsingThisImageAsProfile.forEach(function(user){
+        Meteor.call('updateProfilePicture',
+          user._id,
+          public_id
+        );
+      });
+
+      /*Borrando el id de la imagen de los usuarios que lo usan como portada*/
+      var usersUsingThisImageAsCover = Meteor.users.find({'profileCoverID':public_id});
+      usersUsingThisImageAsCover.forEach(function(user){
+        Meteor.call('updateCoverPicture',
+          user._id,
+          public_id
+        );
+      });
+
+      /*Falta agregar el borrado de las galerías de proyectos*/
+
+      
+      /*Borrando la imagen de la biblioteca de imágenes*/
+      Meteor.call(
+        'deleteMedia',
+        Meteor.userId(),
+        public_id, function(error,result){
+          /*Borrando la imagen de cloudinary*/
+          //console.log("Borrando de cloudinary "+ public_id);
+          var cloud_id = Meteor.userId() + "/" + public_id;
+          
+          Cloudinary.delete(cloud_id,function(res){
+            //console.log(res);
+          });    
+        }
+      );
+    
+    }
+    FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo")+"/"+FlowRouter.getParam("type"));
+  },
 });

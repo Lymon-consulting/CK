@@ -140,6 +140,16 @@ Template.editIndustry.helpers({
     }
     return result;
   },
+  hasMedia() {
+    Meteor.subscribe("allMedia");
+    //var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
+    var media = Media.find({'userId': Meteor.userId()}).count();
+    var hasMedia = false;
+    if(media > 0){
+      hasMedia = true;
+    }
+    return hasMedia;
+  },
   getURL(mediaId){
     var url = "";
     var media = Media.findOne({'mediaId':mediaId});
@@ -348,12 +358,17 @@ stateSelected: function(value){
     return result;
   },
   description(){
-    var company = Industry.findOne({'_id': FlowRouter.getParam("id")});
-
-    if(company && company.company_desc!=""){
-      $('#max').text(Meteor.settings.public.MAX_CHAR_IN_TEXTAREA - company.company_desc.length);
-      return company.company_desc;
+    var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
+    var resume="";
+    var MAX_CHAR_IN_TEXTAREA = getParam("MAX_CHAR_IN_TEXTAREA");
+    if(data!=null && data.company_desc!=null){
+      resume = data.company_desc;
+      $('#max').text(MAX_CHAR_IN_TEXTAREA - resume.length);
     }
+    else{
+      $('#max').text(MAX_CHAR_IN_TEXTAREA); 
+    }
+    return resume;
   },
   getIndustryLogo(size) {
     Meteor.subscribe("allMedia");
@@ -400,6 +415,9 @@ stateSelected: function(value){
       
     }
     return result;
+  },
+  maxLength(){
+    return getParam("MAX_CHAR_IN_TEXTAREA");
   }
 });
 
@@ -407,15 +425,12 @@ stateSelected: function(value){
 Template.editIndustry.events({
   'keyup #company_desc' : function(event){
    event.preventDefault();
-   var len;
-   if($('#company_desc').val()!=""){
-      len = $('#company_desc').val().length;
-      if(len > Meteor.settings.public.MAX_CHAR_IN_TEXTAREA){
-        val.value= val.value.substring(0,Meteor.settings.public.MAX_CHAR_IN_TEXTAREA);
-      }
-      else{
-        $('#max').text(Meteor.settings.public.MAX_CHAR_IN_TEXTAREA-len);
-      }
+   var len = $('#company_desc').val().length;
+   if(len > getParam("MAX_CHAR_IN_TEXTAREA")){
+    val.value= val.value.substring(0,getParam("MAX_CHAR_IN_TEXTAREA"));
+  }
+  else{
+    $('#max').text(getParam("MAX_CHAR_IN_TEXTAREA")-len);
   }
 },
 'click #guardar_empresa': function(event, template) {
@@ -605,10 +620,17 @@ Template.editIndustry.events({
   },
   'click .goMediaLibraryCover': function(event,template){
     event.preventDefault();
-    $('#modal1').modal('hide');
+    $('#modal2').modal('hide');
     $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
     FlowRouter.go("/mediaEditorObject/" + Meteor.userId()+"/industry/"+FlowRouter.getParam("id")+"/cover");
+  },
+  'click .goMediaLibraryGallery': function(event,template){
+    event.preventDefault();
+    $('#modal3').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+    FlowRouter.go("/mediaEditorObject/" + Meteor.userId()+"/industry/"+FlowRouter.getParam("id")+"/gallery");
   },
   'click #openMediaGallery': function(event,template){
     event.preventDefault();

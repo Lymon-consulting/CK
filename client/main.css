@@ -76,6 +76,25 @@
    color:#333;
 }
 
+.negativeMargin{
+  position: relative;
+  
+  margin-right: 20px;
+  text-align: right;
+  color: #ffffff;
+  
+}
+.project-title{
+  font-size: 36px;
+  font-weight: bold;
+  margin-top: -100px;
+}
+.project-type{
+  font-size: 24px;
+  font-style: italic;
+  margin-top: -130px;
+}
+
 .nine-columns {
     vertical-align: middle;
     margin: 20px;
