@@ -111,11 +111,11 @@
                   <input type="text" class="form-control" id="personName" placeholder="Nombres" value="{{name}}" maxlength="30">
                 </div>
                 <div class="col form-group">
-                  <label for="nombre">Apellido Paterno <span class="text-purple">(Requerido)</span></label>
+                  <label for="nombre">Primer Apellido <span class="text-purple">(Requerido)</span></label>
                   <input type="text" class="form-control" id="personLastName" placeholder="Apellido paterno" value="{{lastname}}" maxlength="20">
                 </div>
                 <div class="col form-group">
-                  <label for="nombre">Apellido Materno</label>
+                  <label for="nombre">Segundo Apellido </label>
                   <input type="text" class="form-control" id="personLastName2" placeholder="Apellido materno" value="{{lastname2}}" maxlength="20">
                 </div>
               </div>
@@ -123,7 +123,7 @@
               <div class="row">
                 <div class="col form-group">
                   <label for="resumen">Acerca de </label>
-                  <textarea class="form-control" rows="5" id="resume" value="" placeholder="Cuéntanos de ti (450 caracteres máx)." maxlength="450">{{resume}}</textarea><small>Caracteres restantes: <div id="max"></div></small>
+                  <textarea class="form-control" rows="5" id="resume" value="" placeholder="Cuéntanos de ti ({{maxLength}} caracteres máx)." maxlength="{{maxLength}}">{{resume}}</textarea><small>Caracteres restantes: <div id="max"></div></small>
                 </div>
               </div>
               <div class="spacer40"></div>
@@ -239,7 +239,7 @@
               <div class="spacer20"></div>
               <div class="row">
                 <div class="col-lg-8 form-group">
-                  <label for="nombre">Video de muestra </label>
+                  <label for="nombre">Video de muestra / demo </label>
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <div class="input-group-text"><i class="fa fa-play"></i></div>
@@ -349,6 +349,7 @@
         <div class="modal-body">
 
           <div class="container">
+            {{#if hasMedia}}
             <div class="row background-verylightgray light-padding">
               {{#each getMedia}}
               <div class="col-lg-3 col-sm-6 align-self-center">
@@ -356,6 +357,20 @@
               </div>
               {{/each}}
             </div>
+            {{else}}
+            <div class="spacer20"></div>
+            <div class="row">
+              <div class="col">
+                Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
+              </div>
+            </div>
+            <div class="spacer20"></div>
+            <div class="row">
+              <div class="col text-center">
+                <button class="btn btn-purple goMediaLibraryProfile">Ir a biblioteca de imágenes</button>
+              </div>
+            </div>
+            {{/if}}
           </div>
         </div>
         <!--Footer-->
@@ -389,6 +404,7 @@
         <div class="modal-body">
 
           <div class="container">
+            {{#if hasMedia}}
             <div class="row background-verylightgray light-padding">
               {{#each getMedia}}
               <div class="col-lg-3 col-sm-6 align-self-center">
@@ -396,6 +412,20 @@
               </div>
               {{/each}}
             </div>
+            {{else}}
+            <div class="spacer20"></div>
+            <div class="row">
+              <div class="col">
+                Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
+              </div>
+            </div>
+            <div class="spacer20"></div>
+            <div class="row">
+              <div class="col text-center">
+                <button class="btn btn-purple goMediaLibraryCover">Ir a biblioteca de imágenes</button>
+              </div>
+            </div>
+            {{/if}}
           </div>
 
 

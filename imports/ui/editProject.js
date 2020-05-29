@@ -28,6 +28,9 @@ var isNotEmpty=function(val){
   return false;
 }
 
+
+
+
 Template.editProject.helpers({
   isOwner(){
     var result = false;
@@ -330,6 +333,19 @@ Template.editProject.helpers({
     }
     return projectPictureID;
   },
+  resume(){
+    var data = Project.findOne({'_id' : FlowRouter.getParam('id')});
+    var resume="";
+    var MAX_CHAR_IN_TEXTAREA = getParam("MAX_CHAR_IN_TEXTAREA");
+    if(data!=null && data.project_desc!=null){
+      resume = data.project_desc;
+      $('#max').text(MAX_CHAR_IN_TEXTAREA - resume.length);
+    }
+    else{
+      $('#max').text(MAX_CHAR_IN_TEXTAREA); 
+    }
+    return resume;
+  },
   resumeCount(data){
     var result = 0;
     if(data!=null && data.length!=null){
@@ -397,6 +413,19 @@ Template.editProject.helpers({
       
     }
     return result;
+  },
+  hasMedia() {
+    Meteor.subscribe("allMedia");
+    //var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
+    var media = Media.find({'userId': Meteor.userId()}).count();
+    var hasMedia = false;
+    if(media > 0){
+      hasMedia = true;
+    }
+    return hasMedia;
+  },
+  maxLength(){
+    return getParam("MAX_CHAR_IN_TEXTAREA");
   }
 });
 
@@ -714,14 +743,13 @@ Template.editProject.events({
     });
   },
   'keyup #proj_desc' : function(event){
-    event.preventDefault();
-   
-    var len = $('#proj_desc').val().length;
-    if(len > 450){
-      val.value= val.value.substring(0,450);
+     event.preventDefault();
+     var len = $('#proj_desc').val().length;
+     if(len > getParam("MAX_CHAR_IN_TEXTAREA")){
+      val.value= val.value.substring(0,getParam("MAX_CHAR_IN_TEXTAREA"));
     }
     else{
-      $('#max').text(450-len);
+      $('#max').text(getParam("MAX_CHAR_IN_TEXTAREA")-len);
     }
   },
   'change .profile'(event, instance) {

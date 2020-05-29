@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { Ocupation } from '../api/ocupations.js';
 import { City } from '../api/city.js';
 import { Media } from '../api/media.js';
+import { getParam } from '/lib/functions.js';
 
 import './editProfile.html';
 import '/lib/common.js';
@@ -31,6 +32,12 @@ Meteor.subscribe("getCategories");
 Meteor.subscribe("getCountries");
 Meteor.subscribe("userData");
 
+Template.editProfile.rendered = function(){
+  this.autorun(function(){
+
+  });
+}
+
 Template.editProfile.helpers({
   userId() {
     return Meteor.userId();
@@ -52,7 +59,8 @@ lastname2(){
 },
 resume(){
  if(Meteor.user() && Meteor.user().resume){
-  $('#max').text(Meteor.settings.public.MAX_CHAR_IN_TEXTAREA - Meteor.user().resume.length);
+  var MAX_CHAR_IN_TEXTAREA = getParam("MAX_CHAR_IN_TEXTAREA");
+  $('#max').text(MAX_CHAR_IN_TEXTAREA - Meteor.user().resume.length);
   return Meteor.user().resume;
 }
 },
@@ -252,7 +260,7 @@ getRolesSelected(){
    if(Meteor.user().profilePictureID!=null){
     var profile = Media.findOne({'mediaId':Meteor.user().profilePictureID});
     if(profile!=null){
-      return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_80,h_80,c_thumb,f_auto,r_max/" + "/v" + profile.media_version + "/" + Meteor.userId() + "/" + Meteor.user().profilePictureID;    
+      return getParam("CLOUDINARY_RES_URL") + "/w_80,h_80,c_thumb,f_auto,r_max/" + "/v" + profile.media_version + "/" + Meteor.userId() + "/" + Meteor.user().profilePictureID;    
     }
 
   }
@@ -267,7 +275,7 @@ getCoverPicture() {
   if(Meteor.user().profileCoverID!=null){
     var profile = Media.findOne({'mediaId':Meteor.user().profileCoverID});
     if(profile!=null){
-      return Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + profile.media_version + "/" + Meteor.userId() + "/" + Meteor.user().profileCoverID;    
+      return getParam("CLOUDINARY_RES_URL") + "/v" + profile.media_version + "/" + Meteor.userId() + "/" + Meteor.user().profileCoverID;    
     }
 
   }
@@ -282,6 +290,16 @@ getPublicID(type){
   }
   
 },
+hasMedia() {
+  Meteor.subscribe("allMedia");
+  //var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
+  var media = Media.find({'userId': Meteor.userId()}).count();
+  var hasMedia = false;
+  if(media > 0){
+    hasMedia = true;
+  }
+  return hasMedia;
+},
 getMedia() {
   Meteor.subscribe("allMedia");
   //var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
@@ -290,7 +308,7 @@ getMedia() {
 },
 getURL(mediaId){
   var url = "";
-  url = Meteor.settings.public.CLOUDINARY_RES_URL + "/" + mediaId;
+  url = getParam("CLOUDINARY_RES_URL") + "/" + mediaId;
   return url;
 },
 showCreateCastLink(){
@@ -312,6 +330,9 @@ showCreateCastLink(){
       }
     }
     return result;
+  },
+  maxLength(){
+    return getParam("MAX_CHAR_IN_TEXTAREA");
   }
 
 
@@ -521,11 +542,11 @@ Template.editProfile.events({
  event.preventDefault();
 
  var len = $('#resume').val().length;
- if(len > Meteor.settings.public.MAX_CHAR_IN_TEXTAREA){
-  val.value= val.value.substring(0,Meteor.settings.public.MAX_CHAR_IN_TEXTAREA);
+ if(len > getParam("MAX_CHAR_IN_TEXTAREA")){
+  val.value= val.value.substring(0,getParam("MAX_CHAR_IN_TEXTAREA"));
 }
 else{
-  $('#max').text(Meteor.settings.public.MAX_CHAR_IN_TEXTAREA-len);
+  $('#max').text(getParam("MAX_CHAR_IN_TEXTAREA")-len);
 }
 },
 

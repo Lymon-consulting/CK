@@ -315,7 +315,9 @@ Meteor.publish('params', function(){
     fields:{
       'MIN_YEAR':1,
       'MAX_YEAR':1,
-      'SEND_VERIFICATION_MAIL':1
+      'SEND_VERIFICATION_MAIL':1,
+      'MAX_CHAR_IN_TEXTAREA':1,
+      'CLOUDINARY_RES_URL':1
     }
    });
 });
