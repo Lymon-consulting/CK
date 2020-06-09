@@ -95,7 +95,7 @@ Meteor.publish("userData", function () {
 //const Users = new Mongo.Collection('users');
 export const UsersIndex = new Index({
     collection: Meteor.users,
-    fields: ['profile.name', 'profile.lastname', 'profile.lastname2', 'emails'],
+    fields: ['profile.name', 'profile.lastname', 'profile.lastname2', 'emails', 'cast.artistic'],
     engine: new MongoDBEngine({
 
     selectorPerField: function (field, searchString) {
@@ -117,6 +117,7 @@ export const UsersIndex = new Index({
         const selector = this.defaultConfiguration().selector(searchObject, options, aggregation)
 
         // modify the selector to only match documents where region equals "New York"
+        
         if (options.search.props.isCrew) {
           selector.isCrew = options.search.props.isCrew;
         }
@@ -126,35 +127,8 @@ export const UsersIndex = new Index({
         if (options.search.props.role) {
           selector.role = options.search.props.role;
         }
-        if (options.search.props.profileType) {
-          selector.profileType = options.search.props.profileType;
-        }
-        if (options.search.props.categories) {
-          selector.categories = options.search.props.categories;
-        }
-        if (options.search.props.sex) {
-          selector.sex = options.search.props.sex;
-        }
-        if (options.search.props.eyes) {
-          selector.eyes = options.search.props.eyes;
-        }
-        if (options.search.props.hair) {
-          selector.hair = options.search.props.hair;
-        }
-        if (options.search.props.hairType) {
-          selector.hairType = options.search.props.hairType;
-        }
-        if (options.search.props.physical) {
-          selector.physical = options.search.props.physical;
-        }
-        if (options.search.props.ethnicity) {
-          selector.ethnicity = options.search.props.ethnicity;
-        }
-        if (options.search.props.ageRange) {
-          selector.ageRange = options.search.props.ageRange;
-        }
-        if (options.search.props.height) {
-          selector.height = options.search.props.height;
+        if (options.search.props.topRole) {
+          selector.topRole = options.search.props.topRole;
         }
         if (options.search.props.country) {
           selector.country = options.search.props.country;
@@ -164,6 +138,33 @@ export const UsersIndex = new Index({
         }
         if (options.search.props.city) {
           selector.city = options.search.props.city;
+        }
+        if (options.search.props.eyes) {
+          selector['cast.eyes'] = options.search.props.eyes;
+        }
+        if (options.search.props.categories) {
+          selector['cast.categories'] = options.search.props.categories;
+        }
+        if (options.search.props.sex) {
+          selector['cast.sex'] = options.search.props.sex;
+        }
+        if (options.search.props.hair) {
+          selector['cast.hair'] = options.search.props.hair;
+        }
+        if (options.search.props.hairType) {
+          selector['cast.hairType'] = options.search.props.hairType;
+        }
+        if (options.search.props.physical) {
+          selector['cast.physical'] = options.search.props.physical;
+        }
+        if (options.search.props.ethnicity) {
+          selector['cast.ethnicity'] = options.search.props.ethnicity;
+        }
+        if (options.search.props.ageRange) {
+          selector['cast.ageRange'] = options.search.props.ageRange;
+        }
+        if (options.search.props.height) {
+          selector['cast.height'] = options.search.props.height;
         }
 
         return selector;
@@ -288,7 +289,11 @@ Meteor.publish("otherUsers", function () {
       'alerts': 1,
       'followCompany':1,
       'vimeoCrew':1,
-      'youtubeCrew':1
+      'youtubeCrew':1,
+      'viewAs':1,
+      'topRole':1,
+      'cast':1,
+      'crew':1
     }
   });
 });

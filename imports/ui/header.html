@@ -59,12 +59,12 @@
                 <div class="row">
                   <div class="col-lg-12"><strong>{{firstName}} {{lastName}}</strong></div>
                 </div>
-                {{#if isCrew}}
+                {{#if viewAsCrew}}
                 <div class="row">
                   <div class="col-lg-12 agreements">{{getCrewRoles}}</div>
                 </div>
                 {{/if}}
-                {{#if isCast}}
+                {{#if viewAsCast}}
                 <div class="row">
                   <div class="col-lg-12 agreements">{{getCastRoles}}</div>
                 </div>
@@ -76,7 +76,7 @@
             </div>
             <div class="row">
               <div class="col text-center">
-                {{#if isCrew}}
+                {{#if viewAsCrew}}
                 <a href="/profilePage/{{currentUser._id}}" class="text-purple"><strong>Ver perfil</strong></a>
                 {{else}}
                 <a href="/profilePageActor/{{currentUser._id}}" class="text-purple"><strong>Ver perfil</strong></a>
@@ -84,7 +84,7 @@
               </div>
             </div>
             <h4 class="dropdown-header">CUENTA</h4>
-            {{#if isCrew}}
+            {{#if viewAsCrew}}
             <a class="dropdown-item text-black" href="/editProfile/{{currentUser._id}}">Editar perfil</a>
             {{else}}
             <a class="dropdown-item text-black" href="/editProfileActor/{{currentUser._id}}">Editar perfil</a>
@@ -93,14 +93,24 @@
             <div class="dropdown-divider"></div>
             
             <h4 class="dropdown-header">ADMINISTRAR</h4>
-            {{#if hasTopRole}}
-            <a class="dropdown-item text-black" href="/viewProjects/{{currentUser._id}}">Mis proyectos</a>
+            
+            {{#if viewAsCrew}}
+                <!--Es CREW, solo puede crear empresas-->
+              {{#if hasTopRole}}
+                <!--Tiene rol TOP, puede crear proyectos y empresas-->
+                <a class="dropdown-item text-black" href="/viewProjects/{{currentUser._id}}">Mis proyectos</a>
+                <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}">Mis empresas</a>
+              {{else}}
+                <!--No tiene rol TOP, puede crear portafolios-->
+                <a class="dropdown-item text-black" href="/viewProjects/{{currentUser._id}}">Mi portafolio</a>
+              {{/if}}
             {{else}}
-            <a class="dropdown-item text-black" href="/viewProjects/{{currentUser._id}}">Mi portafolio</a>
+                <!--Es CAST, solo puede crear empresas-->
+                <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}">Mis empresas</a>
             {{/if}}
-            {{#if hasTopRole}}
-            <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}">Mis empresas</a>
-            {{/if}}
+            
+
+            
             <a class="dropdown-item text-black" href="/mediaEditorObject/{{currentUser._id}}/crew/{{currentUser._id}}/global">Mis imágenes</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item text-black logout" href="#">Salir</a>

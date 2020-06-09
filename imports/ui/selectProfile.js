@@ -13,7 +13,7 @@ Template.selectProfile.rendered = function(){
     console.log(user);
     if(user){
       if(user.isCrew || user.isCast){
-        console.log("Ya pasó por aquí y se va a ir a otra página");
+        //console.log("Ya pasó por aquí y se va a ir a otra página");
         if(user.isCrew){
           FlowRouter.go("/editProfile/"+Meteor.userId());  
         }
@@ -31,21 +31,18 @@ Template.selectProfile.events({
     event.preventDefault();
     var optionSelected = $(event.target).attr("data-answer");
     if(optionSelected==='crew'){
-      //Meteor.call('updateProfileType', Meteor.userId(), 'crew'); 
       Meteor.call('setIsCrew', Meteor.userId(), true); 
       FlowRouter.go('/confirmProfile/' + Meteor.userId()+"/crew");  
     }
-    else if(optionSelected==='industry'){
-      //Meteor.call('updateProfileType', Meteor.userId(), 'crew'); 
-      Meteor.call('setIsCast', Meteor.userId(), true); 
-      FlowRouter.go('/confirmProfile/' + Meteor.userId()+"/industry");  
-    }
     else if(optionSelected==='cast'){
-      //Meteor.call('updateProfileType', Meteor.userId(), 'cast'); 
       Meteor.call('setIsCast', Meteor.userId(), true); 
-      //FlowRouter.go('/editProfileActor/' + Meteor.userId());  
       FlowRouter.go('/confirmProfile/' + Meteor.userId()+"/cast"); 
     }
+    else if(optionSelected==='industry'){
+      Meteor.call('setIsCrew', Meteor.userId(), true); 
+      FlowRouter.go('/confirmProfile/' + Meteor.userId()+"/industry");  
+    }
+    
 
   }
 });

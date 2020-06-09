@@ -59,6 +59,38 @@ Template.registerHelper('lastName2', function(){
  return Meteor.user().profile.lastname2;
 });
 
+
+Template.registerHelper('viewAsCrew', function(){
+  var result = false;
+  if(Meteor.user() && Meteor.user().viewAs){
+    if(Meteor.user().viewAs===1){ //usuario elige ver como crew
+      result = true;
+    }
+  }
+  return result;
+});
+
+Template.registerHelper('viewAsCast', function(){
+  var result = false;
+  if(Meteor.user() && Meteor.user().viewAs){
+    if(Meteor.user().viewAs===2){ //usuario elige ver como cast
+      result = true;
+    }
+  }
+  return result;
+});
+
+Template.registerHelper('isBoth', function(){
+  var result = false;
+  var user = Meteor.user();
+  if(user){
+    if(user.isCrew!=null && user.isCrew && user.isCast!=null && user.isCast){
+      result = true;
+    }
+  }
+  return result;
+});
+/*
 Template.registerHelper('isCast', function(){
   var result = false;
   if(Meteor.user()){
@@ -99,16 +131,7 @@ Template.registerHelper('isCrew', function(){
   return result;
 });
 
-Template.registerHelper('isBoth', function(){
-  var result = false;
-  var user = Meteor.user();
-  if(user){
-    if(user.isCrew!=null && user.isCrew && user.isCast!=null && user.isCast){
-      result = true;
-    }
-  }
-  return result;
-});
+
 
 Template.registerHelper('viewAs',function(){
   var userPreference = null;
@@ -126,7 +149,7 @@ Template.registerHelper('viewAs',function(){
   }
   return userPreference;
 });
-
+*/
 Template.registerHelper('fullName', function(){
  var fullName = "";
  if(Meteor.user()!=null && Meteor.user().profile!=null){
@@ -147,26 +170,13 @@ Template.registerHelper('fullName', function(){
 Template.registerHelper('hasTopRole', function(){
   var array = new Array();
   var result = false;
-  if(Meteor.user()!=null && Meteor.user().role!=null){
-    array = Meteor.user().role;
+  if(Meteor.user()!=null && Meteor.user().topRole!=null){
+    array = Meteor.user().topRole;
     for (var i = array.length - 1; i >= 0; i--) {
-      if(array[i]==="Director"){
+      if(array[i]==="1" || array[i]==="2" || array[i]==="3" || array[i]==="4"){
         result = true;  
         break;
       }
-      if(array[i]==="Productor"){
-        result = true;  
-        break;
-      }
-      if(array[i]==="Dueño"){
-        result = true;  
-        break;
-      }
-      if(array[i]==="Legal"){
-        result = true;  
-        break;
-      }
-
     }
   }
   return result;

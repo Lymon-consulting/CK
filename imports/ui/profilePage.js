@@ -61,58 +61,40 @@ Template.profilePage.helpers({
       }
       return url;
     },
-   ownerRole(){
-      var u = Meteor.users.findOne({'_id': FlowRouter.getParam('id')});
-      var result = new Array();
-      var strResult = "";
-      if(u){
-         userRoles = u.role;
-
-         if(userRoles){
-         
-           for (var i = 0; i < userRoles.length; i++) {
-              if(userRoles[i]==="Productor"){
-                result.push(userRoles[i]);
-              }
-              else if(userRoles[i]==="Director"){
-                result.push(userRoles[i]);
-              }
-              else if(userRoles[i]==="Dueño"){
-                //result.push(userRoles[i]);
-              }
-              else if(userRoles[i]==="Legal"){
-                //result.push("Representante legal");
-              }
-              else if(userRoles[i]==="Ejecutivo"){
-                //result.push("Administrador de industria");
-              }
-              else{
-                result.push(userRoles[i]);
-              }
-            }
-
-            for (var i = 0; i < result.length; i++) {
-              strResult = strResult + ", " + result[i];
-            }
-            strResult = strResult.substring(2, strResult.length);
+   getProfileRoles(){
+    var u = Meteor.users.findOne({'_id': FlowRouter.getParam('id')});
+    var result = new Array();
+    var strResult = "";
+    if(u){
+      userTopRoles = u.topRole;
+      if(userTopRoles){
+        for (var i = 0; i < userTopRoles.length; i++) {
+          if(userTopRoles[i]==="1"){
+            result.push("Producción");
+          }
+          else if(userTopRoles[i]==="2"){
+            result.push("Dirección");
           }
         }
+      }
+      userRoles = u.role;
+      if(userRoles){
+        for (var i = 0; i < userRoles.length; i++) {
+          result.push(userRoles[i]);
+        }
+      }
 
-         /*if(rolesArray){
-            var size = rolesArray.length;
-            var count = 0;
-            rolesArray.forEach(function(elem){
-               result = result + elem;
-               count++;
-               if(count < size){
-                  result = result + ", ";
-               }
-            });
-         }*/
-      return strResult;
+      for (var i = 0; i < result.length; i++) {
+        strResult = strResult + ", " + result[i];
+      }
+      strResult = strResult.substring(2, strResult.length);
 
 
-      
+
+
+    }
+
+    return strResult;
    },
    getEmail(){
       var email = "";
@@ -315,7 +297,7 @@ Template.profilePage.helpers({
    getFollowName(userId){
      var user = Meteor.users.findOne({'_id' : userId}); 
      if(user){
-       if(user.showArtisticName){
+       if(user.isCast && user.showArtisticName){
           return user.artistic;
        }
        else{
@@ -340,22 +322,22 @@ isDirectorOrProducer(){
    var user = Meteor.users.findOne({'_id' : FlowRouter.getParam('id')});
    var array = new Array();
     var result = false;
-    if(user!=null && user.role!=null){
-      array = user.role;
+    if(user!=null && user.topRole!=null){
+      array = user.topRole;
       for (var i = array.length - 1; i >= 0; i--) {
-        if(array[i]==="Director"){
+        if(array[i]===1){
           result = true;  
           break;
         }
-        if(array[i]==="Productor"){
+        if(array[i]===2){
           result = true;  
           break;
         }
-        if(array[i]==="Dueño"){
+        if(array[i]===3){
           result = true;  
           break;
         }
-        if(array[i]==="Legal"){
+        if(array[i]===4){
           result = true;  
           break;
         }
@@ -368,11 +350,11 @@ isDirectorOrProducer(){
       Meteor.subscribe("allMedia");
       var user = Meteor.users.findOne({'_id':userId});
       var url;
-      if(user!=null && user.profilePictureID!=null){
-        var profile = Media.findOne({'mediaId':user.profilePictureID});
+      if(user!=null && user.crew!=null && user.crew.profilePictureID!=null){
+        var profile = Media.findOne({'mediaId':user.crew.profilePictureID});
         if(profile!=null){
           //url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + profile.media_version + "/" + userId + "/" + user.crew.profilePictureID;    
         }
         
       }
@@ -407,10 +389,10 @@ isDirectorOrProducer(){
       Meteor.subscribe("allMedia");
       var user = Meteor.users.findOne({'_id':userId});
       var url;
-      if(user!=null && user.profilePictureID!=null){
-        var profile = Media.findOne({'mediaId':user.profilePictureID});
+      if(user!=null && user.crew!=null && user.crew.profilePictureID!=null){
+        var profile = Media.findOne({'mediaId':user.crew.profilePictureID});
         if(profile!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.crew.profilePictureID;    
         }
         
       }
@@ -433,10 +415,10 @@ isDirectorOrProducer(){
       Meteor.subscribe("allMedia");
       var user = Meteor.users.findOne({'_id':userId});
       var url;
-      if(user!=null && user.profileCoverID!=null){
-        var cover = Media.findOne({'mediaId':user.profileCoverID});
+      if(user!=null && user.crew!=null && user.crew.profileCoverID!=null){
+        var cover = Media.findOne({'mediaId':user.crew.profileCoverID});
         if(cover!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + userId + "/" + user.profileCoverID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + userId + "/" + user.crew.profileCoverID;    
         }
         
       }

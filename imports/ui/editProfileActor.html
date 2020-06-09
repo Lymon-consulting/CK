@@ -39,7 +39,7 @@
           <div class="spacer20"></div>
           <div class="row">
             <div class="col text-center text-16">
-              <strong>¡Te damos la bienvenida, {{name}}!</strong>
+              <strong>¡Te damos la bienvenida, {{showName}}!</strong>
             </div>
           </div>
           <div class="spacer40"></div>
@@ -548,6 +548,11 @@
               <a href="#" class="btn btn-purple disabled" id="setProfilePicture" data-id="{{this.mediaId}}" disabled>Establecer como foto de perfil</a>
             </div>
           </div>
+          <div class="row">
+            <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>
+            <div class="col-lg-2">&nbsp;</div>
+            <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+          </div>
         </div>
       </div>
       <!--/.Content-->
@@ -606,6 +611,11 @@
               <a href="#" class="btn btn-purple" id="setCoverPicture" data-id="{{this.mediaId}}" disabled>Establecer como foto de portada</a>
             </div>
           </div>
+          <div class="row">
+            <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryGallery" data-dismiss="modal">Agregar más imágenes</button></div>
+            <div class="col-lg-2">&nbsp;</div>
+            <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+          </div>
 
 
 
@@ -662,7 +672,9 @@
         <!--Footer-->
         <div class="modal-footer justify-content-center">
           <div class="row">
-            <div class="col-lg-6"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+            <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryGallery" data-dismiss="modal">Agregar más imágenes</button></div>
+            <div class="col-lg-2">&nbsp;</div>
+            <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
           </div>
           
           

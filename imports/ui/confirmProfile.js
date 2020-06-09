@@ -31,7 +31,6 @@ Template.confirmProfile.helpers({
   }
 });
 
-
 Template.confirmProfile.events({
   'change .profile'(event, instance) {
     //console.log(event.target.id + " - " + event.target.checked);
@@ -80,38 +79,28 @@ Template.confirmProfile.events({
   },
   'click #continuar': function(event, template){
     event.preventDefault();
-
-    //if ($("input[type=checkbox]").prop(":checked")) { 
     if (check1) { 
         console.log("check1"); 
-        Meteor.call('addRole', Meteor.userId(),"Productor");
+        Meteor.call('addTopRole', Meteor.userId(),"1"); //1=Productor
     }
     if (check2) { 
         console.log("check2"); 
-        Meteor.call('addRole', Meteor.userId(),"Director");
+        Meteor.call('addTopRole', Meteor.userId(),"2"); //2=Director
     }
     if (check3) { 
         console.log("check3"); 
-        Meteor.call('addRole', Meteor.userId(),"Dueño");
+        Meteor.call('addTopRole', Meteor.userId(),"3"); //3=Dueño
     }
     if (check4) { 
         console.log("check4"); 
-        Meteor.call('addRole', Meteor.userId(),"Legal");
+        Meteor.call('addTopRole', Meteor.userId(),"4"); //4=Representante
     }
-    /*
-    if (check5) { 
-        console.log("check5"); 
-        Meteor.call('addRole', Meteor.userId(),"Ejecutivo");
-    }*/
-
-    console.log(FlowRouter.getParam("type"));
-
+//    console.log(FlowRouter.getParam("type"));
     if(FlowRouter.getParam("type")==="crew"){
       FlowRouter.go('/editProfile/' + Meteor.userId());
     }
     else if(FlowRouter.getParam("type")==="cast"){
       FlowRouter.go('/editProfileActor/' + Meteor.userId());
     }
-
   }
 });

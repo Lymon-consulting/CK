@@ -72,10 +72,10 @@ Template.peopleList.helpers({
   if(Session.get("selected_category")!=null){
     allOcupations = Ocupation.find({'title': Session.get("selected_category")}).fetch();
     if(Session.get("selected_category")==="Dirección"){
-      allOcupations.push({'title':'Dirección', 'secondary':'Director'});
+      allOcupations.push({'title':'Dirección', 'secondary':'Dirección'});
     }
     else if(Session.get("selected_category")==="Producción"){
-      allOcupations.push({'title':'Producción', 'secondary':'Productor'});
+      allOcupations.push({'title':'Producción', 'secondary':'Producción'});
     }
   }
   else{
@@ -85,6 +85,20 @@ Template.peopleList.helpers({
 },
 getAllOcupations(){
   return Ocupation.find({},{sort:{"secondary":1}}).fetch();
+},
+isDirector(val){
+  var result = false;
+  if(val==="Dirección"){
+    result = true;
+  }
+  return result;
+},
+isProducer(val){
+  var result = false;
+  if(val==="Producción"){
+    result = true;
+  }
+  return result;
 },
 getAvailableYears(){
   var years = new Array();
@@ -134,43 +148,40 @@ notSameUser(userId){
  }
  return val;
 },
-getPrimaryRoles(roles){
+getPrimaryRoles(userId){
+  var user = Meteor.users.findOne({'_id': userId});
   var result = new Array();
   var strResult = "";
-  userRoles = roles;
-  for (var i = 0; i < userRoles.length; i++) {
-    if(userRoles[i]==="Productor"){
-      result.push(userRoles[i]);
-    }
-    else if(userRoles[i]==="Director"){
-      result.push(userRoles[i]);
-    }
-    else if(userRoles[i]==="Dueño"){
-          //result.push(userRoles[i]);
+  if(user){
+     
+     var topRole = user.topRole;
+     if(topRole){
+       for (var i = 0; i < topRole.length; i++) {
+         if(topRole[i]==="1"){
+           result.push("Producción");
+         }
+         else if(topRole[i]==="2"){
+           result.push("Dirección");
+         }
+       }
+     }
+
+     var crewRoles = user.role;
+     if(crewRoles){
+       for (var i = 0; i < crewRoles.length; i++) {
+          result.push(crewRoles[i]);
         }
-        else if(userRoles[i]==="Legal"){
-          //result.push("Representante legal");
-        }
-        else if(userRoles[i]==="Ejecutivo"){
-          //result.push("Administrador de industria");
-        }
-        else{
-          result.push(userRoles[i]);
-        }
+        
       }
 
       for (var i = 0; i < result.length; i++) {
         strResult = strResult + ", " + result[i];
       }
       strResult = strResult.substring(2, strResult.length);
-
-      return strResult;
-
-    },
-/*   personalCover(userId){
-      Meteor.subscribe("personalcover");
-      return PersonalCover.find({'owner': userId});
-    },*/
+      
+    }
+  return strResult;
+   },
     showButtonFollow(follow){
       var following = Meteor.users.find({$and : [ {'_id' : Meteor.userId()} , {"follows": follow }]});
 
@@ -203,10 +214,10 @@ getPrimaryRoles(roles){
   getProfilePicture(userId) {
     Meteor.subscribe("allMedia");
     var user = Meteor.users.findOne({'_id':userId});
-    if(user!=null && user.profilePictureID!=null){
-      var profile = Media.findOne({'mediaId':user.profilePictureID});
+    if(user!=null && user.crew!=null && user.crew.profilePictureID!=null){
+      var profile = Media.findOne({'mediaId':user.crew.profilePictureID});
       if(profile!=null){
-        return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_80,h_80,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+        return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_80,h_80,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.crew.profilePictureID;    
       }
 
     }
@@ -234,10 +245,10 @@ getPrimaryRoles(roles){
       Meteor.subscribe("allMedia");
       var user = Meteor.users.findOne({'_id':userId});
       var url;
-      if(user!=null && user.profileCoverID!=null){
-        var cover = Media.findOne({'mediaId':user.profileCoverID});
+      if(user!=null && user.crew!=null && user.profileCoverID!=null){
+        var cover = Media.findOne({'mediaId':user.crew.profileCoverID});
         if(cover!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_scale" + "/v" + cover.media_version + "/" + userId + "/" + user.profileCoverID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_scale" + "/v" + cover.media_version + "/" + userId + "/" + user.crew.profileCoverID;    
         }
         
       }
@@ -322,12 +333,19 @@ Template.peopleList.events({
  }
 },
 'change #role': function (e) {
-  if($(e.target).val()!="cualquier"){
-   UsersIndex.getComponentMethods().addProps('role', $(e.target).val());
-   Session.set("role_selected",$(e.target).val());
+  var val = $(e.target).val();
+  if(val!="cualquier"){
+   if(val==="1" || val==="2"){
+    UsersIndex.getComponentMethods().addProps('topRole', val); 
+   }
+   else{
+    UsersIndex.getComponentMethods().addProps('role', val); 
+   }
+   Session.set("role_selected",val);
  }
  else{
    UsersIndex.getComponentMethods().removeProps('role');  
+   UsersIndex.getComponentMethods().removeProps('topRole');  
    Session.set("role_selected",null);
  }
 },

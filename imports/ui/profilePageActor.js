@@ -8,27 +8,27 @@ import './profilePageActor.html';
 Meteor.subscribe("otherUsers");
 Template.profilePageActor.helpers({
    getProfile(){
-      
-      //console.log(FlowRouter.getParam('id'));
-      return Meteor.users.findOne({_id : FlowRouter.getParam('id')});
+    return Meteor.users.findOne({'_id' : FlowRouter.getParam('id')});
    },
    getName(userId){
+      Meteor.subscribe("otherUsers");
       var name = "";
       var user = Meteor.users.findOne({'_id':userId});
-      if(user){
-        if(user.showArtisticName){
-          name = user.artistic;
+      
+      if(user!=null && user.cast!=null){
+        if(user.cast.showArtisticName!=null && user.cast.showArtisticName===true){
+          name = user.cast.artistic;
         }
-        else{
-          if(user.profile.name!=null && user.profile.name!=""){
-            name = user.profile.name;  
-          }
-          if(user.profile.lastname!=null && user.profile.lastname!=""){
-            name = name + " " + user.profile.lastname;
-          }
-          if(user.profile.lastname2!=null && user.profile.lastname2!=""){
-            name = name + " " + user.profile.lastname2;
-          }
+      }
+      else{
+        if(user!=null && user.profile.name!=null && user.profile.name!=""){
+          name = user.profile.name;  
+        }
+        if(user!=null && user.profile.lastname!=null && user.profile.lastname!=""){
+          name = name + " " + user.profile.lastname;
+        }
+        if(user!=null && user.profile.lastname2!=null && user.profile.lastname2!=""){
+          name = name + " " + user.profile.lastname2;
         }
       }
       return name;
@@ -115,8 +115,8 @@ Template.profilePageActor.helpers({
       var user = Meteor.users.findOne({'_id': FlowRouter.getParam('id')});
       var result = new Array();
       
-      if(user && user.categories){
-         result = user.categories;
+      if(user!=null && user.cast!=null && user.cast.categories!=null){
+         result = user.cast.categories;
          for (var i = 0; i < result.length; i++) {
            strResult = strResult + ", " + result[i];
          }
@@ -186,13 +186,14 @@ Template.profilePageActor.helpers({
       Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
       return Project.find({"project_staff._id":  FlowRouter.getParam('id')});
    },
+   /*
    isDirectorOrProducer(){
    Meteor.subscribe("otherUsers");
    var user = Meteor.users.findOne({'_id' : FlowRouter.getParam('id')});
    var array = new Array();
     var result = false;
-    if(user!=null && user.role!=null){
-      array = user.role;
+    if(user!=null && user.topRole!=null){
+      array = user.topRole;
       for (var i = array.length - 1; i >= 0; i--) {
         if(array[i]==="Director"){
           result = true;  
@@ -214,7 +215,7 @@ Template.profilePageActor.helpers({
       }
     }
     return result;
-  },
+  },*/
    getProjectImages(projId, size){
     Meteor.subscribe("allMedia");
       var data = Project.findOne({'_id' : projId});
@@ -334,17 +335,18 @@ Template.profilePageActor.helpers({
         return [];
       }
    },
+   /*
    getName(userId){
      var user = Meteor.users.findOne({'_id' : userId}); 
      if(user){
-       if(user.showArtisticName){
-          return user.artistic;
+       if(user.cast.showArtisticName){
+          return user.cast.artistic;
        }
        else{
          return user.fullname;
        }
      }
-   },
+   },*/
    getFollowingCompanies(){
      Meteor.subscribe("otherUsers");
      var user = Meteor.users.findOne({'_id' : FlowRouter.getParam('id')});
@@ -360,10 +362,10 @@ Template.profilePageActor.helpers({
       Meteor.subscribe("allMedia");
       var user = Meteor.users.findOne({'_id':userId});
       var url;
-      if(user!=null && user.profilePictureID!=null){
-        var profile = Media.findOne({'mediaId':user.profilePictureID});
+      if(user!=null && user.cast!=null && user.cast.profilePictureID!=null){
+        var profile = Media.findOne({'mediaId':user.cast.profilePictureID});
         if(profile!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.cast.profilePictureID;    
         }
         
       }
@@ -409,10 +411,10 @@ Template.profilePageActor.helpers({
       Meteor.subscribe("allMedia");
       var user = Meteor.users.findOne({'_id':userId});
       var url;
-      if(user!=null && user.profileCoverID!=null){
-        var cover = Media.findOne({'mediaId':user.profileCoverID});
+      if(user!=null && user.cast!=null && user.cast.profileCoverID!=null){
+        var cover = Media.findOne({'mediaId':user.cast.profileCoverID});
         if(cover!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_1200,h_600,c_fill/" + "/v" + cover.media_version + "/" + userId + "/" + user.profileCoverID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_1200,h_600,c_fill/" + "/v" + cover.media_version + "/" + userId + "/" + user.cast.profileCoverID;    
         }
         
       }
@@ -423,11 +425,11 @@ Template.profilePageActor.helpers({
     var data = Meteor.users.findOne({'_id' : FlowRouter.getParam("id")});
     var array = new Array();
     
-    if(data){
-      if(data.gallery){
-        for (var i = 0; i < data.gallery.length; i++) {
+    if(data!=null){
+      if(data.cast!=null && data.cast.gallery!=null){
+        for (var i = 0; i < data.cast.gallery.length; i++) {
           var obj = {};
-          obj.mediaId = data.gallery[i];
+          obj.mediaId = data.cast.gallery[i];
 
           if(i==0){
             obj.position = 1;

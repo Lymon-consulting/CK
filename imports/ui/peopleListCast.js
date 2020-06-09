@@ -90,9 +90,9 @@ Template.peopleListCast.helpers({
     getName(userId){
       var result="";
       var user = Meteor.users.findOne({'_id': userId});
-      if(user){
-        if(user.showArtisticName){
-          result = user.artistic;
+      if(user!=null){
+        if(user.cast!=null && user.cast.showArtisticName){
+          result = user.cast.artistic;
         }
         else{
           result = user.fullname;
@@ -104,8 +104,8 @@ Template.peopleListCast.helpers({
       var strResult = "";
       var user = Meteor.users.findOne({'_id': userId});
       var result = new Array();
-      if(user && user.categories){
-         result = user.categories;
+      if(user!=null && user.cast!=null && user.cast.categories){
+         result = user.cast.categories;
          for (var i = 0; i < result.length; i++) {
            strResult = strResult + ", " + result[i];
          }
@@ -176,6 +176,8 @@ Template.peopleListCast.helpers({
       var strResult = "";
       userRoles = roles;
       for (var i = 0; i < userRoles.length; i++) {
+        result.push(userRoles[i]);
+        /*
         if(userRoles[i]==="Productor"){
           result.push(userRoles[i]);
         }
@@ -193,7 +195,7 @@ Template.peopleListCast.helpers({
         }
         else{
           result.push(userRoles[i]);
-        }
+        }*/
       }
 
       for (var i = 0; i < result.length; i++) {
@@ -240,10 +242,10 @@ Template.peopleListCast.helpers({
     getProfilePicture(userId) {
       Meteor.subscribe("allMedia");
       var user = Meteor.users.findOne({'_id':userId});
-      if(user!=null && user.profilePictureID!=null){
-        var profile = Media.findOne({'mediaId':user.profilePictureID});
+      if(user!=null && user.cast!=null && user.cast.profilePictureID!=null){
+        var profile = Media.findOne({'mediaId':user.cast.profilePictureID});
         if(profile!=null){
-          return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_100,h_100,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+          return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_100,h_100,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.cast.profilePictureID;    
         }
         
       }
@@ -271,10 +273,10 @@ Template.peopleListCast.helpers({
       Meteor.subscribe("allMedia");
       var user = Meteor.users.findOne({'_id':userId});
       var url;
-      if(user!=null && user.profileCoverID!=null){
-        var cover = Media.findOne({'mediaId':user.profileCoverID});
+      if(user!=null && user.cast!=null && user.cast.profileCoverID!=null){
+        var cover = Media.findOne({'mediaId':user.cast.profileCoverID});
         if(cover!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_scale" + "/v" + cover.media_version + "/" + userId + "/" + user.profileCoverID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_scale" + "/v" + cover.media_version + "/" + userId + "/" + user.cast.profileCoverID;    
         }
         
       }
@@ -352,15 +354,15 @@ Template.peopleListCast.events({
       var extra = $("#extra").prop("checked");
       var doble = $("#doble").prop("checked");
       if(modelo && actor && bailarin && cantante && extra && doble){ //Todos seleccionados
-        UsersIndex.getComponentMethods().removeProps('categories');  
+        UsersIndex.getComponentMethods().removeProps('cast.categories');  
         Session.set("category_selected",null);
       }
       else if(!modelo && !actor && !bailarin && !cantante && !extra && !doble){ //Ninguno seleccionados
-        UsersIndex.getComponentMethods().removeProps('categories');  
+        UsersIndex.getComponentMethods().removeProps('cast.categories');  
         Session.set("category_selected",null);
       }
       else{
-        UsersIndex.getComponentMethods().addProps('categories', $(event.target).val());
+        UsersIndex.getComponentMethods().addProps('cast.categories', $(event.target).val());
         Session.set("category_selected",$(event.target).val());
       }
 
@@ -383,19 +385,19 @@ Template.peopleListCast.events({
       var female = $("#f-check").prop("checked")
 
       if(male && female){ //Ambos tienen el check, buscar todos
-        UsersIndex.getComponentMethods().removeProps('sex');
+        UsersIndex.getComponentMethods().removeProps('cast.sex');
         Session.set("gender_selected",null);
       }
       else if(!male && !female){ //Ninguno tiene el check, buscar todos
-        UsersIndex.getComponentMethods().removeProps('sex');
+        UsersIndex.getComponentMethods().removeProps('cast.sex');
         Session.set("gender_selected",null);
       }
       else if(male && !female){ //Masculino tiene el ckeck y femenino no
-        UsersIndex.getComponentMethods().addProps('sex', $("#m-check").val());
+        UsersIndex.getComponentMethods().addProps('cast.sex', $("#m-check").val());
         Session.set("gender_selected",$("#m-check").val());
       }
       else if(!male && female){ //Femenino tiene el ckeck y masculino no
-        UsersIndex.getComponentMethods().addProps('sex', $("#f-check").val());
+        UsersIndex.getComponentMethods().addProps('cast.sex', $("#f-check").val());
         Session.set("gender_selected",$("#f-check").val());
       }
 

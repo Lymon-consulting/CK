@@ -79,7 +79,15 @@
               <select class="form-control agreements" id="role">
                 <option value="cualquier"> Cualquier ocupación </option>
                 {{#each getOcupationsFromCategory}}
+                  {{#if isProducer secondary}}
+                <option value="1"> {{secondary}} </option>
+                  {{else}}
+                    {{#if isDirector secondary}}
+                <option value="2"> {{secondary}} </option>  
+                    {{else}}
                 <option value="{{secondary}}"> {{secondary}} </option>
+                    {{/if}}
+                  {{/if}}
                 {{/each}}
               </select>
             </div>
@@ -165,9 +173,7 @@
                               </tr>
                               <tr>
                                 <td class="no-padding text-no-wrap subtitle-underline">
-                                {{#if this.role}}
-                                {{getPrimaryRoles this.role}}
-                                {{/if}}
+                                {{getPrimaryRoles this.__originalId}}
                                 </td>
                               </tr>
                               <tr>
