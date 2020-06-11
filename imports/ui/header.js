@@ -43,20 +43,21 @@ Template.header.helpers({
       var name = "";
       var user = Meteor.user();
       if(user!=null){
-        if(user.cast!=null && user.cast.showArtisticName){
-          name = user.cast.artistic;
-        }
-        else{
-          if(user.profile.name!=null && user.profile.name!=""){
-            name = user.profile.name;  
+
+          if(user.viewAs===2 && user.cast!=null && user.cast.showArtisticName){
+            name = user.cast.artistic;
           }
-          if(user.profile.lastname!=null && user.profile.lastname!=""){
-            name = name + " " + user.profile.lastname;
+          else{
+            if(user.profile.name!=null && user.profile.name!=""){
+              name = user.profile.name;  
+            }
+            if(user.profile.lastname!=null && user.profile.lastname!=""){
+              name = name + " " + user.profile.lastname;
+            }
+            if(user.profile.lastname2!=null && user.profile.lastname2!=""){
+              name = name + " " + user.profile.lastname2;
+            }
           }
-          if(user.profile.lastname2!=null && user.profile.lastname2!=""){
-            name = name + " " + user.profile.lastname2;
-          }
-        }
       }
       return name;
     },

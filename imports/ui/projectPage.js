@@ -49,6 +49,14 @@ if (Meteor.isClient) {
           }
          return url;*/
       },
+      getStatus(status){
+        if(status==="Terminado"){
+          return "";
+        }
+        else{
+          return "En "+status;
+        }
+      },
       getProjectPoster() {
         Meteor.subscribe("allMedia");
         var data = Project.findOne({'_id' : FlowRouter.getParam('id')});
