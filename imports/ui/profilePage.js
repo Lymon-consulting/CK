@@ -135,29 +135,27 @@ Template.profilePage.helpers({
    },
    countCollaborations(){
      Meteor.subscribe("myProjects");
-     var countCast = Project.find({"project_cast._id":  FlowRouter.getParam('id')}).count();
+     //var countCast = Project.find({"project_cast._id":  FlowRouter.getParam('id')}).count();
      var countCrew = Project.find({"project_staff._id":  FlowRouter.getParam('id')}).count();
 
      var result = false;
 
-     if(countCast>0){
-       result = true;
-     }
-     else if(countCrew>0){
+     if(countCrew>0){
        result = true;
      }
      else{
        result = false;
      }
      return result;
-   },
+   },/*
    getCastCollaborations(){
       Meteor.subscribe("myProjects");
       return Project.find({"project_cast._id":  FlowRouter.getParam('id')});
-   },
+   },*/
    getCrewCollaborations(){
       Meteor.subscribe("myProjects");
-      return Project.find({"project_staff._id":  FlowRouter.getParam('id')});
+      return Project.find({"project_staff._id":  FlowRouter.getParam('id')},{sort: {'project_year':-1} });
+      //var media = Media.find({'userId': Meteor.userId()},{sort: {'media_date':-1} });
    },
    getMainProject(){
       Meteor.subscribe("myProjects");
@@ -325,19 +323,19 @@ isDirectorOrProducer(){
     if(user!=null && user.topRole!=null){
       array = user.topRole;
       for (var i = array.length - 1; i >= 0; i--) {
-        if(array[i]===1){
+        if(array[i]==="1"){
           result = true;  
           break;
         }
-        if(array[i]===2){
+        if(array[i]==="2"){
           result = true;  
           break;
         }
-        if(array[i]===3){
+        if(array[i]==="3"){
           result = true;  
           break;
         }
-        if(array[i]===4){
+        if(array[i]==="4"){
           result = true;  
           break;
         }

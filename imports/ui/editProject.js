@@ -159,7 +159,8 @@ Template.editProject.helpers({
     type.push("Pre-producción");
     type.push("Producción");
     type.push("Post-producción");
-    type.push("Distribución/exhibición ");
+    type.push("Distribución/exhibición");
+    type.push("Terminado");
     return type;
   },
   getAvailableYears(){
@@ -599,6 +600,27 @@ Template.editProject.events({
       $('.modal-backdrop').remove();
       FlowRouter.go("/mediaEditorObject/" + Meteor.userId()+"/project/"+FlowRouter.getParam("id")+"/cover");
   },
+  'click .goMediaLibraryCover': function(event,template){
+      event.preventDefault();
+      $('#modal2').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+      FlowRouter.go("/mediaEditorObject/" + Meteor.userId()+"/project/"+FlowRouter.getParam("id")+"/cover");
+  },
+  'click .goMediaLibraryPoster': function(event,template){
+      event.preventDefault();
+      $('#modal3').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+      FlowRouter.go("/mediaEditorObject/" + Meteor.userId()+"/project/"+FlowRouter.getParam("id")+"/poster");
+  },
+  'click .goMediaLibraryGallery': function(event,template){
+      event.preventDefault();
+      $('#modal4').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+      FlowRouter.go("/mediaEditorObject/" + Meteor.userId()+"/project/"+FlowRouter.getParam("id")+"/gallery");
+  },
   'click #openMediaCover': function(event,template){
     event.preventDefault();
     $(".media-thumb").css('border','none');
@@ -618,7 +640,7 @@ Template.editProject.events({
       Session.set("mediaId",mediaId);
 
      $(".media-thumb").css('border','none');
-     $(event.target).css('border', "solid 3px blue");
+     $(event.target).css('border', "solid 3px #ED1567");
      $("#setPosterPicture").removeClass('disabled');
 
     },
@@ -645,7 +667,7 @@ Template.editProject.events({
       Session.set("mediaId",mediaId);
 
      $(".media-thumb").css('border','none');
-     $(event.target).css('border', "solid 3px blue");
+     $(event.target).css('border', "solid 3px #ED1567");
      $("#setCoverPicture").removeClass('disabled');
 
     },

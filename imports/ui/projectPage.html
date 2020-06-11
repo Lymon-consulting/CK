@@ -180,10 +180,12 @@
                      <td class="low-padding text-no-wrap" rowspan="2"><div class="vertical-line-white" style="height: 55px;"></div></td>
                      <td class="low-padding text-no-wrap text-white"></td>
                      <td class="low-padding text-no-wrap text-white numbers"><small>Año: {{projData.project_year}}</small></td>
+                     <!--
                      <td class="low-padding text-no-wrap text-white" rowspan="2"><div class="vertical-line-white" style="height: 55px;" ></div></td>
                      <td class="low-padding text-no-wrap text-white"><a href="mailto:{{ownerEmail projData.userId}}"><i class="fa fa-envelope fa-sm text-white"></i></a></td>
+                     
                      <td class="low-padding text-no-wrap text-white numbers"><small>Contactar</small></td>
-                     <td class="low-padding text-no-wrap text-white" rowspan="2"><div class="vertical-line-white" style="height: 55px;" ></div></td>
+                     <td class="low-padding text-no-wrap text-white" rowspan="2"><div class="vertical-line-white" style="height: 55px;" ></div></td>-->
                      
                   </tr>
                   <tr>
@@ -194,8 +196,9 @@
                      <td class="low-padding text-no-wrap"><a href="#" id="pushDontLike"><i class="fa fa-thumbs-up fa-sm text-purple"></i></a></td>
                      <td class="low-padding text-no-wrap numbers"><small class="text-purple">Ya no me gusta</small></td>
                      {{/if}}
+                     <!--
                      <td class="low-padding text-no-wrap text-white"><i class="fa fa-share-alt-square fa-sm"></i></td>
-                     <td class="low-padding text-no-wrap text-white numbers"><small>Compartir</small></td>
+                     <td class="low-padding text-no-wrap text-white numbers"><small>Compartir</small></td>-->
                      
                   </tr>
                </table>
@@ -203,8 +206,23 @@
             
          </div>
       </div>
-      
 
+      {{#if projData.project_desc}}
+       <div class="spacer40"></div>
+       <div class="container text-center">
+          <h3 class="h1-title">DESCRIPCIÓN / SINÓPSIS</h3>
+          <hr>
+       </div>
+       <div class="spacer40"></div>
+       <div class="container">
+          <div id="demo">
+              {{projData.project_desc}}
+         </div>
+       </div>      
+       <div class="spacer40"></div>   
+       {{/if}}
+      
+  
       {{#if getProjectPoster}}
       <div class="spacer40"></div>
       <div class="row">
@@ -219,7 +237,7 @@
       <div class="spacer40"></div>
       <div class="row">
         <div class="col-lg-12 text-center">
-          <a href="{{projData.proj_external_view}}" target="_blank" class="btn btn-primary"><i class="fa fa-play-circle fa-lg"></i> Ver Película</a>
+          <a href="{{projData.proj_external_view}}" target="_blank" class="btn btn-purple"><i class="fa fa-play-circle fa-lg"></i> Ver Película</a>
         </div>
       </div>
       {{/if}}
@@ -278,20 +296,7 @@
       {{>companies}}
       
   
-  {{#if projData.project_desc}}
-   <div class="spacer40"></div>
-   <div class="container text-center">
-      <h3 class="h1-title">DESCRIPCIÓN / SINÓPSIS</h3>
-      <hr>
-   </div>
-   <div class="spacer40"></div>
-   <div class="container">
-      <div id="demo">
-          {{projData.project_desc}}
-     </div>
-   </div>      
-   <div class="spacer40"></div>   
-   {{/if}}
+  
 
    {{> items}}
 
@@ -1054,6 +1059,7 @@
      <div class="d-flex justify-content-around text-center">
         {{#each getCompanies.companies}}
            {{#if this.confirmed}}
+           <div class="col-lg-2 col-sm-4 col-xs-12">
               <div class="p-2">
                 <a href="/industryPage/{{this._id}}">
                  {{#if getLogoPicture this._id 100}}
@@ -1082,7 +1088,7 @@
                 </div>
               </div>
             -->
-             
+            </div>   
            {{/if}}
         {{/each}}
      </div>

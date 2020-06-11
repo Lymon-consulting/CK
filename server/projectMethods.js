@@ -257,7 +257,8 @@ Meteor.methods({
     return Project.insert({
       "project_title": project_title,
       "userId": userId,
-      "project_family": family
+      "project_family": family,
+      "project_is_main": false
     });
   },
   'updateProjectTitle'(projectId, project_title){

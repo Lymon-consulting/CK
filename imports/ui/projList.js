@@ -134,7 +134,8 @@ Template.projList.helpers({
       type.push("Pre-producción");
       type.push("Producción");
       type.push("Post-producción");
-      type.push("Distribución/exhibición ");
+      type.push("Distribución/exhibición");
+      type.push("Terminado");
       return type;
     },
      getProjectGender(){

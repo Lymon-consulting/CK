@@ -192,20 +192,14 @@ checkParticipation(userId){
   getProfilePicture(userId, size) {
     Meteor.subscribe("allMedia");
     var user = Meteor.users.findOne({'_id':userId});
-    if(user!=null && user.profilePictureID!=null){
-      var profile = Media.findOne({'mediaId':user.profilePictureID});
+    if(user!=null && user.crew!=null && user.crew.profilePictureID!=null){
+      var profile = Media.findOne({'mediaId':user.crew.profilePictureID});
       if(profile!=null){
-        return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+        return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.crew.profilePictureID;    
       }
       
     }
-    /*
-   var url = "";
-   var user = Meteor.users.findOne({'_id':userId});
-   if(user.profilePictureID!=null && user.profilePictureID!=""){
-    url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",h_"+size+",c_thumb,r_max/" + user.profilePictureID;
-  }
-  return url;*/
+
 },
 getInitials(userId){
   var name = "";
@@ -223,8 +217,8 @@ getCoverPicture(userId, size) {
  Meteor.subscribe("otherUsers");
  var url = "";
  var user = Meteor.users.findOne({'_id':userId});
- if(user.profileCoverID!=null && user.profileCoverID!="undefined"){
-  url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_scale/" + user.profileCoverID;
+ if(user!=null && user.crew!=null && user.crew.profileCoverID!=null && user.crew.profileCoverID!="undefined"){
+  url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_scale/" + user.crew.profileCoverID;
 }
 return url;
 }

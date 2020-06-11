@@ -281,7 +281,12 @@
               {{#if hasTopRole}}
               <div class="spacer20"></div>
                  <div class="row">
-                    <div class="col"><label for="web">Ver película:</label></div>
+                    <div class="col-lg-12"><label for="web">Se puede ver en:</label></div>
+                 </div>
+                 <div class="row">
+                   <div class="col-lg-12 agreements">
+                     Si tu película ya se encuentra en una plataforma de streaming (Netflix, Amazon Prime, Filminlatino, Cinépolis Klic o alguna otra plataforma independiente) puedes incluir aquí el link, el cual generará un botón de play que aparecerá en el perfil de tu proyecto y que redireccionará a los visitantes para que puedan ver tu película.
+                   </div>
                  </div>
               <div class="spacer20"></div>
               <div class="row">
@@ -397,6 +402,11 @@
                     <a href="#" class="btn btn-purple disabled" id="setCoverPicture" data-id="{{this.mediaId}}" disabled>Establecer como foto de portada</a>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryCover" data-dismiss="modal">Agregar más imágenes</button></div>
+                  <div class="col-lg-2">&nbsp;</div>
+                  <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+                </div>
 
 
 
@@ -443,6 +453,11 @@
                   <div class="col-lg-12">
                     <a href="#" class="btn btn-purple disabled" id="setPosterPicture" data-id="{{this.mediaId}}" disabled>Establecer como póster</a>
                   </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryPoster" data-dismiss="modal">Agregar más imágenes</button></div>
+                  <div class="col-lg-2">&nbsp;</div>
+                  <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
                 </div>
 
 
@@ -504,6 +519,11 @@
               <div class="modal-footer justify-content-center">
                 <div class="row">
                   <div class="col-lg-6"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryGallery" data-dismiss="modal">Agregar más imágenes</button></div>
+                  <div class="col-lg-2">&nbsp;</div>
+                  <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
                 </div>
                 
                 

@@ -524,6 +524,14 @@ Template.editIndustry.events({
     event.preventDefault();
     var company_type = event.target.value;
       if(company_type!="PRINCIPALES" && company_type!="SECUNDARIAS" && company_type.indexOf("---")<0 && company_type!=""){
+        /*var type;
+        var company = Industry.findOne({'_id':FlowRouter.getParam('id')});
+        if(company){
+          type = company.company_type;
+        }*/
+
+
+
         Meteor.call('updateCompanyType', FlowRouter.getParam("id"), company_type);
       }
   },
@@ -651,7 +659,7 @@ Template.editIndustry.events({
       Session.set("mediaId",mediaId);
 
      $(".media-thumb").css('border','none');
-     $(event.target).css('border', "solid 3px blue");
+     $(event.target).css('border', "solid 3px #ED1567");
      $("#setLogo").removeClass('disabled');
     },
     'click #setLogo': function(event,template){
@@ -688,7 +696,7 @@ Template.editIndustry.events({
       Session.set("mediaId",mediaId);
 
      $(".media-thumb").css('border','none');
-     $(event.target).css('border', "solid 3px blue");
+     $(event.target).css('border', "solid 3px #ED1567");
      $("#setCoverPicture").removeClass('disabled');
 
     },

@@ -39,6 +39,27 @@ Template.header.helpers({
     var initials = name.charAt(0) + lastname.charAt(0);
     return initials;
   },
+  getName(){
+      var name = "";
+      var user = Meteor.user();
+      if(user!=null){
+        if(user.cast!=null && user.cast.showArtisticName){
+          name = user.cast.artistic;
+        }
+        else{
+          if(user.profile.name!=null && user.profile.name!=""){
+            name = user.profile.name;  
+          }
+          if(user.profile.lastname!=null && user.profile.lastname!=""){
+            name = name + " " + user.profile.lastname;
+          }
+          if(user.profile.lastname2!=null && user.profile.lastname2!=""){
+            name = name + " " + user.profile.lastname2;
+          }
+        }
+      }
+      return name;
+    },
   getCrewRoles(){
       var user = Meteor.users.findOne({'_id': Meteor.userId()});
       var result = new Array();

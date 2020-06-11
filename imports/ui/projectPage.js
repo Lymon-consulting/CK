@@ -1456,22 +1456,15 @@ if (Meteor.isClient) {
         Meteor.subscribe("allMedia");
         var user = Meteor.users.findOne({'_id':userId});
         var url;
-        if(user!=null && user.profilePictureID!=null){
-          var profile = Media.findOne({'mediaId':user.profilePictureID});
+        if(user!=null && user.crew!=null && user.crew.profilePictureID!=null){
+          var profile = Media.findOne({'mediaId':user.crew.profilePictureID});
           if(profile!=null){
-            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_100,h_100,c_thumb,r_max" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_100,h_100,c_thumb,r_max" + "/v" + profile.media_version + "/" + userId + "/" + user.crew.profilePictureID;    
           }
           
         }
         return url;
-        /*
-       var url = "";
-       var user = Meteor.users.findOne({'_id':userId});
-       if(user!=null && user.profilePictureID!=null && user.profilePictureID!=""){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_100,h_100,c_thumb,r_max/" + user.profilePictureID;
-
-       }
-       return url;*/
+        
       },
       getInitials(userId){
         var name = "";
@@ -1511,9 +1504,9 @@ Template.cast.helpers({
     getName(userId){
       var name = "";
       var user = Meteor.users.findOne({'_id':userId});
-      if(user){
-        if(user.showArtisticName){
-          name = user.artistic;
+      if(user!=null && user.cast!=null){
+        if(user.cast.showArtisticName){
+          name = user.cast.artistic;
         }
         else{
           if(user.profile.name!=null && user.profile.name!=""){
@@ -1534,8 +1527,8 @@ Template.cast.helpers({
       var user = Meteor.users.findOne({'_id': userId});
       var result = new Array();
       
-      if(user && user.categories){
-         result = user.categories;
+      if(user!=null && user.cast!=null && user.cast.categories!=null){
+         result = user.cast.categories;
          for (var i = 0; i < result.length; i++) {
            strResult = strResult + ", " + result[i];
          }
@@ -1550,10 +1543,10 @@ Template.cast.helpers({
         Meteor.subscribe("allMedia");
         var user = Meteor.users.findOne({'_id':userId});
         var url;
-        if(user!=null && user.profilePictureID!=null){
-          var profile = Media.findOne({'mediaId':user.profilePictureID});
+        if(user!=null && user.cast!=null && user.cast.profilePictureID!=null){
+          var profile = Media.findOne({'mediaId':user.cast.profilePictureID});
           if(profile!=null){
-            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_100,h_100,c_thumb,r_max" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_100,h_100,c_thumb,r_max" + "/v" + profile.media_version + "/" + userId + "/" + user.cast.profilePictureID;    
           }
           
         }

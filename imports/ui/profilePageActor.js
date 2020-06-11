@@ -142,9 +142,10 @@ Template.profilePageActor.helpers({
       return PersonalCover.find({'owner': userId});
    },*/
    getProjects(){
-      Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
+      Meteor.subscribe("myProjects");
       //return Project.find({$and : [ {'userId' : FlowRouter.getParam('id')} , {"project_is_main": '' }]});
-      return Project.find({'userId' : FlowRouter.getParam('id')});
+      return Project.find({$and : [{'userId' : FlowRouter.getParam('id')}, {'project_family':'Portafolios'}]});
+//      var following = Meteor.users.find({$and : [ {'_id' : Meteor.userId()} , {"follows": follow }]});
    },
    getMainProject(){
       Meteor.subscribe("myMainProject", FlowRouter.getParam('id'));
@@ -163,14 +164,10 @@ Template.profilePageActor.helpers({
    countCollaborations(){
      Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
      var countCast = Project.find({"project_cast._id":  FlowRouter.getParam('id')}).count();
-     var countCrew = Project.find({"project_staff._id":  FlowRouter.getParam('id')}).count();
 
      var result = false;
 
      if(countCast>0){
-       result = true;
-     }
-     else if(countCrew>0){
        result = true;
      }
      else{
@@ -180,13 +177,13 @@ Template.profilePageActor.helpers({
    },
    getCastCollaborations(){
       Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
-      return Project.find({"project_cast._id":  FlowRouter.getParam('id')});
-   },
+      return Project.find({"project_cast._id":  FlowRouter.getParam('id')},{sort: {'project_year':-1} });
+   },/*
    getCrewCollaborations(){
       Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
       return Project.find({"project_staff._id":  FlowRouter.getParam('id')});
    },
-   /*
+   
    isDirectorOrProducer(){
    Meteor.subscribe("otherUsers");
    var user = Meteor.users.findOne({'_id' : FlowRouter.getParam('id')});
