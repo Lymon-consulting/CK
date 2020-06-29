@@ -103,6 +103,9 @@
               {{else}}
                 <!--No tiene rol TOP, puede crear portafolios-->
                 <a class="dropdown-item text-black" href="/viewProjects/{{currentUser._id}}">Mi portafolio</a>
+                {{#if hasSecondaryTopRole}}
+                  <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}">Mis empresas</a>
+                {{/if}}
               {{/if}}
             {{else}}
                 <!--Es CAST, solo puede crear empresas-->
@@ -153,7 +156,7 @@
       </li>
    {{else}}
       <li class="nav-item vcenter">
-        <a href="/profilePage/{{currentUser._id}}" class="text-button"><div id="profileImage">{{getInitials}}</div></a>
+        <a href="/profilePage/{{currentUser._id}}" class="text-button"><img src="/images/no-profile.jpg" id="profileImageMenu" class="img-round" /></a>
       </li>      
    {{/if}}
   

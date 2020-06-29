@@ -4,27 +4,15 @@ import { City } from '../api/city.js';
 import { Media } from '../api/media.js';
 import { catHeights, catAges, catPhysical, catEthnics, catEyes, catHair, catHairType, catLanguages, catCategories } from '/lib/globals.js';
 import { getParam } from '/lib/functions.js';
+import { uploadFiles } from '/lib/functions.js';
+import { trimInput } from '/lib/functions.js';
+import { isNotEmpty } from '/lib/functions.js';
+import { formatURL } from '/lib/functions.js';
 
 import '/lib/common.js';
 import './editProfileActor.html';
 
-function trimInput(val){
-  return val.replace(/^\s*|\s*$/g, "");
-}
 
-function isNotEmpty(val){
-  if(val && val!== ""){
-    return true;
-  }
-}
-function formatURL(url){
-  if(url!=""){
-    if (!/^https?:\/\//i.test(url)) {
-      url = 'http://' + url;  
-    }
-  }
-  return url;
-}
 
 Template.editProfileActor.helpers({
   heights(){
@@ -963,5 +951,22 @@ Template.editProfileActor.events({
       else{
         Meteor.call('removeGalleryCast', Meteor.userId(), mediaId); 
       }
+    },
+    'click #save': function(event, template){
+      event.preventDefault();
+      Bert.alert({message: 'Se ha guardado tu perfil', type: 'success', icon: 'fa fa-check'});
+    },
+    'click #saveAndPublish': function(event, template){
+      event.preventDefault();
+      Bert.alert({message: 'Se ha guardado tu perfil', type: 'success', icon: 'fa fa-check'});
+      FlowRouter.go("/profilePageActor/" + Meteor.userId());
+    },
+    'change [type="file"]': function(e, t) {
+      //console.log(e.target.name);
+      uploadFiles(e.target.files, this._id, e.target.name);
+      /*
+      $('#modal1').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();*/
     },
 });

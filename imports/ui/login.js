@@ -26,7 +26,7 @@ Template.login.events({
             console.log("A");
             if(user.emails[0]!=null && user.emails[0].verified){
               console.log("B");
-              FlowRouter.go('/');
+              FlowRouter.go('/peopleList');
             }
             else{
               console.log("C");
@@ -37,7 +37,7 @@ Template.login.events({
           }
           else{
             console.log("D");
-            FlowRouter.go('/');
+            FlowRouter.go('/peopleList');
           }
 
           

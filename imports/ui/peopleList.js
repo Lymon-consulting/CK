@@ -42,13 +42,6 @@ Template.peopleList.helpers({
        id: 'searchBox'
      }; 
    },
-   searchCount: () => {
-    // index instanceof EasySearch.index
-    let dict = ProjectIndex.getComponentDict(/* optional name */);
-
-    // get the total count of search results, useful when displaying additional information
-    return dict.get('count')
-  },
   industryIndex: () => IndustryIndex, // instanceof EasySearch.Index
    inputAttributes: function () {
      return { 
@@ -56,13 +49,6 @@ Template.peopleList.helpers({
        id: 'searchBox'
      }; 
    },
-   searchCount: () => {
-    // index instanceof EasySearch.index
-    let dict = IndustryIndex.getComponentDict(/* optional name */);
-
-    // get the total count of search results, useful when displaying additional information
-    return dict.get('count')
-  },
   getCategories(){
    var data = Ocupation.find({},{sort:{'title':1}}).fetch();
    return _.uniq(data, false, function(transaction) {return transaction.title});
@@ -413,6 +399,60 @@ Template.peopleList.events({
   Session.set("selected_state",null);
   IndustryIndex.getComponentMethods().removeProps(); 
   FlowRouter.go("/industryList");
+},
+'change #searchType': function(event,template){
+  event.preventDefault();
+  
+  var newValue = $(event.target).val();
+  if(newValue==="Proyectos"){
+    Session.set("type_selected",null);
+    Session.set("genre_selected",null);
+    Session.set("status_selected",null);
+    Session.set("family_selected",null);
+    ProjectIndex.getComponentMethods().removeProps(); 
+    FlowRouter.go('/projList');
+  }
+  else if(newValue==="Industrias"){
+    Session.set("type_selected",null);
+    Session.set("year_selected",null);
+    Session.set("selected_country",null);
+    Session.set("selected_state",null);
+    IndustryIndex.getComponentMethods().removeProps(); 
+    FlowRouter.go('/industryList');
+  }
+  else if(newValue==="Cast"){
+    Session.set("country_selected",null);
+    Session.set("city_selected",null);
+    Session.set("state_selected",null);
+    Session.set("role_selected",null);
+    Session.set("category_selected",null);
+    Session.set("gender_selected",null);
+    Session.set("eyes_selected",null);
+    Session.set("hair_selected",null);
+    Session.set("hairType_selected",null);
+    Session.set("physical_selected",null);
+    Session.set("ethnicity_selected",null);
+    Session.set("ageRange_selected",null);
+    Session.set("height_selected",null);
+    Session.set("location_selected",null);
+    Session.set("selected_category", null);
+    Session.set("selected_country", null);
+    Session.set("selected_state", null);
+    UsersIndex.getComponentMethods().removeProps(); 
+    FlowRouter.go('/peopleListCast');
+  }
+  else if(newValue==="Crew"){
+    Session.set("selected_category", null);
+    Session.set("selected_country", null);
+    Session.set("selected_state", null);
+    Session.set("role_selected",null);
+    Session.set("location_selected",null);
+    Session.set("country_selected",null);
+    Session.set("state_selected",null);
+    Session.set("city_selected",null);
+    UsersIndex.getComponentMethods().removeProps(); 
+    FlowRouter.go('/peopleList');
+  }
 }
 
 });

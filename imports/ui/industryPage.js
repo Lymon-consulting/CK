@@ -5,6 +5,14 @@ import { Media } from '../api/media.js';
 
 import './industryPage.html';
 Meteor.subscribe("otherUsers");
+
+
+Template.industryPage.rendered = function(){
+  this.autorun(function(){
+    window.scrollTo(0,0);
+  });
+}
+
 Template.industryPage.helpers({
  getCompany(){
   return Industry.findOne({_id : FlowRouter.getParam('id')});

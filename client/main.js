@@ -60,7 +60,8 @@ Meteor.startup(() => {
 });
 
 Accounts.config({
-  sendVerificationEmail: true
+  /*Habilitar este valor con true para enviar un correo de verificación al crear un usuario*/
+  sendVerificationEmail: false
 });
 
 /*

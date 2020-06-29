@@ -15,7 +15,7 @@
       .bannerProject{
         width: 100%;
         height:auto;
-        background-image: url("/images/nocover.jpg");
+        background-image: url("/images/no-cover.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         position: relative;
@@ -139,7 +139,9 @@
        {{/if}}
        {{/if}}
        {{#if hasTopRole}}
+       {{#if isOwner}}
        <div class="col-lg-2"><a href="#" class="text-black" data-toggle="modal" data-target="#collabModal"><i class="fa fa-user-circle text-purple" aria-hidden="true"></i> Colaboradores</a></div>
+       {{/if}}
        {{/if}}
      </div>
      <div class="spacer10"></div>

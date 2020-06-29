@@ -29,13 +29,29 @@ Template.join.events({
         else {
           var fullname = firstName + " " + lastName;
           Meteor.call('updateFullName', Meteor.userId(), fullname);
-          Meteor.call( 'sendVerificationLink', ( error, response ) => {
+
+          /*Para reactivar el envío de mail de verificación 
+          quitar el siguiente bloque y descomentar el bloque de abajo*/
+
+          /*Inicia bloque de auto verificación para nuevos usuarios sin envío de mail*/
+          Meteor.users.update(Meteor.userId(), { $set:
+            {
+              "emails.0.verified": true
+            }
+          });
+          FlowRouter.go('/selectProfile');
+          /*Termina bloque de auto verificación*/
+          
+
+          /*Inicia bloque de envío de mail de verificación*/
+          /*Meteor.call( 'sendVerificationLink', ( error, response ) => {
             if ( error ) {
               console.log(error.reason);
             } else {
               FlowRouter.go('/verify');
             }
-          });
+          });*/
+          /*Termina bloque de envío de mail de verificación*/
         }
       });
     }

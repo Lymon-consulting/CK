@@ -19,6 +19,26 @@ label{
   font-size: 14px;
 }
 
+label.text-lg-white{
+   color: #fff;
+   font-size: 18px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+  border-width: 3px;
+  border-color: #ED1567;
+  background: transparent;
+  color: #ED1567;
+  font-weight: bold;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
 a.disabled {
   /* Make the disabled links grayish*/
   color: gray;
@@ -41,6 +61,14 @@ a.text-gray{
 
 a.text-black{
    color: #000;
+}
+
+button{
+  border-width: 1px;
+  border-color: #ED1567;
+  background: transparent;
+  color: #ED1567;
+  font-weight: bold;
 }
 
 input,

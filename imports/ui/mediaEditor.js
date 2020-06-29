@@ -70,7 +70,7 @@ function uploadFiles(files, profileId) {
           if(FlowRouter.getParam("from")==="cast"){
             if(FlowRouter.getParam("type")==="profile"){
               Meteor.call(
-              'updateProfilePicture',
+              'updateCastProfilePicture',
               FlowRouter.getParam("returnTo"),
               public_id
               );
@@ -78,7 +78,7 @@ function uploadFiles(files, profileId) {
             }
             else if(FlowRouter.getParam("type")==="cover"){
               Meteor.call(
-              'updateCoverPicture',
+              'updateCastCoverPicture',
               FlowRouter.getParam("returnTo"),
               public_id
               );
@@ -97,7 +97,7 @@ function uploadFiles(files, profileId) {
           else if(FlowRouter.getParam("from")==="crew"){
             if(FlowRouter.getParam("type")==="profile"){
               Meteor.call(
-              'updateProfilePicture',
+              'updateCrewProfilePicture',
               FlowRouter.getParam("returnTo"),
               public_id
               );
@@ -105,11 +105,51 @@ function uploadFiles(files, profileId) {
             }
             else if(FlowRouter.getParam("type")==="cover"){
               Meteor.call(
-              'updateCoverPicture',
+              'updateCrewCoverPicture',
               FlowRouter.getParam("returnTo"),
               public_id
               );
               FlowRouter.go("/editProfile/"+Meteor.userId());
+            }
+            
+          }
+          else if(FlowRouter.getParam("from")==="profileCrew"){
+            if(FlowRouter.getParam("type")==="profile"){
+              console.log(FlowRouter);
+              Meteor.call(
+              'updateCrewProfilePicture',
+              Meteor.userId(),
+              public_id
+              );
+              FlowRouter.go("/profilePage/"+Meteor.userId());
+            }
+            else if(FlowRouter.getParam("type")==="cover"){
+              Meteor.call(
+              'updateCrewCoverPicture',
+              FlowRouter.getParam("returnTo"),
+              public_id
+              );
+              FlowRouter.go("/profilePage/"+Meteor.userId());
+            }
+            
+          }
+          else if(FlowRouter.getParam("from")==="profileCast"){
+            if(FlowRouter.getParam("type")==="profile"){
+              console.log(FlowRouter);
+              Meteor.call(
+              'updateCastProfilePicture',
+              Meteor.userId(),
+              public_id
+              );
+              FlowRouter.go("/profilePageActor/"+Meteor.userId());
+            }
+            else if(FlowRouter.getParam("type")==="cover"){
+              Meteor.call(
+              'updateCastCoverPicture',
+              FlowRouter.getParam("returnTo"),
+              public_id
+              );
+              FlowRouter.go("/profilePageActor/"+Meteor.userId());
             }
             
           }
@@ -154,10 +194,10 @@ function uploadFiles(files, profileId) {
 
 Template.mediaEditor.rendered = function(){
   Meteor.setTimeout(function(){
-    $('#dropzone').removeClass('drag-over');
-    $("#dragzone").css({
+    //$('#dropzone').removeClass('drag-over');
+    /*$("#dragzone").css({
       "display": "none",
-    });
+    });*/ 
   }, 1000);
 
 };
@@ -473,6 +513,9 @@ Template.mediaEditor.events({
       );
     
     }
-    FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo")+"/"+FlowRouter.getParam("type"));
+    $('#modal1').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+    //FlowRouter.go("/mediaEditorObject/"+Meteor.userId()+"/"+FlowRouter.getParam("from")+"/"+FlowRouter.getParam("returnTo")+"/"+FlowRouter.getParam("type"));
   },
 });

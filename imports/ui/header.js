@@ -193,7 +193,9 @@ Template.header.events({
         event.preventDefault();
         Session.keys = {};
         Meteor.logout();
-        FlowRouter.go('/');
+        FlowRouter.go('/home');
+        //FlowRouter.go('/');
+        //document.location.reload(true);
     },
     'click #viewAsCrew':function(event,template){
       event.preventDefault();

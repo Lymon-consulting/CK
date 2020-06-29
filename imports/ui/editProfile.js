@@ -3,28 +3,13 @@ import { Ocupation } from '../api/ocupations.js';
 import { City } from '../api/city.js';
 import { Media } from '../api/media.js';
 import { getParam } from '/lib/functions.js';
+import { uploadFiles } from '/lib/functions.js';
+import { trimInput } from '/lib/functions.js';
+import { isNotEmpty } from '/lib/functions.js';
+import { formatURL } from '/lib/functions.js';
 
 import './editProfile.html';
 import '/lib/common.js';
-
-function trimInput(val){
-  return val.replace(/^\s*|\s*$/g, "");
-}
-
-function isNotEmpty(val){
-  if(val && val!== ""){
-    return true;
-  }
-}
-function formatURL(url){
-  if(url!=""){
-    if (!/^https?:\/\//i.test(url)) {
-      url = 'http://' + url;  
-    }
-  }
-  return url;
-}
-
 
 Meteor.subscribe("fileUploads");
 Meteor.subscribe("getOcupations");
@@ -574,7 +559,7 @@ else{
        event.preventDefault();
        Session.set("selected_category", event.currentTarget.value);
      },
-     'dblclick #ocupation':function(event, template){
+     'click #ocupation':function(event, template){
        event.preventDefault();
        Meteor.call(
         'addRole',
@@ -582,7 +567,7 @@ else{
         event.currentTarget.value
         );
      },
-     'dblclick #selection':function(event, template){
+     'click #selection':function(event, template){
        event.preventDefault();
        Meteor.call(
         'removeRole',
@@ -651,7 +636,25 @@ else{
       //Session.set("viewAs","cast");
       window.scrollTo(0, 0);
       FlowRouter.go("/editProfileActor/" + Meteor.userId());
-    }
+    },
+    'click #save': function(event, template){
+      event.preventDefault();
+      Bert.alert({message: 'Se ha guardado tu perfil', type: 'success', icon: 'fa fa-check'});
+    },
+    'click #saveAndPublish': function(event, template){
+      event.preventDefault();
+      Bert.alert({message: 'Se ha guardado tu perfil', type: 'success', icon: 'fa fa-check'});
+      FlowRouter.go("/profilePage/" + Meteor.userId());
+    },
+
+    'change [type="file"]': function(e, t) {
+      //console.log(e.target.name);
+      uploadFiles(e.target.files, this._id, e.target.name);
+      /*
+      $('#modal1').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();*/
+    },
     
   });
 

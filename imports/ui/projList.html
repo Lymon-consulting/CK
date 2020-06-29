@@ -1,51 +1,30 @@
 <template name="projList">
+  
+  <div class="container-fluid imageDivHeight"> <!--Imagen de fondo de página principal-->
+      <section>
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12 col-lg-12 mx-auto bgText"></div><!--Imagen con título en página principal-->
+            </div>
+         </div>
+      </section>
+   </div>     
+   <nav class="navbar navbar-dark bg-dark justify-content-between">
+    <a class="navbar-brand text-white">Buscar / Proyectos</a>
+    <form class="form-inline">
+      <label for="select" class="text-lg-white">¿No buscas proyectos? Elige otra opción </label>&nbsp;
+      <select name="" id="searchType" class="form-control mr-sm-2">
+       <option value="">-- ¿Qué buscas? --</option>
+       <option value="Crew">CREW</option>
+       <option value="Cast">CAST</option>
+       <option value="Industrias">EMPRESAS</option>
+     </select>
+     
+     
+    </form>
+  </nav>
   <div class="container">
     <div class="spacer20"></div>
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <h1>Buscador de Cinekomuna</h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-12">
-        Busca proyectos dentro de Cinekomuna, o haz clic en alguna de las categoría siguientes para cambiar de buscador
-      </div>
-    </div>
-    <div class="spacer20"></div>
-
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="row">
-          <div class="col-lg-4 col-md-6">
-            <div class="card h-100">
-              <a href="#" id="crewSearch"><img class="card-img-top" src="/images/crew_thumb.jpg" alt=""></a>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="card h-100">
-              <a href="#" id="castSearch"><img class="card-img-top" src="/images/cast_thumb.jpg" alt=""></a>
-            </div>
-          </div>
-          
-          <div class="col-lg-4 col-md-6">
-            <div class="card h-100">
-              <a href="#" id="industrySearch"><img class="card-img-top" src="/images/industry_thumb.jpg" alt=""></a>
-            </div>
-          </div>
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.col-lg-9 -->
-    </div>
-    <!-- /.row -->
-  </div>
-  <!-- /.container -->
-  <div class="container text-center">
-    <h1 class="h1-title">PROYECTOS</h1>
-    <hr>
-    <div class="spacer40"></div>
-  </div>
-  <div class="container">
     <div class="row">
       <div class="col-lg-3 rounded background-verylightgray p-3">
         <div class="sticky-top">
@@ -125,7 +104,7 @@
                      {{#if coverPicture this.__originalId 500}}
                         <img src="{{coverPicture this.__originalId 500}}" class="cover-thumbnail" />
                      {{else}}
-                        <img src="/images/nocover.jpg" class="cover-thumbnail">
+                        <img src="/images/no-cover.jpg" class="cover-thumbnail">
                      {{/if}}
                      </a>
                   </div>
@@ -148,7 +127,7 @@
                               {{#if this.project_status}}
                               <tr>
                                 <td class="no-padding text-no-wrap subtitle-underline">
-                                  En {{this.project_status}}
+                                  {{getStatus this.project_status}}
                                 </td>
                               </tr>
                               {{/if}}
@@ -199,7 +178,7 @@
                     {{#if getProfilePicture this.userId 80}}
                       <img src="{{getProfilePicture this.userId 80}}"/>
                     {{else}}
-                      <div id="profileImageSmall">{{getInitials this.userId}}</div>
+                      <img src="/images/no-profile.jpg" class="img-round" />
                     {{/if}}
                     </a>
                   </div>
@@ -215,7 +194,7 @@
                   {{#EasySearch.IfSearching index=projectIndex}}
                   <div>Buscando...</div>
                   {{/EasySearch.IfSearching}}
-                  {{> EasySearch.Pagination index=projectIndex maxPages=10 prevAndNext=true}}
+                  
                 </div>
               </div>
               <!-- Fin contenido -->

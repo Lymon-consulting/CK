@@ -8,6 +8,12 @@ import { Media } from '../api/media.js';
 import './projectPage.html';
 import '/lib/common.js';
 
+Template.projectPage.rendered = function(){
+  this.autorun(function(){
+    window.scrollTo(0,0);
+  });
+}
+
 if (Meteor.isClient) {
    Meteor.subscribe('projectData');
    Meteor.subscribe('allProjects');

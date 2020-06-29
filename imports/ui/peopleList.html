@@ -1,49 +1,52 @@
 <template name="peopleList">
+  <div class="container-fluid imageDivHeight"> <!--Imagen de fondo de página principal-->
+      <section>
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12 col-lg-12 mx-auto bgText"></div><!--Imagen con título en página principal-->
+            </div>
+         </div>
+      </section>
+   </div>     
+   <nav class="navbar navbar-dark bg-dark justify-content-between">
+    <a class="navbar-brand text-white">Buscar / Crew</a>
+    <form class="form-inline">
+      <label for="select" class="text-lg-white">¿No buscas crew? Elige otra opción </label>&nbsp;
+      <select name="" id="searchType" class="form-control mr-sm-2">
+       <option value="">-- ¿Qué buscas? --</option>
+       <option value="Cast">CAST</option>
+       <option value="Proyectos">PROYECTOS</option>
+       <option value="Industrias">EMPRESAS</option>
+     </select>
+     
+     
+    </form>
+  </nav>
+    
+  
+  <!--
   <div class="container">
-    <div class="spacer20"></div>
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <h1>Buscador de Cinekomuna</h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-12">
-        Busca personas con perfil de Crew, o haz clic en alguna de las categoría siguientes para cambiar de buscador
-      </div>
-    </div>
-    <div class="spacer20"></div>
+    <div class="spacer10"></div>
     <div class="row">
       <div class="col-lg-12">
         <div class="row">
           <div class="col-lg-4 col-md-6">
-            <div class="card h-100">
-              <a href="#" id="castSearch"><img class="card-img-top" src="/images/cast_thumb.jpg" alt=""></a>
-            </div>
+              <a href="#" id="castSearch"><img class="media-thumb" src="/images/cast_thumb.jpg" alt=""></a>
           </div>
           <div class="col-lg-4 col-md-6">
-            <div class="card h-100">
-              <a href="#" id="projSearch"><img class="card-img-top" src="/images/project_thumb.jpg" alt=""></a>
-            </div>
+              <a href="#" id="projSearch"><img class="media-thumb" src="/images/project_thumb.jpg" alt=""></a>
           </div>
           <div class="col-lg-4 col-md-6">
-            <div class="card h-100">
-              <a href="#" id="industrySearch"><img class="card-img-top" src="/images/industry_thumb.jpg" alt=""></a>
-            </div>
+              <a href="#" id="industrySearch"><img class="media-thumb" src="/images/industry_thumb.jpg" alt=""></a>
           </div>
         </div>
-        <!-- /.row -->
       </div>
-      <!-- /.col-lg-9 -->
     </div>
-    <!-- /.row -->
   </div>
-  <!-- /.container -->
-  <div class="container text-center">
-    <h1 class="h1-title">CREW</h1>
-    <hr>
-    <div class="spacer40"></div>
-  </div>
+  -->  
+ 
   <div class="container">
+    <div class="spacer20"></div>
     <div class="row">
       <div class="col-lg-3 rounded background-verylightgray p-3">
         <div class="sticky-top">
@@ -134,6 +137,7 @@
               </select>
             </div>
           </div>
+          
         </div>
       </div>
       <div class="col-lg-9">
@@ -156,7 +160,7 @@
                     {{#if getProfilePicture this.__originalId}}
                     <img src="{{getProfilePicture this.__originalId}}" />
                     {{else}}
-                    <div id="profileImageSmall">{{getInitials this.__originalId}}</div>
+                    <img src="/images/no-profile.jpg" class="img-round" />
                     {{/if}}
                     </a>
                   </div>
@@ -277,5 +281,4 @@
   {{#EasySearch.IfSearching index=usersIndex}}
        <div>Buscando...</div>
   {{/EasySearch.IfSearching}}
-  {{> EasySearch.Pagination index=usersIndex maxPages=10 prevAndNext=true}}
 </template>

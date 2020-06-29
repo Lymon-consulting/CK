@@ -173,7 +173,7 @@ Template.registerHelper('hasTopRole', function(){
   if(Meteor.user()!=null && Meteor.user().topRole!=null){
     array = Meteor.user().topRole;
     for (var i = array.length - 1; i >= 0; i--) {
-      if(array[i]==="1" || array[i]==="2" || array[i]==="3" || array[i]==="4"){
+      if(array[i]==="1" || array[i]==="2"){
         result = true;  
         break;
       }
@@ -181,6 +181,23 @@ Template.registerHelper('hasTopRole', function(){
   }
   return result;
 });
+
+
+Template.registerHelper('hasSecondaryTopRole', function(){
+  var array = new Array();
+  var result = false;
+  if(Meteor.user()!=null && Meteor.user().topRole!=null){
+    array = Meteor.user().topRole;
+    for (var i = array.length - 1; i >= 0; i--) {
+      if(array[i]==="3" || array[i]==="4"){
+        result = true;  
+        break;
+      }
+    }
+  }
+  return result;
+});
+
 
 Template.registerHelper('formatURL', function(url){
   if(url!=""){

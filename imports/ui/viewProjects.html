@@ -67,7 +67,7 @@
            {{#if getProjectPicture this._id 500}}
               <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="{{getProjectPicture this._id 500}}" alt="Card image cap"></a>
            {{else}}
-              <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="/images/nocover.jpg"></a>
+              <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="/images/no-cover.jpg"></a>
            {{/if}}
             <div class="card-body">
               <h5 class="card-title"><a href="/projectPage/{{this._id}}" class="text-purple">{{this.project_title}} ({{this.project_year}})</a></h5>

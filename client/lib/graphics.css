@@ -3,11 +3,12 @@
   border-color: blue;
 }
 
-.carousel-item{
-   width: 600px;
-   /*height: 500px;*/
+
 
    /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
+/*
+.carousel-item{
+   width: 600px;
    object-fit:scale-down;
 }
 
@@ -17,25 +18,25 @@
 }
 
 .carousel-item.active, .carousel-item-next, .carousel-item-prev {
-    width: 600px; 
-    
+    width: 650px; 
 }
 
 .carousel-thumb{
   width: 200px; 
-  
 }
 .carousel-item-thumb{
    width: 200px;
-   /*height: 500px;*/
-
-   /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
    object-fit:scale-down;
+}
+*/
+
+.carousel-control-prev-icon{
+  color:#ED1567;
 }
 .imageDivHeight{
     width: 100%;
     max-width: 100%;
-    height:500px;
+    height:400px;
     background-position: center;
     background-image: url("/images/intro-bg3.jpg");
     background-repeat: no-repeat;
@@ -50,6 +51,17 @@
   height: auto;
 }
 
+.img-round{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #666;
+  font-size: 15px;
+  color: #fff;
+  text-align: center;
+  line-height: 35px;
+  margin: 10px 0;
+}
 .media-thumb{
    /*width: 200px;*/
    height: 100px;
@@ -141,9 +153,35 @@
   /*margin: 10px 0;*/
 }
 
-#profileImageLarge200 {
+#profileImageinProfilePage {
+  width: 100px;
+  border-radius: 50%;
+  background: #666;
+  font-size: 45px;
+  color: #fff;
+  text-align: center;
+  line-height: 100px;
+  margin-top: 30px;
+  object-fit:scale-down;
+  cursor: pointer;
+}
+
+#profileImageinCastPage {
   width: 200px;
   height: auto;
+  border-radius: 50%;
+  background: #666;
+  font-size: 45px;
+  color: #fff;
+  text-align: center;
+  line-height: 100px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+#profileImageLarge200 {
+  width: 200px;
+  height: 200px;;
   border-radius: 50%;
   background: #666;
   /*border:solid;*/
@@ -152,6 +190,7 @@
   text-align: center;
   line-height: 100px;
   margin-left: 20px;
+  padding-top: 50px;
 }
 
 #companyLogo {
