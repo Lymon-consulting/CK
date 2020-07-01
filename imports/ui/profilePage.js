@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { Project } from '../api/project.js';
 import { Media } from '../api/media.js';
 import { Industry } from '../api/industry.js';
+import { uploadFiles } from '/lib/functions.js';
 
 import './profilePage.html';
 Meteor.subscribe("otherUsers");
@@ -187,7 +188,8 @@ Template.profilePage.helpers({
       if(data!=null && data.projectPictureID!=null){
         var cover = Media.findOne({'mediaId':data.projectPictureID});
         if(cover!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_scale" + "/v" + cover.media_version + "/" + data.userId + "/" + data.projectPictureID;    
+          //url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_scale" + "/v" + cover.media_version + "/" + data.userId + "/" + data.projectPictureID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + data.userId + "/" + data.projectPictureID;    
         }
         
       }
@@ -556,6 +558,14 @@ Template.profilePage.events({
         $('.modal-backdrop').remove();
         $("#setCoverPicture").removeClass('disabled');
 
+      },
+      'change [type="file"]': function(e, t) {
+        //console.log(e.target.name);
+        uploadFiles(e.target.files, this._id, e.target.name);
+        /*
+        $('#modal1').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();*/
       },
 });
 

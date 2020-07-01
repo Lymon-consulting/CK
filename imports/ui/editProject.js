@@ -3,6 +3,9 @@ import { Project } from '../api/project.js';
 import { Ocupation } from '../api/ocupations.js';
 import { Media } from '../api/media.js';
 import { getParam } from '/lib/functions.js';
+import { trimInput } from '/lib/functions.js';
+import { isNotEmpty } from '/lib/functions.js';
+import { uploadFiles } from '/lib/functions.js';
 
 import './editProject.html';
 import '/lib/common.js';
@@ -12,24 +15,11 @@ var check2 = false;
 
 Meteor.subscribe("fileUploads");
 
-var trimInput= function(val){
-  if(val!=null){
-    return val.replace(/^\s*|\s*$/g, "");  
-  }
-  return false;
+Template.editProject.rendered = function(){
+  this.autorun(function(){
+    window.scrollTo(0,0);
+  });
 }
-
-var isNotEmpty=function(val){
-  if(val && val!== ""){
-    return true;
-  }
-  //  Bert.alert("", "danger", "growl-top-right");
-  Bert.alert({message: 'Por favor completa todos los campos obligatorios', type: 'danger', icon: 'fa fa-exclamation'});
-  return false;
-}
-
-
-
 
 Template.editProject.helpers({
   isOwner(){
@@ -691,7 +681,7 @@ Template.editProject.events({
     event.preventDefault();
     Session.set("selected_category", event.currentTarget.value);
   },
-  'dblclick #ocupation':function(event, template){
+  'click #ocupation':function(event, template){
     event.preventDefault();
     //console.log("detectó doble click " + FlowRouter.getParam('id') + ","+ event.currentTarget.value);
     Meteor.call(
@@ -700,7 +690,7 @@ Template.editProject.events({
       event.currentTarget.value
     );
   },
-  'dblclick #selection':function(event, template){
+  'click #selection':function(event, template){
     event.preventDefault();
    
     Meteor.call(
@@ -824,6 +814,23 @@ Template.editProject.events({
       Meteor.call('removeGalleryProject', FlowRouter.getParam("id"), mediaId); 
     }
   },
+  'change [type="file"]': function(e, t) {
+        //console.log(e.target.name);
+        uploadFiles(e.target.files, this._id, e.target.name);
+        /*
+        $('#modal1').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();*/
+      },
+    'click #save': function(event, template){
+      event.preventDefault();
+      Bert.alert({message: 'Se ha guardado tu proyecto', type: 'success', icon: 'fa fa-check'});
+    },
+    'click #saveAndPublish': function(event, template){
+      event.preventDefault();
+      Bert.alert({message: 'Se ha guardado tu proyecto', type: 'success', icon: 'fa fa-check'});
+      FlowRouter.go("/projectPage/" + FlowRouter.getParam("id"));
+    },
 });
 
 

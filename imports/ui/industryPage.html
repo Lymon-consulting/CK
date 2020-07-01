@@ -6,8 +6,9 @@
           background: url({{getCoverPicture}});
           background-repeat: no-repeat;
           background-size: cover;
-          background-position: center center;
-          height: 400px;          
+          height: 400px;
+          object-fit:scale-down;
+          /*background-position: center center;*/
       }
       
       {{else}}
@@ -23,24 +24,39 @@
 
   <!-- Inicia bloque para desplegar la foto de perfil -->
   <div class="container-fluid bg-overlay">
-    <div class="spacer280"></div>
-    {{#if getLogoPicture 500}}
-    <img src="{{getLogoPicture 500}}" id="profileImageLarge200">
-    {{else}}
-    <img class="thumbnail-logo" src="/images/nologo.png">
+    {{#if isOwner}}
+    <div class="spacer10"></div>
+    <a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <i class="fa fa-camera"></i></a>
     {{/if}}
+    
   </div>
   <!-- Termina bloque para desplegar la foto de perfil -->   
+
+
+  <div class="container-fluid background-lightgray">
+     <div class="spacer10"></div>
+     <div class="row">
+       {{#if isOwner}}
+       <div class="col-lg-2"><a href="#" class="text-black" data-toggle="modal" data-target="#collabModal"><i class="fa fa-user-circle text-purple" aria-hidden="true"></i> Colaboradores</a></div>
+       <div class="col-lg-2"><a href="#" class="text-black editIndustry" data-answer="{{getCompany._id}}" ><i class="fa fa-pencil text-purple" aria-hidden="true"></i> Editar empresa</a></div>
+       {{/if}}
+     </div>
+     <div class="spacer10"></div>
+   </div>
 
   <!-- Inicia bloque con los datos personales y de contacto del perfil -->
   
   <div class="container-fluid">
-      <div class="spacer40"></div>
+      <div class="spacer20"></div>
       <div class="row">
-          <div class="col-lg-3 col-md-3 col-sm-2 text-left">
-          
+          <div class="col-lg-3">
+            {{#if getLogoPicture 500}}
+            <img src="{{getLogoPicture 500}}" id="" class="img-fluid"> 
+            {{else}}
+            <img class="thumbnail-logo" src="/images/nologo.png">
+            {{/if}}
           </div>
-          <div class="col-lg-8 col-md-8 col-sm-9 text-left">
+          <div class="col-lg-19 col-md-6 col-sm-12 text-left">
             <div class="row">
               <div class="col">
                 <h1 class="h3-title">{{getCompany.company_name}}</h1>
@@ -71,23 +87,8 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-lg-1 col-md-1 col-sm-1 text-right">
-          {{#if isOwner}}
-             {{#if hasTopRole}}
-          <a href="#" class="text-purple editIndustry" data-answer="{{getCompany._id}}"><i class="fa fa-pencil text-purple" aria-hidden="true"></i></a>
-          <a href="#" class="text-black" data-toggle="modal" data-target="#collabModal"><i class="fa fa-user-circle text-purple" aria-hidden="true"></i></a>
-             {{/if}}
-          {{/if}}
-         </div>
-      </div>
-      <div class="row">
-         <div class="col-lg-3 col-md-3 col-sm-2">
-            &nbsp;
-         </div>
-         <div class="col-lg-8 col-md-8 col-sm-9 text-left">
             <div class="row">
-               <div class="col-md-12">
+              <div class="col-md-12">
                   <table class="table table-responsive borderless">
                      <tr>
                         {{#if getCompany.company_web_page}}
@@ -111,18 +112,18 @@
                      </tr>
                   </table>
                 </div>
-              </div>
+
+            </div>
             <div class="row">
                <div class="col">
                   
                 <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
                </div>
             </div>
-         </div>
-         <div class="col-lg-1 col-md-1 col-sm-1 text-right">
-            &nbsp;
-         </div>
+          </div>
+          
       </div>
+      
   </div>
 
 
@@ -294,6 +295,152 @@
     </div>
   </div>
 </div>
+
+<!--Modal: Name-->
+         <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+
+            <!--Content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Elige el logo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+              <!--Body-->
+              <div class="modal-body">
+
+                <div class="container">
+                  <div class="row">
+                    <div class="col-lg-12 text-center">
+                      <label class="custom-file-upload">
+                        <input type="file"/>
+                        <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                      </label>
+                    </div>
+                  </div>
+                  {{#if hasMedia}}
+                  <div class="row background-verylightgray light-padding">
+                    {{#each getMedia}}
+                    <div class="col-lg-3 col-sm-6 align-self-center">
+                      <a href="#" id="selectLogo" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image" id="{{this._id}}"></a>
+                    </div>
+                    {{/each}}
+                  </div>
+                  {{else}}
+                  <div class="spacer20"></div>
+                  <div class="row">
+                    <div class="col">
+                      Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
+                    </div>
+                  </div>
+                  <div class="spacer20"></div>
+                  <div class="row">
+                    <div class="col text-center">
+                      <button class="btn btn-purple goMediaLibraryLogo">Ir a biblioteca de imágenes</button>
+                    </div>
+                  </div>
+                  {{/if}}
+                </div>
+              </div>
+              <!--Footer-->
+              <div class="modal-footer justify-content-center">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <a href="#" class="btn btn-purple disabled" id="setLogo" data-id="{{this.mediaId}}">Establecer como logo</a>
+                  </div>
+                  <!--<div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>-->
+                  <!--<div class="col-lg-5"><input type="file" name="profile" id="nuestroinput"></div>-->
+                  
+                  <div class="col-lg-2">&nbsp;</div>
+                  <div class="col-lg-4"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+                  
+                </div>
+              </div>
+            </div>
+            <!--/.Content-->
+          </div>
+        </div>
+        <!--Modal: Name-->
+
+        <!--Modal: Name-->
+        <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+
+            <!--Content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Elige la foto de portada</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+              <!--Body-->
+              <div class="modal-body">
+
+                <div class="container">
+                  <div class="row">
+                    <div class="col-lg-12 text-center">
+                      <label class="custom-file-upload">
+                        <input type="file"/>
+                        <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                      </label>
+                    </div>
+                  </div>
+                  {{#if hasMedia}}
+                  <div class="row background-verylightgray light-padding">
+                    {{#each getMedia}}
+                    <div class="col-lg-3 col-sm-6 align-self-center">
+                      <a href="#" id="selectCoverPicture" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image" id="{{this._id}}"></a>
+                    </div>
+                    {{/each}}
+                  </div>
+                  {{else}}
+                  <div class="spacer20"></div>
+                  <div class="row">
+                    <div class="col">
+                      Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
+                    </div>
+                  </div>
+                  <div class="spacer20"></div>
+                  <div class="row">
+                    <div class="col text-center">
+                      <button class="btn btn-purple goMediaLibraryCover">Ir a biblioteca de imágenes</button>
+                    </div>
+                  </div>
+                  {{/if}}
+                </div>
+
+
+              </div>
+
+              <!--Footer-->
+              <div class="modal-footer justify-content-center">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <a href="#" class="btn btn-purple disabled" id="setCoverPicture" data-id="{{this.mediaId}}">Establecer como foto de portada</a>
+                  </div>
+                  <!--<div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>-->
+                  <!--<div class="col-lg-5"><input type="file" name="profile" id="nuestroinput"></div>-->
+                  
+                  <div class="col-lg-2">&nbsp;</div>
+                  <div class="col-lg-4"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+                  
+                </div>
+
+
+
+              </div>
+
+            </div>
+            <!--/.Content-->
+
+          </div>
+        </div>
+        <!--Modal: Name-->
    
 </template>
 
@@ -304,6 +451,9 @@
      <div class="row">
       <div class="col-md-12 text-left">
         <strong class="uppercase">{{getCollaboratorTitle}}</strong>
+        {{#if isOwner}}
+        <a href="#" class="text-purple text-right" id="changeCollaboratorsTitle">Cambiar este título <i class="fa fa-pencil"></i></a>
+        {{/if}}
       </div>
     </div>
     <div class="row">
@@ -328,7 +478,39 @@
         {{/each}}
      </div>
    </div>
+   <!--Modal: Name-->
+  <div class="modal fade" id="modal-changeCollaboratorsTitle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+
+      <!--Content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Título de esta sección</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <!--Body-->
+        <div class="modal-body">
+          <input type="text" class="form-control" id="collaboratorstSectionTitle" maxlength="50" placeholder="Ingresa el título">
+        </div>
+
+        <!--Footer-->
+        <div class="modal-footer justify-content-center">
+          <div class="row">
+            <div class="col-lg-12"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+          </div>
+        </div>
+      </div>
+      <!--/.Content-->
+    </div>
+  </div>
+  <!--Modal: Name-->
+
    {{/if}}
+
+
 </template>
 
 <template name="company_projects">
@@ -337,6 +519,9 @@
     <div class="row">
       <div class="col-md-12 text-left">
         <strong class="uppercase">{{getProjectTitle}}</strong>
+        {{#if isOwner}}
+        <a href="#" class="text-purple text-right" id="changeProjectsTitle">Cambiar este título <i class="fa fa-pencil"></i></a>
+        {{/if}}
       </div>
     </div>
     <div class="row">
@@ -364,5 +549,36 @@
       {{/each}}
     </div>
   </div>
+
+  <!--Modal: Name-->
+  <div class="modal fade" id="modal-changeProjectsTitle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+
+      <!--Content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Título de esta sección</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <!--Body-->
+        <div class="modal-body">
+          <input type="text" class="form-control" id="projectSectionTitle" maxlength="50" placeholder="Ingresa el título">
+        </div>
+
+        <!--Footer-->
+        <div class="modal-footer justify-content-center">
+          <div class="row">
+            <div class="col-lg-12"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+          </div>
+        </div>
+      </div>
+      <!--/.Content-->
+    </div>
+  </div>
+  <!--Modal: Name-->
+
   {{/if}}
 </template>

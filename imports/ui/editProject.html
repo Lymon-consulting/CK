@@ -347,77 +347,93 @@
              <div class="row">
                 <div class="col spacer80"></div>
              </div>
+             <div class="row">
+                <div class="col">
+                  <button class="btn btn-purple" id="save">Guardar</button>
+                  <button class="btn btn-purple" id="saveAndPublish">Guardar y publicar</button>
+                </div>
+              </div>
            </div>
 
         
 
      <!--Modal: Name-->
-        <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg" role="document">
+  <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
 
-            <!--Content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Elige la foto de portada</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-
-              <!--Body-->
-              <div class="modal-body">
-
-                <div class="container">
-                  {{#if hasMedia}}
-                  <div class="row background-verylightgray light-padding">
-                    {{#each getMedia}}
-                    <div class="col-lg-3 col-sm-6 align-self-center">
-                      <a href="#" id="selectCoverPicture" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image" id="{{this._id}}"></a>
-                    </div>
-                    {{/each}}
-                  </div>
-                  {{else}}
-                  <div class="spacer20"></div>
-                  <div class="row">
-                    <div class="col">
-                      Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
-                    </div>
-                  </div>
-                  <div class="spacer20"></div>
-                  <div class="row">
-                    <div class="col text-center">
-                      <button class="btn btn-purple goMediaLibrary">Ir a biblioteca de imágenes</button>
-                    </div>
-                  </div>
-                  {{/if}}
-                </div>
-
-
-              </div>
-
-              <!--Footer-->
-              <div class="modal-footer justify-content-center">
-                <div class="row">
-                  <div class="col-lg-12">
-                    <a href="#" class="btn btn-purple disabled" id="setCoverPicture" data-id="{{this.mediaId}}" disabled>Establecer como foto de portada</a>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryCover" data-dismiss="modal">Agregar más imágenes</button></div>
-                  <div class="col-lg-2">&nbsp;</div>
-                  <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
-                </div>
-
-
-
-              </div>
-
-            </div>
-            <!--/.Content-->
-
-          </div>
+      <!--Content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Elige tu foto de portada</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <!--Modal: Name-->
+
+        <!--Body-->
+        <div class="modal-body">
+
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12 text-center">
+                <label class="custom-file-upload">
+                  <input type="file"/>
+                  <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                </label>
+              </div>
+            </div>
+            {{#if hasMedia}}
+            <div class="row background-verylightgray light-padding">
+              {{#each getMedia}}
+              <div class="col-lg-3 col-sm-6 align-self-center">
+                <a href="#" id="selectCoverPicture" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image" id="{{this._id}}"></a>
+              </div>
+              {{/each}}
+            </div>
+            {{else}}
+            <div class="spacer20"></div>
+            <div class="row">
+              <div class="col">
+                Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
+              </div>
+            </div>
+            <div class="spacer20"></div>
+            <div class="row">
+              <div class="col text-center">
+                <button class="btn btn-purple goMediaLibraryCover">Ir a biblioteca de imágenes</button>
+              </div>
+            </div>
+            {{/if}}
+          </div>
+
+
+        </div>
+
+        <!--Footer-->
+        <div class="modal-footer justify-content-center">
+          <div class="row">
+            <div class="col-lg-6">
+              <a href="#" class="btn btn-purple disabled" id="setCoverPicture" data-id="{{this.mediaId}}">Establecer como foto de portada</a>
+            </div>
+            <!--<div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>-->
+            <!--<div class="col-lg-5"><input type="file" name="profile" id="nuestroinput"></div>-->
+            
+            <div class="col-lg-2">&nbsp;</div>
+            <div class="col-lg-4"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+            
+          </div>
+
+
+
+        </div>
+
+      </div>
+      <!--/.Content-->
+
+    </div>
+  </div>
+  <!--Modal: Name-->
+
         <!--Modal: Name-->
         <div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">
@@ -425,7 +441,7 @@
             <!--Content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Elige la foto para el poster</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Elige la foto para el póster</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -435,6 +451,14 @@
               <div class="modal-body">
 
                 <div class="container">
+                  <div class="row">
+                    <div class="col-lg-12 text-center">
+                      <label class="custom-file-upload">
+                        <input type="file"/>
+                        <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                      </label>
+                    </div>
+                  </div>
                   <div class="row background-verylightgray light-padding">
                     {{#each getMedia}}
                     <div class="col-lg-3 col-sm-6 align-self-center">
@@ -450,14 +474,15 @@
               <!--Footer-->
               <div class="modal-footer justify-content-center">
                 <div class="row">
-                  <div class="col-lg-12">
-                    <a href="#" class="btn btn-purple disabled" id="setPosterPicture" data-id="{{this.mediaId}}" disabled>Establecer como póster</a>
+                  <div class="col-lg-6">
+                    <a href="#" class="btn btn-purple disabled" id="setPosterPicture" data-id="{{this.mediaId}}">Establecer como póster</a>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryPoster" data-dismiss="modal">Agregar más imágenes</button></div>
+                  <!--<div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>-->
+                  <!--<div class="col-lg-5"><input type="file" name="profile" id="nuestroinput"></div>-->
+                  
                   <div class="col-lg-2">&nbsp;</div>
-                  <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+                  <div class="col-lg-4"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+                  
                 </div>
 
 
@@ -485,6 +510,14 @@
                   <div class="row">
                     <div class="col text-center">Elige las imágenes para tu galería de fotos</div>
                   </div>
+                  <div class="row">
+                    <div class="col-lg-12 text-center">
+                      <label class="custom-file-upload">
+                        <input type="file"/>
+                        <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                      </label>
+                    </div>
+                  </div>
 
                   {{#if hasMedia}}
                   
@@ -509,25 +542,14 @@
                     </div>
                   </div>
                   {{/if}}
-
                 </div>
-                
-
               </div>
 
               <!--Footer-->
               <div class="modal-footer justify-content-center">
                 <div class="row">
-                  <div class="col-lg-6"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+                  <div class="col-lg-12"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
                 </div>
-                <div class="row">
-                  <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryGallery" data-dismiss="modal">Agregar más imágenes</button></div>
-                  <div class="col-lg-2">&nbsp;</div>
-                  <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
-                </div>
-                
-                
-
               </div>
 
             </div>

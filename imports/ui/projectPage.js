@@ -4,6 +4,7 @@ import { Industry } from '../api/industry.js';
 import { Portlet } from '../api/portlet.js';
 import { Ocupation } from '../api/ocupations.js';
 import { Media } from '../api/media.js';
+import { uploadFiles } from '/lib/functions.js';
 
 import './projectPage.html';
 import '/lib/common.js';
@@ -34,6 +35,26 @@ if (Meteor.isClient) {
            }
          }
          return project;
+      },
+      getMetadata(projectID){
+        var project = Project.findOne({'_id': FlowRouter.getParam('id')});
+        var metadata = "";
+        if(project!=null){
+          if(project.project_type!=null && project.project_type!=""){
+            metadata = project.project_type + " / ";
+          }
+          if(project.project_genre!=null && project.project_genre!=""){
+            metadata = metadata + project.project_genre + " / ";
+          }
+          if(project.project_year!=null && project.project_year!=""){
+            metadata = metadata + project.project_year;
+          }
+
+          if(metadata.substring(metadata.length-3, metadata.length)===" / "){
+            metadata = metadata.substring(0,metadata.length-3);
+          }
+        }
+        return metadata;
       },
       getProjectPicture(size) {
         Meteor.subscribe("allMedia");
@@ -88,25 +109,20 @@ if (Meteor.isClient) {
       },
       
       ownerName(owner){
-         Meteor.subscribe("otherUsers");
-         var u = Meteor.users.findOne({'_id': owner}); 
-         var fullName = "";
-         if(u){
-
-            if(u.showArtisticName){
-              fullName = u.artistic;
-            }
-            else{
-
-              fullName = u.profile.name + " " + u.profile.lastname;
-              if(u.profile.lastname2!=null){
-                fullName = fullName + " " + u.profile.lastname2;
-              }
-            }
-
-
-         }
-         return fullName;
+        var name = "";
+        var user = Meteor.users.findOne({'_id':owner});
+        if(user){
+          if(user.profile.name!=null && user.profile.name!=""){
+            name = user.profile.name;  
+          }
+          if(user.profile.lastname!=null && user.profile.lastname!=""){
+            name = name + " " + user.profile.lastname;
+          }
+          if(user.profile.lastname2!=null && user.profile.lastname2!=""){
+            name = name + " " + user.profile.lastname2;
+          }
+        }
+        return name;
       },
       ownerRole(owner){
          var u = Meteor.users.findOne({'_id': owner});
@@ -198,10 +214,10 @@ if (Meteor.isClient) {
       Meteor.subscribe("allMedia");
       var user = Meteor.users.findOne({'_id':userId});
       var url;
-      if(user!=null && user.profilePictureID!=null){
-        var profile = Media.findOne({'mediaId':user.profilePictureID});
+      if(user!=null && user.crew.profilePictureID!=null){
+        var profile = Media.findOne({'mediaId':user.crew.profilePictureID});
         if(profile!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_100,h_100,c_thumb,r_max" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_100,h_100,c_thumb,r_max" + "/v" + profile.media_version + "/" + userId + "/" + user.crew.profilePictureID;    
         }
         
       }
@@ -306,9 +322,25 @@ if (Meteor.isClient) {
         var url = "";
         var media = Media.findOne({'mediaId':mediaId});
           if(media!=null){
-            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.userId() + "/" + media.mediaId;    
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + media.userId + "/" + media.mediaId;    
           }
         return url;
+      },
+      hasMedia() {
+        Meteor.subscribe("allMedia");
+        //var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
+        var media = Media.find({'userId': Meteor.userId()}).count();
+        var hasMedia = false;
+        if(media > 0){
+          hasMedia = true;
+        }
+        return hasMedia;
+      },
+      getMedia() {
+        Meteor.subscribe("allMedia");
+        //var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
+        var media = Media.find({'userId': Meteor.userId()},{sort:{'media_date':-1}});
+        return media;
       },
 
    });
@@ -1421,7 +1453,48 @@ if (Meteor.isClient) {
           )
 
          myWidget.open();*/
-      }
+      },
+      'click #openMediaGallery': function(event,template){
+       event.preventDefault();
+       $(".media-thumb").css('border','none');
+       $("#setCoverPicture").addClass('disabled');
+       $('#modal2').modal('show'); 
+      },
+      'change [type="file"]': function(e, t) {
+        //console.log(e.target.name);
+        uploadFiles(e.target.files, this._id, e.target.name);
+        /*
+        $('#modal1').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();*/
+      },
+      'click #selectCoverPicture': function(event,template){
+       event.preventDefault();
+        var mediaId = $(event.currentTarget).attr("data-id");
+
+        Session.set("mediaId",mediaId);
+
+       $(".media-thumb").css('border','none');
+       $(event.target).css('border', "solid 3px #ED1567");
+       $("#setCoverPicture").removeClass('disabled');
+
+      },
+    'click #setCoverPicture': function(event,template){
+       event.preventDefault();
+       var mediaId = Session.get("mediaId");
+
+       Meteor.call(
+        'saveProjectPictureID',
+        FlowRouter.getParam('id'),
+        mediaId
+      );
+
+        $('#modal2').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+        $("#setCoverPicture").removeClass('disabled');
+
+      },
    });
 
    Template.projectPage.onRendered(function () {

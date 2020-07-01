@@ -58,7 +58,7 @@
               {{#if getCoverPicture}}
               <img id="image" src="{{getCoverPicture}}" class="thumbnail-project"/>
               {{else}}
-              <img id="image" src="/images/nocover.jpg" class="thumbnail-project"/>
+              <img id="image" src="/images/no-cover.jpg" class="thumbnail-project"/>
               {{/if}}
             </div>
           </div>
@@ -315,6 +315,7 @@
          </div>
         </div>
         </div>
+        <!--
         <div class="spacer40"></div>
         <div class="row">
           <div class="col"><h2>Configuración de la página de perfil</h2></div>
@@ -344,7 +345,7 @@
             <input type="text" id="project_section_title" class="form-control" placeholder="Título proyectos" value="{{companyData.project_section_title}}" maxlength="150" disabled>
             {{/if}}
           </div>
-        </div>
+        </div>-->
         <div class="spacer40"></div>
         <div class="row">
           <div class="col-lg-8 form-group">
@@ -439,6 +440,14 @@
               <div class="modal-body">
 
                 <div class="container">
+                  <div class="row">
+                    <div class="col-lg-12 text-center">
+                      <label class="custom-file-upload">
+                        <input type="file"/>
+                        <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                      </label>
+                    </div>
+                  </div>
                   {{#if hasMedia}}
                   <div class="row background-verylightgray light-padding">
                     {{#each getMedia}}
@@ -466,9 +475,15 @@
               <!--Footer-->
               <div class="modal-footer justify-content-center">
                 <div class="row">
-                  <div class="col-lg-12">
+                  <div class="col-lg-6">
                     <a href="#" class="btn btn-purple disabled" id="setLogo" data-id="{{this.mediaId}}">Establecer como logo</a>
                   </div>
+                  <!--<div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>-->
+                  <!--<div class="col-lg-5"><input type="file" name="profile" id="nuestroinput"></div>-->
+                  
+                  <div class="col-lg-2">&nbsp;</div>
+                  <div class="col-lg-4"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+                  
                 </div>
               </div>
             </div>
@@ -494,6 +509,14 @@
               <div class="modal-body">
 
                 <div class="container">
+                  <div class="row">
+                    <div class="col-lg-12 text-center">
+                      <label class="custom-file-upload">
+                        <input type="file"/>
+                        <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                      </label>
+                    </div>
+                  </div>
                   {{#if hasMedia}}
                   <div class="row background-verylightgray light-padding">
                     {{#each getMedia}}
@@ -524,9 +547,15 @@
               <!--Footer-->
               <div class="modal-footer justify-content-center">
                 <div class="row">
-                  <div class="col-lg-12">
-                    <a href="#" class="btn btn-purple disabled" id="setCoverPicture" data-id="{{this.mediaId}}" disabled>Establecer como foto de portada</a>
+                  <div class="col-lg-6">
+                    <a href="#" class="btn btn-purple disabled" id="setCoverPicture" data-id="{{this.mediaId}}">Establecer como foto de portada</a>
                   </div>
+                  <!--<div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>-->
+                  <!--<div class="col-lg-5"><input type="file" name="profile" id="nuestroinput"></div>-->
+                  
+                  <div class="col-lg-2">&nbsp;</div>
+                  <div class="col-lg-4"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+                  
                 </div>
 
 
@@ -554,6 +583,14 @@
                   <div class="row">
                     <div class="col text-center">Elige las imágenes para tu galería de fotos</div>
                   </div>
+                  <div class="row">
+                    <div class="col-lg-12 text-center">
+                      <label class="custom-file-upload">
+                        <input type="file"/>
+                        <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                      </label>
+                    </div>
+                  </div>
                   {{#if hasMedia}}
                   <div class="row background-verylightgray p-3">
                     {{#each getMedia}}
@@ -577,18 +614,13 @@
                   </div>
                   {{/if}}
                 </div>
-                
-
               </div>
 
               <!--Footer-->
               <div class="modal-footer justify-content-center">
                 <div class="row">
-                  <div class="col-lg-6"><button type="button" class="btn btn-purple btn-rounded btn-md ml-4" data-dismiss="modal">Cerrar</button></div>
+                  <div class="col-lg-12"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
                 </div>
-                
-                
-
               </div>
 
             </div>

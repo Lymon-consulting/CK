@@ -17,8 +17,8 @@
              background-repeat: no-repeat;
              background-size: contain;
              background-position: top center;
-                     
-         }
+                     m
+         }olad
       }
       @media (min-width: 769px) and (max-width: 992px) {
          .bg-overlay {
@@ -110,7 +110,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-8 col-md-8 col-sm-9 text-left">
+        <div class="col-lg-7 col-md-7 col-sm-9 text-left">
           <div class="row">
             <div class="col">
               <h1 class="h3-title">{{getName getProfile._id}}</h1>
@@ -139,11 +139,11 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-1 col-md-1 col-sm-1 text-right">
+        <div class="col-lg-2 col-md-2 col-sm-1 text-right text-purple">
           {{#if notSameUser}}
           {{else}}
             {{#if isVerified}}
-              <a href="/editProfileActor/{{getProfile._id}}"><i class="fa fa-pencil text-purple" aria-hidden="true"></i></a>
+              <a href="/editProfileActor/{{getProfile._id}}" class="text-purple">Editar perfil&nbsp;<i class="fa fa-pencil text-purple" aria-hidden="true"></i></a>
             {{/if}}
           {{/if}}
         </div>
@@ -228,6 +228,9 @@
             <div class="row">
                <div class="col-md-12 text-left">
                   <strong class="uppercase">GALERÍA DE FOTOS</strong>
+                  {{#if isOwner}}
+                  <a href="#" class="text-purple" data-toggle="modal" data-target="#modal3"><br>Agregar <i class="fa fa-pencil"></i></a>
+                  {{/if}}
                </div>
             </div>
             <div class="row">
@@ -562,6 +565,14 @@
         <div class="modal-body">
 
           <div class="container">
+            <div class="row">
+              <div class="col-lg-12 text-center">
+                <label class="custom-file-upload">
+                  <input type="file"/>
+                  <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                </label>
+              </div>
+            </div>
             {{#if hasMedia}}
             <div class="row background-verylightgray light-padding">
               {{#each getMedia}}
@@ -589,14 +600,15 @@
         <!--Footer-->
         <div class="modal-footer justify-content-center">
           <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
               <a href="#" class="btn btn-purple disabled" id="setProfilePicture" data-id="{{this.mediaId}}">Establecer como foto de perfil</a>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>
+            <!--<div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>-->
+            <!--<div class="col-lg-5"><input type="file" name="profile" id="nuestroinput"></div>-->
+            
             <div class="col-lg-2">&nbsp;</div>
-            <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+            <div class="col-lg-4"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+            
           </div>
         </div>
       </div>
@@ -623,6 +635,14 @@
         <div class="modal-body">
 
           <div class="container">
+            <div class="row">
+              <div class="col-lg-12 text-center">
+                <label class="custom-file-upload">
+                  <input type="file"/>
+                  <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                </label>
+              </div>
+            </div>
             {{#if hasMedia}}
             <div class="row background-verylightgray light-padding">
               {{#each getMedia}}
@@ -653,19 +673,18 @@
         <!--Footer-->
         <div class="modal-footer justify-content-center">
           <div class="row">
-            <div class="col-lg-12">
-              <a href="#" class="btn btn-purple disabled" id="setCoverPicture" data-id="{{this.mediaId}}" disabled>Establecer como foto de portada</a>
+            <div class="col-lg-6">
+              <a href="#" class="btn btn-purple disabled" id="setCoverPicture" data-id="{{this.mediaId}}">Establecer como foto de portada</a>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryCover" data-dismiss="modal">Agregar más imágenes</button></div>
+            <!--<div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>-->
+            <!--<div class="col-lg-5"><input type="file" name="profile" id="nuestroinput"></div>-->
+            
             <div class="col-lg-2">&nbsp;</div>
-            <div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+            <div class="col-lg-4"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+            
           </div>
-
-
-
         </div>
+
 
       </div>
       <!--/.Content-->
@@ -674,4 +693,67 @@
   </div>
   <!--Modal: Name-->
 
+
+  <!--Modal: Name-->
+  <div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+
+      <!--Content-->
+      <div class="modal-content">
+
+        <!--Body-->
+        <div class="modal-body">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12 text-center">
+                <label class="custom-file-upload">
+                  <input type="file"/>
+                  <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-center">Elige las imágenes para tu galería de fotos</div>
+            </div>
+            {{#if hasMedia}}
+            <div class="row background-verylightgray p-3">
+              {{#each getMedia}}
+              <div class="col-lg-3 col-sm-6 align-self-center justify-content-center">
+                <input type="checkbox" class="check" data-id="{{this.mediaId}}" {{verifyChecked this.mediaId}}><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image">
+              </div>
+              {{/each}}
+            </div>
+            {{else}}
+            <div class="spacer20"></div>
+            <div class="row">
+              <div class="col">
+                Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
+              </div>
+            </div>
+            <div class="spacer20"></div>
+            <div class="row">
+              <div class="col text-center">
+                <button class="btn btn-purple goMediaLibraryGallery">Ir a biblioteca de imágenes</button>
+              </div>
+            </div>
+            {{/if}}
+          </div>
+          
+
+        </div>
+
+        <!--Footer-->
+        <div class="modal-footer justify-content-center">
+          <div class="row">
+            <div class="col-lg-12"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+          </div>
+        </div>
+
+      </div>
+      <!--/.Content-->
+
+    </div>
+  </div>
+  <!--Modal: Name-->
 </template>

@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { Project } from '../api/project.js';
 import { Media } from '../api/media.js';
 import { Industry } from '../api/industry.js';
+import { uploadFiles } from '/lib/functions.js';
 
 
 import './profilePageActor.html';
@@ -27,6 +28,17 @@ Template.profilePageActor.helpers({
         if(user.cast.showArtisticName!=null && user.cast.showArtisticName===true){
           name = user.cast.artistic;
         }
+        else{
+          if(user!=null && user.profile.name!=null && user.profile.name!=""){
+            name = user.profile.name;  
+          }
+          if(user!=null && user.profile.lastname!=null && user.profile.lastname!=""){
+            name = name + " " + user.profile.lastname;
+          }
+          if(user!=null && user.profile.lastname2!=null && user.profile.lastname2!=""){
+            name = name + " " + user.profile.lastname2;
+          }  
+        }
       }
       else{
         if(user!=null && user.profile.name!=null && user.profile.name!=""){
@@ -39,6 +51,7 @@ Template.profilePageActor.helpers({
           name = name + " " + user.profile.lastname2;
         }
       }
+      console.log(name);
       return name;
     },
     isOwner(){
@@ -248,6 +261,24 @@ Template.profilePageActor.helpers({
       }
      return url;*/
    },
+   verifyChecked(mediaId){
+    var data = Meteor.users.findOne({'_id' : Meteor.userId()});
+    var gallery = new Array();
+    var result="";
+    if(data){
+      if(data.cast.gallery){
+        gallery = data.cast.gallery;
+        for (var i = 0; i < gallery.length; i++) {
+          if(mediaId===gallery[i]){
+            result="checked";
+            break;
+          }
+        }
+      }
+      
+    }
+    return result;
+  },
    projectRole(projId){
       var u = Project.findOne({'_id': projId});
       var result = "";
@@ -486,7 +517,7 @@ Template.profilePageActor.helpers({
     var url = "";
     var media = Media.findOne({'mediaId':mediaId});
       if(media!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + FlowRouter.getParam('id') + "/" + media.mediaId;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + media.userId + "/" + media.mediaId;    
       }
     return url;
   }
@@ -601,6 +632,25 @@ Template.profilePageActor.events({
         $('.modal-backdrop').remove();
         $("#setCoverPicture").removeClass('disabled');
 
+      },
+      'change [type="file"]': function(e, t) {
+        //console.log(e.target.name);
+        uploadFiles(e.target.files, this._id, e.target.name);
+        /*
+        $('#modal1').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();*/
+      },
+      'change .check':function(event,template){
+        event.preventDefault();
+        var mediaId = $(event.currentTarget).attr("data-id");
+        //console.log(mediaId);
+        if(event.target.checked){
+          Meteor.call('addGalleryCast', Meteor.userId(), mediaId);
+        }
+        else{
+          Meteor.call('removeGalleryCast', Meteor.userId(), mediaId); 
+        }
       },
 });
 

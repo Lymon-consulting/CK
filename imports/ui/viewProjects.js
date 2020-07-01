@@ -18,7 +18,7 @@ if (Meteor.isClient) {
       },
       isMainProject(value){
         var main = Project.findOne({'_id': value}).project_is_main;
-        return (main === 'true') ? 'checked' : '' ; 
+        return (main === true) ? 'checked' : '' ; 
       },
       getProjectPicture(projectId, size) {
         Meteor.subscribe("allMedia");

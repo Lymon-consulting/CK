@@ -4,35 +4,13 @@ import { Ocupation } from '../api/ocupations.js';
 import { City } from '../api/city.js';
 import { Media } from '../api/media.js';
 import { getParam } from '/lib/functions.js';
+import { uploadFiles } from '/lib/functions.js';
+import { trimInput } from '/lib/functions.js';
+import { isNotEmpty } from '/lib/functions.js';
+import { formatURL } from '/lib/functions.js';
 
 import './editIndustry.html';
 import '/lib/common.js';
-
-
-var trimInput= function(val){
-  if(val!=null && val!=""){
-    return val.replace(/^\s*|\s*$/g, "");  
-  }
-  return false;
-}
-
-var isNotEmpty=function(val){
-  if(val && val!== ""){
-    return true;
-  }
-//  Bert.alert("", "danger", "growl-top-right");
-Bert.alert({message: 'Por favor completa todos los campos obligatorios', type: 'danger', icon: 'fa fa-exclamation'});
-return false;
-}
-
-function formatURL(url){
-  if(url!=""){
-    if (!/^https?:\/\//i.test(url)) {
-      url = 'http://' + url;  
-    }
-  }
-  return url;
-}
 
 function isOwner(){
   var result = false;
@@ -750,6 +728,16 @@ Template.editIndustry.events({
         }
       }
     },
+    'change [type="file"]': function(e, t) {
+        //console.log(e.target.name);
+        uploadFiles(e.target.files, this._id, e.target.name);
+        /*
+        $('#modal1').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();*/
+      },
+
+
     
 });
 

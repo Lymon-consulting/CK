@@ -33,6 +33,7 @@
 .carousel-control-prev-icon{
   color:#ED1567;
 }
+
 .imageDivHeight{
     width: 100%;
     max-width: 100%;
@@ -179,9 +180,20 @@
   cursor: pointer;
 }
 
+#logoinIndustryPage {
+  width: 200px;
+  height: auto;
+  border-radius: 50%;
+  font-size: 45px;
+  color: #fff;
+  text-align: center;
+  line-height: 100px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
 #profileImageLarge200 {
   width: 200px;
-  height: 200px;;
   border-radius: 50%;
   background: #666;
   /*border:solid;*/
@@ -191,6 +203,7 @@
   line-height: 100px;
   margin-left: 20px;
   padding-top: 50px;
+  object-fit:scale-down;
 }
 
 #companyLogo {
@@ -223,8 +236,8 @@
 }
 .thumbnail-poster{
   /*Los póster tienen un aspectRatio de 3:4*/
-   /*width: 200px;*/
-   height: 300px;
+   width: 200px;
+   /*height: 300px;*/
    object-fit:scale-down;
    
 }
