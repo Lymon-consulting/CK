@@ -34,6 +34,11 @@
 .accordion-section .panel-default .panel-body {
     font-size: 14px;
 }
+.chat-title{
+  background-color: #eee;
+  font-size: 32px;
+  border-width:2px;
+}
 .box{
     height:100px;
     width:150px;

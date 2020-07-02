@@ -517,7 +517,7 @@ Template.profilePageActor.helpers({
     var url = "";
     var media = Media.findOne({'mediaId':mediaId});
       if(media!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + media.userId + "/" + media.mediaId;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + media.userId + "/" + media.mediaId;
       }
     return url;
   }

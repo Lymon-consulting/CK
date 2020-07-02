@@ -13,6 +13,21 @@ Template.profilePage.rendered = function(){
   });
 }
 
+function isFirstTime(from,to){
+  var user1 = Meteor.users.find({'_id':from, 'messagesList.partnerId':to});
+  var user2 = Meteor.users.find({'_id':to, 'messagesList.partnerId':from});
+
+  if((user1!=null && user1.count()>0) || (user2!=null && user2.count()>0)){
+    console.log("ya existe relación");
+    return false;
+  }
+  else{
+    console.log("No existe relación");
+    return true;
+  }
+
+}
+
 Template.profilePage.helpers({
    getProfile(){
       
@@ -567,6 +582,49 @@ Template.profilePage.events({
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();*/
       },
+      'click #sendMessage':function(event,template){
+        event.preventDefault();
+        var from,to;
+        from = Meteor.userId();
+        to = FlowRouter.getParam("id");
+        
+        if(isFirstTime(from,to)){
+          Meteor.call(
+            'createRelationship',
+            from,
+            to,
+          );
+        }
+        else{
+          var user1 = Meteor.users.findOne({'_id':from, 'messagesList.partnerId':to});
+          var user2 = Meteor.users.findOne({'_id':to, 'messagesList.partnerId':from});
+
+          if(user1!=null && user1.messagesList!=null){
+            var conversationId;
+
+            for (var i = 0; i < user1.messagesList.length; i++) {
+              if(user1.messagesList[i]!=null && user1.messagesList[i].partnerId===to){
+                conversationId = user1.messagesList[i].conversationId;
+                break;
+              }
+            }
+
+            console.log(parseFloat(conversationId).toFixed(1));
+
+            Meteor.call(
+              'updateRelationship',
+              conversationId,
+              from,
+              to,
+            );
+          }
+
+          
+        }
+
+        FlowRouter.go("/messages");
+
+      }
 });
 
 Template.profilePage.onRendered(function () {

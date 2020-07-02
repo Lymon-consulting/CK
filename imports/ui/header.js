@@ -5,6 +5,7 @@ import { Media } from '../api/media.js';
  
 import './header.html';
 import './notifications.html'; 
+import './messageIcon.html'; 
 import '/lib/common.js';
 
 Template.header.helpers({

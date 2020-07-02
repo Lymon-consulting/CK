@@ -4,6 +4,7 @@ import { Project } from '../imports/api/project.js';
 import { Industry } from '../imports/api/industry.js';
 import { Portlet } from '../imports/api/portlet.js';
 import { Ocupation } from '../imports/api/ocupations.js';
+import { Message } from '../imports/api/message.js';
 import { City } from '../imports/api/city.js';
 import { Media } from '../imports/api/media.js';
 import { Index, MongoDBEngine } from 'meteor/easy:search'
@@ -14,6 +15,7 @@ import './projectMethods.js';
 import './userMethods.js';
 import './industryMethods.js';
 import './mediaMethods.js';
+import './messageMethods.js';
 
 
 Meteor.startup(() => {
@@ -240,6 +242,19 @@ Meteor.publish("allProjects", function(){
   });
 });
 
+
+Meteor.publish("messages", function(){
+  return Message.find({},{
+    fields: {
+      '_id':1,
+      'conversationId':1,
+      'sender':1,
+      'message':1,
+      'messageDate':1
+    }
+  });
+});
+
 Meteor.publish("otherUsers", function () {
   return Meteor.users.find({},{ 
     fields: { 
@@ -293,7 +308,8 @@ Meteor.publish("otherUsers", function () {
       'viewAs':1,
       'topRole':1,
       'cast':1,
-      'crew':1
+      'crew':1,
+      'messagesList':1,
     }
   });
 });
