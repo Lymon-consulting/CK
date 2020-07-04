@@ -27,11 +27,11 @@ Meteor.methods({
         "messagesList": doc2
       }
     });
+    return conversationId;
   },
   updateRelationship(conversationId, sender, receiver) {
-    
     var modifiedAt = new Date();
-
+    console.log("Actualizando fecha de conversationId="+conversationId);
     Meteor.users.update({'_id': sender, 'messagesList.conversationId':conversationId},{
       $set:{
         "messagesList.$.modifiedAt": modifiedAt
@@ -50,10 +50,18 @@ Meteor.methods({
       "conversationId": conversationId,
       "sender": sender,
       "message": message,
-      "messageDate": modifiedAt
+      "messageDate": modifiedAt,
+      "read":false
      },function(error,result){
         return result;
      });
+  },
+  markAsRead(messageId, value){
+    Message.update({'_id':messageId},{
+      $set:{
+        "read":value
+      }
+    });
   }
 });
 

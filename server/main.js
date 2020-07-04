@@ -250,7 +250,8 @@ Meteor.publish("messages", function(){
       'conversationId':1,
       'sender':1,
       'message':1,
-      'messageDate':1
+      'messageDate':1,
+      'read':1
     }
   });
 });

@@ -8,12 +8,27 @@ import { uploadFiles } from '/lib/functions.js';
 import './profilePageActor.html';
 Meteor.subscribe("otherUsers");
 
+function isFirstTime(from,to){
+  var user1 = Meteor.users.find({'_id':from, 'messagesList.partnerId':to});
+  var user2 = Meteor.users.find({'_id':to, 'messagesList.partnerId':from});
+
+  if((user1!=null && user1.count()>0) || (user2!=null && user2.count()>0)){
+    console.log("ya existe relación");
+    return false;
+  }
+  else{
+    console.log("No existe relación");
+    return true;
+  }
+
+}
 
 Template.profilePageActor.rendered = function(){
   this.autorun(function(){
     window.scrollTo(0,0);
   });
 }
+
 
 Template.profilePageActor.helpers({
    getProfile(){
@@ -652,6 +667,59 @@ Template.profilePageActor.events({
           Meteor.call('removeGalleryCast', Meteor.userId(), mediaId); 
         }
       },
+      'click #sendMessage':function(event,template){
+        event.preventDefault();
+        var from,to;
+        from = Meteor.userId();
+        to = FlowRouter.getParam("id");
+        var conversationId;
+        
+        if(isFirstTime(from,to)){
+          conversationId = Meteor.call(
+                            'createRelationship',
+                            from,
+                            to,
+                            function(error, result){
+                              console.log("Del sever viene el conversationId="+result);
+                              Session.set("conversationId",result);
+                            }
+                          );
+          console.log("Creando un conversationId="+Session.set("conversationId"));
+        }
+        else{
+          var user1 = Meteor.users.findOne({'_id':from, 'messagesList.partnerId':to});
+          var user2 = Meteor.users.findOne({'_id':to, 'messagesList.partnerId':from});
+
+          if(user1!=null && user1.messagesList!=null){
+            
+
+            for (var i = 0; i < user1.messagesList.length; i++) {
+              if(user1.messagesList[i]!=null && user1.messagesList[i].partnerId===to){
+                conversationId = user1.messagesList[i].conversationId;
+                break;
+              }
+            }
+
+            console.log("Retornando un conversationId ="+conversationId);
+
+            Meteor.call(
+              'updateRelationship',
+              conversationId,
+              from,
+              to,
+            );
+            Session.set("conversationId",conversationId);
+          }
+
+          
+        }
+
+        Session.set("partnerId",to);
+
+
+        FlowRouter.go("/messages");
+
+      }
 });
 
 Template.profilePageActor.onRendered(function () {
