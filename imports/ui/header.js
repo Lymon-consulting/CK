@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor'
 import { Project } from '../api/project.js';
 import { Media } from '../api/media.js';
+import { getRoleById } from '/lib/globals.js';
  
 import './header.html';
 import './notifications.html'; 
@@ -67,7 +68,7 @@ Template.header.helpers({
       var result = new Array();
       var strResult = "";
       if(user){
-         
+         /*
          var topRole = user.topRole;
          if(topRole){
            for (var i = 0; i < topRole.length; i++) {
@@ -78,12 +79,12 @@ Template.header.helpers({
                result.push("Dirección");
              }
            }
-         }
+         }*/
 
          var crewRoles = user.role;
          if(crewRoles){
            for (var i = 0; i < crewRoles.length; i++) {
-              result.push(crewRoles[i]);
+              result.push(getRoleById(crewRoles[i]).roleName);
             }
             
           }

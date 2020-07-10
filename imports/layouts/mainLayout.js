@@ -170,10 +170,15 @@ Template.registerHelper('fullName', function(){
 Template.registerHelper('hasTopRole', function(){
   var array = new Array();
   var result = false;
-  if(Meteor.user()!=null && Meteor.user().topRole!=null){
-    array = Meteor.user().topRole;
+  var idFromDatabase, idFromSettingsDirector, idFromSettingsProductor;
+  idFromSettingsDirector = parseInt(Meteor.settings.public.DIRECTOR_ID); 
+  idFromSettingsProductor = parseInt(Meteor.settings.public.PRODUCTOR_ID); 
+  if(Meteor.user()!=null && Meteor.user().role!=null){
+    array = Meteor.user().role;
     for (var i = array.length - 1; i >= 0; i--) {
-      if(array[i]==="1" || array[i]==="2"){
+      idFromDatabase = parseInt(array[i]);
+
+      if(idFromDatabase===idFromSettingsDirector || idFromDatabase===idFromSettingsProductor){//Director=32, Productor=72
         result = true;  
         break;
       }

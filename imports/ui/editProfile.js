@@ -7,6 +7,11 @@ import { uploadFiles } from '/lib/functions.js';
 import { trimInput } from '/lib/functions.js';
 import { isNotEmpty } from '/lib/functions.js';
 import { formatURL } from '/lib/functions.js';
+import { getCrewCategories } from '/lib/globals.js';
+import { getCrewRoleFromCategory } from '/lib/globals.js';
+import { getRoleById } from '/lib/globals.js';
+
+
 
 import './editProfile.html';
 import '/lib/common.js';
@@ -19,7 +24,8 @@ Meteor.subscribe("userData");
 
 Template.editProfile.rendered = function(){
   this.autorun(function(){
-
+    //console.log(getRoleById(32));
+    //console.log(getRoleById(32).roleName);
   });
 }
 
@@ -158,28 +164,44 @@ countrySelected: function(value){
  return result;
 },
 getCategories(){
+
+  var values = getCrewCategories();
+  //console.log(values);
+  return values;
+  /*
  var data = Ocupation.find({},{sort:{'title':1}}).fetch();
- return _.uniq(data, false, function(transaction) {return transaction.title});
+ return _.uniq(data, false, function(transaction) {return transaction.title});*/
 },
 getOcupationsFromCategory(){
+ var object = new Array();
  if(Session.get("selected_category")!=null){
-  return Ocupation.find({'title': Session.get("selected_category")}).fetch();
+  object = getCrewRoleFromCategory(Session.get("selected_category"));
+//  console.log(object);
+
+  //return Ocupation.find({'title': Session.get("selected_category")}).fetch();
 }
 else{
-  return Ocupation.find({'title': "Animacion y arte digital"}).fetch();
+  object = getCrewRoleFromCategory("Animación y arte digital");
+  //return Ocupation.find({'title': "Animacion y arte digital"}).fetch();
 }
+return object;
 },
-getRolesSelected(){
+getRolesSelected(){  
+
   var result = new Array();
   var userRoles = Meteor.user().role;
-        //console.log(userRoles);
-        if(userRoles){
-          for (var i = 0; i < userRoles.length; i++) {
-            result.push(userRoles[i]);
-        }
-      }
-      return result;
-    },
+  //console.log(userRoles);
+  if(userRoles){
+    for (var i = 0; i < userRoles.length; i++) {
+      //console.log("Con "+userRoles[i]);
+      //console.log(getRoleById(parseInt(userRoles[i])).roleName);
+      result.push(getRoleById(userRoles[i]));
+    }
+  }
+  //console.log(result);
+  return result;
+},
+
     hasPrimaryRole(){
       var result = false;
       if(Meteor.user().topRole){

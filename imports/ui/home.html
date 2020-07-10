@@ -29,9 +29,11 @@
       al siguiente nivel.
       </p>
       <div class="spacer20"></div>
+      {{#unless currentUser}}
       <p>
          <a href="/login" class="btn btn-purple btn-lg" role="button" aria-disabled="true">Entrar</a>
       </p>
+      {{/unless}}
    </div>      
    
    <div class="spacer40"></div>

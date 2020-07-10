@@ -3,6 +3,7 @@ import { Project } from '../api/project.js';
 import { Media } from '../api/media.js';
 import { Industry } from '../api/industry.js';
 import { uploadFiles } from '/lib/functions.js';
+import { getRoleById } from '/lib/globals.js';
 
 import './profilePage.html';
 Meteor.subscribe("otherUsers");
@@ -96,6 +97,7 @@ Template.profilePage.helpers({
     var result = new Array();
     var strResult = "";
     if(u){
+      /*
       userTopRoles = u.topRole;
       if(userTopRoles){
         for (var i = 0; i < userTopRoles.length; i++) {
@@ -106,22 +108,18 @@ Template.profilePage.helpers({
             result.push("Dirección");
           }
         }
-      }
+      }*/
       userRoles = u.role;
       if(userRoles){
         for (var i = 0; i < userRoles.length; i++) {
-          result.push(userRoles[i]);
+          result.push(getRoleById(userRoles[i]));
         }
       }
 
       for (var i = 0; i < result.length; i++) {
-        strResult = strResult + ", " + result[i];
+        strResult = strResult + ", " + result[i].roleName;
       }
       strResult = strResult.substring(2, strResult.length);
-
-
-
-
     }
 
     return strResult;

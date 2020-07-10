@@ -192,15 +192,15 @@
                   <label for="oc">Departamentos </label>
                   <select name="category" id="category" class="form-control">
                     {{#each getCategories}}
-                    <option value="{{title}}"> {{title}} </option>
+                    <option value="{{this}}"> {{this}} </option>
                     {{/each}}
                   </select>
                 </div>
                 <div class="col-md-6">
                   <label for="Ocupation">Roles <span class="text-purple">(Selecciona con un clic)</span></label>
                   <select multiple name="Ocupation" id="ocupation" class="form-control">
-                    {{#each getOcupationsFromCategory}}
-                    <option value="{{secondary}}" {{roleSelected secondary}}> {{secondary}} </option>
+                    {{#each item in getOcupationsFromCategory}}
+                    <option value="{{item.roleId}}" {{roleSelected secondary}}> {{item.roleName}} </option>
                     {{/each}}
                   </select>  
                 </div>
@@ -211,7 +211,7 @@
                   <label for="Ocupation">Roles que has seleccionado <span class="text-purple">(Elimina haciendo clic sobre un rol)</span></label>
                   <select name="Selection" multiple id="selection" class="form-control">
                     {{#each item in getRolesSelected}}
-                    <option value="{{item}}" {{roleSelected item}}> {{item}} </option>
+                    <option value="{{item.roleId}}" {{roleSelected item}}> {{item.roleName}} </option>
                     {{/each}}
                   </select>  
                 </div>
