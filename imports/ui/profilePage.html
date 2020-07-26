@@ -149,14 +149,15 @@
                <div class="col">
                   {{#if notSameUser getProfile._id}}
                      {{#if showButtonFollow getProfile._id}}
-                     <input type="hidden" id="thisUser" value="{{getProfile._id}}">
-                        {{#if isVerified}}
+                      <input type="hidden" id="thisUser" value="{{getProfile._id}}">
+                      {{#if isVerified}}
                         <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
-                        <button class="btn button-follow" id="sendMessage"> <i class="fa fa-envelope fa-sm"></i> ENVIAR MENSAJE</button>
-                        {{/if}}
+                        
+                      {{/if}}
                      {{else}}
                         <button class="btn button-unfollow" id="pushUnfollow"> <i class="fa fa-minus-circle fa-sm"></i> DEJAR DE SEGUIR</button>
                      {{/if}}      
+                     <button class="btn button-follow" id="sendMessage"> <i class="fa fa-envelope fa-sm"></i> ENVIAR MENSAJE</button>
                   {{/if}}
                </div>
             </div>
@@ -441,7 +442,7 @@
                                        {{#if getProfilePicture this._id 40}}
                                        <img src="{{getProfilePicture this._id 40}}" data-toggle="tooltip" data-placement="top" title="{{this.fullname}}">
                                        {{else}}
-                                       <div id="profileImage" data-toggle="tooltip" data-placement="top" title="{{this.fullname}}">{{getInitials this._id}}</div>
+                                       <img src="/images/no-profile.jpg" class="img-round" data-toggle="tooltip" style="width:40px;height: 40px" title="{{this.fullname}}"/>
                                        {{/if}}
                                        </a>
                                     </div>
@@ -472,7 +473,7 @@
                                        {{#if getProfilePicture this._id 40}}
                                        <img src="{{getProfilePicture this._id 40}}" data-toggle="tooltip" data-placement="top" title="{{getFollowName this._id}}">
                                        {{else}}
-                                       <div id="profileImage" data-toggle="tooltip" data-placement="top" title="{{getFollowName this._id}}">{{getInitials this._id}}</div>
+                                       <img src="/images/no-profile.jpg" class="img-round" data-toggle="tooltip" style="width:40px;height: 40px" title="{{getFollowName this._id}}"/>
                                        {{/if}}
                                        </a>
                                     </div>

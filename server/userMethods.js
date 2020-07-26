@@ -22,6 +22,9 @@ Meteor.methods({
         "wizard": false
       }
     });
+  },
+  getServerDate(){
+    return new Date();
   }
 });
 

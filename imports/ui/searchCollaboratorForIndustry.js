@@ -5,6 +5,9 @@ import { Industry } from '../api/industry.js';
 import { Media } from '../api/media.js';
 import { UsersIndex } from '/lib/common.js';
 import { getParam } from '/lib/functions.js';
+import { getRoleById } from '/lib/globals.js';
+import { getCrewCategories } from '/lib/globals.js';
+import { getCrewRoleFromCategory } from '/lib/globals.js';
 
 import './searchCollaboratorForIndustry.html';
 import '/lib/common.js';
@@ -176,24 +179,28 @@ checkParticipation(userId){
     }
 },
 getCategories(){
-   var data = Ocupation.find({},{sort:{'title':1}}).fetch();
-   return _.uniq(data, false, function(transaction) {return transaction.title});
+  var values = getCrewCategories();
+  return values;
  },
  getOcupationsFromCategory(){
-  var allOcupations;
+  //var allOcupations;
+  var object = new Array();
   if(Session.get("selected_category")!=null){
+    object = getCrewRoleFromCategory(Session.get("selected_category"));
+    /*
     allOcupations = Ocupation.find({'title': Session.get("selected_category")}).fetch();
     if(Session.get("selected_category")==="Dirección"){
-      allOcupations.push({'title':'Dirección', 'secondary':'Director'});
+      allOcupations.push({'title':'Dirección', 'secondary':'Dirección'});
     }
     else if(Session.get("selected_category")==="Producción"){
-      allOcupations.push({'title':'Producción', 'secondary':'Productor'});
-    }
+      allOcupations.push({'title':'Producción', 'secondary':'Producción'});
+    }*/
   }
   else{
-    allOcupations = Ocupation.find({'title': "Animacion y arte digital"}).fetch();
+    object = getCrewRoleFromCategory("Animación y arte digital");
+    //allOcupations = Ocupation.find({'title': "Animacion y arte digital"}).fetch();
   }
-  return allOcupations;
+  return object;
 },
 getCountries(){
  var data = City.find().fetch();
@@ -244,7 +251,22 @@ getCoverPicture(userId, size) {
   url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_scale/" + user.crew.profileCoverID;
 }
 return url;
-}
+},
+getRoleNames(role){
+    var result = new Array();
+    var strResult="";
+    if(role){
+      for (var i = 0; i < role.length; i++) {
+        result.push(getRoleById(role[i]));
+      }
+      for (var i = 0; i < result.length; i++) {
+        strResult = strResult + ", " + result[i].roleName;
+      }
+      strResult = strResult.substring(2, strResult.length);  
+    }
+    
+    return strResult;
+   },
 
 
 });

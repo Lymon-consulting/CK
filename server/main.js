@@ -230,6 +230,8 @@ export const IndustryIndex = new Index({
     }),
 });
 
+
+
 Meteor.publish("allProjects", function(){
   return Project.find({},{
     fields: {

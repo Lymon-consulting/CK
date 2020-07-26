@@ -32,15 +32,18 @@ Template.selectProfile.events({
     var optionSelected = $(event.target).attr("data-answer");
     if(optionSelected==='crew'){
       Meteor.call('setIsCrew', Meteor.userId(), true); 
-      FlowRouter.go('/confirmProfile/' + Meteor.userId()+"/crew");  
+      FlowRouter.go('/editProfile/' + Meteor.userId());
+      //FlowRouter.go('/confirmProfile/' + Meteor.userId()+"/crew");  
     }
     else if(optionSelected==='cast'){
       Meteor.call('setIsCast', Meteor.userId(), true); 
-      FlowRouter.go('/confirmProfile/' + Meteor.userId()+"/cast"); 
+      FlowRouter.go('/editProfileActor/' + Meteor.userId());
+      //FlowRouter.go('/confirmProfile/' + Meteor.userId()+"/cast"); 
     }
     else if(optionSelected==='industry'){
       Meteor.call('setIsCrew', Meteor.userId(), true); 
-      FlowRouter.go('/confirmProfile/' + Meteor.userId()+"/industry");  
+      FlowRouter.go('/editProfileActor/' + Meteor.userId());
+      //FlowRouter.go('/confirmProfile/' + Meteor.userId()+"/industry");  
     }
     
 

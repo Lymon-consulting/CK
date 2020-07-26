@@ -6,28 +6,82 @@ import { isNotEmpty } from '/lib/functions.js';
 
 import './messages.html';
 
+function isFirstTime(from,to){
+  var user1 = Meteor.users.find({'_id':from, 'messagesList.partnerId':to});
+  var user2 = Meteor.users.find({'_id':to, 'messagesList.partnerId':from});
+
+  if((user1!=null && user1.count()>0) || (user2!=null && user2.count()>0)){
+    //console.log("ya existe relación");
+    return false;
+  }
+  else{
+    //console.log("No existe relación");
+    return true;
+  }
+
+}
 
 function sendMessage(){
+  var from = Meteor.userId();
+  var to;
+  if(Session.get("firstInteraction")!=null){
+    to = Session.get("firstInteraction");
+  }
+  else if(Session.get("partnerId")!=null){
+    to = Session.get("partnerId");
+  } 
   var message = trimInput($('#message').val());
-  if(Session.get("partnerId")!=null && Session.get("conversationId")!=null){
-    var partnerId = Session.get("partnerId");
-    var conversationId = Session.get("conversationId");
-    if(isNotEmpty(message)){
-      Meteor.call(
-        'sendMessage',
-        parseInt(conversationId),
-        Meteor.userId(),
-        message
-      );
-      Meteor.call(
-        'updateRelationship',
-        parseInt(conversationId),
-        Meteor.userId(),
-        partnerId,
-      );
-      $('#message').val("");
+  var conversationId;
+
+  if(isFirstTime(from, to)){
+    conversationId = Meteor.call(
+                          'createRelationship',
+                          from,
+                          to,
+                          function(error, result){
+                            //console.log("Del sever viene el conversationId="+result);
+                            Session.set("conversationId",result);
+                            if(isNotEmpty(message)){
+                              Meteor.call(
+                                'sendMessage',
+                                parseInt(result),
+                                Meteor.userId(),
+                                message
+                              );
+                              Meteor.call(
+                                'updateRelationship',
+                                parseInt(result),
+                                Meteor.userId(),
+                                to,
+                              );
+                              $('#message').val("");
+                            }
+                          }
+                        ); 
+    Session.set("partnerId",to);
+  }
+  else{
+    if(Session.get("conversationId")!=null){
+      conversationId = Session.get("conversationId");
+      if(isNotEmpty(message)){
+        Meteor.call(
+          'sendMessage',
+          parseInt(conversationId),
+          Meteor.userId(),
+          message
+        );
+        Meteor.call(
+          'updateRelationship',
+          parseInt(conversationId),
+          Meteor.userId(),
+          to,
+        );
+        $('#message').val("");
+      }
     }
   }
+
+  
 }
 
 Template.body.onCreated(function bodyOnCreated() {
@@ -59,30 +113,50 @@ Template.body.onRendered(function bodyOnRendered() {
       });
     }
   });
+
+  Meteor.call("getServerDate", function (error, result) {
+        //Session.set("time", result);
+        Session.set("serverDate",result);
+        //serverDate = result;
+    });
+
+  
   
 });
 
+Template.messages.onDestroyed(function(){
+  //console.log("Saliendo de mensajes, borrando variables de sesión");
+  Session.set("firstInteraction",null);
+  Session.set("partnerId",null);
+  Session.set("conversationId",null);
+  Session.set("comesFromCrew",null);
+  Session.set("comesFromCast",null);
+});
+
+
 Template.messages.helpers({
   getPartners(){
-    
+    //interaction = Session.get("interaction");
     var result = new Array();
     if(Meteor.user()!=null && Meteor.user().messagesList!=null){
       var conversations = Meteor.user().messagesList;
+      if(Session.get("firstInteraction")!=null){
+        //console.log("La variable firstInteraction trae valor");
+        var interaction = {};
+        interaction.conversationId = -1;
+        interaction.partnerId = Session.get("firstInteraction");
+        interaction.modifiedAt = new Date();
+        conversations.push(interaction);
+      }
+      else{
+        //console.log("La variable firstInteraction es nula");
+      }
       return _.sortBy(conversations,'modifiedAt').reverse();
     }
   },
   getName(partner){
     var user = Meteor.users.findOne({'_id':partner});
-    var name = "";
-    if(user!=null){
-      if(user.isCast && user.cast.showArtisticName){//es cast
-        name = user.cast.artistic;
-      }      
-      else{
-        name = user.fullname;
-      }
-    }
-    
+    var name = user.fullname;
     return name;
   },
   countMessages(conversationId){
@@ -139,22 +213,52 @@ Template.messages.helpers({
     var user = Meteor.users.findOne({'_id':userId});
     var profile;
     if(user!=null){
-      if(user.viewAs===1 && user.crew!=null && user.crew.profilePictureID!=null){//ver como crew
+      
+      if(user.crew!=null && user.crew.profilePictureID!=null){
         profile = Media.findOne({'mediaId':user.crew.profilePictureID});
         if(profile!=null){
           return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.crew.profilePictureID;    
         }
-      }
-      else if(user.viewAs===2 && user.cast!=null && user.cast.profilePictureID!=null){//ver como cast
-        profile = Media.findOne({'mediaId':user.cast.profilePictureID});
-        if(profile!=null){
-          return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.cast.profilePictureID;    
-        }
+        else if(user.cast!=null && user.cast.profilePictureID!=null){
+          profile = Media.findOne({'mediaId':user.cast.profilePictureID});
+          if(profile!=null){
+            return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.cast.profilePictureID;    
+          }  
+        }  
       }
     }
   },
   formatDate(date){
-    var d = new Date(date);
+    var dateStr="";
+    var serverDate;
+
+    
+    if(Session.get("serverDate")!=null){
+      serverDate = Session.get("serverDate");
+      //console.log(serverDate);
+
+      //var serverDate = Session.get("serverDate");
+      if(date.getDate()===serverDate.getDate() && 
+          date.getMonth()===serverDate.getMonth() && 
+          date.getFullYear()===serverDate.getFullYear()){
+        dateStr =
+          ("00" + date.getHours()).slice(-2) + ":" +
+          ("00" + date.getMinutes()).slice(-2);
+      }
+      else{
+        dateStr =
+          ("00" + date.getDate()).slice(-2) + "/" +
+          ("00" + (date.getMonth() + 1)).slice(-2) + "/" +
+          date.getFullYear() + " " +
+          ("00" + date.getHours()).slice(-2) + ":" +
+          ("00" + date.getMinutes()).slice(-2);
+      }
+    }
+    
+
+    return dateStr;
+
+    /*var d = new Date(date);
     var dateStr;
 
     if(date.getDate()===d.getDate() && date.getMonth()===d.getMonth() && date.getFullYear()===d.getFullYear()){
@@ -171,10 +275,10 @@ Template.messages.helpers({
         ("00" + d.getHours()).slice(-2) + ":" +
         ("00" + d.getMinutes()).slice(-2) + ":" +
         ("00" + d.getSeconds()).slice(-2);
-    }
+    }*/
 
     
-    return dateStr;
+    
   },
   senderIsTheSameUser(partnerId){
     if(partnerId===Meteor.userId()){
@@ -186,33 +290,70 @@ Template.messages.helpers({
   },
   getSelectedPartner(){
     var name = "";
-    if(Session.get("partnerId")!=null){
+    if(Session.get("firstInteraction")!=null){
+      var user = Meteor.users.findOne({'_id':Session.get("firstInteraction")});
+      if(user!=null){
+        name = user.fullname;
+      }
+    }
+    else if(Session.get("partnerId")!=null){
       var user = Meteor.users.findOne({'_id':Session.get("partnerId")});
       if(user!=null){
-        if(user.isCast && user.cast.showArtisticName){//es cast
-          name = user.cast.artistic;
-        }      
-        else{
-          name = user.fullname;
-        }
+        name = user.fullname;
       }
     }
     return name;
   },
   getSelectedPicture(){
-    if(Session.get("partnerId")!=null){
-      var user = Meteor.users.findOne({'_id':Session.get("partnerId")});
-      if(user!=null && user.crew!=null && user.crew.profilePictureID!=null){
-        var profile = Media.findOne({'mediaId':user.crew.profilePictureID});
-        if(profile!=null){
-          return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + Session.get("partnerId") + "/" + user.crew.profilePictureID;    
+    var user;
+    var profile;
+    var userId;
+    if(Session.get("firstInteraction")!=null){
+      userId = Session.get("firstInteraction");
+      user = Meteor.users.findOne({'_id':userId});
+      if(user!=null){
+        if(Session.get("comesFromCrew")!=null && Session.get("comesFromCrew")===true && user.crew!=null && user.crew.profilePictureID!=null){//La interacción viene desde un perfil de crew
+          profile = Media.findOne({'mediaId':user.crew.profilePictureID});
+          if(profile!=null){
+            return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.crew.profilePictureID;    
+          }
         }
-
+        else if(Session.get("comesFromCast")!=null && Session.get("comesFromCast")===true && user.cast!=null && user.cast.profilePictureID!=null){//La interacción viene desde un perfil de cast
+          profile = Media.findOne({'mediaId':user.cast.profilePictureID});
+          if(profile!=null){
+            return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.cast.profilePictureID;    
+          }
+        }  
+      }
+    }
+    else if(Session.get("partnerId")!=null){
+      userId = Session.get("partnerId");
+      user = Meteor.users.findOne({'_id':userId});
+      if(user!=null){
+        if(user.crew!=null && user.crew.profilePictureID!=null){
+          profile = Media.findOne({'mediaId':user.crew.profilePictureID});
+          if(profile!=null){
+            return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.crew.profilePictureID;    
+          }
+          else if(user.cast!=null && user.cast.profilePictureID!=null){
+            profile = Media.findOne({'mediaId':user.cast.profilePictureID});
+            if(profile!=null){
+              return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.cast.profilePictureID;    
+            }  
+          }  
+        }
       }
     }
   },
   wasSelected(partnerId){
-    if(partnerId===Session.get("partnerId")){
+    var interaction;
+    if(Session.get("firstInteraction")!=null){
+      interaction = Session.get("firstInteraction");
+    }
+    else if(Session.get("partnerId")!=null){
+      interaction = Session.get("partnerId");
+    }
+    if(partnerId===interaction){
       return true;
     }
     else{
@@ -224,21 +365,27 @@ Template.messages.helpers({
 Template.messages.events({
   'click .partner': function(event,template){
     var partnerId = $(event.target).attr("data-id");
+    Session.set("firstInteraction",null);
     var conversationId = $(event.target).attr("data-conversation");
-    Session.set("partnerId",partnerId);
-    Session.set("conversationId", conversationId); 
-
-    
-    
+    if(partnerId!=null && partnerId!="undefined"){
+      Session.set("partnerId",partnerId);  
+    }
+    if(conversationId!=null && conversationId!="undefined"){
+      Session.set("conversationId", conversationId); 
+    }
   },
   'click #send': function(event,template){
     event.preventDefault();
+    //console.log("Llamando sendMessage desde #send");
     sendMessage();
+    Session.set("firstInteraction",null);
   },
   'keyup #message': function(event,template){
     event.preventDefault();
     if(event.which === 13){
+      //console.log("Llamando sendMessage desde #message");
       sendMessage();  
+      Session.set("firstInteraction",null);
     }
     
   },

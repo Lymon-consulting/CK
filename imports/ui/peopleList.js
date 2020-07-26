@@ -6,6 +6,9 @@ import { UsersIndex } from '/lib/common.js';
 import { ProjectIndex } from '/lib/common.js';
 import { IndustryIndex } from '/lib/common.js';
 import { getParam } from '/lib/functions.js';
+import { getRoleById } from '/lib/globals.js';
+import { getCrewCategories } from '/lib/globals.js';
+import { getCrewRoleFromCategory } from '/lib/globals.js';
 
 import './peopleList.html';
 import '/lib/common.js';
@@ -50,24 +53,30 @@ Template.peopleList.helpers({
      }; 
    },
   getCategories(){
-   var data = Ocupation.find({},{sort:{'title':1}}).fetch();
-   return _.uniq(data, false, function(transaction) {return transaction.title});
+    var values = getCrewCategories();
+    return values;
+   /*var data = Ocupation.find({},{sort:{'title':1}}).fetch();
+   return _.uniq(data, false, function(transaction) {return transaction.title});*/
  },
  getOcupationsFromCategory(){
-  var allOcupations;
+  //var allOcupations;
+  var object = new Array();
   if(Session.get("selected_category")!=null){
+    object = getCrewRoleFromCategory(Session.get("selected_category"));
+    /*
     allOcupations = Ocupation.find({'title': Session.get("selected_category")}).fetch();
     if(Session.get("selected_category")==="Dirección"){
       allOcupations.push({'title':'Dirección', 'secondary':'Dirección'});
     }
     else if(Session.get("selected_category")==="Producción"){
       allOcupations.push({'title':'Producción', 'secondary':'Producción'});
-    }
+    }*/
   }
   else{
-    allOcupations = Ocupation.find({'title': "Animacion y arte digital"}).fetch();
+    object = getCrewRoleFromCategory("Animación y arte digital");
+    //allOcupations = Ocupation.find({'title': "Animacion y arte digital"}).fetch();
   }
-  return allOcupations;
+  return object;
 },
 getAllOcupations(){
   return Ocupation.find({},{sort:{"secondary":1}}).fetch();
@@ -140,28 +149,15 @@ getPrimaryRoles(userId){
   var strResult = "";
   if(user){
      
-     var topRole = user.topRole;
-     if(topRole){
-       for (var i = 0; i < topRole.length; i++) {
-         if(topRole[i]==="1"){
-           result.push("Producción");
-         }
-         else if(topRole[i]==="2"){
-           result.push("Dirección");
-         }
-       }
-     }
-
-     var crewRoles = user.role;
-     if(crewRoles){
-       for (var i = 0; i < crewRoles.length; i++) {
-          result.push(crewRoles[i]);
+     userRoles = user.role;
+      if(userRoles){
+        for (var i = 0; i < userRoles.length; i++) {
+          result.push(getRoleById(userRoles[i]));
         }
-        
       }
 
       for (var i = 0; i < result.length; i++) {
-        strResult = strResult + ", " + result[i];
+        strResult = strResult + ", " + result[i].roleName;
       }
       strResult = strResult.substring(2, strResult.length);
       
@@ -321,12 +317,7 @@ Template.peopleList.events({
 'change #role': function (e) {
   var val = $(e.target).val();
   if(val!="cualquier"){
-   if(val==="1" || val==="2"){
-    UsersIndex.getComponentMethods().addProps('topRole', val); 
-   }
-   else{
-    UsersIndex.getComponentMethods().addProps('role', val); 
-   }
+   UsersIndex.getComponentMethods().addProps('role', val); 
    Session.set("role_selected",val);
  }
  else{

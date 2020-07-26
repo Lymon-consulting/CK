@@ -674,19 +674,7 @@ Template.profilePageActor.events({
         to = FlowRouter.getParam("id");
         var conversationId;
         
-        if(isFirstTime(from,to)){
-          conversationId = Meteor.call(
-                            'createRelationship',
-                            from,
-                            to,
-                            function(error, result){
-                              console.log("Del sever viene el conversationId="+result);
-                              Session.set("conversationId",result);
-                            }
-                          );
-          console.log("Creando un conversationId="+Session.set("conversationId"));
-        }
-        else{
+        if(!isFirstTime(from,to)){
           var user1 = Meteor.users.findOne({'_id':from, 'messagesList.partnerId':to});
           var user2 = Meteor.users.findOne({'_id':to, 'messagesList.partnerId':from});
 
@@ -710,13 +698,15 @@ Template.profilePageActor.events({
             );
             Session.set("conversationId",conversationId);
           }
-
-          
+          Session.set("partnerId",to);
         }
+        else{
+          Session.set("firstInteraction",to);
+        }
+        Session.set("comesFromCrew",false);
+        Session.set("comesFromCast",true);
 
-        Session.set("partnerId",to);
-
-
+        
         FlowRouter.go("/messages");
 
       }

@@ -5,7 +5,12 @@
   </div>
 
   <div class="messages-title chat-title">
-    <img src="{{getSelectedPicture}}"> {{getSelectedPartner}}
+    {{#if getSelectedPicture}}    
+    <img src="{{getSelectedPicture}}"> 
+    {{else}}
+    <img src="/images/no-profile.jpg" class="img-chat" />
+    {{/if}}
+    {{getSelectedPartner}}
   </div>
 
   <div class="interactions-box">

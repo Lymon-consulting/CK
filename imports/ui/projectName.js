@@ -3,28 +3,14 @@ import { Industry } from '../api/industry.js';
 import { Ocupation } from '../api/ocupations.js';
 import { City } from '../api/city.js';
 import { Media } from '../api/media.js';
+import { trimInput } from '/lib/functions.js';
+import { isNotEmpty } from '/lib/functions.js';
+import { hasTopRole } from '/lib/functions.js';
 
 import './projectName.html';
 import '/lib/common.js';
 
-var trimInput= function(val){
-  if(val!=null && val!=""){
-    return val.replace(/^\s*|\s*$/g, "");  
-  }
-  return false;
-}
-
-var isNotEmpty=function(val){
-  if(val && val!== ""){
-    return true;
-  }
-  else{
-    Bert.alert({message: 'Por favor completa todos los campos obligatorios', type: 'danger', icon: 'fa fa-exclamation'});
-    return false;    
-  }
-}
-
-
+/*
 var hasTopRole=function(){
   var array = new Array();
   var result = false;
@@ -51,7 +37,7 @@ var hasTopRole=function(){
     }
   }
   return result;
-}
+}*/
 
 Template.projectName.events({
   'click #continuar': function(event, template) {
@@ -71,12 +57,12 @@ Template.projectName.events({
 
       console.log(family);
 
-      
+      /*
       Meteor.call('addProjectName', name, Meteor.userId(), family, function(error, response){
         if(!error){
           FlowRouter.go("/editProject/"+response);
         }
-      });
+      });*/
       
     }
     else{

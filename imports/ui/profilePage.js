@@ -587,34 +587,18 @@ Template.profilePage.events({
         to = FlowRouter.getParam("id");
         var conversationId;
         
-        if(isFirstTime(from,to)){
-          conversationId = Meteor.call(
-                            'createRelationship',
-                            from,
-                            to,
-                            function(error, result){
-                              console.log("Del sever viene el conversationId="+result);
-                              Session.set("conversationId",result);
-                            }
-                          );
-          console.log("Creando un conversationId="+Session.set("conversationId"));
-        }
-        else{
+        if(!isFirstTime(from,to)){
           var user1 = Meteor.users.findOne({'_id':from, 'messagesList.partnerId':to});
           var user2 = Meteor.users.findOne({'_id':to, 'messagesList.partnerId':from});
 
           if(user1!=null && user1.messagesList!=null){
             
-
             for (var i = 0; i < user1.messagesList.length; i++) {
               if(user1.messagesList[i]!=null && user1.messagesList[i].partnerId===to){
                 conversationId = user1.messagesList[i].conversationId;
                 break;
               }
             }
-
-            console.log("Retornando un conversationId ="+conversationId);
-
             Meteor.call(
               'updateRelationship',
               conversationId,
@@ -623,15 +607,15 @@ Template.profilePage.events({
             );
             Session.set("conversationId",conversationId);
           }
-
-          
+          Session.set("partnerId",to);
         }
-
-        Session.set("partnerId",to);
-
-
+        else{
+          Session.set("firstInteraction",to); 
+        }
+        Session.set("comesFromCrew",true);
+        Session.set("comesFromCast",false);
+        
         FlowRouter.go("/messages");
-
       }
 });
 
