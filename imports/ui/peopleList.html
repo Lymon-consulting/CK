@@ -162,83 +162,51 @@
                     </a>
                   </div>
                   <div class="col-md-7">
-                    <div class="container-fluid">
-                      <div class="row">
-                        <div class="col">
-                          <table class="table table-responsive borderless">
-                            <tbody>
-                              <tr>
-                                <td class="no-padding text-no-wrap">
-                                  <a href="/profilePage/{{this.__originalId}}"><h5 class="h5-name">{{this.profile.name}} {{this.profile.lastname}} {{this.profile.lastname2}}</h5></a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td class="no-padding text-no-wrap subtitle-underline">
-                                {{getPrimaryRoles this.__originalId}}
-                                </td>
-                              </tr>
-                              <tr>
-                                <td class="no-padding text-no-wrap location-underline">
-                                 {{#if this.city}}
-                                  <i class="fa fa-map-marker fa-sm"></i> 
-                                 {{this.city}}, {{this.state}}
-                                 {{/if}}
 
-                                </td>
-                              </tr>
-
-                              <tr>
-                                <td class="text-no-wrap">
-                                  <div class="row">
-                                    {{#if currentUser}}
-                                    <div class="col-md-4">
-                                      <input type="hidden" id="thisUser" value="{{this.__originalId}}">
-                                      {{#if notSameUser this.__originalId}}
-                                        {{#if showButtonFollow this.__originalId}}
-                                          {{#if isVerified}}
-                                          <!--
-                                      <button class="btn button-follow" id="pushFollow" data-id="{{this.__originalId}}"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>-->
-                                          {{/if}}
-                                        {{else}}
-                                        <!--
-                                      <button class="btn button-follow disabled"> <i class="fa fa-plus-circle fa-sm"></i> SIGUIENDO</button>-->
-                                        {{/if}}   
-                                      <br/>   
-                                        {{#if isCrew}}
-                                        {{#if hasTopRole}}
-                                        
-                                      <button class="btn button-follow pushCollaborator" id="{{this.__originalId}}"> <i class="fa fa-plus-circle fa-sm"></i> COLABORADOR </button>
-                                        {{/if}}
-                                        {{/if}}
-
-                                      {{/if}}
-                                    </div>
-                                    <div class="col-md-2 vdivide"></div>
-                                    {{/if}}
-                                    <div class="col-md-3 numbers">
-                                      <i class="fa fa-thumbs-up fa-sm"></i> 
-                                        {{#if this.likes}}
-                                          {{this.likes}}
-                                        {{else}}
-                                          0
-                                        {{/if}}
-                                    </div>
-                                    <div class="col-md-3 numbers">
-                                      <i class="fa fa-eye fa-sm"></i> 
-                                      {{#if this.views}}
-                                        {{this.views}}
-                                      {{else}}
-                                        0
-                                      {{/if}}
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
+                    <div class="row">
+                      <div class="col-md-12 no-padding text-no-wrap"><a href="/profilePage/{{this.__originalId}}"><h5 class="h5-name">{{this.profile.name}} {{this.profile.lastname}} {{this.profile.lastname2}}</h5></a></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 no-padding text-no-wrap subtitle-underline"><span class="uppercase">{{getFirstRoles this.__originalId}}</span>
                       </div>
                     </div>
+                    <div class="row">
+                      <div class="col-md-12 no-padding text-no-wrap location-underline">{{#if this.city}}
+                        <i class="fa fa-map-marker fa-sm"></i> {{this.city}}, {{this.state}}{{/if}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 no-padding numbers">
+                        <i class="fa fa-thumbs-up fa-sm"></i> 
+                        {{#if this.likes}}
+                          {{this.likes}}
+                        {{else}}
+                          0
+                        {{/if}} / 
+                        <i class="fa fa-eye fa-sm"></i> 
+                        {{#if this.views}}
+                          {{this.views}}
+                        {{else}}
+                          0
+                        {{/if}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 no-padding text-no-wrap">
+                        <input type="hidden" id="thisUser" value="{{this.__originalId}}">
+                        {{#if notSameUser this.__originalId}}
+                        <br/>   
+                        {{#if isCrew}}
+                          {{#if hasTopRole}}
+                        <button class="btn button-follow pushCollaborator" id="{{this.__originalId}}"> <i class="fa fa-plus-circle fa-sm"></i> COLABORADOR </button>
+                          {{/if}}
+                        {{/if}}
+
+                        {{/if}}
+
+                      </div>
+                    </div>
+                    
                   </div>
                   <div class="col-md-3">
                     <img src="{{getCoverPicture this.__originalId 150}}"/>

@@ -168,6 +168,43 @@ getPrimaryRoles(userId){
     }
   return strResult;
    },
+   getFirstRoles(userId){
+  var user = Meteor.users.findOne({'_id': userId});
+  var result = new Array();
+  var strResult = "";
+  if(user){
+     
+     userRoles = user.role;
+      if(userRoles){
+        for (var i = 0; i < userRoles.length && i<Meteor.settings.public.MAX_ROLES_DISPLAY; i++) {
+          result.push(getRoleById(userRoles[i]));
+        }
+      }
+
+      for (var i = 0; i < result.length; i++) {
+        strResult = strResult + ", " + result[i].roleName;
+      }
+      strResult = strResult.substring(2, strResult.length);
+
+      if(userRoles!=null && userRoles.length>Meteor.settings.public.MAX_ROLES_DISPLAY){
+        strResult = strResult + "..." ;
+      }
+      
+    }
+  return strResult;
+   },
+   showMoreRolesLink(roles){
+     var result=false;
+     if(roles!=null){
+       if(roles.length > Meteor.settings.public.MAX_ROLES_DISPLAY){
+         result = true;
+       }
+       else{
+         result = false;
+       }
+     }
+     return result;
+   },
     showButtonFollow(follow){
       var following = Meteor.users.find({$and : [ {'_id' : Meteor.userId()} , {"follows": follow }]});
 

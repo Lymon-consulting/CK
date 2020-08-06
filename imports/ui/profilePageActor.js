@@ -167,6 +167,7 @@ Template.profilePageActor.helpers({
       }
       return strResult;      
    },
+   
    getEmail(){
       var email = "";
       Meteor.subscribe("otherUsers");

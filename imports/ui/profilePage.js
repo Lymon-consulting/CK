@@ -113,6 +113,42 @@ Template.profilePage.helpers({
 
     return strResult;
    },
+   getFirstRoles(){
+    var u = Meteor.users.findOne({'_id': FlowRouter.getParam('id')});
+    var result = new Array();
+    var strResult = "";
+    if(u){
+     
+      userRoles = u.role;
+      if(userRoles!=null){
+        for (var i = 0; i < userRoles.length && i<Meteor.settings.public.MAX_ROLES_DISPLAY; i++) {
+          result.push(getRoleById(userRoles[i]));
+        }
+      }
+
+      for (var i = 0; i < result.length; i++) {
+        strResult = strResult + ", " + result[i].roleName;
+      }
+      strResult = strResult.substring(2, strResult.length);
+      if(userRoles!=null && userRoles.length>Meteor.settings.public.MAX_ROLES_DISPLAY){
+        strResult = strResult + "..." ;
+      }
+    }
+
+    return strResult;
+   },
+   showMoreRolesLink(roles){
+     var result=false;
+     if(roles!=null){
+       if(roles.length > Meteor.settings.public.MAX_ROLES_DISPLAY){
+         result = true;
+       }
+       else{
+         result = false;
+       }
+     }
+     return result;
+   },
    getEmail(){
       var email = "";
       Meteor.subscribe("otherUsers");
@@ -338,19 +374,13 @@ isDirectorOrProducer(){
    var user = Meteor.users.findOne({'_id' : FlowRouter.getParam('id')});
    var array = new Array();
     var result = false;
-    if(user!=null && user.topRole!=null){
-      array = user.topRole;
+    if(user!=null && user.role!=null){
+      array = user.role;
       for (var i = array.length - 1; i >= 0; i--) {
-        if(array[i]==="1"){
+        if(array[i]===parseInt(Meteor.settings.public.DIRECTOR_ID) || array[i]===parseInt(Meteor.settings.public.PRODUCTOR_ID)){
           result = true;  
           break;
         }
-        if(array[i]==="2"){
-          result = true;  
-          break;
-        }
-        
-
       }
     }
     return result;
