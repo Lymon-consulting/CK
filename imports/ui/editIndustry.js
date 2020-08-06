@@ -209,20 +209,33 @@ Template.editIndustry.helpers({
     type.push("Viveros");
     return type;
   },
+  getBusinessTypeSelected(){  
+
+  var result = new Array();
+  var company = Industry.findOne({'_id': FlowRouter.getParam("id")});
+  //console.log(userRoles);
+  if(company && company.company_type){
+    for (var i = 0; i < company.company_type.length; i++) {
+      result.push(company.company_type[i]);
+    }
+  }
+  //console.log(result);
+  return result;
+},
   typeSelected: function(value){
     var result="";
     var company = Industry.findOne({'_id': FlowRouter.getParam("id")});
     var company_type="";
     if(company && company.company_type){
-      company_type = company.company_type.trim();
-      if(company_type!="" && value!=""){
-        var elem = company_type.indexOf(value.trim());
-        if(elem >= 0){
+      for (var i = 0; i < company.company_type.length; i++) {
+        if(value === company.company_type[i]){
           result = 'selected';
+          break;
         }
         else{
           result = "";
-        } 
+        }
+        
       }
     }
     return result;
@@ -498,21 +511,21 @@ Template.editIndustry.events({
       Meteor.call('updateCompanyName', FlowRouter.getParam("id"), name);      
     }
   },
-  'change #company_type': function(event,template){
+  'click #company_type': function(event,template){
     event.preventDefault();
-    var company_type = event.target.value;
-      if(company_type!="PRINCIPALES" && company_type!="SECUNDARIAS" && company_type.indexOf("---")<0 && company_type!=""){
-        /*var type;
-        var company = Industry.findOne({'_id':FlowRouter.getParam('id')});
-        if(company){
-          type = company.company_type;
-        }*/
-
-
-
-        Meteor.call('updateCompanyType', FlowRouter.getParam("id"), company_type);
-      }
+    var company_type = event.currentTarget.value;
+    if(company_type!="PRINCIPALES" && company_type!="SECUNDARIAS" && company_type.indexOf("---")<0 && company_type!=""){
+      Meteor.call('addCompanyType', FlowRouter.getParam("id"), company_type);
+    }
   },
+  'click #selection':function(event, template){
+     event.preventDefault();
+     Meteor.call(
+      'removeCompanyType',
+      FlowRouter.getParam("id"),
+      event.currentTarget.value
+      )
+   },
   'change #company_desc': function(event,template){
     event.preventDefault();
     var company_desc = event.target.value;    

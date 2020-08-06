@@ -93,18 +93,22 @@
             <div class="dropdown-divider"></div>
             
             <h4 class="dropdown-header">ADMINISTRAR</h4>
-            
+            <!--Coprobar si es CREW -->
             {{#if viewAsCrew}}
-                <!--Es CREW, solo puede crear empresas-->
+              <!-- Comprobar si es Productor o Director -->
               {{#if hasTopRole}}
-                <!--Tiene rol TOP, puede crear proyectos y empresas-->
+                <!--Puede crear proyectos y empresas-->
                 <a class="dropdown-item text-black" href="/viewProjects/{{currentUser._id}}">Mis proyectos</a>
                 <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}">Mis empresas</a>
+              <!-- No es productor ni Director -->
               {{else}}
-                <!--No tiene rol TOP, puede crear portafolios-->
+                <!-- Comprobar si es dueño de negocio o representante -->
+                {{#if hasBusinessRole}}
+                <!--Puede crear empresas-->
+                <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}">Mis empresas</a>
+                {{else}}
+                <!--No es productor ni director ni dueño ni representante, puede crear portafolios-->
                 <a class="dropdown-item text-black" href="/viewProjects/{{currentUser._id}}">Mi portafolio</a>
-                {{#if hasSecondaryTopRole}}
-                  <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}">Mis empresas</a>
                 {{/if}}
               {{/if}}
             {{else}}
@@ -135,6 +139,9 @@
       <li class="nav-item">
         <a class="nav-link" href="/login">Entrar</a>
       </li>
+      <li class="nav-item">
+          <a class="nav-link" href="/peopleList">Descubre</a>
+        </li>
     </ul>
   </div>
   {{/if}}

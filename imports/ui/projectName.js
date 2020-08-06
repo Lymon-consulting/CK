@@ -57,12 +57,12 @@ Template.projectName.events({
 
       console.log(family);
 
-      /*
+      
       Meteor.call('addProjectName', name, Meteor.userId(), family, function(error, response){
         if(!error){
           FlowRouter.go("/editProject/"+response);
         }
-      });*/
+      });
       
     }
     else{

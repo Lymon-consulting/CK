@@ -97,18 +97,7 @@ Template.profilePage.helpers({
     var result = new Array();
     var strResult = "";
     if(u){
-      /*
-      userTopRoles = u.topRole;
-      if(userTopRoles){
-        for (var i = 0; i < userTopRoles.length; i++) {
-          if(userTopRoles[i]==="1"){
-            result.push("Producción");
-          }
-          else if(userTopRoles[i]==="2"){
-            result.push("Dirección");
-          }
-        }
-      }*/
+     
       userRoles = u.role;
       if(userRoles){
         for (var i = 0; i < userRoles.length; i++) {

@@ -8,6 +8,7 @@ import { trimInput } from '/lib/functions.js';
 import { isNotEmpty } from '/lib/functions.js';
 import { formatURL } from '/lib/functions.js';
 import { getCrewCategories } from '/lib/globals.js';
+import { catTopCategories } from '/lib/globals.js';
 import { getCrewRoleFromCategory } from '/lib/globals.js';
 import { getRoleById } from '/lib/globals.js';
 
@@ -102,6 +103,20 @@ video(){
       } 
     }
     return video;
+  },
+  categories(){
+    return catTopCategories; //variable global en globals.js
+  },
+  checkCategory:function(item){
+    var result="";
+    var category = new Array() ;
+    if(Meteor.user() && Meteor.user().role){
+      category = Meteor.user().role;
+      if(category!=null && category.indexOf(item)>=0){
+        result = "checked";
+      }
+    }
+   return result;
   },
 /*
 wizard(){
@@ -677,6 +692,16 @@ else{
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();*/
     },
+    'change .category': function(event, template){
+    //console.log($(event.target).val() + " - " + event.target.checked);
+
+    if(event.target.checked){
+      Meteor.call('addRole', Meteor.userId(), $(event.target).val());
+    }
+    else{
+      Meteor.call('removeRole', Meteor.userId(), $(event.target).val()); 
+    }
+  },
     
   });
 

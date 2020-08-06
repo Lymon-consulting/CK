@@ -187,6 +187,26 @@ Template.registerHelper('hasTopRole', function(){
   return result;
 });
 
+Template.registerHelper('hasBusinessRole', function(){
+  var array = new Array();
+  var result = false;
+  var idFromDatabase, idFromSettingsBusiness, idFromSettingsRepresentative;
+  idFromSettingsBusiness = parseInt(Meteor.settings.public.BUSINESS_ID); 
+  idFromSettingsRepresentative = parseInt(Meteor.settings.public.REPRESENTATIVE_ID); 
+  if(Meteor.user()!=null && Meteor.user().role!=null){
+    array = Meteor.user().role;
+    for (var i = array.length - 1; i >= 0; i--) {
+      idFromDatabase = parseInt(array[i]);
+
+      if(idFromDatabase===idFromSettingsBusiness || idFromDatabase===idFromSettingsRepresentative){//Dueño=3000, Representante=4000
+        result = true;  
+        break;
+      }
+    }
+  }
+  return result;
+});
+
 
 Template.registerHelper('hasSecondaryTopRole', function(){
   var array = new Array();

@@ -58,14 +58,14 @@
       {{#if getProfilePicture getProfile._id 500}}
       <img src="{{getProfilePicture getProfile._id 500}}" id="profileImageinCastPage"/>
       {{else}}
-      <div id="profileImageinCastPage">{{getInitials getProfile._id}}</div>
+      <div id="profileInitialsinCastPage">{{getInitials getProfile._id}}</div>
       {{/if}}
     {{else}}
       <div class="spacer280"></div>
       {{#if getProfilePicture getProfile._id 500}}
       <img src="{{getProfilePicture getProfile._id 500}}"  id="profileImageinCastPage"/>
       {{else}}
-      <div id="profileImageinCastPage">{{getInitials getProfile._id}}</div>
+      <div id="profileInitialsinCastPage">{{getInitials getProfile._id}}</div>
       {{/if}}
     {{/if}}
 
@@ -185,11 +185,12 @@
             <input type="hidden" id="thisUser" value="{{getProfile._id}}">
                   {{#if isVerified}}
             <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
-            <button class="btn button-follow" id="sendMessage"> <i class="fa fa-envelope fa-sm"></i> ENVIAR MENSAJE</button>
+            
                   {{/if}}
                {{else}}
             <button class="btn button-unfollow" id="pushUnfollow"> <i class="fa fa-minus-circle fa-sm"></i> DEJAR DE SEGUIR</button>
-               {{/if}}      
+               {{/if}} 
+               <button class="btn button-follow" id="sendMessage"> <i class="fa fa-envelope fa-sm"></i> ENVIAR MENSAJE</button>     
             {{/if}}
           </div>
         </div>
@@ -429,7 +430,7 @@
                                        {{#if getProfilePicture this._id 40}}
                                        <img src="{{getProfilePicture this._id 40}}" data-toggle="tooltip" data-placement="top" title="{{this.fullname}}">
                                        {{else}}
-                                       <div id="profileImage">{{getInitials this._id}}</div>
+                                       <img src="/images/no-profile.jpg" class="img-round" data-toggle="tooltip" style="width:40px;height: 40px" title="{{this.fullname}}"/>
                                        {{/if}}
                                        </a>
                                     </div>
@@ -456,10 +457,10 @@
                                     {{#each getFollowingCrew}}
                                     <div class="col-md-4">
                                         <a href="/profilePage/{{this._id}}">
-                                       {{#if getProfilePicture this._id 40}}
-                                       <img src="{{getProfilePicture this._id 40}}" data-toggle="tooltip" data-placement="top" title="{{this.fullname}}">
+                                       {{#if getCrewProfilePicture this._id 40}}
+                                       <img src="{{getCrewProfilePicture this._id 40}}" data-toggle="tooltip" data-placement="top" title="{{this.fullname}}">
                                        {{else}}
-                                       <div id="profileImage" data-toggle="tooltip" data-placement="top" title="{{this.fullname}}">{{getInitials this._id}}</div>
+                                       <img src="/images/no-profile.jpg" class="img-round" data-toggle="tooltip" style="width:40px;height: 40px" title="{{this.fullname}}"/>
                                        {{/if}}
                                        </a>
                                     </div>
@@ -490,7 +491,7 @@
                                        {{#if getProfilePicture this._id 40}}
                                        <img src="{{getProfilePicture this._id 40}}" data-toggle="tooltip" data-placement="top" title="{{getName this._id}}">
                                        {{else}}
-                                       <div id="profileImage" data-toggle="tooltip" data-placement="top" title="{{getName this._id}}">{{getInitials this._id}}</div>
+                                       <img src="/images/no-profile.jpg" class="img-round" data-toggle="tooltip" style="width:40px;height: 40px" title="{{this.fullname}}"/>
                                        {{/if}}
                                        </a>
                                     </div>

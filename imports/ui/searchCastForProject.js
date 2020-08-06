@@ -5,6 +5,7 @@ import { Project } from '../api/project.js';
 import { Media } from '../api/media.js';
 import { UsersIndex } from '/lib/common.js';
 import { getParam } from '/lib/functions.js';
+import { getRoleById } from '/lib/globals.js';
 
 import './searchCastForProject.html';
 import '/lib/common.js';
@@ -60,6 +61,7 @@ Template.searchCastForProject.helpers({
       var result = new Array();
       
       if(user!=null && user.cast!=null && user.cast.categories){
+        console.log(user.cast.categories);
          result = user.cast.categories;
          for (var i = 0; i < result.length; i++) {
            strResult = strResult + ", " + result[i];

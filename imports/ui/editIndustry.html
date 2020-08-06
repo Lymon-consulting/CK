@@ -106,20 +106,31 @@
           </div>
           <div class="col">
             {{#if hasEditPermission}}
-           <select name="company_type" id="company_type" class="form-control">
+           <select name="company_type" id="company_type" class="form-control" multiple>
             <option value="" disabled selected style='display:none;'> Seleccione </option>
             {{#each getCompanyType}}
-            <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
+            <option value="{{this}}"> {{this}} </option>
             {{/each}}
           </select>
             {{else}}
-            <select name="company_type" id="company_type" class="form-control" disabled>
+            <select name="company_type" id="company_type" class="form-control" multiple disabled>
             <option value="" disabled selected style='display:none;'> Seleccione </option>
             {{#each getCompanyType}}
-            <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
+            <option value="{{this}}"> {{this}} </option>
             {{/each}}
           </select>
             {{/if}}
+          </div>
+        </div>
+        <div class="spacer20"></div>
+        <div class="row">
+          <div class="col-md-12">
+            <label for="Ocupation">Tipos de empresa que has seleccionado <span class="text-purple">(Elimina haciendo clic)</span></label>
+            <select name="Selection" multiple id="selection" class="form-control">
+              {{#each item in getBusinessTypeSelected}}
+              <option value="{{item}}"> {{item}} </option>
+              {{/each}}
+            </select>  
           </div>
         </div>
         

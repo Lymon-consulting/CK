@@ -122,6 +122,7 @@ Template.editProject.helpers({
     type.push("Comercial");
     type.push("Fashion film");
     type.push("Serie/programa televison");
+    type.push("Serie web");
     type.push("Videoclip");
     return type;
   },

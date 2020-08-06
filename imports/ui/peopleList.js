@@ -21,7 +21,11 @@ Template.peopleList.rendered = function(){
   ProjectIndex.getComponentMethods().removeProps(); 
   IndustryIndex.getComponentMethods().removeProps(); 
   Session.set("selected_category",null);
+  this.autorun(function(){
+    window.scrollTo(0,0);
+  });
 }
+
 
 Template.peopleList.helpers({
    usersIndex: () => UsersIndex, // instanceof EasySearch.Index

@@ -82,6 +82,23 @@ Meteor.methods({
       }
     });
   },
+  addCompanyType(companyId, type){
+    Industry.update({'_id': companyId}, 
+    {
+      $addToSet: {
+        "company_type": type
+      }
+    });
+  },
+  removeCompanyType(companyId, type){
+    Industry.update({'_id': companyId}, 
+    {
+      $pull: {
+        "company_type": type
+      }
+    });
+  },
+  /*
   'updateCompanyType'(companyId, type){
     Industry.update({'_id':companyId},{
       $set:
@@ -89,7 +106,7 @@ Meteor.methods({
         "company_type":type
       }
     });
-  },
+  },*/
   'updateCompanyDesc'(companyId, company_desc){
     Industry.update({'_id':companyId},{
       $set:

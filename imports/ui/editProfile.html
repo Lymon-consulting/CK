@@ -61,6 +61,29 @@
               <a href="/viewIndustries/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-building"></i> Tus empresas</a>
             </div>
           </div>
+          {{else}}
+            {{#if hasBusinessRole}}
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col text-14">
+              <a href="/viewIndustries/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-building"></i> Tus empresas</a>
+            </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col text-14">
+              <a href="/viewProjects/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-briefcase"></i> Tus portafolios</a>
+            </div>
+          </div>
+            {{else}}
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col text-14">
+              <a href="/viewProjects/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-briefcase"></i> Tus portafolios</a>
+            </div>
+          </div>
+            {{/if}}
+            
           {{/if}}
           <div class="spacer10"></div>
           <div class="row">
@@ -164,19 +187,22 @@
                   <h2>Roles</h2>
                 </div>
               </div>
-              {{#if hasPrimaryRole}}
-              <!--
               <div class="row">
-                <div class="col-lg-12">
-                  Tus roles primarios son: <strong>{{getPrimaryRoles}}</strong>
+                <div class="col"><label for="category">¿Tienes alguno de estos roles?</label></div>
+              </div>
+              <div class="row">
+              {{#each categories}}
+              <div class="col-lg-4 col-md-6 col-xs-12" style="text-align:left">
+                <div class="checkbox">
+                  <label><input type="checkbox" value="{{this.id}}" class="category" {{checkCategory this.id}}> {{this.spec}}</label>
                 </div>
-              </div>-->
-              {{/if}}
+               </div>
+              {{/each}}   
+              </div>
               <div class="spacer20"></div>
               <div class="row">
                 <div class="col-md-12">
-
-                  <p>A continuación puedes seleccionar tus roles:</p>
+                  <p>Puedes seleccionar otros roles:</p>
                   <small>
                     <ul>
                       <li>En la lista de la izquierda, selecciona el departamento al cual pertenece tu rol.</li>

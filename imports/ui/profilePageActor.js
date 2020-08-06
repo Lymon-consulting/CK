@@ -446,6 +446,20 @@ Template.profilePageActor.helpers({
       return url;
     
     },
+    getCrewProfilePicture(userId, size) {
+      Meteor.subscribe("allMedia");
+      var user = Meteor.users.findOne({'_id':userId});
+      var url;
+      if(user!=null && user.crew!=null && user.crew.profilePictureID!=null){
+        var profile = Media.findOne({'mediaId':user.crew.profilePictureID});
+        if(profile!=null){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.crew.profilePictureID;    
+        }
+        
+      }
+      return url;
+    
+    },
     getLogoPicture(companyId,size){
       Meteor.subscribe("allMedia");
       var data = Industry.findOne({'_id' : companyId});
@@ -559,6 +573,15 @@ Template.profilePageActor.events({
       );
    },
    'click #profileImageinCastPage': function(event,template){
+    console.log("clic en foto");
+     event.preventDefault();
+     if(Meteor.userId()===FlowRouter.getParam("id")){
+       $(".media-thumb").css('border','none');
+       $("#setProfilePicture").addClass('disabled');
+       $('#modal1').modal('show');
+     }
+   },
+   'click #profileInitialsinCastPage': function(event,template){
     console.log("clic en foto");
      event.preventDefault();
      if(Meteor.userId()===FlowRouter.getParam("id")){
