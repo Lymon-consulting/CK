@@ -55,36 +55,24 @@
               <a href="/viewProjects/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-briefcase"></i> Tus proyectos</a>
             </div>
           </div>
-          <div class="spacer10"></div>
-          <div class="row">
-            <div class="col text-14">
-              <a href="/viewIndustries/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-building"></i> Tus empresas</a>
-            </div>
-          </div>
           {{else}}
-            {{#if hasBusinessRole}}
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col text-14">
+              <a href="/viewProjects/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-briefcase"></i> Tus portafolios</a>
+            </div>
+          </div>       
+          
+          {{/if}}
+          {{#if hasBusinessRole}}
           <div class="spacer10"></div>
           <div class="row">
             <div class="col text-14">
               <a href="/viewIndustries/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-building"></i> Tus empresas</a>
             </div>
           </div>
-          <div class="spacer10"></div>
-          <div class="row">
-            <div class="col text-14">
-              <a href="/viewProjects/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-briefcase"></i> Tus portafolios</a>
-            </div>
-          </div>
-            {{else}}
-          <div class="spacer10"></div>
-          <div class="row">
-            <div class="col text-14">
-              <a href="/viewProjects/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-briefcase"></i> Tus portafolios</a>
-            </div>
-          </div>
-            {{/if}}
-            
           {{/if}}
+          
           <div class="spacer10"></div>
           <div class="row">
             <div class="col text-14">
@@ -194,7 +182,7 @@
               {{#each categories}}
               <div class="col-lg-4 col-md-6 col-xs-12" style="text-align:left">
                 <div class="checkbox">
-                  <label><input type="checkbox" value="{{this.id}}" class="category" {{checkCategory this.id}}> {{this.spec}}</label>
+                  <label><input type="checkbox" value="{{this.id}}" class="category" {{checkCategory this.id}}>{{this.spec}}</label>
                 </div>
                </div>
               {{/each}}   

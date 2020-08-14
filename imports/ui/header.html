@@ -99,18 +99,14 @@
               {{#if hasTopRole}}
                 <!--Puede crear proyectos y empresas-->
                 <a class="dropdown-item text-black" href="/viewProjects/{{currentUser._id}}">Mis proyectos</a>
-                <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}">Mis empresas</a>
               <!-- No es productor ni Director -->
               {{else}}
-                <!-- Comprobar si es dueño de negocio o representante -->
-                {{#if hasBusinessRole}}
-                <!--Puede crear empresas-->
-                <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}">Mis empresas</a>
-                {{else}}
-                <!--No es productor ni director ni dueño ni representante, puede crear portafolios-->
-                <a class="dropdown-item text-black" href="/viewProjects/{{currentUser._id}}">Mi portafolio</a>
-                {{/if}}
+                <a class="dropdown-item text-black" href="/viewProjects/{{currentUser._id}}">Mis portafolios</a>
               {{/if}}
+              {{#if hasBusinessRole}}
+              <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}">Mis empresas</a>
+              {{/if}}
+                
             {{else}}
                 <!--Es CAST, solo puede crear empresas-->
                 <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}">Mis empresas</a>

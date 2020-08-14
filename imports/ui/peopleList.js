@@ -8,7 +8,7 @@ import { IndustryIndex } from '/lib/common.js';
 import { getParam } from '/lib/functions.js';
 import { getRoleById } from '/lib/globals.js';
 import { getCrewCategories } from '/lib/globals.js';
-import { getCrewRoleFromCategory } from '/lib/globals.js';
+import { getCrewRoleFromCategoryIncludeTopRoles } from '/lib/globals.js';
 
 import './peopleList.html';
 import '/lib/common.js';
@@ -66,19 +66,10 @@ Template.peopleList.helpers({
   //var allOcupations;
   var object = new Array();
   if(Session.get("selected_category")!=null){
-    object = getCrewRoleFromCategory(Session.get("selected_category"));
-    /*
-    allOcupations = Ocupation.find({'title': Session.get("selected_category")}).fetch();
-    if(Session.get("selected_category")==="Dirección"){
-      allOcupations.push({'title':'Dirección', 'secondary':'Dirección'});
-    }
-    else if(Session.get("selected_category")==="Producción"){
-      allOcupations.push({'title':'Producción', 'secondary':'Producción'});
-    }*/
+    object = getCrewRoleFromCategoryIncludeTopRoles(Session.get("selected_category"));
   }
   else{
-    object = getCrewRoleFromCategory("Animación y arte digital");
-    //allOcupations = Ocupation.find({'title': "Animacion y arte digital"}).fetch();
+    object = getCrewRoleFromCategoryIncludeTopRoles("Animación y arte digital");
   }
   return object;
 },
@@ -177,7 +168,9 @@ getPrimaryRoles(userId){
      userRoles = user.role;
       if(userRoles){
         for (var i = 0; i < userRoles.length && i<Meteor.settings.public.MAX_ROLES_DISPLAY; i++) {
-          result.push(getRoleById(userRoles[i]));
+          if(userRoles[i] != parseInt(Meteor.settings.public.BUSINESS_ID) && userRoles[i] != parseInt(Meteor.settings.public.REPRESENTATIVE_ID)){
+            result.push(getRoleById(userRoles[i]));
+          }
         }
       }
 

@@ -84,7 +84,10 @@ Template.header.helpers({
          var crewRoles = user.role;
          if(crewRoles){
            for (var i = 0; i < crewRoles.length; i++) {
-              result.push(getRoleById(crewRoles[i]).roleName);
+            console.log(crewRoles[i]);
+              if(crewRoles[i] != parseInt(Meteor.settings.public.BUSINESS_ID) && crewRoles[i] != parseInt(Meteor.settings.public.REPRESENTATIVE_ID)){
+                result.push(getRoleById(crewRoles[i]).roleName);
+              }
             }
             
           }
