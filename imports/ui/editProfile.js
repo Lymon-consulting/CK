@@ -695,15 +695,40 @@ else{
     'change .category': function(event, template){
     //console.log($(event.target).val() + " - " + event.target.checked);
 
-    if(event.target.checked){
-      Meteor.call('addRole', Meteor.userId(), $(event.target).val());
-    }
-    else{
-      Meteor.call('removeRole', Meteor.userId(), $(event.target).val()); 
-    }
-  },
+      if(event.target.checked){
+        Meteor.call('addRole', Meteor.userId(), $(event.target).val());
+      }
+      else{
+        Meteor.call('removeRole', Meteor.userId(), $(event.target).val()); 
+      }
+    },
+    'change .activateCrew':function(event, template){
+       event.preventDefault();
+       if($('.activateCrew').is(":checked") == true){
+           $('#category').prop('disabled', false);
+           $('#ocupation').prop('disabled', false);
+           $('#selection').prop('disabled', false);
+           $('#web_page').prop('disabled', false);
+           $('#video').prop('disabled', false);
+           $('#facebook_page').prop('disabled', false);
+           $('#twitter_page').prop('disabled', false);
+           $('#vimeo_page').prop('disabled', false);
+           $('#youtube_page').prop('disabled', false);
+           $('#instagram_page').prop('disabled', false);
+           $('#imdb_page').prop('disabled', false);
+        }else{
+           $('#category').prop('disabled', 'disabled');
+           $('#ocupation').prop('disabled', 'disabled');
+           $('#selection').prop('disabled', 'disabled');
+           $('#web_page').prop('disabled', 'disabled');
+           $('#video').prop('disabled', 'disabled');
+           $('#facebook_page').prop('disabled', 'disabled');
+           $('#twitter_page').prop('disabled', 'disabled');
+           $('#vimeo_page').prop('disabled', 'disabled');
+           $('#youtube_page').prop('disabled', 'disabled');
+           $('#instagram_page').prop('disabled', 'disabled');
+           $('#imdb_page').prop('disabled', 'disabled');
+        }
+     },
     
   });
-
-
-

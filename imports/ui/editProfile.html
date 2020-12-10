@@ -8,16 +8,18 @@
       max-width: 100%;
     }
   </style>
+
+  <nav>
+    <div class="pink">Editar perfil: ¡Te damos la bienvenida {{name}}, cuéntanos quién eres!</div>
+  </nav>
   
-  <div class="container text-center">
-    <h1 class="h1-title">EDITA TU PERFIL DE CREW</h1>
-    <h2>{{fullName}}</h2>
-    <hr>
-  </div>
-
-
+  
   {{#if currentUser}}
-  <div class="container">
+  <div class="container-fluid">
+    <img src="/images/no-cover-photo2.png" class="no-cover-photo" alt="no-cover-photo">
+    <div class="spacer40"></div>
+  </div>
+  <div class="container">    
     <div class="row">
       <div class="col-lg-3 rounded background-verylightgray p-3">
         <div class="sticky-top">
@@ -45,21 +47,21 @@
           <div><hr></div>
           <div class="row">
             <div class="col text-14">
-              <a href="#" class="text-purple" id="goProfile"><i class="fa fa-eye"></i> Tu perfil</a>    
+              <a href="#" class="text-black" id="goProfile"><i class="fa fa-eye"></i> Ver mi perfil</a>    
             </div>
           </div>
           {{#if hasTopRole}}
           <div class="spacer10"></div>
           <div class="row">
             <div class="col text-14">
-              <a href="/viewProjects/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-briefcase"></i> Tus proyectos</a>
+              <a href="/viewProjects/{{currentUser._id}}" class="text-black" id=""><i class="fa fa-briefcase"></i> Mis proyectos</a>
             </div>
           </div>
           {{else}}
           <div class="spacer10"></div>
           <div class="row">
             <div class="col text-14">
-              <a href="/viewProjects/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-briefcase"></i> Tus portafolios</a>
+              <a href="/viewProjects/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-briefcase"></i> Mis portafolios</a>
             </div>
           </div>       
           
@@ -68,15 +70,21 @@
           <div class="spacer10"></div>
           <div class="row">
             <div class="col text-14">
-              <a href="/viewIndustries/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-building"></i> Tus empresas</a>
+              <a href="/viewIndustries/{{currentUser._id}}" class="text-black" id=""><i class="fa fa-building"></i> Mis empresas</a>
             </div>
           </div>
           {{/if}}
           
-          <div class="spacer10"></div>
+          <div class="spacer40"></div>
           <div class="row">
             <div class="col text-14">
-              <a href="/mediaEditorObject/{{currentUser._id}}/crew/{{currentUser._id}}/global" class="text-purple" id=""><i class="fa fa-camera"></i> Tus imágenes</a>
+              <a href="/mediaEditorObject/{{currentUser._id}}/crew/{{currentUser._id}}/global" class="text-black" id=""><i class="fa fa-image"></i> Mis imágenes</a>
+            </div>
+          </div>
+          <div class="spacer40"></div>
+          <div class="row">
+            <div class="col text-14">
+              <a href="/mediaEditorObject/{{currentUser._id}}/crew/{{currentUser._id}}/global" class="text-black" id=""><i class="fa fa-download"></i> Guardar cambios</a>
             </div>
           </div>
           {{#if showCreateCastLink}}
@@ -112,7 +120,7 @@
               <div class="spacer40"></div>
               <div class="row">
                 <div class="col">
-                  <h2>Datos personales</h2>
+                  <h2 class="titles">Datos personales</h2>
                 </div>
               </div>
               <div class="spacer40"></div>
@@ -130,17 +138,11 @@
                   <input type="text" class="form-control" id="personLastName2" placeholder="Apellido materno" value="{{lastname2}}" maxlength="20">
                 </div>
               </div>
-              <div class="spacer20"></div>
-              <div class="row">
-                <div class="col form-group">
-                  <label for="resumen">Acerca de </label>
-                  <textarea class="form-control" rows="5" id="resume" value="" placeholder="Cuéntanos de ti ({{maxLength}} caracteres máx)." maxlength="{{maxLength}}">{{resume}}</textarea><small>Caracteres restantes: <div id="max"></div></small>
-                </div>
-              </div>
+              
               <div class="spacer40"></div>
               <div class="row">
                 <div class="col">
-                  <h2>Ubicación</h2>
+                  <h2 class="titles">Ubicación</h2>
                 </div>
               </div>
               <div class="row">
@@ -169,10 +171,184 @@
                   </select>  
                 </div>
               </div>
+              <div class="spacer20"></div>
+              <div class="row">
+                <div class="col form-group">
+                  <label for="resumen">Acerca de </label>
+                  <textarea class="form-control" rows="5" id="resume" value="" placeholder="Cuéntanos de ti ({{maxLength}} caracteres máx)." maxlength="{{maxLength}}">{{resume}}</textarea><small>Caracteres restantes: <div id="max"></div></small>
+                </div>
+              </div>
+
+
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col"><h2 class="titles">Actividades Profesionales</h2></div>
+              </div>              
+              <div class="row">
+                <div class="col">
+                  <strong>Cinekomuna</strong> te permite tener un perfil especializado para <strong>castings</strong>. Si eres <strong>actriz o actor, bailarína o bailarín, cantante, doble, extra, modelo</strong> o estas actividades profesionales se suman a otras actividades de <strong>Crew</strong>, por favor llena los datos de la pestaña <strong>Cast</strong>.
+                </div>
+              </div>
+              <div class="spacer20"></div>
+              <div class="row">
+                <div class="col">
+                  <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#1" data-toggle="tab">Crew</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link " href="#2" data-toggle="tab">Cast</a>
+                    </li>
+                  </ul>
+                  <div class="tab-content ">
+                    <div class="tab-pane active" id="1">
+                      <div class="spacer20"></div>
+                      <div class="row">
+                        <div class="col">
+                          <input type="checkbox" class="activateCrew"> Activar perfil de <strong>Crew</strong>
+                        </div>
+                      </div>
+                      <div class="spacer20"></div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label for="oc">Departamentos </label>
+                          <select name="category" id="category" class="form-control" disabled>
+                            {{#each getCategories}}
+                            <option value="{{this}}"> {{this}} </option>
+                            {{/each}}
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="Ocupation">Roles <span class="text-purple">(Selecciona con un clic)</span></label>
+                          <select multiple name="Ocupation" id="ocupation" class="form-control" disabled>
+                            {{#each item in getOcupationsFromCategory}}
+                            <option value="{{item.roleId}}" {{roleSelected secondary}}> {{item.roleName}} </option>
+                            {{/each}}
+                          </select>  
+                        </div>
+                      </div>
+                      <div class="spacer20"></div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label for="Ocupation">Roles que has seleccionado <span class="text-purple">(Elimina haciendo clic)</span></label>
+                          <select name="Selection" multiple id="selection" class="form-control" disabled>
+                            {{#each item in getRolesSelected}}
+                            <option value="{{item.roleId}}" {{roleSelected item}}> {{item.roleName}} </option>
+                            {{/each}}
+                          </select>  
+                        </div>
+                      </div>
+                      <div class="spacer40"></div>
+
+                      <div class="row">
+                        <div class="col">
+                          <h2 class="titles">En internet</h2>
+                        </div>
+                      </div>
+
+                      <div class="container">
+                        <div class="row">
+                          <div class="col form-group">
+                            <label for="web">Página Web</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-globe"></i></div>
+                              </div>
+                              <input type="text" class="form-control" id="web_page" value="{{webpage}}" placeholder="Ej: www.cinekomuna.com" maxlength="120" disabled>
+                            </div>
+                          </div>
+                          <div class="col form-group">
+                            <label for="nombre">Video demo </label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-play"></i></div>
+                              </div>
+                              <input type="text" class="form-control" id="video" placeholder="URL de youtube o vimeo" value="{{video}}" maxlength="150" disabled>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col form-group">
+                            <label for="facebook">Facebook</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-facebook"></i></div>
+                              </div>
+                              <input type="text" class="form-control" id="facebook_page" value="{{facebook}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120" disabled>
+                            </div>
+                          </div>
+                          <div class="col form-group">
+                            <label for="twitter">Twitter</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-twitter"></i></div>
+                              </div>
+                              <input type="text" class="form-control" id="twitter_page" value="{{twitter}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120" disabled>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col form-group">
+                            <label for="vimeo">Vimeo</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-vimeo"></i></div>
+                              </div>
+                              <input type="text" class="form-control" id="vimeo_page" value="{{vimeo}}" placeholder="Ej. www.vimeo.com/cinekomuna" maxlength="120" disabled>
+                            </div>
+                          </div>
+                          <div class="col form-group">
+                            <label for="youtube">Youtube</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-youtube"></i></div>
+                              </div>
+                              <input  type="text" class="form-control" id="youtube_page" value="{{youtube}}" placeholder="Ej. www.youtube.com/cinekomuna" maxlength="120" disabled>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col form-group">
+                            <label for="instagram">Instagram</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-instagram"></i></div>
+                              </div>
+                              <input type="text" class="form-control" id="instagram_page" value="{{instagram}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120" disabled>
+                            </div>
+                          </div>
+                          <div class="col form-group">
+                            <label for="imdb">IMDB</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-imdb"></i></div>
+                              </div>
+                              <input type="text" class="form-control" id="imdb_page" value="{{imdbCrew}}" placeholder="Ej. www.imdb.com/cinekomuna" maxlength="120" disabled>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="2">
+                      <div class="spacer20"></div>
+                      <div class="row">
+                        <div class="col">
+                          <input type="checkbox"> Activar perfil de <strong>Cast</strong>
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+              </div>  
+
+
+
+              <!--
               <div class="spacer40"></div>
               <div class="row">
                 <div class="col">
-                  <h2>Roles</h2>
+                  <h2 class="titles">Roles</h2>
                 </div>
               </div>
               <div class="row">
@@ -202,137 +378,13 @@
               </div>
 
               <div class="spacer20"></div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label for="oc">Departamentos </label>
-                  <select name="category" id="category" class="form-control">
-                    {{#each getCategories}}
-                    <option value="{{this}}"> {{this}} </option>
-                    {{/each}}
-                  </select>
-                </div>
-                <div class="col-md-6">
-                  <label for="Ocupation">Roles <span class="text-purple">(Selecciona con un clic)</span></label>
-                  <select multiple name="Ocupation" id="ocupation" class="form-control">
-                    {{#each item in getOcupationsFromCategory}}
-                    <option value="{{item.roleId}}" {{roleSelected secondary}}> {{item.roleName}} </option>
-                    {{/each}}
-                  </select>  
-                </div>
-              </div>
-              <div class="spacer20"></div>
-              <div class="row">
-                <div class="col-md-12">
-                  <label for="Ocupation">Roles que has seleccionado <span class="text-purple">(Elimina haciendo clic)</span></label>
-                  <select name="Selection" multiple id="selection" class="form-control">
-                    {{#each item in getRolesSelected}}
-                    <option value="{{item.roleId}}" {{roleSelected item}}> {{item.roleName}} </option>
-                    {{/each}}
-                  </select>  
-                </div>
-              </div>
+              -->
 
-              <div class="spacer40"></div>
+              
 
-              <div class="row">
-                <div class="col">
-                  <h2>En internet</h2>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col form-group">
-                  <label for="web">Tu página Web personal</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="fa fa-globe"></i></div>
-                    </div>
-                    <input type="text" class="form-control" id="web_page" value="{{webpage}}" placeholder="Ej: www.cinekomuna.com" maxlength="120">
-                  </div>
-                </div>
-              </div>   
-              <div class="spacer20"></div>
-              <div class="row">
-                <div class="col-lg-8 form-group">
-                  <label for="nombre">Video de muestra / demo </label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="fa fa-play"></i></div>
-                    </div>
-                    <input type="text" class="form-control" id="video" placeholder="URL de youtube o vimeo" value="{{video}}" maxlength="150">
-                  </div>
-                </div>
-              </div>
-              <div class="spacer20"></div>
-              <div class="row">
-                <div class="col form-group">
-                  <label for="">En la red <br> <small>Vincula tus cuentas de otros sitios en la red</small></label>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="fa fa-facebook"></i></div>
-                    </div>
-                    <input type="text" class="form-control" id="facebook_page" value="{{facebook}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120">
-                  </div>
-                </div>
-              </div>
-              <div class="spacer10"></div>
-              <div class="row">
-                <div class="col form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="fa fa-twitter"></i></div>
-                    </div>
-                    <input type="text" class="form-control" id="twitter_page" value="{{twitter}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
-                  </div>
-                </div>
-              </div>
-              <div class="spacer10"></div>
-              <div class="row">
-                <div class="col form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="fa fa-vimeo"></i></div>
-                    </div>
-                    <input type="text" class="form-control" id="vimeo_page" value="{{vimeo}}" placeholder="Ej. www.vimeo.com/cinekomuna" maxlength="120">
-                  </div>
-                </div>
-              </div>
-              <div class="spacer10"></div>
-              <div class="row">
-                <div class="col form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="fa fa-youtube"></i></div>
-                    </div>
-                    <input  type="text" class="form-control" id="youtube_page" value="{{youtube}}" placeholder="Ej. www.youtube.com/cinekomuna" maxlength="120">
-                  </div>
-                </div>
-              </div>
-              <div class="spacer10"></div>
-              <div class="row">
-                <div class="col form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="fa fa-instagram"></i></div>
-                    </div>
-                    <input type="text" class="form-control" id="instagram_page" value="{{instagram}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120">
-                  </div>
-                </div>
-              </div>
-              <div class="spacer10"></div>
-              <div class="row">
-                <div class="col form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="fa fa-imdb"></i></div>
-                    </div>
-                    <input type="text" class="form-control" id="imdb_page" value="{{imdbCrew}}" placeholder="Ej. www.imdb.com/cinekomuna" maxlength="120">
-                  </div>
-                </div>
-              </div>
+              
+              
+              
               <div class="spacer40"></div>
               <div class="row">
                 <div class="col">

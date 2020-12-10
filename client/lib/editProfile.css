@@ -1,0 +1,30 @@
+.pink{
+	background:#fd1052;
+	color: white;
+	padding: .5rem; 
+	text-align: center;
+	font-weight: bold;
+}
+.no-cover-photo{
+	width: 100%;
+	height: 350px;
+}
+
+.container-fluid{
+	margin: 0px !important;
+	padding: 0px !important;
+}
+
+.titles{
+	text-transform: uppercase;
+	border-bottom: 1px solid #ccc;
+	font-weight: bold;
+}
+
+
+
+
+.nav-tabs > li > a{
+	color:gray;
+}
+

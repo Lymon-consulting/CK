@@ -924,3 +924,31 @@ a.list-group-item.active { background-color: #6c757d; }
    border: 1px solid #000000;
 }
 
+
+
+
+
+.footer{
+  background: #141e3c;
+  color:white;
+  display: flex;
+  align-items: center;
+  font-family: "Avenir-Book";
+  font-style: normal;
+  font-weight: normal;
+}
+.footer ul{
+  display: flex;
+  list-style:none;
+}
+.footer li{
+  padding-right: 30px;
+  padding-top: 10px;
+}
+.footer a{
+  text-decoration: none;
+  color: white;
+}
+.footer a:hover{
+  color:#2c3e50;
+}
