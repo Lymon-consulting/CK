@@ -132,9 +132,12 @@ Template.projList.helpers({
      },
      getProjectFamily(){
       var type = new Array();
-      type.push("Proyectos");
-      type.push("Portafolios");
+      type.push("Producciones"); //Producción
+      type.push("Muestras de trabajo"); //Muestra de trabajo
       return type;
+    },
+    firstLetter(val){
+      return val.charAt(0);
     },
      getProjectStatus(){
       var type = new Array();
@@ -205,8 +208,15 @@ Template.projList.helpers({
         }
         return (pfamily === value) ? 'selected' : '' ;
       },
-      removeLastChar:function(value){
-        return value.substring(0,value.length-1);
+      getFamily:function(value){
+        var result ="";
+        if(value==="P"){
+          result = "Producción";
+        }
+        else if(value==="M"){
+          result = "Muestra de trabajo";
+        }
+        return result;
       }
 
    
@@ -323,7 +333,7 @@ Template.projList.events({
   event.preventDefault();
   
   var newValue = $(event.target).val();
-  if(newValue==="Proyectos"){
+  if(newValue==="Producciones"){
     Session.set("type_selected",null);
     Session.set("genre_selected",null);
     Session.set("status_selected",null);

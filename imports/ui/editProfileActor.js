@@ -489,13 +489,14 @@ Template.editProfileActor.helpers({
     }
   },
   getProfilePicture() {
+    /*
     if(Meteor.user()!=null && Meteor.user().cast.profilePictureID!=null){
       var profile = Media.findOne({'mediaId':Meteor.user().cast.profilePictureID});
       if(profile!=null){
         return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_80,h_80,c_thumb,f_auto,r_max/" + "/v" + profile.media_version + "/" + Meteor.userId() + "/" + Meteor.user().cast.profilePictureID;    
       }
 
-    }
+    }*/
   },
   getInitials(){
     var name = Meteor.user().profile.name;

@@ -17,6 +17,7 @@ import '../imports/ui/contact.js';
 import '../imports/ui/editIndustry.js';
 import '../imports/ui/editMedia.js';
 import '../imports/ui/editProfile.js';
+import '../imports/ui/editProfileCast.js';
 import '../imports/ui/editProfileActor.js';
 import '../imports/ui/editProject.js';
 import '../imports/ui/faq.js';

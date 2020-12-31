@@ -10,6 +10,8 @@ import { hasTopRole } from '/lib/functions.js';
 import './projectName.html';
 import '/lib/common.js';
 
+var fam_value;
+
 /*
 var hasTopRole=function(){
   var array = new Array();
@@ -47,28 +49,26 @@ Template.projectName.events({
     if(isNotEmpty($('#project_title').val())){
       name = trimInput($('#project_title').val());
 
-      console.log("hasTopRole="+hasTopRole());
-      if(hasTopRole()){
-        family="Proyectos";  
+      if(fam_value!=null && fam_value!=""){
+        family = fam_value;  
+        Meteor.call('addProjectName', name, Meteor.userId(), family, function(error, response){
+          if(!error){
+            FlowRouter.go("/editProject/"+response);
+          }
+        });
       }
-      else{
-        family="Portafolios";
-      }
-
-      console.log(family);
-
-      
-      Meteor.call('addProjectName', name, Meteor.userId(), family, function(error, response){
-        if(!error){
-          FlowRouter.go("/editProject/"+response);
-        }
-      });
-      
     }
     else{
       Bert.alert({message: 'El nombre no puede estar vacío', type: 'error', icon: 'fa fa-times'});
     }
-  }
+  },
+  'change .family' : function(event, template){
+    event.preventDefault();
+    var inputValue = $(event.target).attr("data-answer");
+    fam_value = inputValue;
+    $('#project_title').prop('disabled', false);
+    $('#continuar').prop('disabled', false);
+  },
 });
 
 

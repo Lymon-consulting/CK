@@ -3,15 +3,31 @@
   {{#if currentUser}}
 
 <div class="container text-center">
-  {{#if hasTopRole}}
-  <h1 class="h1-title">DATOS DEL PROYECTO</h1>
-  {{else}}
-  <h1 class="h1-title">DATOS DEL PORTAFOLIO</h1>
-  {{/if}}
+  <div class="spacer20"></div>
   <h2>{{projData.project_title}}</h2>
   <hr>
 </div>
 <div class="container">
+  {{#if isProduction}}
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col">
+      <h2 class="titles">Perfil oficial</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-14">
+      Los proyectos en <strong>Cinekomuna</strong> pueden representar el <strong>Perfil Oficial</strong><i class="fa fa-certificate text-purple"></i> de alguna <strong>Producción audiovisual</strong>, de la cual poseas los derechos de divulgación. Si quieres publicar este proyecto como <strong>Perfil Oficial</strong><i class="fa fa-certificate text-purple"></i> por favor haz clic en la siguiente casilla y nos pondremos en contacto contigo para validarlo.
+    </div>
+  </div>
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col text-14">
+      <input type="checkbox" id="oficial_project"> <strong>Perfil Oficial</strong><i class="fa fa-certificate text-purple"></i>
+    </div>
+  </div>
+  {{/if}}
+  <div class="spacer40"></div>
   <div class="row">
     <div class="col-lg-3 rounded background-verylightgray p-3">
       <div class="sticky-top">
@@ -24,17 +40,25 @@
         <div><hr></div>
         <div class="row">
           <div class="col text-14">
-            {{#if hasTopRole}}
-            <a href="/projectPage/{{projData._id}}" class="text-purple"><i class="fa fa-eye"></i> Ver proyecto</a>    
-            {{else}}
-            <a href="/projectPage/{{projData._id}}" class="text-purple"><i class="fa fa-eye"></i> Ver portafolio</a>    
-            {{/if}}
+            <a href="/projectPage/{{projData._id}}" class="text-black"><i class="fa fa-eye"></i> Ver perfil de proyecto</a>    
           </div>
         </div>
         <div class="spacer10"></div>
         <div class="row">
           <div class="col text-14">
-            <a href="/mediaEditorObject/{{currentUser._id}}/project/{{currentUser._id}}/global" class="text-purple" id=""><i class="fa fa-camera"></i> Tus imágenes</a>
+            <a href="/viewProjects/{{currentUser._id}}" class="text-black"><i class="fa fa-briefcase"></i> Mis proyectos</a>    
+          </div>
+        </div>
+        <div class="spacer10"></div>
+        <div class="row">
+          <div class="col text-14">
+            <a href="/viewIndustries/{{currentUser._id}}" class="text-black"><i class="fa fa-building"></i> Mis empresas</a>    
+          </div>
+        </div>
+        <div class="spacer40"></div>
+        <div class="row">
+          <div class="col text-14">
+            <a href="/mediaEditorObject/{{currentUser._id}}/project/{{currentUser._id}}/global" class="text-black" id=""><i class="fa fa-image"></i> Mis imágenes</a>
           </div>
         </div>
         <div class="spacer40"></div>
@@ -74,220 +98,144 @@
         <div class="row">
           <!--Inicia contenido-->
            <div class="col-md-12">
-                 <div class="row">
-                    <div class="col">
-                       <label for="proj_name">Título: <span class="text-purple">(Requerido)</span></label>
-                    </div>
-                    <div class="col">
-                       <input type="text" id="proj_name" class="form-control" placeholder="Proyecto" value="{{projData.project_title}}" maxlength="150">
-                    </div>
-                 </div>
-                 <div class="spacer20"></div>
-                 <div class="row">
-                    <div class="col"><label for="proj_type">Tipo: <span class="text-purple">(Requerido)</span></label></div>
-                    <div class="col">
-                       <select name="proj_type" id="proj_type" class="form-control">
-                          <option value="" disabled selected style='display:none;'> Seleccione </option>
-                          {{#each getProjectType}}
-                          <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
-                          {{/each}}
-                          
-                       </select>
-                    </div>
-                 </div>
-                 <div class="spacer20"></div>
-                 <div class="row">
-                    <div class="col"><label for="proj_gender">Género: <span class="text-purple">(Requerido)</span></label></div>
-                    <div class="col">
-                       <select name="proj_type" id="proj_gender" class="form-control">
-                          <option value="" disabled selected style='display:none;'> Seleccione </option>
-                          {{#each getProjectGender}}
-                          <option value="{{this}}" {{genderSelected this}}> {{this}} </option>
-                          {{/each}}
-                          
-                       </select>
-                    </div>
-                 </div>
-                 <div class="spacer20"></div>
-                 <div class="row">
-                    <div class="col"><label for="proj_gender">Estatus: <span class="text-purple">(Requerido)</span></label></div>
-                    <div class="col">
-                       <select name="proj_status" id="proj_status" class="form-control">
-                          <option value="" disabled selected style='display:none;'> Seleccione </option>
-                          {{#each getProjectStatus}}
-                          <option value="{{this}}" {{statusSelected this}}> {{this}} </option>
-                          {{/each}}
-                          
-                       </select>
-                    </div>
-                 </div>
-                 <div class="spacer20"></div>
-                 <div class="row">
-                    <div class="col"><label for="proj_desc">Descripción / Sinopsis: <span class="text-purple">(Requerido)</span></label></div>
-                    <div class="col">
-                       <textarea class="form-control" rows="5" id="proj_desc" value="" placeholder="Descripción del proyecto ({{maxLength}} caracteres máx)." maxlength="{{maxLength}}">{{resume}}</textarea><small>Caracteres restantes:</small> <div id="max" class="agreements"></div>
-                    </div>
-                 </div>
-                 <div class="spacer20"></div>
-                 <div class="row">
-                    <div class="col"><label for="proj_year">Año: <span class="text-purple">(Requerido)</span></label></div>
-                    <div class="col">
-                       <select name="proj_year" id="proj_year" class="form-control">
-                          <option value="" disabled selected style='display:none;'> Seleccione </option>
-                          {{#each getAvailableYears}}
-                             <option value="{{this}}" {{yearSelected this}}> {{this}} </option>   
-                          {{/each}}
-                       </select>
-                    </div>
-                 </div>
-                 {{#if hasTopRole}}
-                 <div class="spacer20"></div>
-                 <div class="row">
-                   <div class="col"><label for="proj_year">¿Fuiste el Productor, Director o ambos en este proyecto?</label></div>
-                 </div>
-                 <div class="row">
-                  <div class="col">
-                    <input type="checkbox" value="Productor" id="check1" class="profile" {{verifyProductor}}> Productor
-                  </div>
-                 </div>
-                 <div class="row">
-                   <div class="col">
-                     <input type="checkbox" value="Director" id="check2" class="profile" {{verifyDirector}}> Director
-                   </div>
-                 </div>
-                 {{/if}}
-                 {{#if hasTopRole}}
-                 <div class="spacer20"></div>
-                 <div class="row">
-                    <div class="col-md-6">
-                        <label for="oc">Departamentos <span class="text-purple">(Selecciona al menos uno)</span></label>
-                         <select name="category" id="category" class="form-control">
-                           {{#each getCategories}}
-                              <option value="{{title}}"> {{title}} </option>
-                           {{/each}}
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                       <label for="Ocupation">Rol: <span class="text-purple">(Selecciona con doble clic)</span></label>
-                       <select multiple name="Ocupation" id="ocupation" class="form-control">
-                         {{#each getOcupationsFromCategory}}
-                            <option value="{{secondary}}" {{roleSelected secondary}}> {{secondary}} </option>
-                         {{/each}}
-                      </select>  
-                    </div>
-                 </div>
-                 <div class="spacer20"></div>
-                 <div class="row">
-                    <div class="col-md-12">
-                       <label for="Ocupation">Roles seleccionados <span class="text-purple">(Elimina con doble clic)</span></label>
-                       <select name="Selection" multiple id="selection" class="form-control">
-                         {{#each item in getRolesSelected}}
-                            <option value="{{item}}" {{roleSelected item}}> {{item}} </option>
-                         {{/each}}
-                      </select>  
-                    </div>
+             <div class="row">
+               <div class="col-lg-4">
+                 <label for="proj_name">Título: <span class="text-purple">(Requerido)</span></label>
+                 <input type="text" id="proj_name" class="form-control" placeholder="Proyecto" value="{{projData.project_title}}" maxlength="150">
+               </div>
+               <div class="col-lg-4">
+                <label for="proj_year">Año: <span class="text-purple">(Requerido)</span></label>
+                 <select name="proj_year" id="proj_year" class="form-control">
+                    <option value="" disabled selected style='display:none;'> Seleccione </option>
+                    {{#each getAvailableYears}}
+                       <option value="{{this}}" {{yearSelected this}}> {{this}} </option>   
+                    {{/each}}
+                 </select>
+               </div>
+               {{#if isProduction}}
+               <div class="col-lg-4">
+                 <label for="proj_gender">Género: <span class="text-purple">(Requerido)</span></label>
+                 <select name="proj_type" id="proj_gender" class="form-control">
+                    <option value="" disabled selected style='display:none;'> Seleccione </option>
+                    {{#each getProjectGender}}
+                    <option value="{{this}}" {{genderSelected this}}> {{this}} </option>
+                    {{/each}}
+                 </select>
+               </div>
+               {{/if}}
+             </div>
+             {{#if isProduction}}
+             <div class="row">
+               <div class="col-lg-4">
+                 <label for="proj_gender">Estatus: <span class="text-purple">(Requerido)</span></label>
+                 <select name="proj_status" id="proj_status" class="form-control">
+                    <option value="" disabled selected style='display:none;'> Seleccione </option>
+                    {{#each getProjectStatus}}
+                    <option value="{{this}}" {{statusSelected this}}> {{this}} </option>
+                    {{/each}}
                     
+                 </select>
+               </div>
+               <div class="col-lg-4">
+                 <label for="proj_type">Tipo: <span class="text-purple">(Requerido)</span></label>
+                 <select name="proj_type" id="proj_type" class="form-control">
+                    <option value="" disabled selected style='display:none;'> Seleccione </option>
+                    {{#each getProjectType}}
+                    <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
+                    {{/each}}
+                    
+                 </select>
+               </div>
+               <div class="col-lg-4">
+                 &nbsp;
+               </div>
+             </div>
+             <div class="spacer20"></div>
+             <div class="row">
+               <div class="col-lg-12">
+                 <label for="proj_desc">Descripción / Sinopsis: <span class="text-purple">(Requerido)</span></label>
+                 <textarea class="form-control" rows="5" id="proj_desc" value="" placeholder="Descripción del proyecto ({{maxLength}} caracteres máx)." maxlength="{{maxLength}}">{{resume}}</textarea><small>Caracteres restantes:</small> <div id="max" class="agreements"></div>
+               </div>
+             </div>
+             
+             <div class="spacer40"></div>
+             <div class="row">
+               <div class="col titles">En internet</div>
+             </div>
+             <div class="spacer20"></div>
+             <div class="row">
+               <div class="col-lg-6">
+                 <label for="web">Página Web:</label>
+                 <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fa fa-globe fa-lg"></i></div>
+                   </div>
+                  <input type="text" class="form-control" id="proj_web_page" value="{{projData.project_web_page}}" placeholder="Ej: www.cinekomuna.com" maxlength="120">
                  </div>
-                 {{/if}}
-                 <!--
-                 <div class="spacer20"></div>
-                 <div class="row">
-                    <div class="col"><label for="proj_main">Marcar como principal: </label></div>
-                    <div class="col">
-                       <input type="checkbox" id="proj_main" {{ isMainProject }}>
-                       <small class="agreements">El proyecto se mostrará en la parte superior de tu perfil, con una imagen más grande</small>
-                       {{#if isMainProject}}
-                       <input type="hidden" name="isMainProject" id="isMainProject" value="true">
-                       {{else}}
-                       <input type="hidden" name="isMainProject" id="isMainProject" value="">
-                       {{/if}}
-                    </div>
-                 </div>
-               -->
-                 <div class="spacer20"></div>
-                 <div class="row">
-                    <div class="col"><label for="web">Página Web:</label></div>
-                 </div>
-                 <div class="spacer20"></div>
-                 <div class="row">
-                    <div class="col">
-                       <div class="input-group">
-                          <div class="input-group-prepend">
-                            <div class="input-group-text"><i class="fa fa-globe fa-lg"></i></div>
-                         </div>
-                          <input type="text" class="form-control" id="proj_web_page" value="{{projData.project_web_page}}" placeholder="Ej: www.cinekomuna.com" maxlength="120">
-                       </div>
-                    </div>
-                 </div>
-                 <div class="spacer20"></div>
-                 <div class="row">
-                    <div class="col"><label for="web">En la red:</label></div>
-                 </div>
-                 <div class="spacer20"></div>
-                 <div class="row">
-                 <div class="col">
-                    <div class="input-group">
+               </div>
+               <div class="col-lg-6">
+                <label for="facebook">Facebook:</label>
+                 <div class="input-group">
                        <div class="input-group-prepend">
                          <div class="input-group-text"><i class="fa fa-facebook fa-lg"></i></div>
                       </div>
                        <input  type="text" class="form-control" id="proj_facebook_page" value="{{projData.project_facebook_page}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120">
                     </div>
-                 </div>
-              </div>
-              <div class="spacer20"></div>
-              <div class="row">
-                 <div class="col">
-                    <div class="input-group">
-                       <div class="input-group-prepend">
-                         <div class="input-group-text"><i class="fa fa-twitter fa-lg"></i></div>
-                      </div>
-                       <input type="text" class="form-control" id="proj_twitter_page" value="{{projData.project_twitter_page}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
+               </div>
+             </div>
+             <div class="spacer20"></div>
+             <div class="row">
+               <div class="col-lg-6">
+                <label for="twitter">Twitter:</label>
+                <div class="input-group">
+                   <div class="input-group-prepend">
+                     <div class="input-group-text"><i class="fa fa-twitter fa-lg"></i></div>
+                  </div>
+                   <input type="text" class="form-control" id="proj_twitter_page" value="{{projData.project_twitter_page}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
+                </div>
+               </div>
+               <div class="col-lg-6">
+                <label for="instagram">Instagram:</label>
+                  <div class="input-group">
+                     <div class="input-group-prepend">
+                       <div class="input-group-text"><i class="fa fa-instagram fa-lg"></i></div>
                     </div>
-                 </div>
-              </div>
-              <div class="spacer20"></div>
-              <div class="row">
-                 <div class="col">
-                    <div class="input-group">
-                       <div class="input-group-prepend">
-                         <div class="input-group-text"><i class="fa fa-vimeo fa-lg"></i></div>
-                      </div>
-                       <input type="text" class="form-control" id="proj_vimeo_page" value="{{projData.proj_vimeo_page}}" placeholder="Ej. www.vimeo.com/cinekomuna" maxlength="120">
-                    </div>
-                 </div>
-              </div>
-              <div class="spacer20"></div>
-              <div class="row">
-                 <div class="col">
-                    <div class="input-group">
-                       <div class="input-group-prepend">
-                         <div class="input-group-text"><i class="fa fa-youtube fa-lg"></i></div>
-                      </div>
-                       <input  type="text" class="form-control" id="proj_youtube_page" value="{{projData.proj_youtube_page}}" placeholder="Ej. www.youtube.com/cinekomuna" maxlength="120">
-                    </div>
-                 </div>
-              </div>
-              <div class="spacer20"></div>
-              <div class="row">
-                 <div class="col">
-                    <div class="input-group">
-                       <div class="input-group-prepend">
-                         <div class="input-group-text"><i class="fa fa-instagram fa-lg"></i></div>
-                      </div>
-                       <input type="text" class="form-control" id="proj_instagram_page" value="{{projData.proj_instagram_page}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120">
-                    </div>
-                 </div>
-              </div>
-              {{#if hasTopRole}}
-              <div class="spacer20"></div>
-                 <div class="row">
-                    <div class="col-lg-12"><label for="web">Se puede ver en:</label></div>
-                 </div>
-                 <div class="row">
-                   <div class="col-lg-12 agreements">
-                     Si tu película ya se encuentra en una plataforma de streaming (Netflix, Amazon Prime, Filminlatino, Cinépolis Klic o alguna otra plataforma independiente) puedes incluir aquí el link, el cual generará un botón de play que aparecerá en el perfil de tu proyecto y que redireccionará a los visitantes para que puedan ver tu película.
-                   </div>
-                 </div>
+                     <input type="text" class="form-control" id="proj_instagram_page" value="{{projData.proj_instagram_page}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120">
+                  </div>
+               </div>
+             </div>
+             <div class="spacer20"></div>
+             <div class="row">
+               <div class="col-lg-6">
+                <label for="vimeo">Vimeo:</label>
+                <div class="input-group">
+                   <div class="input-group-prepend">
+                     <div class="input-group-text"><i class="fa fa-vimeo fa-lg"></i></div>
+                  </div>
+                   <input type="text" class="form-control" id="proj_vimeo_page" value="{{projData.proj_vimeo_page}}" placeholder="Ej. www.vimeo.com/cinekomuna" maxlength="120">
+                </div>
+               </div>
+               <div class="col-lg-6">
+                <label for="youtube">Youtube:</label>
+                <div class="input-group">
+                   <div class="input-group-prepend">
+                     <div class="input-group-text"><i class="fa fa-youtube fa-lg"></i></div>
+                  </div>
+                   <input  type="text" class="form-control" id="proj_youtube_page" value="{{projData.proj_youtube_page}}" placeholder="Ej. www.youtube.com/cinekomuna" maxlength="120">
+                </div>
+               </div>
+             </div>
+
+
+             <div class="spacer20"></div>
+             <div class="row">
+                <div class="col-lg-12"><label for="web">Se puede ver en:</label></div>
+             </div>
+             <div class="row">
+               <div class="col-lg-12 agreements">
+                 Si tu película ya se encuentra en una plataforma de streaming (Netflix, Amazon Prime, Filminlatino, Cinépolis Klic o alguna otra plataforma independiente) puedes incluir aquí el link, el cual generará un botón de play que aparecerá en el perfil de tu proyecto y que redireccionará a los visitantes para que puedan ver tu película. Si dejas el campo vacío no aparecerá en el <strong>Perfil de tu Proyecto</strong>.
+               </div>
+             </div>
               <div class="spacer20"></div>
               <div class="row">
                  <div class="col">
@@ -299,7 +247,67 @@
                     </div>
                  </div>
               </div>
+
+              <div class="spacer20"></div>
+              <div class="row">
+                <div class="col titles">Marcar como proyecto principal</div>
+              </div>
+              <div class="row">
+               <div class="col-lg-12 agreements">
+                 Los proyectos marcados como <strong>Proyecto Principal</strong> tienen una presencia destacada en tu <strong>Perfil</strong>, ubicándose en la parte superior, con un formato más grande.
+               </div>
+             </div>
+              <div class="row">
+                <div class="col">
+                   <input type="checkbox" id="proj_main" {{ isMainProject }}>
+                   {{#if isMainProject}}
+                   <input type="hidden" name="isMainProject" id="isMainProject" value="true">
+                   {{else}}
+                   <input type="hidden" name="isMainProject" id="isMainProject" value="">
+                   {{/if}}
+                </div>
+              </div>
               {{/if}}
+
+              {{#unless isProduction}}
+               <div class="spacer20"></div>
+               <div class="row">
+                 <div class="col">
+                   ¿Bajo qué categorías te gustaría que buscaran tu Muestra de trabajo en el sistema de búsqueda? Sólo puedes elegir una opción
+                 </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-6">
+                      <label for="oc">Departamentos <span class="text-purple">(Selecciona al menos uno)</span></label>
+                       <select name="category" id="category" class="form-control">
+                         {{#each getCategories}}
+                            <option value="{{title}}"> {{title}} </option>
+                         {{/each}}
+                      </select>
+                  </div>
+                  <div class="col-md-6">
+                     <label for="Ocupation">Área: <span class="text-purple">(Selecciona con doble clic)</span></label>
+                     <select multiple name="Ocupation" id="ocupation" class="form-control">
+                       {{#each getOcupationsFromCategory}}
+                          <option value="{{secondary}}" {{roleSelected secondary}}> {{secondary}} </option>
+                       {{/each}}
+                    </select>  
+                  </div>
+               </div>
+               <div class="spacer20"></div>
+               <div class="row">
+                  <div class="col-md-12">
+                     <label for="Ocupation">Áreas seleccionados <span class="text-purple">(Elimina con doble clic)</span></label>
+                     <select name="Selection" multiple id="selection" class="form-control">
+                       {{#each item in getRolesSelected}}
+                          <option value="{{item}}" {{roleSelected item}}> {{item}} </option>
+                       {{/each}}
+                    </select>  
+                  </div>
+                  
+               </div>
+              {{/unless}}
+
 
             <div class="spacer40"></div>
               <div class="row">

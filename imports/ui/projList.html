@@ -1,18 +1,17 @@
 <template name="projList">
-  
   <div class="container-fluid imageDivHeight"> <!--Imagen de fondo de página principal-->
       <section>
          <div class="container">
             <div class="row">
-               <div class="col-md-12 col-lg-12 mx-auto bgText"></div><!--Imagen con título en página principal-->
+               <div class="col-md-12 col-lg-12 mx-auto"></div><!--Imagen con título en página principal-->
             </div>
          </div>
       </section>
    </div>     
    <nav class="navbar navbar-dark bg-dark justify-content-between">
-    <a class="navbar-brand text-white">Buscar / Proyectos</a>
+    <a class="navbar-brand text-white">Buscar / Producciones</a>
     <form class="form-inline">
-      <label for="select" class="text-lg-white">¿No buscas proyectos? Elige otra opción </label>&nbsp;
+      <label for="select" class="text-lg-white">¿No buscas producciones? Elige otra opción </label>&nbsp;
       <select name="" id="searchType" class="form-control mr-sm-2">
        <option value="">-- ¿Qué buscas? --</option>
        <option value="Crew">CREW</option>
@@ -29,28 +28,29 @@
       <div class="col-lg-3 rounded background-verylightgray p-3">
         <div class="sticky-top">
           <div class="row">
-            <div>&nbsp;Filtra tus resultados</div>
-          </div>
-          <div class="spacer10"></div>
-          <div class="row">
-            <div class="col agreements">Nombre</div>
-          </div>
-          <div class="row">
-            <div class="col agreements">
-              {{> EasySearch.Input index=projectIndex event="enter" attributes=inputAttributes}}
-              {{#EasySearch.IfSearching index=usersIndex}}{{/EasySearch.IfSearching}}
-              {{#EasySearch.IfSearching index=industryIndex}}{{/EasySearch.IfSearching}}
-            </div>
+            <div><i class="fa fa-sliders fa-sm"></i>&nbsp;Filtrar búsqueda</div>
           </div>
           <div class="spacer10"></div>
           <div class="row">
             <div class="col">
               <select class="form-control agreements" id="family">
-                <option value="cualquier"> Todos </option>
                 {{#each getProjectFamily}}
-                <option value="{{this}}" {{familySelected this}}> {{this}} </option>
+                <option value="{{firstLetter this}}" {{familySelected this}}> {{this}} </option>
                 {{/each}}
               </select>
+            </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">Nombre</div>
+          </div>
+          
+          
+          <div class="row">
+            <div class="col agreements">
+              {{> EasySearch.Input index=projectIndex event="enter" attributes=inputAttributes}}
+              {{#EasySearch.IfSearching index=usersIndex}}{{/EasySearch.IfSearching}}
+              {{#EasySearch.IfSearching index=industryIndex}}{{/EasySearch.IfSearching}}
             </div>
           </div>
           <div class="spacer10"></div>
@@ -125,7 +125,7 @@
                               </tr>
                               <tr>
                                 <td class="no-padding text-no-wrap subtitle-underline">
-                                  {{removeLastChar this.project_family}}
+                                  {{getFamily this.project_family}}
                                 </td>
                               </tr>
                               {{#if this.project_status}}

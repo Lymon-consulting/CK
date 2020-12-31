@@ -1,0 +1,283 @@
+<template name="editProfileCast">
+  <div class="row">
+    <div class="col"><label for="category">¿Cuál es tu categoría o categorías? <span class="text-purple">(Requerido)</span></label></div>
+  </div>
+  <div class="row">
+  {{#each categories}}
+  <div class="col-lg-4 col-md-6 col-xs-12" style="text-align:left">
+    <div class="checkbox">
+      <label><input type="checkbox" value="{{spec}}" class="category" {{checkCategory spec}}> {{spec}}</label>
+    </div>
+   </div>
+  {{/each}}   
+  </div>
+  <div class="spacer40"></div>
+  <div class="row">
+    <div class="col-lg-4 form-group">
+      <label for="gender">Sexo <span class="text-purple">(Requerido)</span></label>
+      <div class="row">
+        <div class="col text-14"><input type="radio" name="gender" class="sex" data-answer="Masculino" {{selectedGender 'Masculino'}}>Masculino</div>
+      </div>
+      <div class="spacer10"></div>
+      <div class="row">
+        <div class="col text-14"><input type="radio" name="gender" class="sex" data-answer="Femenino" {{selectedGender 'Femenino'}}>Femenino</div>
+      </div>
+      <div class="spacer10"></div>
+      <div class="row">
+        <div class="col text-14">
+          <input type="radio" name="gender" class="sex" data-answer="Sin definir" {{selectedGender 'Sin definir'}}>Sin definir    
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 form-group">
+      <label for="age">Rango de edad (o la que aparenta) <span class="text-purple">(Requerido)</span></label>
+      <select name="country" id="age" class="form-control">
+       <option value="">--- Selecciona una opción ---</option>
+       {{#each ages}}
+       <option value="{{spec}}" {{ageSelected spec}}> {{spec}} </option>
+       {{/each}}
+     </select>
+    </div>
+  </div>
+  <div class="spacer40"></div>
+  <div class="row">
+    <div class="col-lg-12 form-group">
+      <label for="resume">Acerca de </label>
+        <textarea class="form-control" rows="5" id="resume" value="" placeholder="({{maxLength}} caracteres máx)." maxlength="{{maxLength}}">{{resume}}</textarea><small>Caracteres restantes: <div id="max"></div></small>
+    </div>
+  </div>
+  <div class="spacer40"></div>
+  <div class="row">
+    <div class="col-lg-12 mx-auto">
+      <h2>Datos avanzados</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 form-group">
+      <label for="height">Altura </label>
+      <select name="height" id="height" class="form-control">
+       <option value="">--- Selecciona una opción ---</option>
+       {{#each heights}}
+       <option value="{{spec}}" {{heightSelected spec}}> {{spec}} </option>
+       {{/each}}
+     </select>
+    </div>
+    <div class="col-lg-4 form-group">
+      <label for="physical">Complexión física </label>
+      <select name="physical" id="physical" class="form-control">
+       <option value="">--- Selecciona una opción ---</option>
+       {{#each physical}}
+       <option value="{{spec}}" {{physicalSelected spec}}> {{spec}} </option>
+       {{/each}}
+     </select>
+    </div>
+    <div class="col-lg-4 form-group">
+      <label for="ethnics">Etnicidad </label>
+      <select name="ethnics" id="ethnics" class="form-control">
+       <option value="">--- Selecciona una opción ---</option>
+       {{#each ethnics}}
+       <option value="{{spec}}" {{ethnicsSelected spec}}> {{spec}} </option>
+       {{/each}}
+     </select>
+    </div>
+  </div>
+  <div class="spacer40"></div>
+  <div class="row">
+    <div class="col-lg-4 form-group">
+      <label for="eyes">Color de ojos </label>
+      <select name="eyes" id="eyes" class="form-control">
+       <option value="">--- Selecciona una opción ---</option>
+       {{#each eyes}}
+       <option value="{{spec}}" {{eyesSelected spec}}> {{spec}} </option>
+       {{/each}}
+     </select>
+    </div>
+    <div class="col-lg-4 form-group">
+      <label for="hair">Color de cabello </label>
+      <select name="hair" id="hair" class="form-control">
+       <option value="">--- Selecciona una opción ---</option>
+       {{#each hair}}
+       <option value="{{spec}}" {{hairSelected spec}}> {{spec}} </option>
+       {{/each}}
+     </select>
+    </div>
+    <div class="col-lg-4 form-group">
+      <label for="hairType">Tipo de cabello </label>
+      <select name="hairType" id="hairType" class="form-control">
+       <option value="">--- Selecciona una opción ---</option>
+       {{#each hairType}}
+       <option value="{{spec}}" {{hairTypeSelected spec}}> {{spec}} </option>
+       {{/each}}
+     </select>
+    </div>
+  </div>
+  <div class="spacer40"></div>
+  <div class="row">
+    <div class="col-lg-6 form-group">
+      <label for="gender">Barba y bigote </label>
+      <div class="spacer10"></div>
+      <div class="row">
+        <div class="col text-14"><input type="radio" name="beard" class="facial-hair" data-answer="true" {{selectedBeard 'true'}}>Si</div>
+      </div>
+      <div class="spacer10"></div>
+      <div class="row">
+        <div class="col text-14"><input type="radio" name="beard" class="facial-hair" data-answer="false" {{selectedBeard 'false'}}>No</div>
+      </div>
+
+    </div>
+  </div>
+  <div class="spacer40"></div>
+  <div class="row">
+    <div class="col-lg-12 mx-auto">
+      <h2>Datos extra</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 form-group">
+      <label for="peculiarities">Características físicas particulares ( Cicatrices,lunares, tatuajes, etc.) </label>
+        <textarea class="form-control" rows="5" id="peculiarities" value="" placeholder="({{maxLength}} caracteres máx)." maxlength="{{maxLength}}">{{peculiarities}}</textarea><small>Caracteres restantes: <div id="max-peculiarities"></div></small>
+    </div>
+  </div>
+  <div class="spacer40"></div>
+  <div class="row">
+    <div class="col-lg-12 form-group">
+      <label for="skills">Habilidades especiales (Montar a caballo, stunts, gimnasia, natacion, canto, baile ,etc) </label>
+        <textarea class="form-control" rows="5" id="skills" value="" placeholder="({{maxLength}} caracteres máx)." maxlength="{{maxLength}}">{{skills}}</textarea><small>Caracteres restantes: <div id="max-skills"></div></small>
+    </div>
+  </div>
+  <div class="spacer40"></div>
+  <div class="row">
+    <div class="col-lg-12 form-group">
+      <h2>Idiomas</h2>
+      
+      <div class="container">
+        <div class="row">
+          {{#each languages}}
+          <div class="col-lg-4 col-md-6 col-xs-12" style="text-align:left">
+            <div class="checkbox">
+              <label><input type="checkbox" value="{{spec}}" class="language" {{checkLanguage spec}}> {{spec}}</label>
+            </div>
+           </div>
+          {{/each}}   
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="spacer40"></div>
+  <div class="spacer40"></div>
+  <div class="row">
+    <div class="col-lg-8 form-group">
+      <label for="nombre">Demo </label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fa fa-play"></i></div>
+        </div>
+        <input type="text" class="form-control" id="video" placeholder="URL de youtube, vimeo, etc." value="{{video}}" maxlength="150">
+      </div>
+    </div>
+  </div>
+  <div class="spacer40"></div>
+  <div class="row">
+    <div class="col-lg-12 mx-auto">
+      <h2>En Internet</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-8 form-group">
+      <label for="web">Facebook</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fa fa-facebook"></i></div>
+        </div>
+        <input  type="text" class="form-control" id="facebook_page" value="{{facebook}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-8 form-group">
+      <label for="web">Instagram</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fa fa-instagram"></i></div>
+        </div>
+        <input type="text" class="form-control" id="instagram_page" value="{{instagram}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-8 form-group">
+      <label for="web">IMDB</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fa fa-imdb"></i></div>
+        </div>
+        <input type="text" class="form-control" id="imdb_page" value="{{imdb}}" placeholder="Ej. www.imdb.com/cinekomuna" maxlength="120">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-8 form-group">
+      <label for="web">Twitter</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fa fa-twitter"></i></div>
+        </div>
+        <input type="text" class="form-control" id="twitter_page" value="{{twitter}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-8 form-group">
+      <label for="web">Página Web</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fa fa-globe"></i></div>
+        </div>
+        <input type="text" class="form-control" id="web_page" value="{{webpage}}" placeholder="Ej: www.cinekomuna.com" maxlength="120">
+      </div>
+    </div>
+  </div>
+  <div class="spacer40"></div>
+  <div class="row">
+    <div class="col-lg-12">Galería de imágenes <a href="#" class="text-purple" data-toggle="modal" data-target="#modal3"><br>Agregar <i class="fa fa-pencil"></i></a></div>
+  </div>
+  {{#if getGallery}}
+  <div class="row">
+    <div class="col-lg-12">
+      <!--Inicia carrousel -->
+      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          {{#each getGallery}}
+            {{#if isFirstElement this.position}}
+          <div class="carousel-item active">
+            <img class="d-block w-100" src="{{getURL this.mediaId}}" alt="First slide">
+          </div>
+            {{else}}
+          <div class="carousel-item carousel-item-thumb">
+            <img class="d-block w-100" src="{{getURL this.mediaId}}" alt="Not first slide">
+          </div>
+            {{/if}}
+          {{/each}}
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Siguiente</span>
+        </a>
+      </div>
+      <!--Termina carrousel -->
+        
+    </div>
+  </div>
+  {{else}}
+  <div class="row">
+    <div class="col agreements">
+      Aún no agregas imágenes a tu galería
+    </div>
+  </div>
+ 
+  {{/if}}
+</template>

@@ -25,11 +25,7 @@
         <div class="sticky-top">
           <div class="row">
             <div class="col d-flex justify-content-center">
-              {{#if getProfilePicture}}
-              <img src="{{getProfilePicture}}"/>
-              {{else}}
-              <div id="profileImageLarge">{{getInitials}}</div>
-              {{/if}}
+              
             </div>
           </div>
           <div class="row">
@@ -205,7 +201,7 @@
                       <div class="spacer20"></div>
                       <div class="row">
                         <div class="col">
-                          <input type="checkbox" class="activateCrew"> Activar perfil de <strong>Crew</strong>
+                          <input type="checkbox" class="activateCrew" {{isCrewChecked}}> Activar perfil de <strong>Crew</strong>
                         </div>
                       </div>
                       <div class="spacer20"></div>
@@ -333,9 +329,11 @@
                       <div class="spacer20"></div>
                       <div class="row">
                         <div class="col">
-                          <input type="checkbox"> Activar perfil de <strong>Cast</strong>
+                          <input type="checkbox" class="activateCast" {{isCastChecked}}> Activar perfil de <strong>Cast</strong>
                         </div>
                       </div>
+                      <div class="spacer20"></div>
+                      
                     </div>
                    
                   </div>

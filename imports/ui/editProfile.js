@@ -277,14 +277,14 @@ getRolesSelected(){
 
   },
   getProfilePicture() {
-
+/*
    if(Meteor.user()!=null && Meteor.user().crew!=null && Meteor.user().crew.profilePictureID!=null){
       var profile = Media.findOne({'mediaId':Meteor.user().crew.profilePictureID});
       if(profile!=null){
         return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_80,h_80,c_thumb,f_auto,r_max/" + "/v" + profile.media_version + "/" + Meteor.userId() + "/" + Meteor.user().crew.profilePictureID;    
       }
 
-    }
+    }*/
 },
 getInitials(){
   var name = Meteor.user().profile.name;
@@ -339,6 +339,35 @@ showCreateCastLink(){
     if(Meteor.user()){
       if(Meteor.user().isCast!=null && Meteor.user().isCast){
         result=false;
+      }
+    }
+    return result;
+  },
+  isCastChecked(){
+    var result = "";
+    if(Meteor.user()){
+      if(Meteor.user().isCast!=null && Meteor.user().isCast){
+        result="checked";
+      }
+    }
+    return result;
+  },
+  isCrewChecked(){
+    var result = "";
+    if(Meteor.user()){
+      if(Meteor.user().isCrew!=null && Meteor.user().isCrew){
+        result="checked";
+        $('#category').prop('disabled', false);
+        $('#ocupation').prop('disabled', false);
+        $('#selection').prop('disabled', false);
+        $('#web_page').prop('disabled', false);
+        $('#video').prop('disabled', false);
+        $('#facebook_page').prop('disabled', false);
+        $('#twitter_page').prop('disabled', false);
+        $('#vimeo_page').prop('disabled', false);
+        $('#youtube_page').prop('disabled', false);
+        $('#instagram_page').prop('disabled', false);
+        $('#imdb_page').prop('disabled', false);
       }
     }
     return result;
@@ -716,6 +745,7 @@ else{
            $('#youtube_page').prop('disabled', false);
            $('#instagram_page').prop('disabled', false);
            $('#imdb_page').prop('disabled', false);
+           Meteor.call('setIsCrew', Meteor.userId(),true);
         }else{
            $('#category').prop('disabled', 'disabled');
            $('#ocupation').prop('disabled', 'disabled');
@@ -728,6 +758,15 @@ else{
            $('#youtube_page').prop('disabled', 'disabled');
            $('#instagram_page').prop('disabled', 'disabled');
            $('#imdb_page').prop('disabled', 'disabled');
+           Meteor.call('setIsCrew', Meteor.userId(),false);
+        }
+     },
+     'change .activateCast':function(event, template){
+       event.preventDefault();
+       if($('.activateCast').is(":checked") == true){
+           Meteor.call('setIsCast', Meteor.userId(),true);
+        }else{
+           Meteor.call('setIsCast', Meteor.userId(),false);
         }
      },
     

@@ -35,6 +35,15 @@ Template.editProject.helpers({
   projData(){
     return Project.findOne({'_id': FlowRouter.getParam('id')});
   },
+  isProduction(){
+    var family = Project.findOne({'_id': FlowRouter.getParam('id')}).project_family;
+    if(family==="P"){
+      return true;
+    }
+    else{
+      return false;
+    }
+  },
   typeSelected: function(value){
     var ptype = Project.findOne({'_id': FlowRouter.getParam('id')}).project_type;
     return (ptype === value) ? 'selected' : '' ;

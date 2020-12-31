@@ -23,22 +23,28 @@
         <div class="col-lg-12">
           <div class="row">
             <div class="col-lg-4">
-            {{#if hasTopRole}}
-             <label for="proj_name">¿Cuál es el nombre del proyecto que deseas agregar? <span class="text-purple">(Requerido)</span></label>
-             {{else}}
-
-             <label for="proj_name">¿Cuál es el nombre del portafolio que deseas agregar? <span class="text-purple">(Requerido)</span></label>
-             {{/if}}
-
+              Cinekomuna cataloga los proyectos en <strong>Producciones audiovisuales</strong>, y en <strong>Muestras de trabajo</strong>. Por favor especifica qué tipo de proyecto quieres publicar.
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 text-14">
+              <input type="radio" name="family" class="family" data-answer="P">Producción audiovisual
+              <input type="radio" name="family" class="family" data-answer="M">Muestra de trabajo
+            </div>
+          </div>
+          <div class="spacer20"></div>
+          <div class="row">
+            <div class="col-lg-4">
+              <label for="proj_name">Nombre del proyecto que deseas agregar <span class="text-purple">(Requerido)</span></label>
             </div>
             <div class="col-lg-8">
-              <input type="text" id="project_title" class="form-control" placeholder="Nombre" value="" maxlength="150">
+              <input type="text" id="project_title" class="form-control" placeholder="Nombre" value="" maxlength="150" disabled>
             </div>
           </div>
           <div class="spacer20"></div>
           <div class="row">
             <div class="col-lg-12 text-center">
-              <button class="btn btn-purple" id="continuar" type="button" role="button">CONTINUAR</button>   
+              <button class="btn btn-purple" id="continuar" type="button" role="button" disabled>CONTINUAR</button>   
             </div>
           </div>
           <div class="row">
