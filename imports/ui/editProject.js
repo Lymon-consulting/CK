@@ -35,6 +35,10 @@ Template.editProject.helpers({
   projData(){
     return Project.findOne({'_id': FlowRouter.getParam('id')});
   },
+  statusPublished(){
+    return Project.findOne({'_id': FlowRouter.getParam('id')}).project_status;
+
+  },
   isProduction(){
     var family = Project.findOne({'_id': FlowRouter.getParam('id')}).project_family;
     if(family==="P"){
@@ -431,6 +435,7 @@ Template.editProject.helpers({
 });
 
 Template.editProject.events({
+  /*
   'change #proj_name': function(event, template) {
     event.preventDefault();
     var proj_name = trimInput(event.target.value);
@@ -497,7 +502,7 @@ Template.editProject.events({
     Meteor.call('updateProjectExternalView', FlowRouter.getParam("id"), proj_external_view);  
   },
   
-
+*/
 
   
   'change #proj_main': function(event) {
@@ -505,62 +510,122 @@ Template.editProject.events({
     $('#isMainProject').val(x);
     //console.log($('#isMainProject').val());
   },
-  /*
-  'click #guardar_proyecto': function(event, template) {
+  
+  'click .save': function(event, template) {
     event.preventDefault();
-    var proj_name = trimInput($('#proj_name').val());
-    var proj_type = $('#proj_type').val();
-    var proj_genre = $('#proj_gender').val();
-    var proj_desc = trimInput($('#proj_desc').val());
-    var proj_year = $('#proj_year').val();
-    var proj_role = $('#selection').val();
-    var proj_main = $('#isMainProject').val();
-    var proj_web_page = trimInput($('#proj_web_page').val());
-    var proj_facebook_page = trimInput($('#proj_facebook_page').val());
-    var proj_twitter_page = trimInput($('#proj_twitter_page').val());
-    var proj_vimeo_page = trimInput($('#proj_vimeo_page').val());
-    var proj_youtube_page = trimInput($('#proj_youtube_page').val());
-    var proj_instagram_page = trimInput($('#proj_instagram_page').val());
 
-    if(isNotEmpty(proj_name) && 
-      isNotEmpty(proj_type) && 
-      isNotEmpty(proj_genre) && 
-      isNotEmpty(proj_desc) &&
-      isNotEmpty(proj_year) &&
-      isNotEmpty(proj_role)){
-      if(proj_main==='true'){
-        otherProjects = Project.find({userId: Meteor.userId()}).fetch();
-        otherProjects.forEach(function(current_value) {
-                  //Project.update({_id: current_value._id},{$set:{"project_is_main": "" }});   
-                  Meteor.call(
-                    'updateMain',
-                    current_value._id
-                    );    
-                });
+    /*Verificar qué botón oprimió*/
+    var button = $(event.currentTarget).attr("publish");
+
+    /*Validar si es una producción o una muestra*/
+    var data = Project.findOne({'_id' : FlowRouter.getParam("id")});
+
+    if(data.project_family!=null && data.project_family==='M'){
+      /*Validar los datos obligatorios para una muestra*/
+      var proj_name = trimInput($('#proj_name').val());
+      var proj_year = $('#proj_year').val();
+      var proj_area = $('#selection').val();
+
+      if(!isNotEmpty(proj_name)){
+        Bert.alert({message: 'Por favor rellena el nombre del proyecto', type: 'error', icon: 'fa fa-times'});
       }
-      Meteor.call(
-       'updateProject',
-       FlowRouter.getParam('id'),
-       proj_name,
-       proj_type,
-       proj_genre,
-       proj_desc, 
-       proj_year,
-       proj_main,
-       proj_web_page,
-       proj_facebook_page,
-       proj_twitter_page,
-       proj_vimeo_page,
-       proj_youtube_page,
-       proj_instagram_page
-       );
-      
-      Bert.alert({message: 'El proyecto ha sido modificado con éxito', type: 'success', icon: 'fa fa-check'});
-      FlowRouter.go('/projectPage/' + FlowRouter.getParam('id'));
+      else if(!isNotEmpty(proj_year)){
+        Bert.alert({message: 'Por favor rellena el año del proyecto', type: 'error', icon: 'fa fa-times'});
+      }
+      else if(!isNotEmpty(proj_area)){
+        Bert.alert({message: 'Por favor selecciona el área de tu proyecto', type: 'error', icon: 'fa fa-times'});
+      }
+      else{
+        var status = false;
+        var msg = "";
+        if(button==="true"){
+          status = true;
+          msg = "Los datos de tu proyecto han sido actualizados y ahora se encuentra publicado";
+        }
+        else if(button==="false"){
+          status = false;
+          msg="Los datos de tu proyecto han sido actualizados, se ha guardado como borrador";
+        }
+        Meteor.call(
+         'updateProjectSample',
+         FlowRouter.getParam('id'),
+         proj_name,
+         proj_year,
+         status
+         );
+        
+        Bert.alert({message: msg, type: 'success', icon: 'fa fa-check'});
+        //FlowRouter.go('/projectPage/' + FlowRouter.getParam('id'));
+      }
 
+      
     }
+    else if(data.project_family!=null && data.project_family==='P'){
+      /*Validar los datos obligatorios para una producción*/
+      var proj_name = trimInput($('#proj_name').val());
+      var proj_type = $('#proj_type').val();
+      var proj_genre = $('#proj_gender').val();
+      var proj_desc = trimInput($('#proj_desc').val());
+      var proj_year = $('#proj_year').val();
+      var proj_role = $('#selection').val();
+      var proj_main = $('#isMainProject').val();
+      var proj_web_page = trimInput($('#proj_web_page').val());
+      var proj_facebook_page = trimInput($('#proj_facebook_page').val());
+      var proj_twitter_page = trimInput($('#proj_twitter_page').val());
+      var proj_vimeo_page = trimInput($('#proj_vimeo_page').val());
+      var proj_youtube_page = trimInput($('#proj_youtube_page').val());
+      var proj_instagram_page = trimInput($('#proj_instagram_page').val());
+      if(isNotEmpty(proj_name) && 
+        isNotEmpty(proj_type) && 
+        isNotEmpty(proj_genre) && 
+        isNotEmpty(proj_desc) &&
+        isNotEmpty(proj_year) &&
+        isNotEmpty(proj_role)){
+        if(proj_main==='true'){
+          otherProjects = Project.find({userId: Meteor.userId()}).fetch();
+          otherProjects.forEach(function(current_value) {
+                    //Project.update({_id: current_value._id},{$set:{"project_is_main": "" }});   
+                    Meteor.call(
+                      'updateMain',
+                      current_value._id
+                      );    
+                  });
+        }
+        Meteor.call(
+         'updateProjectProduction',
+         FlowRouter.getParam('id'),
+         proj_name,
+         proj_type,
+         proj_genre,
+         proj_desc, 
+         proj_year,
+         proj_main,
+         proj_web_page,
+         proj_facebook_page,
+         proj_twitter_page,
+         proj_vimeo_page,
+         proj_youtube_page,
+         proj_instagram_page
+         );
+        
+        Bert.alert({message: 'Los datos del proyecto han sido actulizados', type: 'success', icon: 'fa fa-check'});
+        //FlowRouter.go('/projectPage/' + FlowRouter.getParam('id'));
+
+      }
+      else{
+        Bert.alert({message: 'Por favor rellena los datos requeridos', type: 'error', icon: 'fa fa-times'});
+      }
+    }
+
+    
     return false;
   },
+  'click #saveAndPublish': function(event, template){
+      event.preventDefault();
+      //Bert.alert({message: 'Se ha guardado tu proyecto', type: 'success', icon: 'fa fa-check'});
+      FlowRouter.go("/projectPage/" + FlowRouter.getParam("id"));
+    },
+  /*
   'click #deleteFileButton ': function (event) {
      //console.log("deleteFile button ", this);
      event.preventDefault();
@@ -694,6 +759,11 @@ Template.editProject.events({
   'click #ocupation':function(event, template){
     event.preventDefault();
     //console.log("detectó doble click " + FlowRouter.getParam('id') + ","+ event.currentTarget.value);
+    Meteor.call(
+      'removeAllRolesFromProject',
+      FlowRouter.getParam('id')
+    );    
+    
     Meteor.call(
       'addRoleToProject',
       FlowRouter.getParam('id'),
@@ -832,15 +902,12 @@ Template.editProject.events({
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();*/
       },
+      /*
     'click #save': function(event, template){
       event.preventDefault();
       Bert.alert({message: 'Se ha guardado tu proyecto', type: 'success', icon: 'fa fa-check'});
-    },
-    'click #saveAndPublish': function(event, template){
-      event.preventDefault();
-      Bert.alert({message: 'Se ha guardado tu proyecto', type: 'success', icon: 'fa fa-check'});
-      FlowRouter.go("/projectPage/" + FlowRouter.getParam("id"));
-    },
+    },*/
+    
 });
 
 

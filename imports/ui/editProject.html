@@ -4,29 +4,14 @@
 
 <div class="container text-center">
   <div class="spacer20"></div>
-  <h2>{{projData.project_title}}</h2>
+  <h2 class="h1-title">{{projData.project_title}}</h2>
+  {{#unless statusPublished}}
+  <div class="pink">Tu proyecto no está publicado, nadie lo podrá ver hasta que lo publiques</div>
+  {{/unless}}
   <hr>
 </div>
 <div class="container">
-  {{#if isProduction}}
-  <div class="spacer20"></div>
-  <div class="row">
-    <div class="col">
-      <h2 class="titles">Perfil oficial</h2>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col text-14">
-      Los proyectos en <strong>Cinekomuna</strong> pueden representar el <strong>Perfil Oficial</strong><i class="fa fa-certificate text-purple"></i> de alguna <strong>Producción audiovisual</strong>, de la cual poseas los derechos de divulgación. Si quieres publicar este proyecto como <strong>Perfil Oficial</strong><i class="fa fa-certificate text-purple"></i> por favor haz clic en la siguiente casilla y nos pondremos en contacto contigo para validarlo.
-    </div>
-  </div>
-  <div class="spacer20"></div>
-  <div class="row">
-    <div class="col text-14">
-      <input type="checkbox" id="oficial_project"> <strong>Perfil Oficial</strong><i class="fa fa-certificate text-purple"></i>
-    </div>
-  </div>
-  {{/if}}
+  
   <div class="spacer40"></div>
   <div class="row">
     <div class="col-lg-3 rounded background-verylightgray p-3">
@@ -76,7 +61,8 @@
           </div>
         </div>
         <div class="spacer40"></div>
-        {{#if hasTopRole}}
+        {{#if isProduction}}
+          {{#if hasTopRole}}
         <div><hr></div>
         <div class="row">
           <div class="col text-14">Póster <a href="#" class="text-purple" id="openMediaPoster">Cambiar <i class="fa fa-pencil"></i></a></div>
@@ -90,6 +76,7 @@
             {{/if}}
           </div>
         </div>
+          {{/if}}
         {{/if}}
       </div>
     </div>
@@ -276,9 +263,10 @@
                    ¿Bajo qué categorías te gustaría que buscaran tu Muestra de trabajo en el sistema de búsqueda? Sólo puedes elegir una opción
                  </div>
                </div>
+               <div class="spacer20"></div>
                <div class="row">
                   <div class="col-md-6">
-                      <label for="oc">Departamentos <span class="text-purple">(Selecciona al menos uno)</span></label>
+                      <label for="oc">Departamento:</label>
                        <select name="category" id="category" class="form-control">
                          {{#each getCategories}}
                             <option value="{{title}}"> {{title}} </option>
@@ -286,7 +274,7 @@
                       </select>
                   </div>
                   <div class="col-md-6">
-                     <label for="Ocupation">Área: <span class="text-purple">(Selecciona con doble clic)</span></label>
+                     <label for="Ocupation">Área:</label>
                      <select multiple name="Ocupation" id="ocupation" class="form-control">
                        {{#each getOcupationsFromCategory}}
                           <option value="{{secondary}}" {{roleSelected secondary}}> {{secondary}} </option>
@@ -297,8 +285,8 @@
                <div class="spacer20"></div>
                <div class="row">
                   <div class="col-md-12">
-                     <label for="Ocupation">Áreas seleccionados <span class="text-purple">(Elimina con doble clic)</span></label>
-                     <select name="Selection" multiple id="selection" class="form-control">
+                     <label for="Ocupation">Área seleccionada: <span class="text-purple">(Requerido)</span></label>
+                     <select name="Selection" id="selection" class="form-control" disabled>
                        {{#each item in getRolesSelected}}
                           <option value="{{item}}" {{roleSelected item}}> {{item}} </option>
                        {{/each}}
@@ -357,8 +345,8 @@
              </div>
              <div class="row">
                 <div class="col">
-                  <button class="btn btn-purple" id="save">Guardar</button>
-                  <button class="btn btn-purple" id="saveAndPublish">Guardar y publicar</button>
+                  <button class="btn btn-purple save" publish="false"><i class="fa fa-save text-white"></i>&nbsp;Guardar cambios</button>
+                  <button class="btn btn-purple save" publish="true"><i class="fa fa-external-link text-white"></i>&nbsp;Guardar y publicar</button>
                 </div>
               </div>
            </div>

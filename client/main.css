@@ -772,9 +772,9 @@ a.list-group-item.active { background-color: #6c757d; }
 
 .btn-purple {
    border-width: 1px;
-   border-color: #ED1567;
-   background: transparent;
-   color: #ED1567;
+   border-radius: 5px;
+   background: #fd1052;
+   color: #fff;
    font-weight: bold;
 }
 

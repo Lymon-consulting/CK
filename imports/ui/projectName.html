@@ -1,60 +1,65 @@
 <template name="projectName">
 
 
- <div class="container text-center">
-  {{#if hasTopRole}}
-  <h1 class="h1-title">AGREGAR UN PROYECTO</h1>
-  {{else}}
-  <h1 class="h1-title">AGREGAR UN PORTAFOLIO</h1>
+  <div class="container text-center">
+    <div class="spacer20"></div>
+    <h2>{{fullName}}</h2>
+    <hr class="hr_width_600">
+  </div>
+
+
+  <div class="container">
+   {{#if currentUser}}
+   <div class="row">
+    <div class="col-lg-12">
+      Cinekomuna cataloga los proyectos en <strong>Producciones audiovisuales</strong>, y en <strong>Muestras de trabajo</strong>. Por favor especifica qué tipo de proyecto quieres publicar.
+    </div>
+  </div>
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col-lg-4 text-14">
+      <input type="radio" name="family" class="family" data-answer="P">&nbsp;Producción audiovisual
+      <input type="radio" name="family" class="family" data-answer="M">&nbsp;Muestra de trabajo
+    </div>
+  </div>
+  
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col-lg-4">
+      <label for="proj_name">Nombre del proyecto que deseas agregar <span class="text-purple">(Requerido)</span></label>
+    </div>
+    <div class="col-lg-8">
+      <input type="text" id="project_title" class="form-control" placeholder="Nombre" value="" maxlength="150" disabled>
+    </div>
+  </div>
+  {{#if isProduction}}
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col">
+      <h2 class="titles">Perfil oficial</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-14">
+      Los proyectos en <strong>Cinekomuna</strong> pueden representar el <strong>Perfil Oficial</strong><i class="fa fa-certificate text-purple"></i> de alguna <strong>Producción audiovisual</strong>, de la cual poseas los derechos de divulgación. Si quieres publicar este proyecto como <strong>Perfil Oficial</strong><i class="fa fa-certificate text-purple"></i> por favor haz clic en la siguiente casilla y nos pondremos en contacto contigo para validarlo.
+    </div>
+  </div>
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col text-14">
+      <input type="checkbox" id="oficial_project"> <strong>Perfil Oficial</strong><i class="fa fa-certificate text-purple"></i>
+    </div>
+  </div>
   {{/if}}
-  <h2>{{fullName}}</h2>
-  <hr class="hr_width_600">
-</div>
-
-
-
-<div class="container">
-  <div class="col-lg-12 mx-auto">
-   <!-- Tab panes -->
-   <div class="tab-content">
-     <div role="tabpanel" class="tab-pane active" id="persona_panel">    
-       {{#if currentUser}}
-       <div class="row">
-        <div class="col-lg-12">
-          <div class="row">
-            <div class="col-lg-4">
-              Cinekomuna cataloga los proyectos en <strong>Producciones audiovisuales</strong>, y en <strong>Muestras de trabajo</strong>. Por favor especifica qué tipo de proyecto quieres publicar.
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-4 text-14">
-              <input type="radio" name="family" class="family" data-answer="P">Producción audiovisual
-              <input type="radio" name="family" class="family" data-answer="M">Muestra de trabajo
-            </div>
-          </div>
-          <div class="spacer20"></div>
-          <div class="row">
-            <div class="col-lg-4">
-              <label for="proj_name">Nombre del proyecto que deseas agregar <span class="text-purple">(Requerido)</span></label>
-            </div>
-            <div class="col-lg-8">
-              <input type="text" id="project_title" class="form-control" placeholder="Nombre" value="" maxlength="150" disabled>
-            </div>
-          </div>
-          <div class="spacer20"></div>
-          <div class="row">
-            <div class="col-lg-12 text-center">
-              <button class="btn btn-purple" id="continuar" type="button" role="button" disabled>CONTINUAR</button>   
-            </div>
-          </div>
-          <div class="row">
-            <div class="col spacer80"></div>
-          </div>
-       </div>
-      </div>
-       {{/if}}
-     </div>       
-   </div>
- </div>
-</div>
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col-lg-12 text-center">
+      <button class="btn btn-purple" id="continuar" type="button" role="button" disabled>CONTINUAR</button>   
+    </div>
+  </div>
+  <div class="row">
+    <div class="col spacer80"></div>
+  </div>
+  {{/if}}
+  </div>
 </template>

@@ -158,7 +158,15 @@ Meteor.methods({
         return result;
      });
   },
-  updateProject(projectId, proj_name, proj_type, proj_genre, proj_desc, proj_year, proj_main, proj_web_page, proj_facebook_page, proj_twitter_page, proj_vimeo_page, proj_youtube_page, proj_instagram_page){
+  updateProjectSample(projectId, proj_name, proj_year, proj_status){
+    Project.update({_id: projectId},{
+      $set:{
+        "project_title": proj_name,
+        "project_year": proj_year,
+        "project_status": proj_status
+     }});
+  },
+  updateProjectProduction(projectId, proj_name, proj_type, proj_genre, proj_desc, proj_year, proj_main, proj_web_page, proj_facebook_page, proj_twitter_page, proj_vimeo_page, proj_youtube_page, proj_instagram_page){
     Project.update({_id: projectId},{
       $set:{
         "project_title": proj_name,
@@ -182,6 +190,13 @@ Meteor.methods({
       }
     });  
   },
+  setOficial(projectId, isOficial){
+    Project.update({'_id': current},{
+      $set:{
+        "oficial": isOficial 
+      }
+    });  
+  },
   addRoleToProject(projectId, role){
     Project.update({'_id': projectId},
       {
@@ -195,6 +210,14 @@ Meteor.methods({
       {
         $pull: {
                 "project_role": role
+              }
+         });
+  },
+  removeAllRolesFromProject(projectId){
+    Project.update({'_id': projectId}, 
+      {
+        $set: {
+                "project_role": []
               }
          });
   },
