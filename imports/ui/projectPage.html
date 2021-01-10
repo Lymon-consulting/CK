@@ -35,81 +35,119 @@
    </style>
    <div class="container-fluid bannerProject">
       {{#if isOwner}}
-      <div class="spacer10"></div>
+      <div class="spacer120"></div>
+      <div class="spacer120"></div>
+      <div class="spacer120"></div>
       <div class="container-fluid text-white">
         <a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <i class="fa fa-camera"></i></a>
       </div>
       {{/if}}
-      <section>
-         <div class="container-fluid">
-            <div class="spacer120"></div>
-            <div class="spacer120"></div>
-            <div class="row">
-               <div class="col-md-12 col-lg-12 clasification-text text-description">
-                  {{getMetadata}}
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-10 col-lg-10 project-title-text h1-title">
-                  {{projData.project_title}}
-               </div>
-               <div  class="col-lg-2">
-                  <div class="row justify-content-end align-items-center">
-                      <div class="col-12 text-white">
-                        <small>{{projData.likes}}</small> <i class="fa fa-thumbs-up fa-sm"></i> 
-                      </div>
-                      <div class="col-12 text-white">
-                        <small>{{projData.views}}</small> <i class="fa fa-eye fa-sm"></i> 
-                      </div>
-                  </div>
-                </div>
-            </div>
-            {{#if projData.project_status}}
-            <div class="row">
-               <div class="col-12 clasification-text text-description">
-                  {{getStatus projData.project_status}}
-               </div>
-            </div>
-            {{/if}}
-            
-            <div class="row">
-               <div class="col-12">
-                  <hr class="hr_white">
-               </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-2 col-md-6 col-sm-12">
-                   <a href="/profilePage/{{projData.userId}}">
-                   {{#if getProfilePicture projData.userId}}
-                      <img src="{{getProfilePicture projData.userId}}" border="0" class="rounded-circle"/>
-                   {{else}}
-                      <div id="profileImageLarge">{{getInitials projData.userId}}</div>
-                   {{/if}}
-                   </a>
-                </div>
-                <div class="col-lg-10 col-sm-6 col-sm-12">
-                    <div class="container-fluid">
-                       <div class="row justify-content-start align-items-center">
-                          <div class="col-12 people-name-text">
-                             <a href="/profilePage/{{projData.userId}}" class="text-white">{{ownerName projData.userId}}</a>
-                          </div>
-                       </div>
-                       <div class="row justify-content-start align-items-center">
-                          <div class="col-12 text-white uppercase">
-                          {{#if hasTopRole}}
-                           {{projData.project_role}}
-                          {{else}}
-                            Portafolio
-                          {{/if}}
-                            
-                          </div>
-                      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-8 leftpadding">
+          <section>
+             <div class="container-fluid">
+                <div class="spacer20"></div>
+                <div class="row">
+                   <div class="col-md-12 col-lg-12 text-description">
+                      {{getMetadata}}
                    </div>
                 </div>
+                <div class="row">
+                   <div class="col-md-10 col-lg-10  h3-title">
+                      {{projData.project_title}}
+                   </div>
+                   <div  class="col-lg-2">
+                      <div class="row justify-content-end align-items-center">
+                          
+                          
+                      </div>
+                    </div>
+                </div>
+                {{#if projData.project_status}}
+                <div class="row">
+                   <div class="col-12 text-description">
+                      {{getStatus projData.project_status}} {{{getWeb}}}
+                   </div>
+                </div>
+                {{/if}}
                 
+                
+             </div>
+          </section>
+        </div>
+        <div class="col-lg-3">
+          <section>
+            <div class="spacer20"></div>
+            <div class="row">
+              <div class="col-12 text-black">
+                <small><i class="fa fa-eye fa-sm"></i>&nbsp;Vistas {{projData.views}}</small> 
+              </div>
             </div>
+            <div class="row">
+              <div class="col-12 text-black">
+                <small><i class="fa fa-thumbs-up fa-sm"></i>&nbsp;Valoraciones {{projData.likes}}</small> 
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="col-lg-1">
+          <section>
+            <div class="spacer20"></div>
+            <div class="row">
+              <div class="col-6 text-black">
+                <a href="{{formatURL projData.project_web_page}}" target="_blank"><i class="fa fa-sm fa-globe text-black"></i></a>
+              </div>
+              <div class="col-6 text-black">
+                <a href="{{formatURL projData.project_facebook_page}}" target="_blank"><i class="fa fa-sm fa-facebook text-black"></i></a>
+              </div>
+              <div class="col-6 text-black">
+                <a href="{{formatURL projData.project_twitter_page}}" target="_blank"><i class="fa fa-sm fa-twitter text-black"></i></a>
+              </div>
+            </div>
+           
+          </section>
+        </div>
+      
+      </div>
+      <div class="row">
+         <div class="col-12">
+            <hr class="gray">
          </div>
-      </section>
+      </div>
+      <div class="row">
+          <div class="col-lg-2 col-md-6 col-sm-12">
+             <a href="/profilePage/{{projData.userId}}">
+             {{#if getProfilePicture projData.userId}}
+                <img src="{{getProfilePicture projData.userId}}" border="0" class="rounded-circle"/>
+             {{else}}
+                <div id="profileImageLarge">{{getInitials projData.userId}}</div>
+             {{/if}}
+             </a>
+          </div>
+          <div class="col-lg-10 col-sm-6 col-sm-12">
+              <div class="container-fluid">
+                 <div class="row justify-content-start align-items-center">
+                    <div class="col-12 people-name-text">
+                       <a href="/profilePage/{{projData.userId}}" class="text-black">{{ownerName projData.userId}}</a>
+                    </div>
+                 </div>
+                 <div class="row justify-content-start align-items-center">
+                    <div class="col-12 text-black uppercase">
+                    {{#if hasTopRole}}
+                     {{projData.project_role}}
+                    {{else}}
+                      Portafolio
+                    {{/if}}
+                      
+                    </div>
+                </div>
+             </div>
+          </div>
+          
+      </div>
+      
    </div>
    
    <div class="container-fluid background-lightgray">

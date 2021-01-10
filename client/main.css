@@ -287,6 +287,10 @@ a.list-group-item.active { background-color: #6c757d; }
   background-color: white;
 }
 
+.leftpadding{
+  padding-left: 5%;
+}
+
 .notificationNoRead{
   background-color: #edf2fa;
   padding-top: 10px;
@@ -413,7 +417,7 @@ a.list-group-item.active { background-color: #6c757d; }
    font-weight: bold;
 }
 .people-name-text{
-   color: #fff;
+   color: #000;
    font-size: 25px;
    font-family: "Avenir-Book";
    text-decoration: underline;
@@ -455,7 +459,8 @@ a.list-group-item.active { background-color: #6c757d; }
 }
 .card-title{
   text-align: center;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
+  color:black;
   font-size: 90%;
   font-weight: bolder;
   margin-top: 20px;
@@ -463,12 +468,12 @@ a.list-group-item.active { background-color: #6c757d; }
 .card-body {
   background-color: #eee;
   width: 100%;
-  /*height: 100px;*/
+  height: auto;
 }
 .card-footer {
   background-color: #eee;
   width: 100%;
-  height: 50px;
+  height: auto;
 }
 .card-text {
   font-size: 85%;
@@ -584,6 +589,11 @@ a.list-group-item.active { background-color: #6c757d; }
 
 .text-purple{
    color: #ED1567;
+}
+
+.black-link{
+  color:black !important;
+  text-decoration: underline;
 }
 
 .text-14{

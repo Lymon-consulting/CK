@@ -13,6 +13,7 @@ Template.projectPage.rendered = function(){
   this.autorun(function(){
     window.scrollTo(0,0);
   });
+
 }
 
 if (Meteor.isClient) {
@@ -41,16 +42,16 @@ if (Meteor.isClient) {
         var metadata = "";
         if(project!=null){
           if(project.project_type!=null && project.project_type!=""){
-            metadata = project.project_type + " / ";
+            metadata = project.project_type + " | ";
           }
           if(project.project_genre!=null && project.project_genre!=""){
-            metadata = metadata + project.project_genre + " / ";
+            metadata = metadata + project.project_genre + " | ";
           }
           if(project.project_year!=null && project.project_year!=""){
             metadata = metadata + project.project_year;
           }
 
-          if(metadata.substring(metadata.length-3, metadata.length)===" / "){
+          if(metadata.substring(metadata.length-3, metadata.length)===" | "){
             metadata = metadata.substring(0,metadata.length-3);
           }
         }
@@ -83,6 +84,14 @@ if (Meteor.isClient) {
         else{
           return "En "+status;
         }
+      },
+      getWeb(){
+        var data = Project.findOne({'_id' : FlowRouter.getParam('id')});
+        var web = "";
+        if(data.project_web_page!=null && data.project_web_page!=""){
+          web = " | <a href='"+ data.project_web_page +"' class='black-link'>" +data.project_web_page +"</>" ;
+        }
+        return web      
       },
       getProjectPoster() {
         Meteor.subscribe("allMedia");
@@ -1498,10 +1507,11 @@ if (Meteor.isClient) {
    });
 
    Template.projectPage.onRendered(function () {
-      Project.update(
-         {'_id': FlowRouter.getParam('id')},
-         { $inc:{ 'views': 1}
-      });
+      console.log("Incrementando una vista");
+      Meteor.call(
+        'addOneView',
+        FlowRouter.getParam("id")
+        );
    });
 
    Template.selectedUsers.helpers({

@@ -14,7 +14,11 @@ if (Meteor.isClient) {
    Template.projectList.helpers({
       myProjects(){      
          Meteor.subscribe('myProjects');
-         return Project.find({'userId':FlowRouter.getParam('id')}).fetch();
+         return Project.find({'userId':FlowRouter.getParam('id'),'project_family':'P'}).fetch();
+      },
+      mySamples(){      
+         Meteor.subscribe('myProjects');
+         return Project.find({'userId':FlowRouter.getParam('id'),'project_family':'M'}).fetch();
       },
       isMainProject(value){
         var main = Project.findOne({'_id': value}).project_is_main;
@@ -49,16 +53,30 @@ if (Meteor.isClient) {
    });
 
    Template.projectList.events({
-      'change #proj_main': function(event, template) {
-         event.preventDefault();
-         Meteor.subscribe("userData");
-         var element = template.find('input:radio[name=selectMain]:checked');
-         id = $(element).val();
-         otherProjects = Project.find({userId: Meteor.userId()}).fetch();
-         otherProjects.forEach(function(current_value) {
-            Project.update({_id: current_value._id},{$set:{"project_is_main": false }});       
-         });
-         Project.update({_id: id},{$set:{"project_is_main": true }});       
+      'change .proj_main': function(event, template) {
+        /*Captura el id del proyecto*/
+        current = event.currentTarget.value;
+
+        /*Captura si es checked true o false*/
+        check = event.currentTarget.checked;
+        
+         /*Poner todos los proyectos del usuario en falso*/
+        userProjects = Project.find({userId: Meteor.userId()}).fetch();
+        userProjects.forEach(function(current_value) {
+                      Meteor.call(
+                        'updateMain',
+                        current_value._id,
+                        false
+                        );    
+                    });
+        /*Si el estatus seleccionado es checked poner este proyecto como principal*/
+        if (check){
+          Meteor.call(
+            'updateMain',
+            current,
+            true
+          );
+        }      
       },
       'click .closeModal ': function (event){
         event.preventDefault();

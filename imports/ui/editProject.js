@@ -36,7 +36,7 @@ Template.editProject.helpers({
     return Project.findOne({'_id': FlowRouter.getParam('id')});
   },
   statusPublished(){
-    return Project.findOne({'_id': FlowRouter.getParam('id')}).project_status;
+    return Project.findOne({'_id': FlowRouter.getParam('id')}).status;
 
   },
   isProduction(){
@@ -506,9 +506,23 @@ Template.editProject.events({
 
   
   'change #proj_main': function(event) {
-    var x = event.target.checked;
-    $('#isMainProject').val(x);
-    //console.log($('#isMainProject').val());
+    /*Si cambia el estatus de proyecto principal poner todos los proyectos del usuario en falso*/
+    userProjects = Project.find({userId: Meteor.userId()}).fetch();
+    userProjects.forEach(function(current_value) {
+                  Meteor.call(
+                    'updateMain',
+                    current_value._id,
+                    false
+                    );    
+                });
+    /*Si el estatus seleccionado es checked poner este proyecto como principal*/
+    if ($('#proj_main').is(":checked")){
+      Meteor.call(
+        'updateMain',
+        FlowRouter.getParam("id"),
+        true
+      );
+    }
   },
   
   'click .save': function(event, template) {
@@ -563,66 +577,78 @@ Template.editProject.events({
     else if(data.project_family!=null && data.project_family==='P'){
       /*Validar los datos obligatorios para una producción*/
       var proj_name = trimInput($('#proj_name').val());
-      var proj_type = $('#proj_type').val();
-      var proj_genre = $('#proj_gender').val();
-      var proj_desc = trimInput($('#proj_desc').val());
       var proj_year = $('#proj_year').val();
-      var proj_role = $('#selection').val();
-      var proj_main = $('#isMainProject').val();
+      var proj_genre = $('#proj_gender').val();
+      var proj_status = $('#proj_status').val();
+      var proj_type = $('#proj_type').val();
+      var proj_desc = trimInput($('#proj_desc').val());
       var proj_web_page = trimInput($('#proj_web_page').val());
       var proj_facebook_page = trimInput($('#proj_facebook_page').val());
       var proj_twitter_page = trimInput($('#proj_twitter_page').val());
+      var proj_instagram_page = trimInput($('#proj_instagram_page').val());
       var proj_vimeo_page = trimInput($('#proj_vimeo_page').val());
       var proj_youtube_page = trimInput($('#proj_youtube_page').val());
-      var proj_instagram_page = trimInput($('#proj_instagram_page').val());
-      if(isNotEmpty(proj_name) && 
-        isNotEmpty(proj_type) && 
-        isNotEmpty(proj_genre) && 
-        isNotEmpty(proj_desc) &&
-        isNotEmpty(proj_year) &&
-        isNotEmpty(proj_role)){
-        if(proj_main==='true'){
-          otherProjects = Project.find({userId: Meteor.userId()}).fetch();
-          otherProjects.forEach(function(current_value) {
-                    //Project.update({_id: current_value._id},{$set:{"project_is_main": "" }});   
-                    Meteor.call(
-                      'updateMain',
-                      current_value._id
-                      );    
-                  });
+      var proj_external_view = trimInput($('#proj_external_view').val());
+
+
+      if(!isNotEmpty(proj_name)){
+        Bert.alert({message: 'Por favor rellena el nombre del proyecto', type: 'error', icon: 'fa fa-times'});
+      }
+      else if(!isNotEmpty(proj_year)){
+        Bert.alert({message: 'Por favor rellena el año del proyecto', type: 'error', icon: 'fa fa-times'});
+      }
+      else if(!isNotEmpty(proj_genre)){
+        Bert.alert({message: 'Por favor rellena el género del proyecto', type: 'error', icon: 'fa fa-times'});
+      }
+      else if(!isNotEmpty(proj_status)){
+        Bert.alert({message: 'Por favor rellena el estatus del proyecto', type: 'error', icon: 'fa fa-times'});
+      }
+      else if(!isNotEmpty(proj_type)){
+        Bert.alert({message: 'Por favor rellena el tipo de proyecto', type: 'error', icon: 'fa fa-times'});
+      }
+      else if(!isNotEmpty(proj_desc)){
+        Bert.alert({message: 'Por favor rellena la descripción del proyecto', type: 'error', icon: 'fa fa-times'});
+      }
+      else{
+        var status = false;
+        var msg = "";
+        if(button==="true"){
+          status = true;
+          msg = "Los datos de tu proyecto han sido actualizados y ahora se encuentra publicado";
         }
+        else if(button==="false"){
+          status = false;
+          msg="Los datos de tu proyecto han sido actualizados, se ha guardado como borrador";
+        }
+       
         Meteor.call(
          'updateProjectProduction',
          FlowRouter.getParam('id'),
          proj_name,
-         proj_type,
-         proj_genre,
-         proj_desc, 
          proj_year,
-         proj_main,
+         proj_genre,
+         proj_status,
+         proj_type,
+         proj_desc, 
          proj_web_page,
          proj_facebook_page,
          proj_twitter_page,
+         proj_instagram_page,
          proj_vimeo_page,
          proj_youtube_page,
-         proj_instagram_page
+         proj_external_view,
+         status
          );
-        
-        Bert.alert({message: 'Los datos del proyecto han sido actulizados', type: 'success', icon: 'fa fa-check'});
-        //FlowRouter.go('/projectPage/' + FlowRouter.getParam('id'));
 
-      }
-      else{
-        Bert.alert({message: 'Por favor rellena los datos requeridos', type: 'error', icon: 'fa fa-times'});
+        Bert.alert({message: msg, type: 'success', icon: 'fa fa-check'});
+
       }
     }
 
-    
     return false;
   },
   'click #saveAndPublish': function(event, template){
       event.preventDefault();
-      //Bert.alert({message: 'Se ha guardado tu proyecto', type: 'success', icon: 'fa fa-check'});
       FlowRouter.go("/projectPage/" + FlowRouter.getParam("id"));
     },
   /*

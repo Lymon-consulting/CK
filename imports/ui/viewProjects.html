@@ -1,16 +1,11 @@
 <template name="viewProjects">
 {{#if hasPermission}}
-   <div class="container text-center">
-      {{#if hasTopRole}}
-      <h1 class="h1-title">TUS PROYECTOS</h1>
-      {{else}}
-      <h1 class="h1-title">TU PORTAFOLIO</h1>
-      {{/if}}
-      <h2>{{fullName}}</h2>
-      <hr class="hr_width_600">
-   </div>
-   <div class="container">
-      <div class="col-md-10">
+   <div class="container-fluid text-center">
+    <div class="pink">Mis proyectos</div>
+    <hr>
+  </div>
+   <div class="container-fluid text-center">
+      <div class="col-md-12">
         {{> projectList }}
       </div>
    </div>
@@ -25,67 +20,104 @@
 
 
 <template name="projectList">
-      <div class="spacer20"></div>
-      <div class="row">
-         <div class="col-md-12">
-            {{#if isVerified}}
-               <a href="/projectName" class="btn btn-purple">+</a>
-            {{/if}}
-         </div>
-      </div>
-      <div class="spacer20"></div>
-
-      
-      {{#if myProjects}}
-         {{#if hasTopRole}}
-         <small>
-            <p>Esta es tu lista de proyectos. Desde aquí puedes:</p>
-            <ul>
-               <li>Ver la página de cada proyecto, haciendo clic en su nombre o en el ícono <i class="fa fa-search">&nbsp;</i>.</li> 
-               <li>Editar un proyecto, haciendo clic sobre el ícono <i class="fa fa-edit">&nbsp;</i></li>
-            </ul>
-         </small>
-         {{else}}
-          <small>
-            <p>Este es tu portafolio. Desde aquí puedes:</p>
-            <ul>
-               <li>Ver la página de cada trabajo, haciendo clic en su nombre o en el ícono <i class="fa fa-search">&nbsp;</i>.</li> 
-               <li>Editar un portafolio, haciendo clic sobre el ícono <i class="fa fa-edit">&nbsp;</i></li>
-            </ul>
-         </small>
-         {{/if}}
-         
-         <main role="main">
-
-  <div class="album py-5 bg-light">
-    <div class="container">
-
-      <div class="row">
-        {{#each myProjects}}
-        <div class="col-md-4">
-          <div class="card h-250">
-           {{#if getProjectPicture this._id 500}}
-              <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="{{getProjectPicture this._id 500}}" alt="Card image cap"></a>
-           {{else}}
-              <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="/images/no-cover.jpg"></a>
-           {{/if}}
-            <div class="card-body">
-              <h5 class="card-title"><a href="/projectPage/{{this._id}}" class="text-purple">{{this.project_title}} ({{this.project_year}})</a></h5>
-              <p class="card-text">{{this.project_type}}</p>
-              <p class="card-text">{{this.project_genre}}</p>
-              <p class="card-text">{{this.project_role}}</p>
-              <p class="card-text">Marcar como principal: <input type="radio" name="selectMain" id="proj_main" {{ isMainProject this._id }} value="{{this._id}}"></p>
-            </div>
-            <div class="card-footer">
-               <div class="row">
-                  <div class="col"><a href="/projectPage/{{this._id}}" class="text-purple"><i class="fa fa-search">&nbsp;</i></a></div>
-                  <div class="col text-right"><a href="/editProject/{{this._id}}" class="text-purple"><i class="fa fa-edit">&nbsp;</i></a></div>
-               </div>
-             </div>
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col-md-3">
+        <div class="card h-250">
+          <a href="/projectName" class="text-black"><img class="card-img-top cover-top" src="/images/no-cover.jpg"></a>
+          <div class="card-body">
+            <h5 class="card-title"><a href="/projectName" class="text-black">Crear nuevo proyecto</a></h5>
+            <div class="card-text text-center"><a href="/projectName" class="text-black"><h1 class="text-purple">+</h1></a></div>
           </div>
         </div>
-        {{/each}}
       </div>
+  </div>
+  <div class="spacer20"></div>
+ {{#if myProjects}}
+         
+  <main role="main">
+
+  <div class="album bg-light">
+    <div class="container-fluid">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" href="#1" data-toggle="tab">Producciones</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="#2" data-toggle="tab">Muestras de trabajo</a>
+        </li>
+      </ul>
+
+      <div class="tab-content ">
+        <div class="tab-pane active" id="1">
+          <div class="row">
+            {{#each myProjects}}
+            <div class="col-md-3">
+              <div class="card">
+               {{#if getProjectPicture this._id 500}}
+                  <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="{{getProjectPicture this._id 500}}" alt="Card image cap"></a>
+               {{else}}
+                  <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="/images/no-cover.jpg"></a>
+               {{/if}}
+                <div class="card-body">
+                  <h5 class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a></h5>
+                  <p class="card-text">{{this.project_year}}</p>
+                  
+                </div>
+                <div class="card-footer">
+                  <div class="row">
+                    <div class="col">
+                      <p class="card-text">Proyecto principal: <input type="checkbox" name="selectMain" id="proj_main" class="proj_main" {{ isMainProject this._id }} value="{{this._id}}"></p>    
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col"><hr></div>
+
+                  </div>
+                   <div class="row">
+                      <div class="col card-text"><a href="/projectPage/{{this._id}}" class="text-black"><i class="fa fa-eye"></i>&nbsp;Ver producción</a></div>
+                      <div class="col card-text text-right"><a href="/editProject/{{this._id}}" class="text-black"><i class="fa fa-pencil"></i>&nbsp;Editar</a></div>
+                   </div>
+                 </div>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+        <div class="tab-pane" id="2">
+          <div class="row">
+            {{#each mySamples}}
+            <div class="col-md-3">
+              <div class="card">
+               {{#if getProjectPicture this._id 500}}
+                  <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="{{getProjectPicture this._id 500}}" alt="Card image cap"></a>
+               {{else}}
+                  <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="/images/no-cover.jpg"></a>
+               {{/if}}
+                <div class="card-body">
+                  <h5 class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a></h5>
+                  <p class="card-text">{{this.project_year}}</p>
+                  
+                </div>
+                <div class="card-footer">
+                  
+                  <div class="row">
+                    <div class="col"><hr></div>
+
+                  </div>
+                   <div class="row">
+                      <div class="col card-text"><a href="/projectPage/{{this._id}}" class="text-black"><i class="fa fa-eye"></i>&nbsp;Ver muestra</a></div>
+                      <div class="col card-text text-right"><a href="/editProject/{{this._id}}" class="text-black"><i class="fa fa-pencil"></i>&nbsp;Editar</a></div>
+                   </div>
+                 </div>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+
+      
 
     </div>
   </div>
@@ -97,22 +129,16 @@
                
             
          
-      {{else}}
-         <table class="table">
-            <tr>
-              {{#if hasTopRole}}
-               <td colspan="9">
-                  No tienes proyectos, agrega tu primer proyecto
-               </td>
-               {{else}}
-               <td colspan="9">
-                  Tu portafolio está vacío, agrega tu primer trabajo
-               </td>
-               {{/if}}
-            </tr>
-         </table>
-      {{/if}}
-      <div class="spacer80"></div>
+{{else}}
+   <table class="table">
+      <tr>
+         <td colspan="9">
+            No tienes proyectos, agrega tu primer proyecto
+         </td>
+      </tr>
+   </table>
+{{/if}}
+<div class="spacer80"></div>
 
 <div class="modal modal-backdrop" tabindex="-1" id="myModal" role="dialog">
   <div class="modal-dialog" role="document">

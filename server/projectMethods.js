@@ -158,35 +158,37 @@ Meteor.methods({
         return result;
      });
   },
-  updateProjectSample(projectId, proj_name, proj_year, proj_status){
+  updateProjectSample(projectId, proj_name, proj_year, status){
     Project.update({_id: projectId},{
       $set:{
         "project_title": proj_name,
         "project_year": proj_year,
-        "project_status": proj_status
+        "status": status
      }});
   },
-  updateProjectProduction(projectId, proj_name, proj_type, proj_genre, proj_desc, proj_year, proj_main, proj_web_page, proj_facebook_page, proj_twitter_page, proj_vimeo_page, proj_youtube_page, proj_instagram_page){
-    Project.update({_id: projectId},{
+  updateProjectProduction(projectId, proj_name, proj_year, proj_genre, proj_status, proj_type, proj_desc, proj_web_page, proj_facebook_page, proj_twitter_page, proj_instagram_page, proj_vimeo_page, proj_youtube_page, proj_external_view, status){
+    Project.update({_id: projectId},{ 
       $set:{
         "project_title": proj_name,
-        "project_type": proj_type,
-        "project_genre": proj_genre,
-        "project_desc": proj_desc, 
         "project_year": proj_year,
-        "project_is_main": proj_main,
+        "project_genre": proj_genre,
+        "project_status": proj_status,
+        "project_type": proj_type,
+        "project_desc": proj_desc, 
         "project_web_page": proj_web_page,
         "project_facebook_page": proj_facebook_page,
         "project_twitter_page": proj_twitter_page,
+        "proj_instagram_page": proj_instagram_page,
         "proj_vimeo_page": proj_vimeo_page,
         "proj_youtube_page": proj_youtube_page,
-        "proj_instagram_page": proj_instagram_page
+        "proj_external_view": proj_external_view,
+        "status":status
      }});
   },
-  updateMain(current){
-    Project.update({'_id': current},{
+  updateMain(projectID, status){
+    Project.update({'_id': projectID},{
       $set:{
-        "project_is_main": "" 
+        "project_is_main": status
       }
     });  
   },
@@ -387,6 +389,12 @@ Meteor.methods({
         "proj_external_view":proj_external_view
       }
     });
+  },
+  addOneView(projectId){
+    Project.update(
+         {'_id': projectId},
+         { $inc:{ 'views': 1}
+      });
   },
   addGalleryProject(projectId,mediaId){
     Project.update({'_id': projectId}, 
