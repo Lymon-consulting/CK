@@ -45,7 +45,7 @@
     </div>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-8 leftpadding">
+        <div class="col-lg-8 col-md-12 leftpadding">
           <section>
              <div class="container-fluid">
                 <div class="spacer20"></div>
@@ -58,12 +58,7 @@
                    <div class="col-md-10 col-lg-10  h3-title">
                       {{projData.project_title}}
                    </div>
-                   <div  class="col-lg-2">
-                      <div class="row justify-content-end align-items-center">
-                          
-                          
-                      </div>
-                    </div>
+                  
                 </div>
                 {{#if projData.project_status}}
                 <div class="row">
@@ -77,7 +72,7 @@
              </div>
           </section>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-2 col-md-6 leftpadding">
           <section>
             <div class="spacer20"></div>
             <div class="row">
@@ -92,18 +87,27 @@
             </div>
           </section>
         </div>
-        <div class="col-lg-1">
+        <div class="col-lg-2 col-md-6 leftpadding rightpadding">
           <section>
             <div class="spacer20"></div>
             <div class="row">
-              <div class="col-6 text-black">
+              <div class="col-4 text-black">
                 <a href="{{formatURL projData.project_web_page}}" target="_blank"><i class="fa fa-sm fa-globe text-black"></i></a>
               </div>
-              <div class="col-6 text-black">
+              <div class="col-4 text-black">
                 <a href="{{formatURL projData.project_facebook_page}}" target="_blank"><i class="fa fa-sm fa-facebook text-black"></i></a>
               </div>
-              <div class="col-6 text-black">
+              <div class="col-4 text-black">
+                <a href="{{formatURL projData.proj_instagram_page}}" target="_blank"><i class="fa fa-sm fa-instagram text-black"></i></a>
+              </div>
+              <div class="col-4 text-black">
                 <a href="{{formatURL projData.project_twitter_page}}" target="_blank"><i class="fa fa-sm fa-twitter text-black"></i></a>
+              </div>
+              <div class="col-4 text-black">
+                <a href="{{formatURL projData.proj_youtube_page}}" target="_blank"><i class="fa fa-sm fa-youtube text-black"></i></a>
+              </div>
+              <div class="col-4 text-black">
+                <a href="{{formatURL projData.proj_vimeo_page}}" target="_blank"><i class="fa fa-sm fa-vimeo text-black"></i></a>
               </div>
             </div>
            
@@ -117,7 +121,7 @@
          </div>
       </div>
       <div class="row">
-          <div class="col-lg-2 col-md-6 col-sm-12">
+          <div class="col-lg-2 col-md-2 col-sm-12 leftpadding">
              <a href="/profilePage/{{projData.userId}}">
              {{#if getProfilePicture projData.userId}}
                 <img src="{{getProfilePicture projData.userId}}" border="0" class="rounded-circle"/>
@@ -126,7 +130,7 @@
              {{/if}}
              </a>
           </div>
-          <div class="col-lg-10 col-sm-6 col-sm-12">
+          <div class="col-lg-10 col-md-10 col-sm-12">
               <div class="container-fluid">
                  <div class="row justify-content-start align-items-center">
                     <div class="col-12 people-name-text">
@@ -136,7 +140,7 @@
                  <div class="row justify-content-start align-items-center">
                     <div class="col-12 text-black uppercase">
                     {{#if hasTopRole}}
-                     {{projData.project_role}}
+                     {{getProjectRoles}}
                     {{else}}
                       Portafolio
                     {{/if}}
@@ -149,16 +153,20 @@
       </div>
       
    </div>
+   <div class="spacer40"></div>
    
-   <div class="container-fluid background-lightgray">
-     <div class="spacer10"></div>
+   <div class="container-fluid background-verydarkgray mx-auto">
+     <div class="spacer5"></div>
      <div class="row">
+      <div class="col-lg-2">&nbsp;</div>
        {{#if isOwner}}
        {{#if isCollaborator}}
-       <div class="col-lg-2">
+       
+       
+       <div class="col-lg-3 text-center">
           <div class="dropdown show">
-            <a class="text-black dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-plus text-purple" aria-hidden="true"></i> Agregar Sección
+            <a class="text-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-plus text-white" aria-hidden="true"></i> Agregar Sección
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item clear_portlet" href="#" data-type="text">Texto</a>
@@ -175,75 +183,17 @@
        {{/if}}
        {{#if hasTopRole}}
        {{#if isOwner}}
-       <div class="col-lg-2"><a href="#" class="text-black" data-toggle="modal" data-target="#collabModal"><i class="fa fa-user-circle text-purple" aria-hidden="true"></i> Colaboradores</a></div>
-       <div class="col-lg-2"><a href="/editProject/{{projData._id}}" class="text-black"><i class="fa fa-pencil text-purple" aria-hidden="true"></i> Editar proyecto</a></div>
+       <div class="col-lg-3"><a href="#" class="text-white" data-toggle="modal" data-target="#collabModal"><i class="fa fa-user-circle text-white" aria-hidden="true"></i> Agregar Colaboradores</a></div>
+       <div class="col-lg-3"><a href="/editProject/{{projData._id}}" class="text-white"><i class="fa fa-pencil text-white" aria-hidden="true"></i> Editar proyecto</a></div>
        {{/if}}
        {{/if}}
+       <div class="col-lg-1">&nbsp;</div>
      </div>
-     <div class="spacer10"></div>
+     <div class="spacer5"></div>
    </div>
    
   
-   <div class="container-fluid background-verydarkgray">
-         <div class="row">
-            <div class="col-md-4">
-               <table class="table table-responsive borderless">
-                  <tbody class="">
-                     <tr>
-                        {{#if projData.project_web_page}}
-                        <td><a href="{{formatURL projData.project_web_page}}" target="_blank"><i class="fa fa-sm fa-globe text-purple"></i></a></td>
-                        {{/if}}
-                        {{#if projData.project_facebook_page}}
-                        <td><a href="{{formatURL projData.project_facebook_page}}" target="_blank"><i class="fa fa-sm fa-facebook text-purple"></i></a></td>
-                        {{/if}}
-                        {{#if projData.project_twitter_page}}
-                        <td><a href="{{formatURL projData.project_twitter_page}}" target="_blank"><i class="fa fa-sm fa-twitter text-purple"></i></a></td>
-                        {{/if}}
-                        {{#if projData.proj_vimeo_page}}
-                        <td><a href="{{formatURL projData.proj_vimeo_page}}" target="_blank"><i class="fa fa-sm fa-vimeo text-purple"></i></a></td>
-                        {{/if}}
-                        {{#if projData.proj_youtube_page}}
-                        <td><a href="{{formatURL projData.proj_youtube_page}}" target="_blank"><i class="fa fa-sm fa-youtube text-purple"></i></a></td>
-                        {{/if}}
-                        {{#if projData.proj_instagram_page}}
-                        <td><a href="{{formatURL projData.proj_instagram_page}}" target="_blank"><i class="fa fa-sm fa-instagram text-purple"></i></a></td>
-                        {{/if}}
-                     </tr>
-                  </tbody>
-               </table>
-            </div>
-            <div class="col-md-4 vertical-align-middle">
-               <table class="table table-responsive borderless">
-                  <tr>
-                     <td class="low-padding text-no-wrap" rowspan="2"><div class="vertical-line-white" style="height: 55px;"></div></td>
-                     <td class="low-padding text-no-wrap text-white"></td>
-                     <td class="low-padding text-no-wrap text-white numbers"><small>Año: {{projData.project_year}}</small></td>
-                     <!--
-                     <td class="low-padding text-no-wrap text-white" rowspan="2"><div class="vertical-line-white" style="height: 55px;" ></div></td>
-                     <td class="low-padding text-no-wrap text-white"><a href="mailto:{{ownerEmail projData.userId}}"><i class="fa fa-envelope fa-sm text-white"></i></a></td>
-                     
-                     <td class="low-padding text-no-wrap text-white numbers"><small>Contactar</small></td>
-                     <td class="low-padding text-no-wrap text-white" rowspan="2"><div class="vertical-line-white" style="height: 55px;" ></div></td>-->
-                     
-                  </tr>
-                  <tr>
-                     {{#if notLikeThisProject}}
-                     <td class="low-padding text-no-wrap text-white"><a href="#" id="pushLike"><i class="fa fa-thumbs-up fa-sm text-white"></i></a></td>
-                     <td class="low-padding text-no-wrap text-white numbers"><small class="text-white">Me gusta</small></td>
-                     {{else}}
-                     <td class="low-padding text-no-wrap"><a href="#" id="pushDontLike"><i class="fa fa-thumbs-up fa-sm text-purple"></i></a></td>
-                     <td class="low-padding text-no-wrap numbers"><small class="text-purple">Ya no me gusta</small></td>
-                     {{/if}}
-                     <!--
-                     <td class="low-padding text-no-wrap text-white"><i class="fa fa-share-alt-square fa-sm"></i></td>
-                     <td class="low-padding text-no-wrap text-white numbers"><small>Compartir</small></td>-->
-                     
-                  </tr>
-               </table>
-            </div>
-            
-         </div>
-      </div>
+  
 
       {{#if projData.project_desc}}
        <div class="spacer40"></div>
@@ -332,11 +282,17 @@
       {{>cast}}
       
       {{>companies}}
-      
-  
-  
 
-   {{> items}}
+      {{> items}}
+
+      <div class="container">
+        <div class="row">
+          <div class="col text-center">
+            <button class="btn text-white background-verydarkgray" id="goBackTop">VOLVER ARRIBA</button>
+          </div>
+        </div>
+        
+      </div>
 
   <!--
   <div id="drop-zone" droppable="true">

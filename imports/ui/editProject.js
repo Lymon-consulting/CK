@@ -785,10 +785,11 @@ Template.editProject.events({
   'click #ocupation':function(event, template){
     event.preventDefault();
     //console.log("detectó doble click " + FlowRouter.getParam('id') + ","+ event.currentTarget.value);
+    /*
     Meteor.call(
       'removeAllRolesFromProject',
       FlowRouter.getParam('id')
-    );    
+    );    */
     
     Meteor.call(
       'addRoleToProject',

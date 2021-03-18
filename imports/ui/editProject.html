@@ -139,6 +139,55 @@
                </div>
              </div>
              <div class="spacer20"></div>
+             {{#if hasTopRole}}
+                 <div class="spacer20"></div>
+                 <div class="row">
+                   <div class="col"><label for="proj_year">¿Fuiste el Productor, Director o ambos en este proyecto?</label></div>
+                 </div>
+                 <div class="row">
+                  <div class="col">
+                    <input type="checkbox" value="Productor" id="check1" class="profile" {{verifyProductor}}> Productor
+                  </div>
+                 </div>
+                 <div class="row">
+                   <div class="col">
+                     <input type="checkbox" value="Director" id="check2" class="profile" {{verifyDirector}}> Director
+                   </div>
+                 </div>
+                 {{/if}}
+                 {{#if hasTopRole}}
+                 <div class="spacer20"></div>
+                 <div class="row">
+                    <div class="col-md-6">
+                        <label for="oc">Departamentos <span class="text-purple">(Selecciona al menos uno)</span></label>
+                         <select name="category" id="category" class="form-control">
+                           {{#each getCategories}}
+                              <option value="{{title}}"> {{title}} </option>
+                           {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                       <label for="Ocupation">Rol: <span class="text-purple">(Selecciona con doble clic)</span></label>
+                       <select multiple name="Ocupation" id="ocupation" class="form-control">
+                         {{#each getOcupationsFromCategory}}
+                            <option value="{{secondary}}" {{roleSelected secondary}}> {{secondary}} </option>
+                         {{/each}}
+                      </select>  
+                    </div>
+                 </div>
+                 <div class="spacer20"></div>
+                 <div class="row">
+                    <div class="col-md-12">
+                       <label for="Ocupation">Roles seleccionados <span class="text-purple">(Elimina con doble clic)</span></label>
+                       <select name="Selection" multiple id="selection" class="form-control">
+                         {{#each item in getRolesSelected}}
+                            <option value="{{item}}" {{roleSelected item}}> {{item}} </option>
+                         {{/each}}
+                      </select>  
+                    </div>
+                    
+                 </div>
+                 {{/if}}
              <div class="row">
                <div class="col-lg-12">
                  <label for="proj_desc">Descripción / Sinopsis: <span class="text-purple">(Requerido)</span></label>

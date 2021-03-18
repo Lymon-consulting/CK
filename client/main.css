@@ -291,6 +291,10 @@ a.list-group-item.active { background-color: #6c757d; }
   padding-left: 5%;
 }
 
+.rightpadding{
+  padding-right: 5%;
+}
+
 .notificationNoRead{
   background-color: #edf2fa;
   padding-top: 10px;
@@ -753,7 +757,7 @@ a.list-group-item.active { background-color: #6c757d; }
 }
 
 .btn {
-   border-radius: 0;
+   border-radius: 0.25rem;
 }
 
 .btn-primary-outline {

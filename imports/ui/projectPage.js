@@ -57,6 +57,20 @@ if (Meteor.isClient) {
         }
         return metadata;
       },
+      getProjectRoles(){
+        var prole;
+        var strResult="";
+        var data = Project.findOne({'_id' : FlowRouter.getParam('id')});
+        userRoles = data.project_role;
+
+        console.log(userRoles);
+
+        for (var i = 0; i < userRoles.length; i++) {
+          strResult = strResult + ", " + userRoles[i];
+        }
+        strResult = strResult.substring(2, strResult.length);
+        return strResult;
+      },
       getProjectPicture(size) {
         Meteor.subscribe("allMedia");
         var data = Project.findOne({'_id' : FlowRouter.getParam('id')});
@@ -353,6 +367,12 @@ if (Meteor.isClient) {
       },
 
    });
+
+  Template.projectPage.events({
+    'click #goBackTop': function(event){
+      window.scrollTo(0,0);
+    }
+  });
 
    Template.items.helpers({
       items() {
