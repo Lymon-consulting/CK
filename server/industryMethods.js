@@ -71,7 +71,7 @@ Meteor.methods({
   addCompanyName(company_name, userId){
     return Industry.insert({
       "company_name": company_name,
-      "userId": userId
+      "creator": userId
     });
   },
   'updateCompanyName'(companyId, name){

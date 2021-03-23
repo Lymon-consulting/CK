@@ -35,6 +35,9 @@ Template.industryName.events({
           Session.set("companyID",response);
           FlowRouter.go("/editIndustry/"+response);
         }
+        else{
+          Bert.alert( error.reason, 'danger' );
+        }
       });
       
     }

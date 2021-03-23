@@ -39,7 +39,8 @@ Template.join.events({
               "emails.0.verified": true
             }
           });
-          FlowRouter.go('/selectProfile');
+          FlowRouter.go('/peopleList');
+          //FlowRouter.go('/selectProfile');
           /*Termina bloque de auto verificación*/
           
 

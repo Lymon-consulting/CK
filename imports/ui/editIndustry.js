@@ -15,8 +15,8 @@ import '/lib/common.js';
 function isOwner(){
   var result = false;
     var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
-    if(data!=null && data.userId!=null){
-      if(data.userId === Meteor.userId()){
+    if(data!=null && data.creator!=null){
+      if(data.creator === Meteor.userId()){
         result = true;
       }
     }
