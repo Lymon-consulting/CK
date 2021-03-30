@@ -4,6 +4,9 @@
    <div class="container text-center">
     <h1 class="h1-title">DATOS DE LA EMPRESA U ORGANIZACIÓN</h1>
     <h2>{{companyData.company_name}}</h2>
+    {{#unless statusPublished}}
+    <div class="pink">Tu empresa u organización no está publicada, nadie la podrá ver hasta que la publiques</div>
+    {{/unless}}
     <hr>
   </div>
 
@@ -62,6 +65,14 @@
               {{/if}}
             </div>
           </div>
+          {{#if isCreator}}
+          <div class="spacer40"></div>
+          <div class="row">
+            <div class="col text-14">
+              <a href="#" class="text-purple" id="deleteIndustry"><i class="fa fa-trash"></i> Eliminar empresa</a>
+            </div>
+          </div>
+          {{/if}}
         </div>
       </div>
       <div class="col-lg-9">
@@ -71,6 +82,15 @@
             <h2>Datos generales</h2>
           </div>
         </div>
+        {{#if isCreator}}
+        <div class="row">
+          <div class="col">
+            <div class="alert alert-success" role="alert">
+              Eres el creador de esta empresa, tienes todos los privilegios
+            </div>
+          </div>
+        </div>
+        {{/if}}
         {{#unless hasEditPermission}}
         <div class="row">
           <div class="col">
@@ -84,18 +104,18 @@
         <div class="row">
          <div class="col-md-12">
            <div class="row">
+
             <div class="col">
              <label for="company_name">Nombre comercial de la empresa: <span class="text-purple">(Requerido)</span></label>
            </div>
            <div class="col">
-            {{#if hasEditPermission}}
+            {{#if isCreator}}
              <input type="text" id="company_name" class="form-control" placeholder="Empresa" value="{{companyData.company_name}}" maxlength="150">
             {{else}}
              <input type="text" id="company_name" class="form-control" placeholder="Empresa" value="{{companyData.company_name}}" maxlength="150" disabled="">
             {{/if}}
-            
-            
            </div>
+
          </div>
 
         <div class="spacer20"></div>
@@ -369,6 +389,14 @@
             </div>
           </div>
         </div>
+        {{#if video}}
+        <div class="spacer20"></div>
+         <div class="row">
+            <div class="col">
+               <iframe width="560" height="315" src="{{videoDisplay}}" title="Video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+         </div>
+         {{/if}}
         <div class="spacer40"></div>
         <div class="row">
           <div class="col">
@@ -417,6 +445,15 @@
           </div>
         </div>
         {{/if}}
+        <div class="row">
+            <div class="col spacer80"></div>
+         </div>
+        <div class="row">
+          <div class="col">
+            <button class="btn btn-purple save" publish="false"><i class="fa fa-save text-white"></i>&nbsp;Guardar cambios</button>
+            <button class="btn btn-purple save" publish="true"><i class="fa fa-external-link text-white"></i>&nbsp;Guardar y publicar</button>
+          </div>
+        </div>
 
         <div class="row">
           <div class="col spacer80"></div>

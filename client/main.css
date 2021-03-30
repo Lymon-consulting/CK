@@ -295,6 +295,10 @@ a.list-group-item.active { background-color: #6c757d; }
   padding-right: 5%;
 }
 
+.toppadding{
+  padding-top: 2%;
+}
+
 .notificationNoRead{
   background-color: #edf2fa;
   padding-top: 10px;

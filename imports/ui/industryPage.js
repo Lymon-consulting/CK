@@ -20,9 +20,12 @@ Template.industryPage.helpers({
  getCompany(){
   return Industry.findOne({_id : FlowRouter.getParam('id')});
 },
+statusPublished(){
+    return Industry.findOne({'_id': FlowRouter.getParam('id')}).status;
+  },
 isOwner(){
   industry = Industry.findOne({'_id': FlowRouter.getParam('id')});
-  if(industry!=null && industry.userId === Meteor.userId()) {
+  if(industry!=null && industry.creator === Meteor.userId()) {
    val = true;
  }
  else{
@@ -99,6 +102,24 @@ getProjects(){
     url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_"+size+",c_fill/" + company.companyLogoID;
   }
   return url;*/
+},
+getMetadata(){
+  var company = Industry.findOne({'_id': FlowRouter.getParam('id')});
+  var metadata = "";
+  if(company!=null){
+    if(company.company_type!=null && company.company_type!=""){
+      metadata = company.company_type + " | ";
+    }
+    
+    if(company.company_year!=null && company.company_year!=""){
+      metadata = metadata + company.company_year;
+    }
+
+    if(metadata.substring(metadata.length-3, metadata.length)===" | "){
+      metadata = metadata.substring(0,metadata.length-3);
+    }
+  }
+  return metadata;
 },
 getGallery(){
     var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});

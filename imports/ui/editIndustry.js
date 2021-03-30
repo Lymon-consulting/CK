@@ -13,12 +13,11 @@ import './editIndustry.html';
 import '/lib/common.js';
 
 function isOwner(){
+  Meteor.subscribe("myIndustries");
   var result = false;
     var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
-    if(data!=null && data.creator!=null){
-      if(data.creator === Meteor.userId()){
-        result = true;
-      }
+    if(data.creator === Meteor.userId()){
+      result = true;
     }
     return result;
 }
@@ -41,6 +40,9 @@ Template.editIndustry.helpers({
       return false;
     }
 
+  },
+  isCreator(){
+    return isOwner();
   },
   hasEditPermission(){
     var result = false;
@@ -149,6 +151,23 @@ Template.editIndustry.helpers({
     }
     return video;
   },
+  videoDisplay(){
+    var video = "";
+    var data = Industry.findOne({'_id' : FlowRouter.getParam("id")});
+    if(data){
+      if(data.vimeo){
+        video = data.vimeo;
+        var vimeoVideoID = video.substring(video.indexOf(".com/")+5, video.length);
+        url = "https://player.vimeo.com/video/" + vimeoVideoID+"?portrait=0";
+      }
+      else if(data.youtube){
+        video = data.youtube;
+        var youtubeVideoID = video.substring(video.indexOf("?v=")+3, video.length);
+        url = "https://www.youtube.com/embed/" + youtubeVideoID;
+      } 
+    }
+    return url;
+  },
   getCompanyType(){
     var type = new Array();
     type.push("");
@@ -208,6 +227,9 @@ Template.editIndustry.helpers({
     type.push("Servicio de subtitulaje");
     type.push("Viveros");
     return type;
+  },
+  statusPublished(){
+    return Industry.findOne({'_id': FlowRouter.getParam('id')}).status;
   },
   getBusinessTypeSelected(){  
 
@@ -424,31 +446,79 @@ Template.editIndustry.events({
     $('#max').text(getParam("MAX_CHAR_IN_TEXTAREA")-len);
   }
 },
-'click #guardar_empresa': function(event, template) {
-
-  console.log("En guardar empresa");
+'click .save': function(event, template) {
   event.preventDefault();
+  
+  /*Verificar qué botón oprimió*/
+  var button = $(event.currentTarget).attr("publish");
+
+  /*Validar datos obligatorios*/
   var company_name = trimInput($('#company_name').val());
-  var company_type = $('#company_type').val();
   var company_desc = trimInput($('#company_desc').val());
   var company_year = $('#company_year').val();
-  var company_web_page = trimInput($('#company_web_page').val());
-  var company_facebook_page = trimInput($('#facebook_page').val());
-  var company_twitter_page = trimInput($('#twitter_page').val());
-  var company_vimeo_page = trimInput($('#vimeo_page').val());
-  var company_youtube_page = trimInput($('#youtube_page').val());
-  var company_instagram_page = trimInput($('#instagram_page').val());
+  var country = $('#country').val();
+  var state = $('#states').val();
+  var city = $('#city').val();
 
-  if(isNotEmpty(company_name) && 
-    isNotEmpty(company_type) && 
-    isNotEmpty(company_desc) &&
-    isNotEmpty(company_year)){
+  var company_type = new Array();
+  $('select#selection').find('option').each(function() {
+      company_type.push($(this).val());
+  });
+
+
+  if(!isNotEmpty(company_name)){
+    Bert.alert({message: 'Por favor rellena el nombre de la empresa u organización', type: 'error', icon: 'fa fa-times'});
+  }
+  else if(company_type==null || company_type.length<=0){
+    Bert.alert({message: 'Por favor selecciona el tipo de empresa u organización', type: 'error', icon: 'fa fa-times'});
+  }
+  else if(!isNotEmpty(company_desc)){
+    Bert.alert({message: 'Por favor agrega una descripción', type: 'error', icon: 'fa fa-times'});
+  }
+  else if(!isNotEmpty(company_year)){
+    Bert.alert({message: 'Por favor selecciona el año de fundación', type: 'error', icon: 'fa fa-times'});
+  }
+  else{
+    var status = false;
+    var msg = "";
+    if(button==="true"){
+      status = true;
+      msg = "Los datos de tu empresa u organización han sido actualizados y ahora se encuentra publicado";
+    }
+    else if(button==="false"){
+      status = false;
+      msg="Los datos de tu empresa u organización han sido actualizados, se ha guardado como borrador";
+    }
+    var company_web_page = trimInput($('#company_web_page').val());
+    var company_facebook_page = trimInput($('#facebook_page').val());
+    var company_twitter_page = trimInput($('#twitter_page').val());
+    var company_vimeo_page = trimInput($('#vimeo_page').val());
+    var company_youtube_page = trimInput($('#youtube_page').val());
+    var company_instagram_page = trimInput($('#instagram_page').val());
+    var video = trimInput($('#video').val());
+
+    Meteor.call('updateYoutubeForIndustry', FlowRouter.getParam("id"), null);
+    Meteor.call('updateVimeoForIndustry', FlowRouter.getParam("id"), null);  
+
+    if(video!=null && video!=""){
+      
+      if(video.indexOf("vimeo")>0){
+        Meteor.call('updateVimeoForIndustry', FlowRouter.getParam("id"), formatURL(video)); 
+      } 
+      else if(video.indexOf("youtube")>0){
+        Meteor.call('updateYoutubeForIndustry', FlowRouter.getParam("id"), formatURL(video)); 
+      }
+      else{
+        Bert.alert({message: 'Por el momento únicamente aceptamos videos de vimeo o youtube', type: 'danger', icon: 'fa fa-exclamation'});
+      }  
+    }
+    
+
     Meteor.call(
-     'insertCompany',
-     Meteor.userId(),
+     'updateCompany',
+     FlowRouter.getParam('id'),
      company_name,
-     company_type,
-     company_desc, 
+     company_desc,
      company_year,
      company_web_page,
      company_facebook_page,
@@ -456,53 +526,25 @@ Template.editIndustry.events({
      company_vimeo_page,
      company_youtube_page,
      company_instagram_page,
-     function(err,result){
-       if(!err){
-        $.cloudinary.config({
-          cloud_name:"drhowtsxb"
-        });
+     status
+     );
+    
+    Meteor.call('updateCompanyCountry', FlowRouter.getParam("id"), country);
+    Meteor.call('updateCompanyState', FlowRouter.getParam("id"), state);
+    Meteor.call('updateCompanyCity', FlowRouter.getParam("id"), city);
+    
+    Bert.alert({message: msg, type: 'success', icon: 'fa fa-check'});
 
-        var options = {
-          folder: Meteor.userId()
-        };
-
-        var file_logo = document.getElementById('company-logo-upload').files[0];
-        var file_cover = document.getElementById('company-cover-upload').files[0];
-
-        Cloudinary.upload(file_logo, options, function(err_logo,res_logo){
-          if(!err_logo){
-            Meteor.call(
-              'saveCompanyLogoID',
-              result,
-              res_logo.public_id
-              );
-            Cloudinary.upload(file_cover, options, function(err_cover,res_cover){
-              if(!err_cover){
-                Meteor.call(
-                  'saveCompanyCoverID',
-                  result,
-                  res_cover.public_id
-                  );
-              }
-              else{
-                console.log("Upload Cover Error:"  + err); //no output on console
-              }
-            });
-          }
-          else{
-              console.log("Upload Logo:"  + err); //no output on console
-            }
-          });
-        Bert.alert({message: 'La empresa ha sido agregada', type: 'success', icon: 'fa fa-check'});
-        //FlowRouter.go('/industryPage/' + result);       
-      }
-      else{
-       console.log("Ocurrió el siguiente error: " +err);
-     }
-   });
   }
+
+  
+
+
+
+  
   return false;
   },
+  /*
   'change #company_name': function(event,template){
     event.preventDefault();
     var name = "";
@@ -510,7 +552,7 @@ Template.editIndustry.events({
       name = trimInput(event.target.value);
       Meteor.call('updateCompanyName', FlowRouter.getParam("id"), name);      
     }
-  },
+  },*/
   'click #company_type': function(event,template){
     event.preventDefault();
     var company_type = event.currentTarget.value;
@@ -525,7 +567,7 @@ Template.editIndustry.events({
       FlowRouter.getParam("id"),
       event.currentTarget.value
       )
-   },
+   },/*
   'change #company_desc': function(event,template){
     event.preventDefault();
     var company_desc = event.target.value;    
@@ -581,26 +623,26 @@ Template.editIndustry.events({
       if(isNotEmpty(instagram_page)){
         Meteor.call('updateCompanyInstagram', FlowRouter.getParam("id"), instagram_page);
       }    
-  },
+  },*/
   'change #country': function(event,template){
     var country = trimInput(event.target.value);    
-    Meteor.call('updateCompanyCountry', FlowRouter.getParam("id"), country);
+    //Meteor.call('updateCompanyCountry', FlowRouter.getParam("id"), country);
     Session.set("selected_country", event.target.value);    
   },
   'change #states': function(event,template){
     var state = trimInput(event.target.value);
     
-    Meteor.call('updateCompanyState', FlowRouter.getParam("id"), state);
-    Meteor.call('updateCompanyCountry', FlowRouter.getParam("id"), "México");
+    /*Meteor.call('updateCompanyState', FlowRouter.getParam("id"), state);
+    Meteor.call('updateCompanyCountry', FlowRouter.getParam("id"), "México");*/
     Session.set("selected_state", state);
-    var firstCity = City.findOne({'state': state}).city;
-    Meteor.call('updateCompanyCity', FlowRouter.getParam("id"), firstCity);    
+    /*var firstCity = City.findOne({'state': state}).city;
+    Meteor.call('updateCompanyCity', FlowRouter.getParam("id"), firstCity);    */
     
   },
   'change #city': function(event,template){
-    var city = trimInput(event.target.value);
+    /*var city = trimInput(event.target.value);
     Meteor.call('updateCompanyCity', FlowRouter.getParam("id"), city);
-    Meteor.call('updateCompanyCountry', FlowRouter.getParam("id"), "México");
+    Meteor.call('updateCompanyCountry', FlowRouter.getParam("id"), "México");*/
   },
   'change #collaborator_section_title': function(event,template){
     var section_title = trimInput(event.target.value);
@@ -717,11 +759,11 @@ Template.editIndustry.events({
         Meteor.call('removeGallery', FlowRouter.getParam("id"), mediaId); 
       }
     },
+    /*
     'change #video': function(event,template){
       event.preventDefault();
       var video = trimInput(event.target.value);
       if(event.target.value!=""){
-        if(isNotEmpty(video)){
           if(video.indexOf("vimeo")>0){
             Meteor.call('updateVimeoForIndustry', FlowRouter.getParam("id"), formatURL(video)); 
             Meteor.call('updateYoutubeForIndustry', FlowRouter.getParam("id"), null); 
@@ -739,8 +781,7 @@ Template.editIndustry.events({
           Meteor.call('updateYoutubeForIndustry', FlowRouter.getParam("id"), null); 
           Meteor.call('updateVimeoForIndustry', FlowRouter.getParam("id"), null); 
         }
-      }
-    },
+    },*/
     'change [type="file"]': function(e, t) {
         //console.log(e.target.name);
         uploadFiles(e.target.files, this._id, e.target.name);
@@ -749,6 +790,14 @@ Template.editIndustry.events({
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();*/
       },
+    'click #deleteIndustry': function(event,Template){
+      event.preventDefault();
+      if(confirm("Estas a punto de eliminar esta empresa, esta acción no se puede deshacer, ¿quieres continuar?")){
+        Meteor.call('deleteCompany', FlowRouter.getParam("id"));
+        Session.set("companyID",null);
+        FlowRouter.go("/viewIndustries/"+Meteor.userId());
+      }
+    }
 
 
     

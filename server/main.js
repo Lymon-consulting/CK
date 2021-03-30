@@ -1,3 +1,4 @@
+import helmet from "helmet";
 import { Meteor } from 'meteor/meteor';
 import { Params } from '../imports/api/params.js';
 import { Project } from '../imports/api/project.js';
@@ -9,6 +10,7 @@ import { City } from '../imports/api/city.js';
 import { Media } from '../imports/api/media.js';
 import { Index, MongoDBEngine } from 'meteor/easy:search'
 
+
 import '../imports/api/ocupations.js';
 import '../imports/startup/server/on-create-user.js';
 import './projectMethods.js';
@@ -19,6 +21,13 @@ import './messageMethods.js';
 
 
 Meteor.startup(() => {
+
+/*Llamada a helmet para setear los headers de la app*/
+/*WebApp.connectHandlers.use(helmet());
+WebApp.connectHandlers.use(helmet.frameguard({
+  action: "allow",
+}));  */
+
 Cloudinary.config({
       cloud_name: Meteor.settings.private.CLOUDINARY_URL,
       api_key: Meteor.settings.private.API_KEY,
@@ -349,7 +358,34 @@ Meteor.publish('myProjects', function() {
 });
 
 Meteor.publish('myIndustries', function(userId) {
-   return Industry.find();
+   return Industry.find({},{
+    fields:{
+      'company_name':1,
+      'companyLogoID':1,
+      'companyCoverID':1,
+      'gallery':1,
+      'company_type':1,
+      'company_desc':1,
+      'company_year':1,
+      'company_staff':1,
+      'company_admin':1,
+      'project_section_title':1,
+      'collaborator_section_title':1,
+      'state':1,
+      'country':1,
+      'city':1,
+      'company_web_page':1,
+      'company_facebook_page':1,
+      'company_twitter_page':1,
+      'company_vimeo_page':1,
+      'company_youtube_page':1,
+      'company_instagram_page':1,
+      'vimeo':1,
+      'youtube':1,
+      'creator':1,
+      'gallery':1
+    }
+   });
 });
 
 Meteor.publish('projectData', function(projId){

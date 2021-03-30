@@ -21,11 +21,10 @@ Meteor.methods({
         return result;
      });
   },
-  updateCompany(companyId, company_name, company_type, company_desc, company_year, company_web_page, company_facebook_page, company_twitter_page, company_vimeo_page, company_youtube_page, company_instagram_page){
+  updateCompany(companyId, company_name, company_desc, company_year, company_web_page, company_facebook_page, company_twitter_page, company_vimeo_page, company_youtube_page, company_instagram_page, status){
     Industry.update({_id: companyId},{
       $set:{
         "company_name": company_name,
-        "company_type": company_type,
         "company_desc": company_desc, 
         "company_year": company_year,
         "company_web_page": company_web_page,
@@ -33,7 +32,8 @@ Meteor.methods({
         "company_twitter_page": company_twitter_page,
         "company_vimeo_page": company_vimeo_page,
         "company_youtube_page": company_youtube_page,
-        "company_instagram_page": company_instagram_page
+        "company_instagram_page": company_instagram_page,
+        "status": status
      }});
   },
   saveCompanyLogoID(companyId, companyLogoID){
@@ -67,6 +67,9 @@ Meteor.methods({
           "companyCoverID": null
         }
     }); 
+  },
+  deleteCompany(companyID){
+     Industry.remove({"_id": companyID});
   },
   addCompanyName(company_name, userId){
     return Industry.insert({

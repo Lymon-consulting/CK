@@ -11,7 +11,7 @@ Template.industryList.helpers({
    var ownerOfCompanies = new Array();
    var adminOfCompanies = new Array();
    var result = new Array();
-   ownerOfCompanies = Industry.find({'userId':FlowRouter.getParam('id')}).fetch();
+   ownerOfCompanies = Industry.find({'creator':FlowRouter.getParam('id')}).fetch();
    adminOfCompanies = Industry.find({'company_admin._id': FlowRouter.getParam('id')}).fetch();
    for (var i = 0; i < ownerOfCompanies.length; i++) {
      result.push(ownerOfCompanies[i]);

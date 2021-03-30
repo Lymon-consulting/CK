@@ -412,4 +412,7 @@ Meteor.methods({
         }
       });
   },
+  deleteProject(projectID){
+     Project.remove({"_id": projectID});
+  },
 });
