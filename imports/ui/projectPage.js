@@ -130,6 +130,28 @@ if (Meteor.isClient) {
         }
         return val;
       },
+      statusPublished(){
+        return Project.findOne({'_id': FlowRouter.getParam('id')}).status;
+      },
+      statusPublishedOrIsOwner(){
+        var project = Project.findOne({'_id': FlowRouter.getParam('id')});
+        var status = false;
+        var isOwner = false;
+        if(project!=null) {
+          status = project.status;  
+          if(project.userId === Meteor.userId()) {
+            isOwner = true;
+          }  
+        }
+        
+        if(isOwner || status){
+          return true;
+        }
+        else{
+          return false;
+        }
+        
+      },
       
       ownerName(owner){
         var name = "";

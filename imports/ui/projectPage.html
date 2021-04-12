@@ -1,5 +1,5 @@
 <template name="projectPage">
-
+{{#if statusPublishedOrIsOwner}}
    <style>
      {{#if getProjectPicture 800}}
      .bannerProject{
@@ -41,6 +41,10 @@
       <div class="container-fluid text-white">
         <a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <i class="fa fa-camera"></i></a>
       </div>
+      {{#unless statusPublished}}
+      <div class="pink">Tu proyecto no está publicada, nadie la podrá ver hasta que la publiques</div>
+
+      {{/unless}}
       {{/if}}
     </div>
     <div class="container-fluid">
@@ -181,11 +185,9 @@
        </div>
        {{/if}}
        {{/if}}
-       {{#if hasTopRole}}
        {{#if isOwner}}
        <div class="col-lg-3"><a href="#" class="text-white" data-toggle="modal" data-target="#collabModal"><i class="fa fa-user-circle text-white" aria-hidden="true"></i> Agregar Colaboradores</a></div>
        <div class="col-lg-3"><a href="/editProject/{{projData._id}}" class="text-white"><i class="fa fa-pencil text-white" aria-hidden="true"></i> Editar proyecto</a></div>
-       {{/if}}
        {{/if}}
        <div class="col-lg-1">&nbsp;</div>
      </div>
@@ -960,8 +962,8 @@
             {{#if hasMedia}}
             <div class="row background-verylightgray light-padding">
               {{#each getMedia}}
-              <div class="col-lg-3 col-sm-6 align-self-center">
-                <a href="#" id="selectCoverPicture" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image" id="{{this._id}}"></a>
+              <div class="col-4 align-self-center">
+                <a href="#" id="selectCoverPicture" data-id="{{this.mediaId}}"><img class="media-thumb-mini z-depth-1" src="{{this.media_url}}" alt="image" id="{{this._id}}"></a>
               </div>
               {{/each}}
             </div>
@@ -988,7 +990,7 @@
         <div class="modal-footer justify-content-center">
           <div class="row">
             <div class="col-lg-6">
-              <a href="#" class="btn btn-purple disabled" id="setCoverPicture" data-id="{{this.mediaId}}">Establecer como foto de portada</a>
+              <a href="#" class="btn btn-purple text-white disabled" id="setCoverPicture" data-id="{{this.mediaId}}">Establecer como foto de portada</a>
             </div>
             <!--<div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>-->
             <!--<div class="col-lg-5"><input type="file" name="profile" id="nuestroinput"></div>-->
@@ -1006,7 +1008,11 @@
     </div>
   </div>
   <!--Modal: Name-->
-
+{{else}}
+    <div class="spacer80">&nbsp;</div>
+    <div class="text-center">El proyecto no existe o no está publicado</div>
+    <div class="spacer80">&nbsp;</div>
+{{/if}}
 </template> 
 
 <template name="userPill">

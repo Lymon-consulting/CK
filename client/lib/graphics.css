@@ -80,6 +80,13 @@
    /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
    object-fit:scale-down;
 }
+.media-thumb-mini{
+   /*width: 200px;*/
+   height: 50px;
+
+   /*Scale down will take the necessary specified space that is 200px x 100px without stretching the image*/
+   object-fit:scale-down;
+}
 
 .media-preview{
    width: 400px;

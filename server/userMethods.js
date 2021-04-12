@@ -333,6 +333,16 @@ Accounts.onCreateUser(function(options, user) {
         $set:{"cast.youtube":youtube_page}
       });
     },
+    updateCastVimeoDemo(userId,vimeo_demo){
+      Meteor.users.update({'_id': userId},{
+        $set:{"cast.vimeo_demo":vimeo_demo}
+      });
+    },
+    updateCastYoutubeDemo(userId,youtube_demo){
+      Meteor.users.update({'_id': userId},{
+        $set:{"cast.youtube_demo":youtube_demo}
+      });
+    },
     updateCastFacebookPage(userId,facebook_page){
       Meteor.users.update({'_id': userId},{
         $set:{"cast.facebook":facebook_page}
@@ -351,6 +361,16 @@ Accounts.onCreateUser(function(options, user) {
     updateCastTwitterPage(userId,twitter_page){
       Meteor.users.update({'_id': userId},{
         $set:{"cast.twitter":twitter_page}
+      });
+    },
+    updateCastVimeoPage(userId,vimeo_page){
+      Meteor.users.update({'_id': userId},{
+        $set:{"cast.vimeo":vimeo_page}
+      });
+    },
+    updateCastYoutubePage(userId,youtube_page){
+      Meteor.users.update({'_id': userId},{
+        $set:{"cast.youtube":youtube_page}
       });
     },
     updateCastWebPage(userId,web_page){

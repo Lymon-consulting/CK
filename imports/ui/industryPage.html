@@ -1,4 +1,5 @@
 <template name="industryPage">
+  {{#if statusPublishedOrIsOwner}}
    <style>
       {{#if getCoverPicture}}
       /**Estilo para que la foto de perfil aparezca sobre la foto de fondo de portada*/
@@ -32,12 +33,14 @@
       <div class="container-fluid text-white">
         <a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <i class="fa fa-camera"></i></a>
       </div>
+      {{#unless statusPublished}}
+      <div class="pink">Tu empresa u organización no está publicada, nadie la podrá ver hasta que la publiques</div>
+
+      {{/unless}}
       {{/if}}
     </div>
     <div class="container-fluid">
-      {{#unless statusPublished}}
-      <div class="pink">Tu empresa u organización no está publicada, nadie la podrá ver hasta que la publiques</div>
-      {{/unless}}
+      <div class="spacer20">&nbsp;</div>
       <div class="row">
         <div class="col-lg-1 col-md-6 leftpadding toppadding">
           {{#if getLogoPicture 500}}
@@ -250,8 +253,7 @@
           <div class="row">
              <div class="col">
                 {{>company_projects}}
-                <div class="spacer40"></div>
-                {{>company_crew}}
+                
              </div>
           </div>
        </div>
@@ -273,6 +275,12 @@
             </div>
           </div>
           {{/if}}
+          <div class="spacer40"></div>
+          <div class="row">
+            <div class="col-lg-12 text-left">
+              {{>company_crew}}
+            </div>
+          </div>
        </div>
     </div>
 
@@ -447,8 +455,8 @@
                   {{#if hasMedia}}
                   <div class="row background-verylightgray light-padding">
                     {{#each getMedia}}
-                    <div class="col-lg-3 col-sm-6 align-self-center">
-                      <a href="#" id="selectCoverPicture" data-id="{{this.mediaId}}"><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image" id="{{this._id}}"></a>
+                    <div class="col-4 align-self-center">
+                      <a href="#" id="selectCoverPicture" data-id="{{this.mediaId}}"><img class="media-thumb-mini z-depth-1" src="{{this.media_url}}" alt="image" id="{{this._id}}"></a>
                     </div>
                     {{/each}}
                   </div>
@@ -462,7 +470,7 @@
                   <div class="spacer20"></div>
                   <div class="row">
                     <div class="col text-center">
-                      <button class="btn btn-purple goMediaLibraryCover">Ir a biblioteca de imágenes</button>
+                      <button class="btn btn-purple text-white goMediaLibraryCover">Ir a biblioteca de imágenes</button>
                     </div>
                   </div>
                   {{/if}}
@@ -475,7 +483,7 @@
               <div class="modal-footer justify-content-center">
                 <div class="row">
                   <div class="col-lg-6">
-                    <a href="#" class="btn btn-purple disabled" id="setCoverPicture" data-id="{{this.mediaId}}">Establecer como foto de portada</a>
+                    <a href="#" class="btn btn-purple text-white disabled" id="setCoverPicture" data-id="{{this.mediaId}}">Establecer como foto de portada</a>
                   </div>
                   <!--<div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>-->
                   <!--<div class="col-lg-5"><input type="file" name="profile" id="nuestroinput"></div>-->
@@ -495,13 +503,17 @@
           </div>
         </div>
         <!--Modal: Name-->
-   
+  {{else}}
+    <div class="spacer80">&nbsp;</div>
+    <div class="text-center">La empresa no existe o no está publicada</div>
+    <div class="spacer80">&nbsp;</div>
+  {{/if}}   
 </template>
 
 
 <template name="company_crew">
   {{#if getCrew}}
-  <div class="container">
+  <div class="container-fluid">
      <div class="row">
       <div class="col-md-12 text-left">
         <strong class="uppercase">{{getCollaboratorTitle}}</strong>
@@ -518,15 +530,15 @@
      <div class="d-flex justify-content-around text-center">
         {{#each getCrew}}
            {{#if this.confirmed}}
-              <div class="">
-                <a href="/profilePage/{{this._id}}">
+              <div class="text-center">
+                <a href="/profilePage/{{this._id}}" class="text-center">
                  {{#if getProfilePicture this._id}}
-                    <img src="{{getProfilePicture this._id}}" class="rounded-circle" /><br/>
+                    <img src="{{getProfilePicture this._id}}" class="rounded-circle text-center" /><br/>
                  {{else}}
-                    <div id="profileImageLarge">{{getInitials this._id}}</div>
+                    <div id="profileImageMenu" class="text-center">{{getInitials this._id}}</div>
                  {{/if}}
                  </a>
-                  <span class="people-name-text-circle"><a href="/profilePage/{{this._id}}" class="text-title-gray">{{this.name}}</a></span>
+                  <span class="mx-auto text-center"><a href="/profilePage/{{this._id}}" class="text-title-gray text-center">{{this.name}}</a></span>
               </div>
            {{/if}}
         {{/each}}
@@ -635,4 +647,5 @@
   <!--Modal: Name-->
 
   {{/if}}
+  
 </template>

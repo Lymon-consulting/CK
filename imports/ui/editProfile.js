@@ -11,6 +11,7 @@ import { getCrewCategories } from '/lib/globals.js';
 import { catTopCategories } from '/lib/globals.js';
 import { getCrewRoleFromCategory } from '/lib/globals.js';
 import { getRoleById } from '/lib/globals.js';
+import { catHeights, catAges, catPhysical, catEthnics, catEyes, catHair, catHairType, catLanguages, catCategories } from '/lib/globals.js';
 
 
 
@@ -22,6 +23,7 @@ Meteor.subscribe("getOcupations");
 Meteor.subscribe("getCategories");
 Meteor.subscribe("getCountries");
 Meteor.subscribe("userData");
+Meteor.subscribe("otherUsers");
 
 Template.editProfile.rendered = function(){
   this.autorun(function(){
@@ -56,6 +58,13 @@ resume(){
   return Meteor.user().crew.resume;
 }
 },
+resumeCast(){
+ if(Meteor.user() && Meteor.user().cast!=null && Meteor.user().cast.resume){
+  var MAX_CHAR_IN_TEXTAREA = getParam("MAX_CHAR_IN_TEXTAREA");
+  $('#maxCast').text(MAX_CHAR_IN_TEXTAREA - Meteor.user().cast.resume.length);
+  return Meteor.user().cast.resume;
+}
+},
 webpage(){
  if(Meteor.user()!=null && Meteor.user().crew!=null){
   return Meteor.user().crew.webpage;
@@ -66,9 +75,19 @@ facebook(){
   return Meteor.user().crew.facebook;
 }
 },
+facebook_cast(){
+ if(Meteor.user()!=null && Meteor.user().cast!=null){
+  return Meteor.user().cast.facebook;
+}
+},
 twitter(){
  if(Meteor.user()!=null && Meteor.user().crew!=null){
   return Meteor.user().crew.twitter;
+}
+},
+twitter_cast(){
+ if(Meteor.user()!=null && Meteor.user().cast!=null){
+  return Meteor.user().cast.twitter;
 }
 },
 vimeo(){
@@ -76,9 +95,20 @@ vimeo(){
   return Meteor.user().crew.vimeo;
 }
 },
+vimeo_cast(){
+ if(Meteor.user()!=null && Meteor.user().cast!=null){
+  return Meteor.user().cast.vimeo;
+}
+},
+
 youtube(){
  if(Meteor.user()!=null && Meteor.user().crew!=null){
   return Meteor.user().crew.youtube;
+}
+},
+youtube_cast(){
+ if(Meteor.user()!=null && Meteor.user().cast!=null){
+  return Meteor.user().cast.youtube;
 }
 },
 instagram(){
@@ -86,13 +116,24 @@ instagram(){
   return Meteor.user().crew.instagram;
 }
 },
+instagram_cast(){
+ if(Meteor.user()!=null && Meteor.user().cast!=null){
+  return Meteor.user().cast.instagram;
+}
+},
+
 imdbCrew(){
  if(Meteor.user()!=null && Meteor.user().crew!=null){
   return Meteor.user().crew.imdb;
 }
 },
+imdb_cast(){
+ if(Meteor.user()!=null && Meteor.user().cast!=null){
+  return Meteor.user().cast.imdb;
+}
+},
 
-video(){
+  video(){
     var video = "";
     if(Meteor.user()!=null){
       if(Meteor.user().crew!=null && Meteor.user().crew.vimeo!=null){
@@ -100,6 +141,23 @@ video(){
       }
       else if(Meteor.user().crew!=null && Meteor.user().crew.youtube!=null){
         video = Meteor.user().crew.youtube;
+      } 
+    }
+    return video;
+  },
+  web_cast(){
+    if(Meteor.user()!=null && Meteor.user().cast!=null){
+      return Meteor.user().cast.webpage;
+    }
+  },
+  video_cast(){
+    var video = "";
+    if(Meteor.user()!=null){
+      if(Meteor.user().cast!=null && Meteor.user().cast.vimeo_demo!=null){
+        video = Meteor.user().cast.vimeo_demo;
+      }
+      else if(Meteor.user().cast!=null && Meteor.user().cast.youtube_demo!=null){
+        video = Meteor.user().cast.youtube_demo;
       } 
     }
     return video;
@@ -374,9 +432,193 @@ showCreateCastLink(){
   },
   maxLength(){
     return getParam("MAX_CHAR_IN_TEXTAREA");
-  }
+  },
+  maxCastLength(){
+    return getParam("MAX_CHAR_IN_TEXTAREA");
+  },
 
-
+ /*Métodos para cast*/
+ selectedGender(radioVal){
+    var result = "";
+    Meteor.subscribe("otherUsers");
+    var userSelection = Meteor.user().cast.sex; 
+    if(userSelection==='Masculino' && radioVal==='Masculino'){ 
+      result = "checked";
+    }
+    else if(userSelection==='Femenino' && radioVal==='Femenino'){
+      result = "checked";
+    }
+    else if(userSelection==='Sin definir' && radioVal==='Sin definir'){
+      result = "checked";
+    }
+    return result;
+  },
+  ageSelected: function(item){
+    var result="";
+    var age = Meteor.user().cast.ageRange;
+    //console.log(height);
+    if(age){
+     var elem = age.indexOf(item);
+     if(elem >= 0){
+       result = 'selected';
+     }
+     else{
+       result = "";
+     } 
+   }
+   return result;
+  },
+  heightSelected: function(item){
+    var result="";
+    var height = Meteor.user().cast.height;
+    //console.log(height);
+    if(height){
+     var elem = height.indexOf(item);
+     if(elem >= 0){
+       result = 'selected';
+     }
+     else{
+       result = "";
+     } 
+   }
+   return result;
+  },
+  physicalSelected: function(item){
+    var result="";
+    var physical = Meteor.user().cast.physical;
+    //console.log(height);
+    if(physical){
+     var elem = physical.indexOf(item);
+     if(elem >= 0){
+       result = 'selected';
+     }
+     else{
+       result = "";
+     } 
+   }
+   return result;
+  },
+  ethnicsSelected:function(item){
+    var result="";
+    var ethnics = Meteor.user().cast.ethnicity;
+    //console.log(height);
+    if(ethnics){
+     var elem = ethnics.indexOf(item);
+     if(elem >= 0){
+       result = 'selected';
+     }
+     else{
+       result = "";
+     } 
+   }
+   return result;
+  },
+  eyesSelected:function(item){
+    var result="";
+    var eyes = Meteor.user().cast.eyes;
+    //console.log(height);
+    if(eyes){
+     var elem = eyes.indexOf(item);
+     if(elem >= 0){
+       result = 'selected';
+     }
+     else{
+       result = "";
+     } 
+   }
+   return result;
+  },
+  hairSelected:function(item){
+    var result="";
+    var hair = Meteor.user().cast.hair;
+    //console.log(height);
+    if(hair){
+     var elem = hair.indexOf(item);
+     if(elem >= 0){
+       result = 'selected';
+     }
+     else{
+       result = "";
+     } 
+   }
+   return result;
+  },
+  hairTypeSelected:function(item){
+    var result="";
+    var hairType = Meteor.user().cast.hairType;
+    //console.log(height);
+    if(hairType){
+     var elem = hairType.indexOf(item);
+     if(elem >= 0){
+       result = 'selected';
+     }
+     else{
+       result = "";
+     } 
+   }
+   return result;
+  },
+  checkLanguage:function(item){
+    var result="";
+    var language = new Array() ;
+    if(Meteor.user() && Meteor.user().cast.languages){
+      language = Meteor.user().cast.languages;
+      if(language!=null && language.indexOf(item)>=0){
+        result = "checked";
+      }
+    }
+   return result;
+  },
+  ages(){
+    return catAges; //variable global en globals.js
+  },
+  heights(){
+    return catHeights; //variable global en globals.js
+  },
+  physical(){
+    return catPhysical; //variable global en globals.js
+  },
+  ethnics(){
+    return catEthnics; //variable global en globals.js
+  },
+  eyes(){
+    return catEyes; //variable global en globals.js
+  },
+  hair(){
+    return catHair; //variable global en globals.js
+  },
+  hairType(){
+    return catHairType; //variable global en globals.js
+  },
+  languages(){
+    return catLanguages; //variable global en globals.js
+  },
+  peculiarities(){
+    var data = Meteor.user();
+    var resume="";
+    var MAX_CHAR_IN_TEXTAREA = getParam("MAX_CHAR_IN_TEXTAREA");
+    if(data!=null && data.cast.peculiarities!=null){
+      resume = data.cast.peculiarities;
+      $('#max-peculiarities').text(MAX_CHAR_IN_TEXTAREA - resume.length);
+    }
+    else{
+      $('#max-peculiarities').text(MAX_CHAR_IN_TEXTAREA); 
+    }
+    return resume;
+  },
+  skills(){
+   var data = Meteor.user();
+    var resume="";
+    var MAX_CHAR_IN_TEXTAREA = getParam("MAX_CHAR_IN_TEXTAREA");
+    if(data!=null && data.cast.skills!=null){
+      resume = data.cast.skills;
+      $('#max-skills').text(MAX_CHAR_IN_TEXTAREA - resume.length);
+    }
+    else{
+      $('#max-skills').text(MAX_CHAR_IN_TEXTAREA); 
+    }
+    return resume;
+  },
 
 });
 
@@ -417,6 +659,7 @@ Template.editProfile.events({
     var resume = trimInput(event.target.value);
     Meteor.call('updateCrewResume', Meteor.userId(), resume);
   },
+  
   'change #country': function(event,template){
     var country = trimInput(event.target.value);
     Meteor.call('updateCountry', Meteor.userId(), country);
@@ -588,6 +831,17 @@ Template.editProfile.events({
 }
 else{
   $('#max').text(getParam("MAX_CHAR_IN_TEXTAREA")-len);
+}
+},
+'keyup #resumeCast' : function(event){
+ event.preventDefault();
+
+ var len = $('#resumeCast').val().length;
+ if(len > getParam("MAX_CHAR_IN_TEXTAREA")){
+  val.value= val.value.substring(0,getParam("MAX_CHAR_IN_TEXTAREA"));
+}
+else{
+  $('#maxCast').text(getParam("MAX_CHAR_IN_TEXTAREA")-len);
 }
 },
 
@@ -769,5 +1023,96 @@ else{
            Meteor.call('setIsCast', Meteor.userId(),false);
         }
      },
+
+     /*Métodos para cast*/
+     'change .sex' : function(event, template){
+    event.preventDefault();
+    var inputValue = $(event.target).attr("data-answer");
+    //console.log(inputValue);
+    Meteor.call('updateCastGender', Meteor.userId(), inputValue); 
+  },
+  'change #age': function(event,template){
+    var value = event.target.value;
+    Meteor.call('updateCastAge', Meteor.userId(), value);
+  },
+  'change #resumeCast': function(event,template){
+    var resumeCast = trimInput(event.target.value);
+    Meteor.call('updateCastResume', Meteor.userId(), resumeCast);
+  },
+  'change #peculiarities': function(event,template){
+    var value = event.target.value;
+    Meteor.call('updateCastPeculiarities', Meteor.userId(), value);
+  },
+  'keyup #peculiarities' : function(event){
+     event.preventDefault();
+     var len = $('#peculiarities').val().length;
+     if(len > getParam("MAX_CHAR_IN_TEXTAREA")){
+      val.value= val.value.substring(0,getParam("MAX_CHAR_IN_TEXTAREA"));
+    }
+    else{
+      $('#max-peculiarities').text(getParam("MAX_CHAR_IN_TEXTAREA")-len);
+    }
+  },
+  'keyup #skills' : function(event){
+     event.preventDefault();
+     var len = $('#skills').val().length;
+     if(len > getParam("MAX_CHAR_IN_TEXTAREA")){
+      val.value= val.value.substring(0,getParam("MAX_CHAR_IN_TEXTAREA"));
+    }
+    else{
+      $('#max-skills').text(getParam("MAX_CHAR_IN_TEXTAREA")-len);
+    }
+  },
+  'change #video_cast': function(event,template){
+    event.preventDefault();
+    var video = trimInput(event.target.value);
+    if(isNotEmpty(video)){
+      if(video.indexOf("vimeo")>0){
+        Meteor.call('updateCastVimeoDemo', Meteor.userId(), formatURL(video)); 
+        Meteor.call('updateCastYoutubeDemo', Meteor.userId(), null); 
+      } 
+      else if(video.indexOf("youtube")>0){
+        Meteor.call('updateCastYoutubeDemo', Meteor.userId(), formatURL(video)); 
+        Meteor.call('updateCastVimeoDemo', Meteor.userId(), null); 
+      }
+      else{
+        Bert.alert({message: 'Por el momento únicamente aceptamos videos de vimeo o youtube', type: 'danger', icon: 'fa fa-exclamation'});
+      }
+      
+    }
+    else{
+      Meteor.call('updateCastYoutubeDemo', Meteor.userId(), null); 
+      Meteor.call('updateCastVimeoDemo', Meteor.userId(), null); 
+    }
+  },
+  'change #facebook_cast': function(event,template){
+    var value = trimInput(event.target.value);
+    Meteor.call('updateCastFacebookPage', Meteor.userId(), value);
+  },
+  'change #imdb_cast': function(event,template){
+    var value = trimInput(event.target.value);
+    Meteor.call('updateCastImdbPage', Meteor.userId(), value);
+  },
+  'change #twitter_cast': function(event,template){
+    var value = trimInput(event.target.value);
+    Meteor.call('updateCastTwitterPage', Meteor.userId(), value);
+  },
+  'change #instagram_cast': function(event,template){
+    var value = trimInput(event.target.value);
+    Meteor.call('updateCastInstagramPage', Meteor.userId(), value);
+  },
+  'change #vimeo_cast': function(event,template){
+    var value = trimInput(event.target.value);
+    Meteor.call('updateCastVimeoPage', Meteor.userId(), value);
+  },
+  'change #youtube_cast': function(event,template){
+    var value = trimInput(event.target.value);
+    Meteor.call('updateCastYoutubePage', Meteor.userId(), value);
+  },
+  'change #web_cast': function(event,template){
+    var value = trimInput(event.target.value);
+    Meteor.call('updateCastWebPage', Meteor.userId(), value);
+  },
+  
     
   });

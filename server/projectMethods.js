@@ -193,7 +193,7 @@ Meteor.methods({
     });  
   },
   setOficial(projectId, isOficial){
-    Project.update({'_id': current},{
+    Project.update({'_id': projectId},{
       $set:{
         "oficial": isOficial 
       }

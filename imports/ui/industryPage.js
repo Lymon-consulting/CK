@@ -23,6 +23,25 @@ Template.industryPage.helpers({
 statusPublished(){
     return Industry.findOne({'_id': FlowRouter.getParam('id')}).status;
   },
+statusPublishedOrIsOwner(){
+  var industry = Industry.findOne({'_id': FlowRouter.getParam('id')});
+  var status = false;
+  var isOwner = false;
+  if(industry!=null) {
+    status = industry.status;  
+    if(industry.creator === Meteor.userId()) {
+      isOwner = true;
+    }  
+  }
+  
+  if(isOwner || status){
+    return true;
+  }
+  else{
+    return false;
+  }
+  
+},  
 isOwner(){
   industry = Industry.findOne({'_id': FlowRouter.getParam('id')});
   if(industry!=null && industry.creator === Meteor.userId()) {
@@ -70,7 +89,7 @@ getProjects(){
     if(data!=null && data.companyCoverID!=null){
       var cover = Media.findOne({'mediaId':data.companyCoverID});
       if(cover!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + data.userId + "/" + data.companyCoverID;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + data.creator + "/" + data.companyCoverID;    
       }
       
     }
@@ -262,7 +281,7 @@ getInitials(userId){
 },
 isOwner(){
   industry = Industry.findOne({'_id': FlowRouter.getParam('id')});
-  if(industry!=null && industry.userId === Meteor.userId()) {
+  if(industry!=null && industry.creator === Meteor.userId()) {
    val = true;
  }
  else{

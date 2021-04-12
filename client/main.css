@@ -375,8 +375,9 @@ a.list-group-item.active { background-color: #6c757d; }
 }
 .text-title-gray{
    font-family: "AvenirNext-Medium";
-   font-size: 16px;
+   font-size: 12px;
    color:#999;
+   text-decoration: none;
 }
 .text-body-gray{
    font-family: "AvenirNext-Medium";
