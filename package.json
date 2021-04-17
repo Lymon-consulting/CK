@@ -10,7 +10,7 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "@splidejs/splide": "^2.4.21",
-    "bcrypt": "^3.0.8",
+    "bcrypt": "^5.0.0",
     "helmet": "^4.4.1",
     "jquery": "^3.6.0",
     "meteor-node-stubs": "^0.4.1",
