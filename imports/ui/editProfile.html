@@ -15,66 +15,47 @@
   
   
   {{#if currentUser}}
-  <div class="container-fluid">
-    <img src="/images/no-cover-photo2.png" class="no-cover-photo" alt="no-cover-photo">
-    <div class="spacer40"></div>
-  </div>
+ 
   <div class="container">    
     <div class="row">
       <div class="col-lg-3 rounded background-verylightgray p-3">
         <div class="sticky-top">
-          <div class="row">
-            <div class="col d-flex justify-content-center">
-              
-            </div>
-          </div>
-          <div class="row">
-            <div class="col text-14 text-purple text-center">
-              <a href="#" class="text-purple" id="openMediaGallery">Cambiar <i class="fa fa-pencil"></i></a>
-            </div>
-          </div>
+          
           <div class="spacer20"></div>
-          <div class="row">
-            <div class="col text-center text-16">
-              <strong>¡Te damos la bienvenida, {{name}}!</strong>
-            </div>
-          </div>
-          <div class="spacer40"></div>
           <div><hr></div>
+          {{#if isCrewChecked}}
           <div class="row">
             <div class="col text-14">
-              <a href="#" class="text-black" id="goProfile"><i class="fa fa-eye"></i> Ver mi perfil</a>    
+              <a href="#" class="text-black" id="goProfile"><i class="fa fa-eye"></i> Ver mi perfil de crew</a>    
             </div>
           </div>
-          {{#if hasTopRole}}
+          {{/if}}
+          {{#if isCastChecked}}
           <div class="spacer10"></div>
           <div class="row">
             <div class="col text-14">
-              <a href="/viewProjects/{{currentUser._id}}" class="text-black" id=""><i class="fa fa-briefcase"></i> Mis proyectos</a>
+              <a href="#" class="text-black" id="goProfileCast"><i class="fa fa-eye"></i> Ver mi perfil de cast</a>    
             </div>
           </div>
-          {{else}}
+          {{/if}}
           <div class="spacer10"></div>
           <div class="row">
             <div class="col text-14">
-              <a href="/viewProjects/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-briefcase"></i> Mis portafolios</a>
+              <a href="/viewProjects/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-briefcase"></i> Mis producciones/muestras</a>
             </div>
           </div>       
           
-          {{/if}}
-          {{#if hasBusinessRole}}
           <div class="spacer10"></div>
           <div class="row">
             <div class="col text-14">
               <a href="/viewIndustries/{{currentUser._id}}" class="text-black" id=""><i class="fa fa-building"></i> Mis empresas</a>
             </div>
           </div>
-          {{/if}}
           
           <div class="spacer40"></div>
           <div class="row">
             <div class="col text-14">
-              <a href="/mediaEditorObject/{{currentUser._id}}/crew/{{currentUser._id}}/global" class="text-black" id=""><i class="fa fa-image"></i> Mis imágenes</a>
+              <a href="/mediaEditorObject/{{currentUser._id}}/crew/{{currentUser._id}}/global" class="text-black" id=""><i class="fa fa-image"></i> Mis imágenes del perfil</a>
             </div>
           </div>
           <div class="spacer40"></div>
@@ -167,16 +148,8 @@
                   </select>  
                 </div>
               </div>
-              <div class="spacer20"></div>
-              <div class="row">
-                <div class="col form-group">
-                  <label for="resumen">Acerca de </label>
-                  <textarea class="form-control" rows="5" id="resume" value="" placeholder="Cuéntanos de ti ({{maxLength}} caracteres máx)." maxlength="{{maxLength}}">{{resume}}</textarea><small>Caracteres restantes: <div id="max"></div></small>
-                </div>
-              </div>
-
-
               <div class="spacer40"></div>
+              
               <div class="row">
                 <div class="col"><h2 class="titles">Actividades Profesionales</h2></div>
               </div>              
@@ -205,6 +178,30 @@
                         </div>
                       </div>
                       <div class="spacer20"></div>
+                      <div class="row">
+                        <div class="col d-flex justify-content-center">
+                          {{#if getProfilePicture}}
+                            <img src="{{getProfilePicture}}"/>
+                            {{else}}
+                            <div id="profileImageMenu">{{getInitials}}</div>
+                            {{/if}}   
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col text-14 text-purple text-center">
+                          <a href="#" class="text-purple" id="openMediaGallery" data-id="1">Cambiar <i class="fa fa-pencil"></i></a>
+                        </div>
+                      </div>
+                      <div class="spacer20"></div>
+                      <div class="row">
+                        <div class="col form-group">
+                          <label for="resumen">Acerca de </label>
+                          <textarea class="form-control" rows="5" id="resume" value="" placeholder="Cuéntanos de ti ({{maxLength}} caracteres máx)." maxlength="{{maxLength}}">{{resume}}</textarea><small>Caracteres restantes: <div id="max"></div></small>
+                        </div>
+                      </div>
+
+
+                      <div class="spacer40"></div>
                       <div class="row">
                         <div class="col-md-6">
                           <label for="oc">Departamentos </label>
@@ -330,6 +327,21 @@
                       <div class="row">
                         <div class="col">
                           <input type="checkbox" class="activateCast" {{isCastChecked}}> Activar perfil de <strong>Cast</strong>
+                        </div>
+                      </div>
+                      <div class="spacer20"></div>
+                      <div class="row">
+                        <div class="col d-flex justify-content-center">
+                          {{#if getProfilePictureCast}}
+                            <img src="{{getProfilePictureCast}}"/>
+                            {{else}}
+                            <div id="profileImageMenu">{{getInitials}}</div>
+                            {{/if}}   
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col text-14 text-purple text-center">
+                          <a href="#" class="text-purple" id="openMediaGallery" data-id="2">Cambiar <i class="fa fa-pencil"></i></a>
                         </div>
                       </div>
                       <div class="spacer20"></div>
@@ -682,7 +694,7 @@
         <div class="modal-footer justify-content-center">
           <div class="row">
             <div class="col-lg-6">
-              <a href="#" class="btn btn-purple disabled" id="setProfilePicture" data-id="{{this.mediaId}}">Establecer como foto de perfil</a>
+              <a href="#" class="btn btn-purple text-white disabled" id="setProfilePicture" data-id="{{this.mediaId}}">Establecer como foto de perfil</a>
             </div>
             <!--<div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>-->
             <!--<div class="col-lg-5"><input type="file" name="profile" id="nuestroinput"></div>-->
@@ -754,7 +766,7 @@
         <div class="modal-footer justify-content-center">
           <div class="row">
             <div class="col-lg-6">
-              <a href="#" class="btn btn-purple disabled" id="setCoverPicture" data-id="{{this.mediaId}}">Establecer como foto de portada</a>
+              <a href="#" class="btn btn-purple text-white disabled" id="setCoverPicture" data-id="{{this.mediaId}}">Establecer como foto de portada</a>
             </div>
             <!--<div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>-->
             <!--<div class="col-lg-5"><input type="file" name="profile" id="nuestroinput"></div>-->

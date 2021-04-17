@@ -101,6 +101,14 @@ Meteor.methods({
       }
     });
   },
+  changeStatus(companyId,status){
+    Industry.update({'_id': companyId}, 
+    {
+      $set: {
+        "status": status
+      }
+    }); 
+  },
   /*
   'updateCompanyType'(companyId, type){
     Industry.update({'_id':companyId},{

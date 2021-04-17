@@ -386,7 +386,8 @@ Meteor.publish('myIndustries', function(userId) {
       'vimeo':1,
       'youtube':1,
       'creator':1,
-      'gallery':1
+      'gallery':1,
+      'status':1
     }
    });
 });
@@ -435,6 +436,8 @@ Meteor.publish('allMedia', function(){
     fields: {
       '_id':1,
       'userId':1,
+      'companyId':1,
+      'projectId':1,
       'mediaId':1,
       'media_title':1,
       'media_desc':1,

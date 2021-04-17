@@ -1512,12 +1512,7 @@ if (Meteor.isClient) {
        $('#modal2').modal('show'); 
       },
       'change [type="file"]': function(e, t) {
-        //console.log(e.target.name);
-        uploadFiles(e.target.files, this._id, e.target.name);
-        /*
-        $('#modal1').modal('hide');
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();*/
+        uploadFiles(e.target.files, FlowRouter.getParam('id'), 3);
       },
       'click #selectCoverPicture': function(event,template){
        event.preventDefault();

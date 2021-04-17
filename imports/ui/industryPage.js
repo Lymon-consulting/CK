@@ -21,7 +21,10 @@ Template.industryPage.helpers({
   return Industry.findOne({_id : FlowRouter.getParam('id')});
 },
 statusPublished(){
-    return Industry.findOne({'_id': FlowRouter.getParam('id')}).status;
+  Meteor.subscribe("myIndustries");
+  var status = Industry.findOne({'_id': FlowRouter.getParam('id')}).status;
+  console.log("status="+status);
+    return status;
   },
 statusPublishedOrIsOwner(){
   var industry = Industry.findOne({'_id': FlowRouter.getParam('id')});
@@ -84,23 +87,16 @@ getProjects(){
    },
    getCoverPicture() {
     Meteor.subscribe("allMedia");
-    var data = Industry.findOne({'_id' : FlowRouter.getParam('id')});
+    var data = Industry.findOne({'_id' : FlowRouter.getParam("id")});
     var url;
     if(data!=null && data.companyCoverID!=null){
       var cover = Media.findOne({'mediaId':data.companyCoverID});
       if(cover!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + data.creator + "/" + data.companyCoverID;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_1200,h_250,c_fill" + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.companyCoverID;
       }
       
     }
     return url;
-    /*
-     var url = "";
-     var company = Industry.findOne({'_id':FlowRouter.getParam('id')});
-     if(company!=null && company.companyCoverID!=null && company.companyCoverID!=""){
-      url = Meteor.settings.public.CLOUDINARY_RES_URL + "w_1200,h_250,c_fill/" + company.companyCoverID;
-    }
-    return url;*/
   },
   getLogoPicture(size) {
     Meteor.subscribe("allMedia");
@@ -109,7 +105,8 @@ getProjects(){
     if(data!=null && data.companyLogoID!=null){
       var cover = Media.findOne({'mediaId':data.companyLogoID});
       if(cover!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + data.userId + "/" + data.companyLogoID;    
+        //url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + data.userId + "/" + data.companyLogoID;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_fill" + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.companyLogoID;
       }
       
     }
@@ -176,7 +173,7 @@ getGallery(){
   hasMedia() {
       Meteor.subscribe("allMedia");
       //var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
-      var media = Media.find({'userId': Meteor.userId()}).count();
+      var media = Media.find({'companyId': FlowRouter.getParam("id")}).count();
       var hasMedia = false;
       if(media > 0){
         hasMedia = true;
@@ -186,7 +183,7 @@ getGallery(){
     getMedia() {
       Meteor.subscribe("allMedia");
       //var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
-      var media = Media.find({'userId': Meteor.userId()},{sort:{'media_date':-1}});
+      var media = Media.find({'companyId': FlowRouter.getParam("id")},{sort:{'media_date':-1}});
       return media;
     },
   getURL(mediaId){
@@ -195,6 +192,8 @@ getGallery(){
       if(media!=null){
         url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + media.userId + "/" + media.mediaId;    
       }
+
+      console.log(url);
     return url;
   },
   getVideo(vimeo, youtube){
@@ -369,6 +368,28 @@ Template.industryPage.events({
     //Session.set("companyID",companyID);
     FlowRouter.go("/editIndustry/" + companyID);
   },
+  'click .publishIndustry':function(event, template){
+    //var companyID = $(event.target).attr('data-answer');
+    var companyID = FlowRouter.getParam("id");
+    //Session.set("companyID",companyID);
+    Meteor.call(
+      'changeStatus',
+      companyID,
+      true
+      );
+    Bert.alert({message: 'La empresa u organización se encuentra ahora publicada', type: 'success', icon: 'fa fa-times'});
+  },
+  'click .unpublishIndustry':function(event, template){
+    //var companyID = $(event.target).attr('data-answer');
+    var companyID = FlowRouter.getParam("id");
+    //Session.set("companyID",companyID);
+    Meteor.call(
+      'changeStatus',
+      companyID,
+      false
+      );
+    Bert.alert({message: 'La empresa se ha cambiado a borrador', type: 'success', icon: 'fa fa-times'});
+  },
   'click #logoinIndustryPage': function(event,template){
      event.preventDefault();
      $(".media-thumb").css('border','none');
@@ -401,18 +422,19 @@ Template.industryPage.events({
 
     },
     'change [type="file"]': function(e, t) {
-        //console.log(e.target.name);
-        uploadFiles(e.target.files, this._id, e.target.name);
-        /*
-        $('#modal1').modal('hide');
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();*/
+        uploadFiles(e.target.files, FlowRouter.getParam('id'), 2);
       },
       'click #openMediaGallery': function(event,template){
          event.preventDefault();
          $(".media-thumb").css('border','none');
          $("#setCoverPicture").addClass('disabled');
          $('#modal2').modal('show'); 
+     },
+     'click #openLogoGallery': function(event,template){
+         event.preventDefault();
+         $(".media-thumb").css('border','none');
+         $("#setCoverPicture").addClass('disabled');
+         $('#modal1').modal('show'); 
      },
      'click #selectCoverPicture': function(event,template){
      event.preventDefault();
@@ -439,6 +461,33 @@ Template.industryPage.events({
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();
       $("#setCoverPicture").removeClass('disabled');
+
+    },
+    'click #selectLogoPicture': function(event,template){
+     event.preventDefault();
+      var mediaId = $(event.currentTarget).attr("data-id");
+
+      Session.set("mediaId",mediaId);
+
+     $(".media-thumb").css('border','none');
+     $(event.target).css('border', "solid 3px #ED1567");
+     $("#setLogoPicture").removeClass('disabled');
+
+    },
+    'click #setLogoPicture': function(event,template){
+     event.preventDefault();
+     var mediaId = Session.get("mediaId");
+
+      Meteor.call(
+        'saveCompanyLogoID',
+        FlowRouter.getParam("id"),
+        mediaId
+      );
+
+      $('#modal1').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+      $("#setLogoPicture").removeClass('disabled');
 
     },
 });

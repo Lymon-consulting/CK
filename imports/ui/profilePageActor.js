@@ -672,13 +672,8 @@ Template.profilePageActor.events({
         $("#setCoverPicture").removeClass('disabled');
 
       },
-      'change [type="file"]': function(e, t) {
-        //console.log(e.target.name);
-        uploadFiles(e.target.files, this._id, e.target.name);
-        /*
-        $('#modal1').modal('hide');
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();*/
+      'change [type="file"]': function(e, t) {        
+        uploadFiles(e.target.files, Meteor.userId(), 1);    
       },
       'change .check':function(event,template){
         event.preventDefault();

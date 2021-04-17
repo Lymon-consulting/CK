@@ -43,10 +43,16 @@
       <div class="spacer20">&nbsp;</div>
       <div class="row">
         <div class="col-lg-1 col-md-6 leftpadding toppadding">
-          {{#if getLogoPicture 500}}
-            <img src="{{getLogoPicture 500}}" id="" class="img-fluid"> 
+            {{#if getLogoPicture 500}}
+            <img src="{{getLogoPicture 80}}"> 
             {{else}}
             <img class="thumbnail-logo" src="/images/nologo.png">
+            {{/if}}
+            {{#if isOwner}}
+            <div class="container-fluid text-white">
+              <a href="#" class="text-white text-right" id="openLogoGallery">Cambiar <i class="fa fa-camera"></i></a>
+            </div>
+            
             {{/if}}
         </div>
         <div class="col-lg-7 col-md-6 leftpadding">
@@ -171,12 +177,21 @@
       <div class="col text-center">
         <div class="row">
             <div class="col-lg-3">&nbsp;</div>
-            <div class="col-lg-3 leftpadding">
+            <div class="col-lg-2 leftpadding">
               <a href="#" class="text-white" data-toggle="modal" data-target="#collabModal"><i class="fa fa-user-circle text-white" aria-hidden="true"></i> Colaboradores</a>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
               <a href="#" class="text-white editIndustry" data-answer="{{getCompany._id}}" ><i class="fa fa-pencil text-white" aria-hidden="true"></i> Editar empresa</a>
            </div>
+           {{#unless statusPublished}}
+           <div class="col-lg-2">
+              <a href="#" class="text-white publishIndustry" data-answer="{{getCompany._id}}" ><i class="fa fa-pencil text-white" aria-hidden="true"></i> Publicar empresa</a>
+           </div>
+           {{else}}
+           <div class="col-lg-2">
+              <a href="#" class="text-white unpublishIndustry" data-answer="{{getCompany._id}}" ><i class="fa fa-pencil text-white" aria-hidden="true"></i> Cambiar a borrador</a>
+           </div>
+           {{/unless}}
            <div class="col-lg-3">&nbsp;</div>
         </div> 
       </div>
@@ -395,7 +410,7 @@
                   <div class="spacer20"></div>
                   <div class="row">
                     <div class="col">
-                      Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
+                      La biblioteca de imágenes de esta empresa está vacía. Agrega imágenes antes de usarlas.
                     </div>
                   </div>
                   <div class="spacer20"></div>

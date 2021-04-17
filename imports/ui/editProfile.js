@@ -133,36 +133,36 @@ imdb_cast(){
 }
 },
 
-  video(){
-    var video = "";
-    if(Meteor.user()!=null){
-      if(Meteor.user().crew!=null && Meteor.user().crew.vimeo!=null){
-        video = Meteor.user().crew.vimeo;
-      }
-      else if(Meteor.user().crew!=null && Meteor.user().crew.youtube!=null){
-        video = Meteor.user().crew.youtube;
-      } 
+video(){
+  var video = "";
+  if(Meteor.user()!=null){
+    if(Meteor.user().crew!=null && Meteor.user().crew.vimeo!=null){
+      video = Meteor.user().crew.vimeo;
     }
-    return video;
-  },
-  web_cast(){
-    if(Meteor.user()!=null && Meteor.user().cast!=null){
-      return Meteor.user().cast.webpage;
+    else if(Meteor.user().crew!=null && Meteor.user().crew.youtube!=null){
+      video = Meteor.user().crew.youtube;
+    } 
+  }
+  return video;
+},
+web_cast(){
+  if(Meteor.user()!=null && Meteor.user().cast!=null){
+    return Meteor.user().cast.webpage;
+  }
+},
+video_cast(){
+  var video = "";
+  if(Meteor.user()!=null){
+    if(Meteor.user().cast!=null && Meteor.user().cast.vimeo_demo!=null){
+      video = Meteor.user().cast.vimeo_demo;
     }
-  },
-  video_cast(){
-    var video = "";
-    if(Meteor.user()!=null){
-      if(Meteor.user().cast!=null && Meteor.user().cast.vimeo_demo!=null){
-        video = Meteor.user().cast.vimeo_demo;
-      }
-      else if(Meteor.user().cast!=null && Meteor.user().cast.youtube_demo!=null){
-        video = Meteor.user().cast.youtube_demo;
-      } 
-    }
-    return video;
-  },
-  categories(){
+    else if(Meteor.user().cast!=null && Meteor.user().cast.youtube_demo!=null){
+      video = Meteor.user().cast.youtube_demo;
+    } 
+  }
+  return video;
+},
+categories(){
     return catTopCategories; //variable global en globals.js
   },
   checkCategory:function(item){
@@ -174,7 +174,7 @@ imdb_cast(){
         result = "checked";
       }
     }
-   return result;
+    return result;
   },
 /*
 wizard(){
@@ -275,32 +275,32 @@ getRolesSelected(){
   return result;
 },
 
-    hasPrimaryRole(){
-      var result = false;
-      if(Meteor.user().topRole){
-        result = true;
+hasPrimaryRole(){
+  var result = false;
+  if(Meteor.user().topRole){
+    result = true;
+  }
+  return result;
+},
+getPrimaryRoles(){
+  var result = new Array();
+  var userRoles = Meteor.user().topRole;
+  var strResult = "";
+  if(userRoles){
+    for (var i = 0; i < userRoles.length; i++) {
+      if(userRoles[i]==="1"){
+        result.push("Producción");
       }
-      return result;
-    },
-    getPrimaryRoles(){
-      var result = new Array();
-      var userRoles = Meteor.user().topRole;
-      var strResult = "";
-      if(userRoles){
-        for (var i = 0; i < userRoles.length; i++) {
-          if(userRoles[i]==="1"){
-            result.push("Producción");
-          }
-          else if(userRoles[i]==="2"){
-            result.push("Dirección");
-          }
-        }
+      else if(userRoles[i]==="2"){
+        result.push("Dirección");
+      }
+    }
 
-        for (var i = 0; i < result.length; i++) {
-          strResult = strResult + ", " + result[i];
-        }
-        strResult = strResult.substring(2, strResult.length);
-      }
+    for (var i = 0; i < result.length; i++) {
+      strResult = strResult + ", " + result[i];
+    }
+    strResult = strResult.substring(2, strResult.length);
+  }
         //console.log(result);
         return strResult;
       },
@@ -335,14 +335,24 @@ getRolesSelected(){
 
   },
   getProfilePicture() {
-/*
-   if(Meteor.user()!=null && Meteor.user().crew!=null && Meteor.user().crew.profilePictureID!=null){
-      var profile = Media.findOne({'mediaId':Meteor.user().crew.profilePictureID});
-      if(profile!=null){
-        return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_80,h_80,c_thumb,f_auto,r_max/" + "/v" + profile.media_version + "/" + Meteor.userId() + "/" + Meteor.user().crew.profilePictureID;    
-      }
 
-    }*/
+   if(Meteor.user()!=null && Meteor.user().crew!=null && Meteor.user().crew.profilePictureID!=null){
+    var profile = Media.findOne({'mediaId':Meteor.user().crew.profilePictureID});
+    if(profile!=null){
+      return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_80,h_80,c_thumb,f_auto,r_max/" + "/v" + profile.media_version + "/" + Meteor.userId() + "/" + Meteor.user().crew.profilePictureID;    
+    }
+
+  }
+},
+getProfilePictureCast() {
+
+ if(Meteor.user()!=null && Meteor.user().cast!=null && Meteor.user().cast.profilePictureID!=null){
+  var profile = Media.findOne({'mediaId':Meteor.user().cast.profilePictureID});
+  if(profile!=null){
+    return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_80,h_80,c_thumb,f_auto,r_max/" + "/v" + profile.media_version + "/" + Meteor.userId() + "/" + Meteor.user().cast.profilePictureID;    
+  }
+
+}
 },
 getInitials(){
   var name = Meteor.user().profile.name;
@@ -393,69 +403,69 @@ getURL(mediaId){
   return url;
 },
 showCreateCastLink(){
-    var result = true;
-    if(Meteor.user()){
-      if(Meteor.user().isCast!=null && Meteor.user().isCast){
-        result=false;
-      }
+  var result = true;
+  if(Meteor.user()){
+    if(Meteor.user().isCast!=null && Meteor.user().isCast){
+      result=false;
     }
-    return result;
-  },
-  isCastChecked(){
-    var result = "";
-    if(Meteor.user()){
-      if(Meteor.user().isCast!=null && Meteor.user().isCast){
-        result="checked";
-      }
+  }
+  return result;
+},
+isCastChecked(){
+  var result = "";
+  if(Meteor.user()){
+    if(Meteor.user().isCast!=null && Meteor.user().isCast){
+      result="checked";
     }
-    return result;
-  },
-  isCrewChecked(){
-    var result = "";
-    if(Meteor.user()){
-      if(Meteor.user().isCrew!=null && Meteor.user().isCrew){
-        result="checked";
-        $('#category').prop('disabled', false);
-        $('#ocupation').prop('disabled', false);
-        $('#selection').prop('disabled', false);
-        $('#web_page').prop('disabled', false);
-        $('#video').prop('disabled', false);
-        $('#facebook_page').prop('disabled', false);
-        $('#twitter_page').prop('disabled', false);
-        $('#vimeo_page').prop('disabled', false);
-        $('#youtube_page').prop('disabled', false);
-        $('#instagram_page').prop('disabled', false);
-        $('#imdb_page').prop('disabled', false);
-      }
+  }
+  return result;
+},
+isCrewChecked(){
+  var result = "";
+  if(Meteor.user()){
+    if(Meteor.user().isCrew!=null && Meteor.user().isCrew){
+      result="checked";
+      $('#category').prop('disabled', false);
+      $('#ocupation').prop('disabled', false);
+      $('#selection').prop('disabled', false);
+      $('#web_page').prop('disabled', false);
+      $('#video').prop('disabled', false);
+      $('#facebook_page').prop('disabled', false);
+      $('#twitter_page').prop('disabled', false);
+      $('#vimeo_page').prop('disabled', false);
+      $('#youtube_page').prop('disabled', false);
+      $('#instagram_page').prop('disabled', false);
+      $('#imdb_page').prop('disabled', false);
     }
-    return result;
-  },
-  maxLength(){
-    return getParam("MAX_CHAR_IN_TEXTAREA");
-  },
-  maxCastLength(){
-    return getParam("MAX_CHAR_IN_TEXTAREA");
-  },
+  }
+  return result;
+},
+maxLength(){
+  return getParam("MAX_CHAR_IN_TEXTAREA");
+},
+maxCastLength(){
+  return getParam("MAX_CHAR_IN_TEXTAREA");
+},
 
- /*Métodos para cast*/
- selectedGender(radioVal){
-    var result = "";
-    Meteor.subscribe("otherUsers");
-    var userSelection = Meteor.user().cast.sex; 
-    if(userSelection==='Masculino' && radioVal==='Masculino'){ 
-      result = "checked";
-    }
-    else if(userSelection==='Femenino' && radioVal==='Femenino'){
-      result = "checked";
-    }
-    else if(userSelection==='Sin definir' && radioVal==='Sin definir'){
-      result = "checked";
-    }
-    return result;
-  },
-  ageSelected: function(item){
-    var result="";
-    var age = Meteor.user().cast.ageRange;
+/*Métodos para cast*/
+selectedGender(radioVal){
+  var result = "";
+  Meteor.subscribe("otherUsers");
+  var userSelection = Meteor.user().cast.sex; 
+  if(userSelection==='Masculino' && radioVal==='Masculino'){ 
+    result = "checked";
+  }
+  else if(userSelection==='Femenino' && radioVal==='Femenino'){
+    result = "checked";
+  }
+  else if(userSelection==='Sin definir' && radioVal==='Sin definir'){
+    result = "checked";
+  }
+  return result;
+},
+ageSelected: function(item){
+  var result="";
+  var age = Meteor.user().cast.ageRange;
     //console.log(height);
     if(age){
      var elem = age.indexOf(item);
@@ -467,10 +477,10 @@ showCreateCastLink(){
      } 
    }
    return result;
-  },
-  heightSelected: function(item){
-    var result="";
-    var height = Meteor.user().cast.height;
+ },
+ heightSelected: function(item){
+  var result="";
+  var height = Meteor.user().cast.height;
     //console.log(height);
     if(height){
      var elem = height.indexOf(item);
@@ -482,10 +492,10 @@ showCreateCastLink(){
      } 
    }
    return result;
-  },
-  physicalSelected: function(item){
-    var result="";
-    var physical = Meteor.user().cast.physical;
+ },
+ physicalSelected: function(item){
+  var result="";
+  var physical = Meteor.user().cast.physical;
     //console.log(height);
     if(physical){
      var elem = physical.indexOf(item);
@@ -497,10 +507,10 @@ showCreateCastLink(){
      } 
    }
    return result;
-  },
-  ethnicsSelected:function(item){
-    var result="";
-    var ethnics = Meteor.user().cast.ethnicity;
+ },
+ ethnicsSelected:function(item){
+  var result="";
+  var ethnics = Meteor.user().cast.ethnicity;
     //console.log(height);
     if(ethnics){
      var elem = ethnics.indexOf(item);
@@ -512,10 +522,10 @@ showCreateCastLink(){
      } 
    }
    return result;
-  },
-  eyesSelected:function(item){
-    var result="";
-    var eyes = Meteor.user().cast.eyes;
+ },
+ eyesSelected:function(item){
+  var result="";
+  var eyes = Meteor.user().cast.eyes;
     //console.log(height);
     if(eyes){
      var elem = eyes.indexOf(item);
@@ -527,10 +537,10 @@ showCreateCastLink(){
      } 
    }
    return result;
-  },
-  hairSelected:function(item){
-    var result="";
-    var hair = Meteor.user().cast.hair;
+ },
+ hairSelected:function(item){
+  var result="";
+  var hair = Meteor.user().cast.hair;
     //console.log(height);
     if(hair){
      var elem = hair.indexOf(item);
@@ -542,10 +552,10 @@ showCreateCastLink(){
      } 
    }
    return result;
-  },
-  hairTypeSelected:function(item){
-    var result="";
-    var hairType = Meteor.user().cast.hairType;
+ },
+ hairTypeSelected:function(item){
+  var result="";
+  var hairType = Meteor.user().cast.hairType;
     //console.log(height);
     if(hairType){
      var elem = hairType.indexOf(item);
@@ -557,19 +567,19 @@ showCreateCastLink(){
      } 
    }
    return result;
-  },
-  checkLanguage:function(item){
-    var result="";
-    var language = new Array() ;
-    if(Meteor.user() && Meteor.user().cast.languages){
-      language = Meteor.user().cast.languages;
-      if(language!=null && language.indexOf(item)>=0){
-        result = "checked";
-      }
+ },
+ checkLanguage:function(item){
+  var result="";
+  var language = new Array() ;
+  if(Meteor.user() && Meteor.user().cast.languages){
+    language = Meteor.user().cast.languages;
+    if(language!=null && language.indexOf(item)>=0){
+      result = "checked";
     }
-   return result;
-  },
-  ages(){
+  }
+  return result;
+},
+ages(){
     return catAges; //variable global en globals.js
   },
   heights(){
@@ -608,17 +618,17 @@ showCreateCastLink(){
   },
   skills(){
    var data = Meteor.user();
-    var resume="";
-    var MAX_CHAR_IN_TEXTAREA = getParam("MAX_CHAR_IN_TEXTAREA");
-    if(data!=null && data.cast.skills!=null){
-      resume = data.cast.skills;
-      $('#max-skills').text(MAX_CHAR_IN_TEXTAREA - resume.length);
-    }
-    else{
-      $('#max-skills').text(MAX_CHAR_IN_TEXTAREA); 
-    }
-    return resume;
-  },
+   var resume="";
+   var MAX_CHAR_IN_TEXTAREA = getParam("MAX_CHAR_IN_TEXTAREA");
+   if(data!=null && data.cast.skills!=null){
+    resume = data.cast.skills;
+    $('#max-skills').text(MAX_CHAR_IN_TEXTAREA - resume.length);
+  }
+  else{
+    $('#max-skills').text(MAX_CHAR_IN_TEXTAREA); 
+  }
+  return resume;
+},
 
 });
 
@@ -731,15 +741,14 @@ Template.editProfile.events({
 
   'click #goProfile': function(event, template){
    event.preventDefault();
-   
+   FlowRouter.go('/profilePage/' + Meteor.userId());
+ },
+ 'click #goProfileCast': function(event, template){
+   event.preventDefault();
+   FlowRouter.go('/profilePageActor/' + Meteor.userId());
+ },
 
-    //Bert.alert({message: 'Se ha actualizado tu perfil', type: 'success', icon: 'fa fa-check'});
-    FlowRouter.go('/profilePage/' + Meteor.userId());
-  //}
-  //return false
-},
-
-'click .goMediaLibraryProfile': function(event,template){
+ 'click .goMediaLibraryProfile': function(event,template){
   event.preventDefault();
   $('#modal1').modal('hide');
   $('body').removeClass('modal-open');
@@ -757,6 +766,11 @@ Template.editProfile.events({
 },
 'click #openMediaGallery': function(event,template){
   event.preventDefault();
+
+  var pictureType = $(event.currentTarget).attr("data-id");
+
+  Session.set("profilePicture",pictureType);
+
   $(".media-thumb").css('border','none');
   $("#setProfilePicture").addClass('disabled');
   $('#modal1').modal('show');
@@ -774,31 +788,41 @@ Template.editProfile.events({
 
   Session.set("mediaId",mediaId);
 
- $(".media-thumb").css('border','none');
- $(event.target).css('border', "solid 3px #ED1567");
- $("#setProfilePicture").removeClass('disabled');
+  $(".media-thumb").css('border','none');
+  $(event.target).css('border', "solid 3px #ED1567");
+  $("#setProfilePicture").removeClass('disabled');
 
 },
 'click #setProfilePicture': function(event,template){
  event.preventDefault();
  var mediaId = Session.get("mediaId");
+ var pictureType = Session.get("profilePicture");
+ if(pictureType==="1"){ //cambiando foto de crew
+   Meteor.call(
+    'updateCrewProfilePicture',
+    Meteor.userId(),
+    mediaId
+    );
+ }
+  else if(pictureType==="2"){ //cambiando foto de cast
+   Meteor.call(
+    'updateCastProfilePicture',
+    Meteor.userId(),
+    mediaId
+    );
+ }
 
- Meteor.call(
-  'updateCrewProfilePicture',
-  Meteor.userId(),
-  mediaId
-  );
 
-  $('#modal1').modal('hide');
-  $('body').removeClass('modal-open');
-  $('.modal-backdrop').remove();
+ $('#modal1').modal('hide');
+ $('body').removeClass('modal-open');
+ $('.modal-backdrop').remove();
 
 },
 'click #selectCoverPicture': function(event,template){
  event.preventDefault();
-  var mediaId = $(event.currentTarget).attr("data-id");
+ var mediaId = $(event.currentTarget).attr("data-id");
 
-  Session.set("mediaId",mediaId);
+ Session.set("mediaId",mediaId);
 
  $(".media-thumb").css('border','none');
  $(event.target).css('border', "solid 3px #ED1567");
@@ -815,10 +839,10 @@ Template.editProfile.events({
   mediaId
   );
 
-  $('#modal2').modal('hide');
-  $('body').removeClass('modal-open');
-  $('.modal-backdrop').remove();
-  $("#setCoverPicture").removeClass('disabled');
+ $('#modal2').modal('hide');
+ $('body').removeClass('modal-open');
+ $('.modal-backdrop').remove();
+ $("#setCoverPicture").removeClass('disabled');
 
 },
 
@@ -942,9 +966,9 @@ else{
             console.log("Upload Error:"  + err); //no output on console
           }
         });
-    },*/
-    'click #addCastProfile':function(event, template){
-      event.preventDefault();
+      },*/
+      'click #addCastProfile':function(event, template){
+        event.preventDefault();
 
       //Meteor.call('updateProfileType', Meteor.userId(),"both");
       Meteor.call('setIsCast', Meteor.userId(),true);
@@ -968,66 +992,62 @@ else{
     },
 
     'change [type="file"]': function(e, t) {
-      //console.log(e.target.name);
-      uploadFiles(e.target.files, this._id, e.target.name);
-      /*
-      $('#modal1').modal('hide');
-      $('body').removeClass('modal-open');
-      $('.modal-backdrop').remove();*/
+      uploadFiles(e.target.files, Meteor.userId(), 1);
+    
     },
     'change .category': function(event, template){
     //console.log($(event.target).val() + " - " + event.target.checked);
 
-      if(event.target.checked){
-        Meteor.call('addRole', Meteor.userId(), $(event.target).val());
-      }
-      else{
-        Meteor.call('removeRole', Meteor.userId(), $(event.target).val()); 
-      }
-    },
-    'change .activateCrew':function(event, template){
-       event.preventDefault();
-       if($('.activateCrew').is(":checked") == true){
-           $('#category').prop('disabled', false);
-           $('#ocupation').prop('disabled', false);
-           $('#selection').prop('disabled', false);
-           $('#web_page').prop('disabled', false);
-           $('#video').prop('disabled', false);
-           $('#facebook_page').prop('disabled', false);
-           $('#twitter_page').prop('disabled', false);
-           $('#vimeo_page').prop('disabled', false);
-           $('#youtube_page').prop('disabled', false);
-           $('#instagram_page').prop('disabled', false);
-           $('#imdb_page').prop('disabled', false);
-           Meteor.call('setIsCrew', Meteor.userId(),true);
-        }else{
-           $('#category').prop('disabled', 'disabled');
-           $('#ocupation').prop('disabled', 'disabled');
-           $('#selection').prop('disabled', 'disabled');
-           $('#web_page').prop('disabled', 'disabled');
-           $('#video').prop('disabled', 'disabled');
-           $('#facebook_page').prop('disabled', 'disabled');
-           $('#twitter_page').prop('disabled', 'disabled');
-           $('#vimeo_page').prop('disabled', 'disabled');
-           $('#youtube_page').prop('disabled', 'disabled');
-           $('#instagram_page').prop('disabled', 'disabled');
-           $('#imdb_page').prop('disabled', 'disabled');
-           Meteor.call('setIsCrew', Meteor.userId(),false);
-        }
-     },
-     'change .activateCast':function(event, template){
-       event.preventDefault();
-       if($('.activateCast').is(":checked") == true){
-           Meteor.call('setIsCast', Meteor.userId(),true);
-        }else{
-           Meteor.call('setIsCast', Meteor.userId(),false);
-        }
-     },
+    if(event.target.checked){
+      Meteor.call('addRole', Meteor.userId(), $(event.target).val());
+    }
+    else{
+      Meteor.call('removeRole', Meteor.userId(), $(event.target).val()); 
+    }
+  },
+  'change .activateCrew':function(event, template){
+   event.preventDefault();
+   if($('.activateCrew').is(":checked") == true){
+     $('#category').prop('disabled', false);
+     $('#ocupation').prop('disabled', false);
+     $('#selection').prop('disabled', false);
+     $('#web_page').prop('disabled', false);
+     $('#video').prop('disabled', false);
+     $('#facebook_page').prop('disabled', false);
+     $('#twitter_page').prop('disabled', false);
+     $('#vimeo_page').prop('disabled', false);
+     $('#youtube_page').prop('disabled', false);
+     $('#instagram_page').prop('disabled', false);
+     $('#imdb_page').prop('disabled', false);
+     Meteor.call('setIsCrew', Meteor.userId(),true);
+   }else{
+     $('#category').prop('disabled', 'disabled');
+     $('#ocupation').prop('disabled', 'disabled');
+     $('#selection').prop('disabled', 'disabled');
+     $('#web_page').prop('disabled', 'disabled');
+     $('#video').prop('disabled', 'disabled');
+     $('#facebook_page').prop('disabled', 'disabled');
+     $('#twitter_page').prop('disabled', 'disabled');
+     $('#vimeo_page').prop('disabled', 'disabled');
+     $('#youtube_page').prop('disabled', 'disabled');
+     $('#instagram_page').prop('disabled', 'disabled');
+     $('#imdb_page').prop('disabled', 'disabled');
+     Meteor.call('setIsCrew', Meteor.userId(),false);
+   }
+ },
+ 'change .activateCast':function(event, template){
+   event.preventDefault();
+   if($('.activateCast').is(":checked") == true){
+     Meteor.call('setIsCast', Meteor.userId(),true);
+   }else{
+     Meteor.call('setIsCast', Meteor.userId(),false);
+   }
+ },
 
-     /*Métodos para cast*/
-     'change .sex' : function(event, template){
-    event.preventDefault();
-    var inputValue = $(event.target).attr("data-answer");
+ /*Métodos para cast*/
+ 'change .sex' : function(event, template){
+  event.preventDefault();
+  var inputValue = $(event.target).attr("data-answer");
     //console.log(inputValue);
     Meteor.call('updateCastGender', Meteor.userId(), inputValue); 
   },
@@ -1044,75 +1064,75 @@ else{
     Meteor.call('updateCastPeculiarities', Meteor.userId(), value);
   },
   'keyup #peculiarities' : function(event){
-     event.preventDefault();
-     var len = $('#peculiarities').val().length;
-     if(len > getParam("MAX_CHAR_IN_TEXTAREA")){
-      val.value= val.value.substring(0,getParam("MAX_CHAR_IN_TEXTAREA"));
-    }
-    else{
-      $('#max-peculiarities').text(getParam("MAX_CHAR_IN_TEXTAREA")-len);
-    }
-  },
-  'keyup #skills' : function(event){
-     event.preventDefault();
-     var len = $('#skills').val().length;
-     if(len > getParam("MAX_CHAR_IN_TEXTAREA")){
-      val.value= val.value.substring(0,getParam("MAX_CHAR_IN_TEXTAREA"));
-    }
-    else{
-      $('#max-skills').text(getParam("MAX_CHAR_IN_TEXTAREA")-len);
-    }
-  },
-  'change #video_cast': function(event,template){
-    event.preventDefault();
-    var video = trimInput(event.target.value);
-    if(isNotEmpty(video)){
-      if(video.indexOf("vimeo")>0){
-        Meteor.call('updateCastVimeoDemo', Meteor.userId(), formatURL(video)); 
-        Meteor.call('updateCastYoutubeDemo', Meteor.userId(), null); 
-      } 
-      else if(video.indexOf("youtube")>0){
-        Meteor.call('updateCastYoutubeDemo', Meteor.userId(), formatURL(video)); 
-        Meteor.call('updateCastVimeoDemo', Meteor.userId(), null); 
-      }
-      else{
-        Bert.alert({message: 'Por el momento únicamente aceptamos videos de vimeo o youtube', type: 'danger', icon: 'fa fa-exclamation'});
-      }
-      
-    }
-    else{
+   event.preventDefault();
+   var len = $('#peculiarities').val().length;
+   if(len > getParam("MAX_CHAR_IN_TEXTAREA")){
+    val.value= val.value.substring(0,getParam("MAX_CHAR_IN_TEXTAREA"));
+  }
+  else{
+    $('#max-peculiarities').text(getParam("MAX_CHAR_IN_TEXTAREA")-len);
+  }
+},
+'keyup #skills' : function(event){
+ event.preventDefault();
+ var len = $('#skills').val().length;
+ if(len > getParam("MAX_CHAR_IN_TEXTAREA")){
+  val.value= val.value.substring(0,getParam("MAX_CHAR_IN_TEXTAREA"));
+}
+else{
+  $('#max-skills').text(getParam("MAX_CHAR_IN_TEXTAREA")-len);
+}
+},
+'change #video_cast': function(event,template){
+  event.preventDefault();
+  var video = trimInput(event.target.value);
+  if(isNotEmpty(video)){
+    if(video.indexOf("vimeo")>0){
+      Meteor.call('updateCastVimeoDemo', Meteor.userId(), formatURL(video)); 
       Meteor.call('updateCastYoutubeDemo', Meteor.userId(), null); 
+    } 
+    else if(video.indexOf("youtube")>0){
+      Meteor.call('updateCastYoutubeDemo', Meteor.userId(), formatURL(video)); 
       Meteor.call('updateCastVimeoDemo', Meteor.userId(), null); 
     }
-  },
-  'change #facebook_cast': function(event,template){
-    var value = trimInput(event.target.value);
-    Meteor.call('updateCastFacebookPage', Meteor.userId(), value);
-  },
-  'change #imdb_cast': function(event,template){
-    var value = trimInput(event.target.value);
-    Meteor.call('updateCastImdbPage', Meteor.userId(), value);
-  },
-  'change #twitter_cast': function(event,template){
-    var value = trimInput(event.target.value);
-    Meteor.call('updateCastTwitterPage', Meteor.userId(), value);
-  },
-  'change #instagram_cast': function(event,template){
-    var value = trimInput(event.target.value);
-    Meteor.call('updateCastInstagramPage', Meteor.userId(), value);
-  },
-  'change #vimeo_cast': function(event,template){
-    var value = trimInput(event.target.value);
-    Meteor.call('updateCastVimeoPage', Meteor.userId(), value);
-  },
-  'change #youtube_cast': function(event,template){
-    var value = trimInput(event.target.value);
-    Meteor.call('updateCastYoutubePage', Meteor.userId(), value);
-  },
-  'change #web_cast': function(event,template){
-    var value = trimInput(event.target.value);
-    Meteor.call('updateCastWebPage', Meteor.userId(), value);
-  },
-  
-    
-  });
+    else{
+      Bert.alert({message: 'Por el momento únicamente aceptamos videos de vimeo o youtube', type: 'danger', icon: 'fa fa-exclamation'});
+    }
+
+  }
+  else{
+    Meteor.call('updateCastYoutubeDemo', Meteor.userId(), null); 
+    Meteor.call('updateCastVimeoDemo', Meteor.userId(), null); 
+  }
+},
+'change #facebook_cast': function(event,template){
+  var value = trimInput(event.target.value);
+  Meteor.call('updateCastFacebookPage', Meteor.userId(), value);
+},
+'change #imdb_cast': function(event,template){
+  var value = trimInput(event.target.value);
+  Meteor.call('updateCastImdbPage', Meteor.userId(), value);
+},
+'change #twitter_cast': function(event,template){
+  var value = trimInput(event.target.value);
+  Meteor.call('updateCastTwitterPage', Meteor.userId(), value);
+},
+'change #instagram_cast': function(event,template){
+  var value = trimInput(event.target.value);
+  Meteor.call('updateCastInstagramPage', Meteor.userId(), value);
+},
+'change #vimeo_cast': function(event,template){
+  var value = trimInput(event.target.value);
+  Meteor.call('updateCastVimeoPage', Meteor.userId(), value);
+},
+'change #youtube_cast': function(event,template){
+  var value = trimInput(event.target.value);
+  Meteor.call('updateCastYoutubePage', Meteor.userId(), value);
+},
+'change #web_cast': function(event,template){
+  var value = trimInput(event.target.value);
+  Meteor.call('updateCastWebPage', Meteor.userId(), value);
+},
+
+
+});

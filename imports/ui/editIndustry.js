@@ -12,6 +12,8 @@ import { formatURL } from '/lib/functions.js';
 import './editIndustry.html';
 import '/lib/common.js';
 
+
+
 function isOwner(){
   Meteor.subscribe("myIndustries");
   var result = false;
@@ -29,6 +31,90 @@ function isAdmin(){
        result = true;
     }
     return result;
+}
+
+simSlides = new ReactiveVar( 3 );
+
+Template.editIndustry.rendered = function(){
+  new Slidr({
+    timer: 1500,
+    carousel: true,
+    slideCallback: _.debounce( function () {
+      console.log('A global slide callback, gets called whenever this slidr slides. Protop: debounce it to avoid multiple simultaneous calls!');
+    }, 50, true ),
+    views: [{
+      wrapper: this.find('.slide-show'),
+      slides: this.findAll('.slide-show .slide'),
+      controls: this.findAll('.slide-show .next-prev-btns'),
+      simultaneousSlides: 3,
+      pagination: {
+        wrapper: 'ul',
+        wrapperClass: 'ul-class',
+        showControls: false,
+        indicators: 'li',
+        indicatorsClass: 'li-class',
+        paginationContent: function ( slide ) {
+          return $(slide).text();
+        }
+      },
+      slideCallback: function( viewOptions ) {
+        return console.log('This is a local slide callback, and this is the the wrapper element for this view: ', viewOptions.wrapper );
+      }
+    }, {
+      wrapper: this.find('.slide-show-2'),
+      slides: this.findAll('.slide-show-2 .slide'),
+      fadeType: 'slide',
+      simultaneousSlides: function() {
+        return simSlides.get();
+      },
+      pagination: {
+        wrapper: 'div',
+        wrapperClass: 'ul-class-3',
+        indicators: 'div',
+        indicatorsClass: 'li-class-3',
+        paginationContent: '•',
+        paginationPlacement: 'before'
+      }
+    }]
+  });
+
+  new Slidr({
+    timer: 350,
+    carousel: false,
+    views: [{
+      wrapper: this.find('.another-slideshow'),
+      slides: this.findAll('.another-slideshow .slide'),
+      controls: this.findAll('.another-slideshow .next-prev-btns'),
+      controlsBaseClass: 'next-prev-btns',
+      simultaneousSlides: 1,
+      showControls: false,
+      pagination: {
+        wrapper: 'ul',
+        wrapperClass: 'ul-class',
+        indicators: 'li',
+        indicatorsClass: 'li-class-2'
+      }
+    }]
+  });
+
+  new Slidr({
+    timer: 4500,
+    carousel: false,
+    views: [{
+      wrapper: this.find('.slider-slides'),
+      slides: this.findAll('.slider-slides .slide'),
+      controls: this.findAll('.slider-slides .next-prev-btns'),
+      controlsBaseClass: 'next-prev-btns',
+      fadeType: 'slide',
+      simultaneousSlides: 4
+    }, {
+      wrapper: this.find('.slider-slides-text-slides'),
+      slides: this.findAll('.slider-slides-text-slides .text-slide')
+    }]
+  });
+
+  
+
 }
 
 Template.editIndustry.helpers({
@@ -69,10 +155,17 @@ Template.editIndustry.helpers({
   getMedia() {
      Meteor.subscribe("allMedia");
     //var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
-    var media = Media.find({'userId': Meteor.userId()},{sort:{'media_date':-1}});
+    var media = Media.find({'companyId': FlowRouter.getParam("id")},{sort:{'media_date':-1}});
     return media;
   },
   getGallery(){
+    
+    $('.multiple-items').slick({
+      infinite: false,
+      slidesToShow: 3,
+      slidesToScroll: 3
+    });
+
     var data = Industry.findOne({'_id' : FlowRouter.getParam("id")});
     var array = new Array();
     
@@ -93,6 +186,7 @@ Template.editIndustry.helpers({
         }
       }
     }
+
     return array;
 /*
     var media = Media.find({"userId": Meteor.userId(), "media_use":"gallery"}).fetch();
@@ -123,7 +217,8 @@ Template.editIndustry.helpers({
   hasMedia() {
     Meteor.subscribe("allMedia");
     //var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
-    var media = Media.find({'userId': Meteor.userId()}).count();
+    var media = Media.find({'companyId': FlowRouter.getParam("id")}).count();
+    console.log(media);
     var hasMedia = false;
     if(media > 0){
       hasMedia = true;
@@ -134,8 +229,9 @@ Template.editIndustry.helpers({
     var url = "";
     var media = Media.findOne({'mediaId':mediaId});
       if(media!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + media.userId + "/" + media.mediaId;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.settings.public.LEVEL + "/" + media.mediaId;    
       }
+      console.log("--->"+url);
     return url;
   },
   video(){
@@ -390,10 +486,14 @@ stateSelected: function(value){
     if(data!=null && data.companyLogoID!=null){
       var cover = Media.findOne({'mediaId':data.companyLogoID});
       if(cover!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_fill/" + "/v" + cover.media_version + "/" + data.userId + "/" + data.companyLogoID;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_fill" + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.companyLogoID;
       }
       
     }
+
+    //https://res.cloudinary.com/drhowtsxb/image/upload/w_80,c_fill//v1618683694/development/undefined/company/L9pf5PLPK5LGGn7Yd/wzymgoghihnqidwhmowu
+    //https://res.cloudinary.com/drhowtsxb/image/upload             /v1618683694/development/company/L9pf5PLPK5LGGn7Yd/wzymgoghihnqidwhmowu.jpg
+
     return url;
   },
   getCoverPicture() {
@@ -403,7 +503,7 @@ stateSelected: function(value){
     if(data!=null && data.companyCoverID!=null){
       var cover = Media.findOne({'mediaId':data.companyCoverID});
       if(cover!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_1200,h_250,c_fill/" + "/v" + cover.media_version + "/" + data.userId + "/" + data.companyCoverID;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_1200,h_250,c_fill" + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.companyCoverID;
       }
       
     }
@@ -436,6 +536,19 @@ stateSelected: function(value){
 
 
 Template.editIndustry.events({
+  'submit .change-simultaneous-slides': function ( e, tmpl ) {
+    
+    e.preventDefault();
+    
+    var input = parseInt( $(tmpl.find('input')).val(), 10 );
+    if (input === 0)
+      input = 1;
+    if (input > 3)
+      input = 3;
+
+    simSlides.set( input );
+
+  },
   'keyup #company_desc' : function(event){
    event.preventDefault();
    var len = $('#company_desc').val().length;
@@ -783,12 +896,7 @@ Template.editIndustry.events({
         }
     },*/
     'change [type="file"]': function(e, t) {
-        //console.log(e.target.name);
-        uploadFiles(e.target.files, this._id, e.target.name);
-        /*
-        $('#modal1').modal('hide');
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();*/
+        uploadFiles(e.target.files, FlowRouter.getParam("id"), 2);
       },
     'click #deleteIndustry': function(event,Template){
       event.preventDefault();
