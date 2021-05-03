@@ -394,19 +394,11 @@ Accounts.onCreateUser(function(options, user) {
         }
       });
     },
-    updateCastProfilePicture(userId, mediaId){
+    updateProfilePicture(userId, mediaId){
       Meteor.users.update({'_id': userId}, {
         $set:
         {
-          "cast.profilePictureID": mediaId
-        }
-      });
-    },
-    updateCastCoverPicture(userId, mediaId){
-      Meteor.users.update({'_id': userId}, {
-        $set:
-        {
-          "cast.profileCoverID": mediaId
+          "profilePictureID": mediaId
         }
       });
     },

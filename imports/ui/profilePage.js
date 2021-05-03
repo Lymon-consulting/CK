@@ -387,15 +387,12 @@ isDirectorOrProducer(){
   },
    getProfilePicture(userId, size) {
       Meteor.subscribe("allMedia");
-      var user = Meteor.users.findOne({'_id':userId});
       var url;
-      if(user!=null && user.crew!=null && user.crew.profilePictureID!=null){
-        var profile = Media.findOne({'mediaId':user.crew.profilePictureID});
+      if(Meteor.user()!=null && Meteor.user().profilePictureID!=null){
+        var profile = Media.findOne({'mediaId':Meteor.user().profilePictureID});
         if(profile!=null){
-          //url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + profile.media_version + "/" + userId + "/" + user.crew.profilePictureID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + Meteor.user().profilePictureID;
         }
-        
       }
       return url;
     
@@ -428,10 +425,11 @@ isDirectorOrProducer(){
       Meteor.subscribe("allMedia");
       var user = Meteor.users.findOne({'_id':userId});
       var url;
-      if(user!=null && user.crew!=null && user.crew.profilePictureID!=null){
-        var profile = Media.findOne({'mediaId':user.crew.profilePictureID});
+      if(user!=null && user.profilePictureID!=null){
+        var profile = Media.findOne({'mediaId':user.profilePictureID});
         if(profile!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.crew.profilePictureID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + user.profilePictureID;    
+//                Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + Meteor.user().profilePictureID;
         }
         
       }

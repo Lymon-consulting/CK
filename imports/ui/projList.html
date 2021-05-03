@@ -8,27 +8,33 @@
          </div>
       </section>
    </div>     
-   <nav class="navbar navbar-dark bg-dark justify-content-between">
-    <a class="navbar-brand text-white">Buscar / Producciones</a>
-    <form class="form-inline">
-      <label for="select" class="text-lg-white">¿No buscas producciones? Elige otra opción </label>&nbsp;
-      <select name="" id="searchType" class="form-control mr-sm-2">
-       <option value="">-- ¿Qué buscas? --</option>
-       <option value="Crew">CREW</option>
-       <option value="Cast">CAST</option>
-       <option value="Industrias">EMPRESAS</option>
-     </select>
-     
-     
-    </form>
-  </nav>
+   
   <div class="container">
     <div class="spacer20"></div>
     <div class="row">
       <div class="col-lg-3 rounded background-verylightgray p-3">
         <div class="sticky-top">
           <div class="row">
-            <div><i class="fa fa-sliders fa-sm"></i>&nbsp;Filtrar búsqueda</div>
+            <div>&nbsp;<i class="fa fa-sliders fa-sm"></i>&nbsp;Filtrar búsqueda</div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">Opciones</div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col">
+              <select name="" id="searchType" class="form-control agreements">
+               <option value="Proyectos" selected>Proyectos</option>
+               <option value="Crew">Crew</option>
+               <option value="Cast">Cast</option>
+               <option value="Industrias">Empresas</option>
+             </select>
+            </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">Tipo</div>
           </div>
           <div class="spacer10"></div>
           <div class="row">
@@ -43,15 +49,17 @@
           <div class="spacer10"></div>
           <div class="row">
             <div class="col agreements">Nombre</div>
-          </div>
-          
-          
+          </div>                  
           <div class="row">
             <div class="col agreements">
               {{> EasySearch.Input index=projectIndex event="enter" attributes=inputAttributes}}
               {{#EasySearch.IfSearching index=usersIndex}}{{/EasySearch.IfSearching}}
               {{#EasySearch.IfSearching index=industryIndex}}{{/EasySearch.IfSearching}}
             </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">Estatus</div>
           </div>
           <div class="spacer10"></div>
           <div class="row">
@@ -66,6 +74,10 @@
           </div>
           <div class="spacer10"></div>
           <div class="row">
+            <div class="col agreements">Tipo</div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
             <div class="col">
               <select class="form-control agreements" id="type">
                 <option value="cualquier"> Cualquier tipo </option>
@@ -74,6 +86,10 @@
                 {{/each}}
               </select>
             </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">Género</div>
           </div>
           <div class="spacer10"></div>
           <div class="row">

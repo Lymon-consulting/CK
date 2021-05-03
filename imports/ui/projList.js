@@ -9,6 +9,14 @@ import './projList.html';
 import '/lib/common.js';
 
 Meteor.subscribe("otherUsers");
+
+Template.projList.rendered = function(){
+  ProjectIndex.getComponentMethods().addProps('status',true); 
+  this.autorun(function(){
+    window.scrollTo(0,0);
+  });
+}
+
 Template.projList.helpers({
    usersIndex: () => UsersIndex, // instanceof EasySearch.Index
    inputAttributes: function () {
@@ -66,7 +74,7 @@ Template.projList.helpers({
     if(data!=null && data.projectPictureID!=null){
       var cover = Media.findOne({'mediaId':data.projectPictureID});
       if(cover!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_limit" + "/v" + cover.media_version + "/" + data.userId + "/" + data.projectPictureID;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_limit" + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.projectPictureID;    
       }
       
     }
@@ -95,7 +103,7 @@ Template.projList.helpers({
       if(user!=null && user.profilePictureID!=null){
         var profile = Media.findOne({'mediaId':user.profilePictureID});
         if(profile!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + user.profilePictureID;    
         }
         
       }

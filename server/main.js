@@ -187,7 +187,7 @@ export const UsersIndex = new Index({
 
 export const ProjectIndex = new Index({
     collection: Project,
-    fields: ['project_title', 'project_desc', 'project_genre', 'project_type', 'project_family', 'project_status'],
+    fields: ['project_title', 'project_desc', 'project_genre', 'project_type', 'project_family', 'project_status', 'status'],
     
     engine: new MongoDBEngine({
       selector: function (searchObject, options, aggregation) {
@@ -205,6 +205,9 @@ export const ProjectIndex = new Index({
         if (options.search.props.project_genre) {
           selector.project_genre = options.search.props.project_genre;
         }
+        if (options.search.props.status) {
+          selector.status = options.search.props.status;
+        }
 
         return selector;
       }
@@ -213,7 +216,7 @@ export const ProjectIndex = new Index({
 
 export const IndustryIndex = new Index({
     collection: Industry,
-    fields: ['company_name', 'company_desc', 'company_type', 'company_year'],
+    fields: ['company_name', 'company_desc', 'company_type', 'company_year','status'],
     
     engine: new MongoDBEngine({
       selector: function (searchObject, options, aggregation) {
@@ -233,6 +236,9 @@ export const IndustryIndex = new Index({
         }
         if (options.search.props.city) {
           selector.city = options.search.props.city;
+        }
+        if (options.search.props.status) {
+          selector.status = options.search.props.status;
         }
         return selector;
       }

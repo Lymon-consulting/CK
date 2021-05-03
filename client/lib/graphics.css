@@ -132,16 +132,32 @@
   margin: 10px 0;
 }
 #profileImageMenu {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #666;
+  background: #333;
   /*border:solid;*/
   font-size: 15px;
   color: #fff;
   text-align: center;
   line-height: 40px;
   /*margin: 10px 0;*/
+  padding: 8px;
+  width: 60px;
+    height: 60px;
+    /*border: 2px solid #ED1567;*/
+    border-radius: 50%;
+}
+#profileImageTop {
+  background: #fff;
+  /*border:solid;*/
+  font-size: 15px;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+  /*margin: 10px 0;*/
+  padding: 8px;
+  width: 60px;
+    height: 60px;
+    /*border: 2px solid #ED1567;*/
+    border-radius: 50%;
 }
 #profileImageSmall {
   width: 80px;
@@ -334,3 +350,66 @@
     }
 }
 
+
+.profile-header-container{
+    margin: 0 auto;
+    text-align: center;
+}
+
+.profile-header-img {
+    padding: 24px;
+}
+
+
+.profile-header-img > img.img-circle {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #ED1567;
+    border-radius: 50%;
+
+}
+
+.profile-header-img > div.img-circle {
+    width: 60px;
+    height: 60px;
+    /*border: 2px solid #ED1567;*/
+    border-radius: 50%;
+    background: #666;
+    color:#fff;
+    text-align: center;
+    padding: 17px;
+    margin:0 auto;
+}
+
+.profile-header {
+    margin-top: 20px;
+}
+
+
+/**
+ * Ranking component
+ */
+.rank-label-container {
+    margin-top: -5px;
+    /* z-index: 1000; */
+    text-align: center;
+}
+
+.label.label-default.rank-label {
+    /*background-color: rgb(237, 21, 103);*/
+    padding: 2px 5px 2px 5px;
+    border-radius: 27px;
+    font-family: "AvenirNext-Medium";
+    font-size: 12px;
+    color:#333;
+    text-decoration: none;
+}
+
+.img-circle a{
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
+
+.img-circle a:hover{
+  color:#ED1567;
+}

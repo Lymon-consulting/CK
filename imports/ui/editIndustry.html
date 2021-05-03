@@ -1,5 +1,5 @@
 <template name="editIndustry">
-
+{{#if Template.subscriptionsReady}}
  <style>
         .carousel-image {
             width: 400px;
@@ -423,80 +423,6 @@
 
 
 
-  <p>Look, a slideshow:</p>
-  
-  <div class="slide-show">
-    
-    <div class="slide">slide 1 view 1!</div>
-    <div class="slide">slide 2 view 1!</div>
-    <div class="slide">slide 3 view 1!</div>
-    <div class="slide">slide 4 view 1!</div>
-    <div class="slide">slide 5 view 1!</div>
-
-    <p class="next-prev-btns">Prev</p>
-    <p class="next-prev-btns">Next</p>
-
-  </div>
-
-  <div class="slide-show-2">
-    
-    <div class="slide">slide 1 view 2!</div>
-    <div class="slide">slide 2 view 2!</div>
-    <div class="slide">slide 3 view 2!</div>
-    <div class="slide">slide 4 view 2!</div>
-    <div class="slide">slide 5 view 2!</div>
-
-  </div>
-
-  <p>
-    Slides to show at the same time (1-3):
-    <form class="change-simultaneous-slides">
-      <input type="text">
-    </form>
-    (Should update instantly due to Tracker.autorun(fn) which tracks the simultaneousSlides fn (which return the simSlides reactive var value.))
-  </p>
-
-  <hr>
-
-  <ul class="another-slideshow">
-
-    <li class="slide">One</li>
-    <li class="slide">Two</li>
-    <li class="slide">Three</li>
-  
-    <p>
-      <span class="next-prev-btns another-unrelated-class">&lt;</span>
-      <span class="next-prev-btns">&gt;</span>
-    </p>
-
-  </ul>
-
-  <hr>
-
-  <div class="slider-slides">
-
-    <div class="slides">
-      <div class="slide">Un</div>
-      <div class="slide">Dos</div>
-      <div class="slide">Tre</div>
-      <div class="slide">Audi Quatro</div>
-      <div class="slide">Cinq</div>
-    </div>
-
-    <span class="next-prev-btns">&lt;</span>
-    <span class="next-prev-btns">&gt;</span>
-
-  </div>
-  <div class="slider-slides-text-slides">
-    
-    <div class="text-slide">One – Audi</div>
-    <div class="text-slide">Two to Fiver</div>
-    <div class="text-slide">Not visible!</div>
-    <div class="text-slide">Not visible!</div>
-    <div class="text-slide">Not visible!</div>
-
-  </div>
-
         
 
         <div class="spacer40"></div>
@@ -512,32 +438,10 @@
         {{/if}}
         {{#if getGallery}}
         <div class="row">
-          <div class="col-lg-12">
-            <!--Inicia carrousel -->
-            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-              <div class="carousel-inner">
-                {{#each getGallery}}
-                  {{#if isFirstElement this.position}}
-                <div class="carousel-item active">
-                  <img class="d-block w-50" src="{{getURL this.mediaId}}" alt="">
-                </div>
-                  {{else}}
-                <div class="carousel-item">
-                  <img class="d-block w-50" src="{{getURL this.mediaId}}" alt="">
-                </div>
-                  {{/if}}
-                {{/each}}
-              </div>
-              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Anterior</span>
-              </a>
-              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Siguiente</span>
-              </a>
-            </div>
-            <!--Termina carrousel -->
+          <div class="owl-carousel">
+            {{#each getGallery}}
+            <div> <img class="d-block w-50" src="{{getURL this.mediaId}}" alt=""> </div>
+            {{/each}}  
           </div>
         </div>
         {{else}}
@@ -791,5 +695,6 @@
     <div class="spacer80"></div>
   </div>  
   {{/if}}
+{{/if}}
   </template>
 

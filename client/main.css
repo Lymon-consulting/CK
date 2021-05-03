@@ -46,6 +46,11 @@
   border-width:2px;
   width: 100%
 }
+
+nav.bg-dark{
+  background-color: #141e3c !important;
+}
+
 .bg-light-selected{
   background-color: #333 !important;
 }
@@ -224,6 +229,13 @@ a.list-group-item.active { background-color: #6c757d; }
       -moz-column-count: 4; /* Firefox */
       column-count: 4;
 }
+
+
+#searchType{
+  background-color: #141e3c;
+  color:#fff;
+}
+
 /*** Inician estilos para pantallas de tablets */
 @media (max-width: 900px){
   .nine-columns{

@@ -33,88 +33,30 @@ function isAdmin(){
     return result;
 }
 
-simSlides = new ReactiveVar( 3 );
+
+mediaSub = Meteor.subscribe("myIndustries");
 
 Template.editIndustry.rendered = function(){
-  new Slidr({
-    timer: 1500,
-    carousel: true,
-    slideCallback: _.debounce( function () {
-      console.log('A global slide callback, gets called whenever this slidr slides. Protop: debounce it to avoid multiple simultaneous calls!');
-    }, 50, true ),
-    views: [{
-      wrapper: this.find('.slide-show'),
-      slides: this.findAll('.slide-show .slide'),
-      controls: this.findAll('.slide-show .next-prev-btns'),
-      simultaneousSlides: 3,
-      pagination: {
-        wrapper: 'ul',
-        wrapperClass: 'ul-class',
-        showControls: false,
-        indicators: 'li',
-        indicatorsClass: 'li-class',
-        paginationContent: function ( slide ) {
-          return $(slide).text();
-        }
-      },
-      slideCallback: function( viewOptions ) {
-        return console.log('This is a local slide callback, and this is the the wrapper element for this view: ', viewOptions.wrapper );
-      }
-    }, {
-      wrapper: this.find('.slide-show-2'),
-      slides: this.findAll('.slide-show-2 .slide'),
-      fadeType: 'slide',
-      simultaneousSlides: function() {
-        return simSlides.get();
-      },
-      pagination: {
-        wrapper: 'div',
-        wrapperClass: 'ul-class-3',
-        indicators: 'div',
-        indicatorsClass: 'li-class-3',
-        paginationContent: '•',
-        paginationPlacement: 'before'
-      }
-    }]
+  var _this = this;
+  this.autorun(function(c) {
+
+    setTimeout(() => {  
+
+    if (mediaSub.ready()) {
+      var owl = _this.$(".owl-carousel");
+      owl.owlCarousel({
+         
+         items:1,
+         nav:false
+      });
+      c.stop();
+    }
+
+    }, 2000);
+
+    window.scrollTo(0,0);
+
   });
-
-  new Slidr({
-    timer: 350,
-    carousel: false,
-    views: [{
-      wrapper: this.find('.another-slideshow'),
-      slides: this.findAll('.another-slideshow .slide'),
-      controls: this.findAll('.another-slideshow .next-prev-btns'),
-      controlsBaseClass: 'next-prev-btns',
-      simultaneousSlides: 1,
-      showControls: false,
-      pagination: {
-        wrapper: 'ul',
-        wrapperClass: 'ul-class',
-        indicators: 'li',
-        indicatorsClass: 'li-class-2'
-      }
-    }]
-  });
-
-  new Slidr({
-    timer: 4500,
-    carousel: false,
-    views: [{
-      wrapper: this.find('.slider-slides'),
-      slides: this.findAll('.slider-slides .slide'),
-      controls: this.findAll('.slider-slides .next-prev-btns'),
-      controlsBaseClass: 'next-prev-btns',
-      fadeType: 'slide',
-      simultaneousSlides: 4
-    }, {
-      wrapper: this.find('.slider-slides-text-slides'),
-      slides: this.findAll('.slider-slides-text-slides .text-slide')
-    }]
-  });
-
-  
-
 }
 
 Template.editIndustry.helpers({
@@ -160,11 +102,7 @@ Template.editIndustry.helpers({
   },
   getGallery(){
     
-    $('.multiple-items').slick({
-      infinite: false,
-      slidesToShow: 3,
-      slidesToScroll: 3
-    });
+    
 
     var data = Industry.findOne({'_id' : FlowRouter.getParam("id")});
     var array = new Array();
@@ -188,6 +126,7 @@ Template.editIndustry.helpers({
     }
 
     return array;
+
 /*
     var media = Media.find({"userId": Meteor.userId(), "media_use":"gallery"}).fetch();
     var array = new Array();
@@ -231,7 +170,6 @@ Template.editIndustry.helpers({
       if(media!=null){
         url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.settings.public.LEVEL + "/" + media.mediaId;    
       }
-      console.log("--->"+url);
     return url;
   },
   video(){
@@ -536,19 +474,7 @@ stateSelected: function(value){
 
 
 Template.editIndustry.events({
-  'submit .change-simultaneous-slides': function ( e, tmpl ) {
-    
-    e.preventDefault();
-    
-    var input = parseInt( $(tmpl.find('input')).val(), 10 );
-    if (input === 0)
-      input = 1;
-    if (input > 3)
-      input = 3;
-
-    simSlides.set( input );
-
-  },
+  
   'keyup #company_desc' : function(event){
    event.preventDefault();
    var len = $('#company_desc').val().length;

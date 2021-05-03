@@ -29,7 +29,9 @@ Template.industryList.helpers({
     if(data!=null && data.companyLogoID!=null){
       var cover = Media.findOne({'mediaId':data.companyLogoID});
       if(cover!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_250,c_scale" + "/v" + cover.media_version + "/" + data.userId + "/" + data.companyLogoID;    
+        //url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_250,c_scale" + "/v" + cover.media_version + "/" + data.companyId + "/" + data.companyLogoID;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_250,c_scale" + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + cover.mediaId;
+        console.log(url);
       }
       
     }

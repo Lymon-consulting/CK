@@ -437,10 +437,11 @@ Template.profilePageActor.helpers({
       Meteor.subscribe("allMedia");
       var user = Meteor.users.findOne({'_id':userId});
       var url;
-      if(user!=null && user.cast!=null && user.cast.profilePictureID!=null){
-        var profile = Media.findOne({'mediaId':user.cast.profilePictureID});
+      if(user!=null && user.profilePictureID!=null){
+        var profile = Media.findOne({'mediaId':user.profilePictureID});
         if(profile!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.cast.profilePictureID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + user.profilePictureID;    
+          
         }
         
       }

@@ -10,9 +10,27 @@ import './industryPage.html';
 Meteor.subscribe("otherUsers");
 
 
+mediaSub = Meteor.subscribe("myIndustries");
 Template.industryPage.rendered = function(){
-  this.autorun(function(){
+  var _this = this;
+  this.autorun(function(c) {
+
+    setTimeout(() => {  
+
+    if (mediaSub.ready()) {
+      var owl = _this.$(".owl-carousel");
+      owl.owlCarousel({
+         
+         items:1,
+         nav:false
+      });
+      c.stop();
+    }
+
+    }, 2000);
+
     window.scrollTo(0,0);
+
   });
 }
 
@@ -190,10 +208,8 @@ getGallery(){
     var url = "";
     var media = Media.findOne({'mediaId':mediaId});
       if(media!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + media.userId + "/" + media.mediaId;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.settings.public.LEVEL + "/" + media.mediaId;    
       }
-
-      console.log(url);
     return url;
   },
   getVideo(vimeo, youtube){
