@@ -36,9 +36,40 @@
 }
 
 .carousel-control-next-icon{
-  color:#6c757d im !important;
-  background-color: #6c757d i !important;
+  color:#ED1567 !important;
+  background-color: #ED1567 !important;
 }
+
+.carousel-control-prev-icon{
+  color:#ED1567 !important;
+  background-color: #ED1567 !important;
+}
+
+.carousel{
+  width: 400px; 
+  
+}
+
+.carousel-item{
+   width: 600px;
+   object-fit:scale-down;
+   padding-left: 15%;
+}
+
+
+/*
+.carousel-item.active, .carousel-item-next, .carousel-item-prev {
+    width: 650px; 
+}
+
+.carousel-thumb{
+  width: 200px; 
+}
+.carousel-item-thumb{
+   width: 200px;
+   object-fit:scale-down;
+}*/
+
 
 .chat-title{
   background-color: #eee;
@@ -200,6 +231,10 @@ a.list-group-item.active { background-color: #6c757d; }
 
 .new-message-container form button {
   margin-left: 10px;
+}
+
+.no-scroll{
+   overflow: hidden;
 }
 
 .project-title{

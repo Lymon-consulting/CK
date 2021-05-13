@@ -504,7 +504,7 @@ Template.profilePageActor.helpers({
       if(user!=null && user.cast!=null && user.cast.profileCoverID!=null){
         var cover = Media.findOne({'mediaId':user.cast.profileCoverID});
         if(cover!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_1200,h_600,c_fill/" + "/v" + cover.media_version + "/" + userId + "/" + user.cast.profileCoverID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_1200,h_600,c_fill/" + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + user.cast.profileCoverID;
         }
         
       }

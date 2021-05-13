@@ -1,40 +1,40 @@
 <template name="searchIndustryForProject">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="row">
-          <div class="col-lg-4 col-md-6">
-            <div class="card h-100">
-              <a href="/peopleList"><img class="card-img-top" src="/images/crew_thumb.jpg" alt=""></a>
+    <div class="container-fluid imageDivHeight"> <!--Imagen de fondo de página principal-->
+      <section>
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12 col-lg-12 mx-auto"></div><!--Imagen con título en página principal-->
             </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="card h-100">
-              <a href="/peopleListCast/"><img class="card-img-top" src="/images/cast_thumb.jpg" alt=""></a>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="card h-100">
-              <a href="/projList/"><img class="card-img-top" src="/images/project_thumb.jpg" alt=""></a>
-            </div>
-          </div>
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.col-lg-9 -->
-    </div>
-    <!-- /.row -->
-  </div>
-  <!-- /.container -->
-  <div class="container text-center">
-    <h1 class="h1-title">EMPRESA U ORGANIZACIÓN</h1>
-    <hr>
-    <div class="spacer40"></div>
-  </div> 
+         </div>
+      </section>
+   </div>     
+
+
   <div class="container">
     <div class="row">
       <div class="col-lg-3 rounded background-verylightgray p-3">
         <div class="sticky-top">
+          <div class="row">
+            <div>&nbsp;<i class="fa fa-sliders fa-sm"></i>&nbsp;Filtrar búsqueda</div>
+          </div>
+          <div class="spacer10"></div>
+          <!--
+          <div class="row">
+            <div class="col agreements">Opciones</div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col">
+              <select name="" id="searchType" class="form-control agreements">
+               <option value="Proyectos">Proyectos</option>
+               <option value="Crew">Crew</option>
+               <option value="Cast">Cast</option>
+               <option value="Industrias" selected>Empresas</option>
+             </select>
+            </div>
+          </div>
+          <div class="spacer10"></div>
+        -->
           <div class="row">
             <div class="col agreements">Nombre</div>
           </div>
@@ -44,6 +44,9 @@
             </div>
           </div>
           <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">Tipo de empresa</div>
+          </div>
           <div class="row">
             <div class="col">
               <select class="form-control agreements" id="type">
@@ -55,6 +58,51 @@
             </div>
           </div>
           <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">País</div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <select class="form-control agreements" id="country">
+                <option value="cualquier"> Cualquier país </option>
+                {{#each getCountries}}
+                <option value="{{country}}"> {{country}} </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">Estado</div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <select class="form-control agreements" id="state">
+                <option value="cualquier"> Cualquier estado </option>
+                {{#each getStatesFromCountries}}
+                <option value="{{state}}"> {{state}} </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">Ciudad</div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <select class="form-control agreements" id="city">
+                <option value="cualquier"> Cualquier ciudad </option>
+                {{#each getCitiesFromStates}}
+                <option value="{{city}}"> {{city}} </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="spacer10"></div>
+          <div class="row">
+            <div class="col agreements">Año de fundación</div>
+          </div>
           <div class="row">
             <div class="col">
               <select class="form-control agreements" id="year">
@@ -79,6 +127,7 @@
               </div>
             </div>
           </div>
+          <div class="spacer40"></div>
           {{#EasySearch.Each index=industryIndex}}
           <div class="row">
             <div class="col-lg-1">
@@ -120,6 +169,11 @@
                             {{this.company_year}}
                           </td>
                         </tr>
+                        <tr>
+                          <td>
+                            {{this.status}}
+                          </td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -140,6 +194,7 @@
           <div class="row">
             <div class="col-md-12"><hr></div>
           </div>
+          <div class="spacer20"></div>
           {{/EasySearch.Each}}
           {{> EasySearch.LoadMore index=industryIndex}}
 

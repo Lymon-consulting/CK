@@ -265,7 +265,7 @@ getProfilePicture(userId) {
   if(user!=null && user.profilePictureID!=null){
     var profile = Media.findOne({'mediaId':user.profilePictureID});
     if(profile!=null){
-      url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_100,h_100,c_thumb,r_max" + "/v" + profile.media_version + "/" + userId + "/" + user.profilePictureID;    
+      url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_60,h_60,c_thumb,r_max" + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + user.profilePictureID;    
     }
     
   }
@@ -326,7 +326,7 @@ Template.company_projects.helpers({
     if(data!=null && data.projectPictureID!=null){
       var cover = Media.findOne({'mediaId':data.projectPictureID});
       if(cover!=null){
-        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_limit" + "/v" + cover.media_version + "/" + data.userId + "/" + data.projectPictureID;    
+        url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_limit" + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.projectPictureID;    
       }
       
     }

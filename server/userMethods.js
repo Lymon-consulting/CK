@@ -495,6 +495,14 @@ Accounts.onCreateUser(function(options, user) {
         }
       });
     },
+    updateCastCoverPicture(userId, mediaId){
+      Meteor.users.update({'_id': userId}, {
+        $set:
+        {
+          "cast.profileCoverID": mediaId
+        }
+      });
+    },
     saveCrewProfilePictureID(userId, profilePictureID){
       Meteor.users.update({'_id': userId}, {
         $set:

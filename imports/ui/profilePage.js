@@ -227,7 +227,7 @@ Template.profilePage.helpers({
         var cover = Media.findOne({'mediaId':data.projectPictureID});
         if(cover!=null){
           //url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_scale" + "/v" + cover.media_version + "/" + data.userId + "/" + data.projectPictureID;    
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + data.userId + "/" + data.projectPictureID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.projectPictureID;    
         }
         
       }
@@ -455,7 +455,7 @@ isDirectorOrProducer(){
       if(user!=null && user.crew!=null && user.crew.profileCoverID!=null){
         var cover = Media.findOne({'mediaId':user.crew.profileCoverID});
         if(cover!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + userId + "/" + user.crew.profileCoverID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + user.crew.profileCoverID;    
         }
         
       }

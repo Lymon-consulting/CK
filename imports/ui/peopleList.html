@@ -33,20 +33,7 @@
              </select>
             </div>
           </div>
-          <div class="spacer10"></div>
-          <div class="row">
-            <div class="col agreements">Opciones</div>
-          </div>
-          <div class="row">
-            <div class="col agreements">
-              {{> EasySearch.Input index=usersIndex event="enter" attributes=inputAttributes}}
-              {{#EasySearch.IfSearching index=projectIndex}}{{/EasySearch.IfSearching}}
-              {{#EasySearch.IfSearching index=industryIndex}}{{/EasySearch.IfSearching}}
-              <!--
-      
-              -->
-            </div>
-          </div>
+         
           <div class="spacer10"></div>
           <div class="row">
             <div class="col agreements">Nombre</div>
@@ -54,11 +41,7 @@
           <div class="row">
             <div class="col agreements">
               {{> EasySearch.Input index=usersIndex event="enter" attributes=inputAttributes}}
-              {{#EasySearch.IfSearching index=projectIndex}}{{/EasySearch.IfSearching}}
-              {{#EasySearch.IfSearching index=industryIndex}}{{/EasySearch.IfSearching}}
-              <!--
-      
-              -->
+         
             </div>
           </div>
           <div class="spacer10"></div>
@@ -156,7 +139,6 @@
                     </a>
                   </div>
                   <div class="col-md-7">
-
                     <div class="row">
                       <div class="col-md-12 no-padding text-no-wrap"><a href="/profilePage/{{this.__originalId}}"><h5 class="h5-name">{{this.profile.name}} {{this.profile.lastname}} {{this.profile.lastname2}}</h5></a></div>
                     </div>
@@ -203,7 +185,11 @@
                     
                   </div>
                   <div class="col-md-3">
+                    {{#if getCoverPicture this.__originalId}}
                     <img src="{{getCoverPicture this.__originalId 150}}"/>
+                    {{else}}
+                    <img src="/images/c4.jpg"/>
+                    {{/if}}
                   </div>
                 </div>
                 <div class="row">

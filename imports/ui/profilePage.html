@@ -73,26 +73,24 @@
    </div>
    <!-- Termina bloque para desplegar la foto de perfil -->
    
+{{#unless notSameUser}}
+    <div class="container-fluid background-verydarkgray mx-auto">
+     <div class="spacer5"></div>
+     <div class="row">
+      <div class="col-lg-1">&nbsp;</div>
+       <div class="col-lg-3"><a href="/editProfile/{{getProfile._id}}" class="text-white"><i class="fa fa-user-circle text-white" aria-hidden="true"></i> Editar perfil</a></div>
+       <div class="col-lg-4"><a href="/viewProjects/{{getProfile._id}}" class="text-white"><i class="fa fa-pencil text-white" aria-hidden="true"></i> Editar proyectos</a></div>
+       <div class="col-lg-3"><a href="/viewIndustries/{{getProfile._id}}" class="text-white"><i class="fa fa-user-circle text-white" aria-hidden="true"></i> Editar empresas</a></div>
+       <div class="col-lg-1">&nbsp;</div>
+     </div>
+     <div class="spacer5"></div>
+   </div>
+{{/unless}}
+
    <!-- Inicia bloque con los datos personales y de contacto del perfil -->
    <div class="container">
       <div class="spacer40"></div>
-      <div class="row">
-         <div class="col-md-1 col-sm-12">
-            &nbsp;
-         </div>
-         <div class="col-md-8 col-sm-12 text-left">
-            <h1 class="h3-title">{{getName getProfile._id}}</h1>
-         </div>
-         <div class="col-md-3 col-sm-12 text-right">
-            {{#if notSameUser}}
-            {{else}}
-               {{#if isVerified}}
-                  <a href="/editProfile/{{getProfile._id}}" class="text-purple">Editar perfil&nbsp;<i class="fa fa-pencil text-purple" aria-hidden="true"></i></a>
-                  &nbsp;<a href="/viewProjects/{{getProfile._id}}" class="text-purple">Editar proyectos&nbsp;<i class="fa fa-briefcase text-purple" aria-hidden="true"></i></a>
-               {{/if}}
-            {{/if}}
-         </div>
-      </div>
+      
       
       <div class="row">
          <div class="col-md-1 col-sm-12">
@@ -179,11 +177,7 @@
             <div class="container">
                {{#if countProjects}}
                <div class="row">
-                 {{#if isDirectorOrProducer}}
                  <strong class="uppercase">Proyectos</strong>
-                 {{else}}
-                 <strong class="uppercase">Portafolio</strong>
-                 {{/if}}
                  
                </div>
                <div class="row">
@@ -366,7 +360,7 @@
                         </div>
                         <div class="row">
                            <div class="col-md-12">
-                              <table class="table table-responsive borderless">
+                              <table class="table table-responsive borderless no-scroll">
                                  <tr>
                                     {{#if getProfile.crew.facebook}}
                                     <td><a href="{{formatURL getProfile.crew.facebook}}" target="_blank"> <i class="fa fa-sm fa-facebook text-purple"></i></a></td>

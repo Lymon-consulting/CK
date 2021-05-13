@@ -33,6 +33,14 @@ function isAdmin(){
     return result;
 }
 
+let myCarousel; //a variable thats hold owlCarousel object
+function myCarouselStart() {
+    myCarousel = $('#my-carousel.owl-carousel').owlCarousel({
+     items:1,
+     nav:false
+    });
+}
+
 
 mediaSub = Meteor.subscribe("myIndustries");
 
@@ -42,6 +50,11 @@ Template.editIndustry.rendered = function(){
 
     setTimeout(() => {  
 
+      $(document).ready(() => {
+          myCarouselStart(); // run owl carousel for first time
+      });
+    
+/*
     if (mediaSub.ready()) {
       var owl = _this.$(".owl-carousel");
       owl.owlCarousel({
@@ -50,7 +63,10 @@ Template.editIndustry.rendered = function(){
          nav:false
       });
       c.stop();
-    }
+    }*/
+
+    
+
 
     }, 2000);
 
@@ -791,12 +807,41 @@ Template.editIndustry.events({
     'change .check':function(event,template){
       event.preventDefault();
       var mediaId = $(event.currentTarget).attr("data-id");
+       
+      console.log("Llamando myCarousel");
+
+      $("#my-carousel").html("");
+       myCarousel.trigger("destroy.owl.carousel");
+      
+
       if(event.target.checked){
         Meteor.call('addGallery', FlowRouter.getParam("id"), mediaId);
+
       }
       else{
         Meteor.call('removeGallery', FlowRouter.getParam("id"), mediaId); 
       }
+       
+ /*
+      var url = "";
+      var media;
+
+       var data = Industry.findOne({'_id' : FlowRouter.getParam("id")});
+       var htmlConstructor = "";
+       for (var i = data.gallery.length - 1; i >= 0; i--) {
+         media = Media.findOne({'mediaId':mediaId});
+         url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.gallery[i];
+         htmlConstructor += "<div> <img class='d-block w-50' src='"+ url +"'> </div>";
+         
+       }
+
+
+       console.log(htmlConstructor);
+       $("#my-carousel").html(htmlConstructor);*/
+       myCarouselStart();
+       console.log("Otra vez el start");
+      
+
     },
     /*
     'change #video': function(event,template){

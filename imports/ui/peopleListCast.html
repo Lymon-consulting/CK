@@ -237,7 +237,7 @@
                     {{/if}}
                     </a>
                   </div>
-                  <div class="col-md-10">
+                  <div class="col-md-7">
                     <div class="row">
                       <div class="col-md-12 no-padding text-no-wrap">
                         <a href="/profilePageActor/{{this.__originalId}}"><h5 class="h5-name">{{getName this.__originalId}}</h5></a>
@@ -276,17 +276,22 @@
                         {{#if notSameUser this.__originalId}}
                           <br/>
                           {{#if currentUser}}
-                          {{#if isCrew}}
                           {{#if hasTopRole}}
                             <button class="btn button-follow pushCollaborator" id="{{this.__originalId}}"> <i class="fa fa-plus-circle fa-sm"></i> COLABORADOR </button>
-                          {{/if}}
                           {{/if}}
                           {{/if}}
                         {{/if}}
                       </div>
                     </div>
                   </div>
-                </div>
+                  <div class="col-md-3">
+                      {{#if getCoverPicture this.__originalId}}
+                      <img src="{{getCoverPicture this.__originalId 150}}"/>
+                      {{else}}
+                      <img src="/images/c4.jpg"/>
+                      {{/if}}
+                    </div>
+                  </div>
                 <div class="row">
                   <div class="col-md-12"><hr></div>
                 </div>

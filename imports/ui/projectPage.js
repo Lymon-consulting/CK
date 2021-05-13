@@ -9,9 +9,27 @@ import { uploadFiles } from '/lib/functions.js';
 import './projectPage.html';
 import '/lib/common.js';
 
+mediaSub = Meteor.subscribe("projectData");
 Template.projectPage.rendered = function(){
-  this.autorun(function(){
+  var _this = this;
+  this.autorun(function(c) {
+
+    setTimeout(() => {  
+
+    if (mediaSub.ready()) {
+      var owl = _this.$(".owl-carousel");
+      owl.owlCarousel({
+         
+         items:1,
+          margin:10
+      });
+      c.stop();
+    }
+
+    }, 3000);
+
     window.scrollTo(0,0);
+
   });
 
 }
@@ -351,6 +369,7 @@ if (Meteor.isClient) {
             }
           }
         }
+        console.log("gallery size="+array.length);
         return array;
       },
       isFirstElement(position){
@@ -367,7 +386,8 @@ if (Meteor.isClient) {
         var url = "";
         var media = Media.findOne({'mediaId':mediaId});
           if(media!=null){
-            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + media.userId + "/" + media.mediaId;    
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.settings.public.LEVEL + "/" + media.mediaId;    
+            console.log(url);
           }
         return url;
       },
@@ -1737,7 +1757,7 @@ Template.companies.helpers({
         if(data!=null && data.companyLogoID!=null){
           var cover = Media.findOne({'mediaId':data.companyLogoID});
           if(cover!=null){
-            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_fill" + "/v" + cover.media_version + "/" + data.userId + "/" + data.companyLogoID;    
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_fill" + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.companyLogoID;    
           }
           
         }
