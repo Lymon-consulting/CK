@@ -55,7 +55,7 @@
           <div class="spacer10"></div>
           <div class="row">
             <div class="col text-14">
-              <a href="/viewProjects/{{currentUser._id}}" class="text-purple" id=""><i class="fa fa-briefcase"></i> Mis producciones/muestras</a>
+              <a href="/viewProjects/{{currentUser._id}}" class="text-black" id=""><i class="fa fa-briefcase"></i> Mis producciones/muestras</a>
             </div>
           </div>       
           
@@ -352,6 +352,18 @@
                       </div>
                       <div class="spacer40"></div>
                       <div class="row">
+                        <div class="col"><label for="category">¿Cuál es tu categoría o categorías? <span class="text-purple">(Requerido)</span></label></div>
+                      </div>
+                      <div class="row">
+                      {{#each categories}}
+                      <div class="col-lg-4 col-md-6 col-xs-12" style="text-align:left">
+                        <div class="checkbox">
+                          <label><input type="checkbox" value="{{spec}}" class="category" {{checkCategory spec}}> {{spec}}</label>
+                        </div>
+                       </div>
+                      {{/each}}   
+                      </div>
+                      <div class="row">
                         <div class="col-lg-12 form-group">
                           <label for="resumeCast">Acerca de </label>
                             <textarea class="form-control" rows="5" id="resumeCast" value="" placeholder="({{maxCastLength}} caracteres máx)." maxCastlength="{{maxCastLength}}" disabled>{{resumeCast}}</textarea><small>Caracteres restantes: <div id="maxCast"></div></small>
@@ -561,6 +573,49 @@
                             {{/if}}
                           </div>
                         </div>
+                        <div class="spacer40"></div>
+                        <div class="row">
+                          <div class="col-lg-12">Galería de imágenes <a href="#" class="text-purple" data-toggle="modal" data-target="#modal4"><br>Agregar <i class="fa fa-pencil"></i></a></div>
+                        </div>
+                        {{#if getGallery}}
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <!--Inicia carrousel -->
+                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                              <div class="carousel-inner">
+                                {{#each getGallery}}
+                                  {{#if isFirstElement this.position}}
+                                <div class="carousel-item active">
+                                  <img class="d-block w-50" src="{{getURL this.mediaId}}" alt="First slide">
+                                </div>
+                                  {{else}}
+                                <div class="carousel-item carousel-item-thumb">
+                                  <img class="d-block w-50" src="{{getURL this.mediaId}}" alt="Not first slide">
+                                </div>
+                                  {{/if}}
+                                {{/each}}
+                              </div>
+                              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Anterior</span>
+                              </a>
+                              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Siguiente</span>
+                              </a>
+                            </div>
+                            <!--Termina carrousel -->
+                              
+                          </div>
+                        </div>
+                        {{else}}
+                        <div class="row">
+                          <div class="col agreements">
+                            Aún no agregas imágenes a tu galería
+                          </div>
+                        </div>
+                       
+                        {{/if}}
                       </div>
                       <div class="spacer40"></div>
                     </div>
@@ -837,6 +892,71 @@
             
             <div class="col-lg-2">&nbsp;</div>
             <div class="col-lg-4"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
+            
+          </div>
+        </div>
+
+      </div>
+      <!--/.Content-->
+
+    </div>
+  </div>
+  <!--Modal: Name-->
+
+  <!--Modal: Name-->
+  <div class="modal fade" id="modal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+
+      <!--Content-->
+      <div class="modal-content">
+
+        <!--Body-->
+        <div class="modal-body">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12 text-center">
+                <label class="custom-file-upload">
+                  <input type="file"/>
+                  <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-center">Elige las imágenes para tu galería de fotos</div>
+            </div>
+            {{#if hasMedia}}
+            <div class="row background-verylightgray p-3">
+              {{#each getMedia}}
+              <div class="col-lg-3 col-sm-6 align-self-center justify-content-center">
+                <input type="checkbox" class="check" data-id="{{this.mediaId}}" {{verifyChecked this.mediaId}}><img class="media-thumb z-depth-1" src="{{this.media_url}}" alt="image">
+              </div>
+              {{/each}}
+            </div>
+            {{else}}
+            <div class="spacer20"></div>
+            <div class="row">
+              <div class="col">
+                Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
+              </div>
+            </div>
+            <div class="spacer20"></div>
+            <div class="row">
+              <div class="col text-center">
+                <button class="btn btn-purple goMediaLibraryGallery">Ir a biblioteca de imágenes</button>
+              </div>
+            </div>
+            {{/if}}
+          </div>
+          
+
+        </div>
+
+        <!--Footer-->
+        <div class="modal-footer justify-content-center">
+          <div class="row">
+
+            <div class="col-lg-12"><button type="button" class="btn btn-purple btn-rounded" data-dismiss="modal">Cerrar</button></div>
             
           </div>
         </div>

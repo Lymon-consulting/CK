@@ -177,7 +177,7 @@
             <div class="container">
                {{#if countProjects}}
                <div class="row">
-                 <strong class="uppercase">Proyectos</strong>
+                 <strong class="uppercase">Producciones</strong>
                  
                </div>
                <div class="row">
@@ -290,6 +290,62 @@
                   {{/each}}
                {{/if}}
                </div>
+               <div class="spacer40"></div>
+               
+               {{#if getSamples}}
+                <div class="row">
+                  <div class="col-12">
+                    <strong class="uppercase">Muestras de trabajo</strong>
+                  </div>
+                </div>
+                <div class="row">
+                   <div class="col">
+                      <hr>
+                   </div>
+                 </div>
+                 <div class="row">
+                  {{#each getSamples}}
+                  <!-- Inicia cada recuadro de cada proyecto -->
+                     <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="spacer20"></div>
+                        <div class="card w-100">
+                           {{#if getProjectImages this._id 175}}
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img class="card-img-top w-100" src="{{getProjectImages this._id 175}}" alt="Card image cap"></a>
+                           {{else}}
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/nocover.jpg" class="card-img-top w-100" alt=""></a>
+                           {{/if}}  
+
+                          <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a>{{#if ownerRole}}&nbsp;<a href="/editProject/{{this._id}}"><i class="fa fa-pencil fa-sm text-purple"></i></a>{{/if}}</div>
+                          <div class="agreements"><strong>{{this.project_year}}</strong></div>
+                          <div class="card-body">
+                            <p class="card-text"><strong>{{projectRole this._id}}</strong></p>
+                          </div>
+                          <div class="card-footer">
+                            <div class="row">
+                               <div class="col"><i class="fa fa-thumbs-up fa-sm"></i><small>&nbsp;
+                               {{#if this.likes}}
+                                 {{this.likes}}
+                               {{else}}
+                                 0
+                               {{/if}}
+                             </small></div>
+                               <div class="col text-right"><i class="fa fa-eye fa-sm"></i><small>&nbsp;
+                               {{#if this.views}}
+                                 {{this.views}}
+                               {{else}}
+                                 0
+                               {{/if}}
+                             </small></div>
+                              
+                            </div>
+                          </div>
+                        </div>      
+                     </div>
+                  <!-- Termina cada recuadro de cada proyecto -->
+                  {{/each}}
+                </div>
+               {{/if}}
+               
                {{#if getVideo getProfile.crew.vimeoDemo getProfile.crew.youtubeDemo}}
                 <div class="spacer40"></div>
                 <div class="row">

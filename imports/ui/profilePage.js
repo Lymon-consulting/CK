@@ -172,7 +172,19 @@ Template.profilePage.helpers({
       return Project.find({
         $and : [ 
           {'userId' : FlowRouter.getParam('id')},
-          {'project_is_main':false}
+          {'project_is_main':false},
+          {'project_family':'P'}
+        ]
+      });
+   },
+   getSamples(){
+      Meteor.subscribe("myProjects");
+      //Meteor.users.find  ({$and : [ {'_id' : Meteor.userId()} ,            {"follows": follow      }]});
+      return Project.find({
+        $and : [ 
+          {'userId' : FlowRouter.getParam('id')},
+          {'project_is_main':false},
+          {'project_family':'M'}
         ]
       });
    },

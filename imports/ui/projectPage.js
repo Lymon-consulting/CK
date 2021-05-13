@@ -345,7 +345,7 @@ if (Meteor.isClient) {
       },
       getMedia() {
         Meteor.subscribe("allMedia");
-        var media = Media.find({'userId': Meteor.userId()});
+        var media = Media.find({'projectId': FlowRouter.getParam('id')});
         return media;
       },
       getGallery(){
@@ -394,19 +394,13 @@ if (Meteor.isClient) {
       hasMedia() {
         Meteor.subscribe("allMedia");
         //var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
-        var media = Media.find({'userId': Meteor.userId()}).count();
+        var media = Media.find({'projectId': FlowRouter.getParam("id")}).count();
         var hasMedia = false;
         if(media > 0){
           hasMedia = true;
         }
         return hasMedia;
-      },
-      getMedia() {
-        Meteor.subscribe("allMedia");
-        //var media = Media.find({'userId': Meteor.userId(), 'media_use': type});
-        var media = Media.find({'userId': Meteor.userId()},{sort:{'media_date':-1}});
-        return media;
-      },
+      }
 
    });
 

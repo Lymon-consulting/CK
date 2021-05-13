@@ -12,6 +12,7 @@ Meteor.subscribe("otherUsers");
 
 Template.projList.rendered = function(){
   ProjectIndex.getComponentMethods().addProps('status',true); 
+  ProjectIndex.getComponentMethods().addProps('project_family','P'); 
   this.autorun(function(){
     window.scrollTo(0,0);
   });
