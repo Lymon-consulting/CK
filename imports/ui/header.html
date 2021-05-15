@@ -4,7 +4,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <a class="navbar-brand" href="/">
-    <img src="/images/logo.svg" alt="logo" class="logo d-inline-block align-top">
+    <img src="/images/logo.svg" alt="logo" class="header-logo d-inline-block align-top">
   </a>
   {{#if currentUser}}
   <div class="collapse navbar-collapse justify-content-end w-100 order-3" id="navbar-list-9">
@@ -27,44 +27,66 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             <div class="row">
-              <div class="col-lg-3">
+              <div class="col-lg-2">
                 {{#if getProfilePicture}}
-                <img src="{{getProfilePicture}}"/>
+                <img src="{{getProfilePicture}}" class="padding-10" />
                 {{else}}
-                <div id="profileImageMenu">{{getInitials}}</div>
+                <div id="profileImage">{{getInitials}}</div>
                 {{/if}}    
               </div>
-              <div class="col-lg-9">
+              <div class="col-lg-10">
                 <div class="row">
-                  <div class="col-lg-12"><strong>{{getName}}</strong></div>
+                  <div class="col-lg-12">
+                    <div class="row">
+                      <div class="col">
+                        <strong>{{getName}}</strong>    
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        {{getFirstRoles}}
+                      </div>
+                    </div>
+                    
+                  </div>
                 </div>
               </div>
             </div>
+            
             <div class="row">
               <div class="col"><div class="spacer10"></div></div>
             </div>
             <div class="row">
               <div class="col text-center">
                 {{#if isCrewChecked}}
-                <a href="/profilePage/{{currentUser._id}}" class="text-purple"><strong>Ver perfil de crew</strong></a>
+                <div class="row padding-5">
+                  <div class="col m-50">
+                    <a href="/profilePage/{{currentUser._id}}" class="button-rounded"><i class="fa fa-truck"></i>&nbsp;Ver perfil de crew</a>    
+                  </div>
+                </div>
+                
                 {{/if}}
                 {{#if isCastChecked}}
-                <br/><a href="/profilePageActor/{{currentUser._id}}" class="text-purple"><strong>Ver perfil de cast</strong></a>
+                <div class="row padding-5">
+                  <div class="col">
+                    <a href="/profilePageActor/{{currentUser._id}}" class="button-rounded"><i class="fa fa-film"></i>&nbsp;Ver perfil de cast</a>    
+                  </div>
+                </div>
+                
                 {{/if}}
               </div>
             </div>
             <h4 class="dropdown-header">CUENTA</h4>
-            <a class="dropdown-item text-black" href="/editProfile/{{currentUser._id}}">Editar perfil</a>
+            <a class="dropdown-item text-black" href="/editProfile/{{currentUser._id}}"><i class="fa fa-pencil"></i>&nbsp;Editar perfil</a>
             
             <div class="dropdown-divider"></div>
             
             <h4 class="dropdown-header">ADMINISTRAR</h4>
             <a class="dropdown-item text-black" href="/viewProjects/{{currentUser._id}}">
-            Mis producciones / muestras</a>
-            <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}">Mis empresas</a>
-            <a class="dropdown-item text-black" href="/mediaEditorObject/{{currentUser._id}}/crew/{{currentUser._id}}/global">Mis imágenes</a>
+            <i class="fa fa-briefcase"></i>&nbsp;Mis producciones / muestras</a>
+            <a class="dropdown-item text-black" href="/viewIndustries/{{currentUser._id}}"><i class="fa fa-building"></i>&nbsp;Mis empresas</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item text-black logout" href="#">Salir</a>
+            <a class="dropdown-item text-black logout" href="#"><i class="fa fa-arrow-left"></i>&nbsp;Salir</a>
             <!--
             <h4 class="dropdown-header">HERRAMIENTAS</h4>
             <a class="dropdown-item text-black" href="/jobs">Bolsa de trabajo</a>
@@ -101,16 +123,15 @@
   <p>Loggin in...</p>
 {{else}}
   {{#if currentUser}}  
-    {{#if getProfilePicture}}   
-      <li class="nav-item vcenter">
-        <a href="/profilePage/{{currentUser._id}}" class="text-button"><img src="{{getProfilePicture}}"/></a>
-      </li>
-   {{else}}
-      <li class="nav-item vcenter">
-        <a href="/profilePage/{{currentUser._id}}" class="text-button"><img src="/images/no-profile.jpg" id="profileImageTop" class="img-round" /></a>
-      </li>      
-   {{/if}}
-  
+    <li class="nav-item vcenter">
+      <a href="/profilePage/{{currentUser._id}}" class="text-button">
+      {{#if getProfilePicture}}   
+        <img src="{{getProfilePicture}}"/>
+      {{else}}
+        <div id="profileImageMenu">{{getInitials currentUser._id}}</div>
+      {{/if}}
+      </a>
+    </li>
   {{/if}}
 {{/if}}
 

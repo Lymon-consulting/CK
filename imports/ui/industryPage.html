@@ -4,20 +4,20 @@
       {{#if getCoverPicture}}
       /**Estilo para que la foto de perfil aparezca sobre la foto de fondo de portada*/
       .bg-overlay {
-          background: url({{getCoverPicture}});
-          background-repeat: no-repeat;
-          background-size: cover;
-          height: 400px;
-          object-fit:scale-down;
-          /*background-position: center center;*/
+          background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url({{getCoverPicture}});
+        -webkit-background-size: cover;
+        -moz-background-size:  cover;
+        -o-background-size: cover;
+        background-size: cover;
       }
       
       {{else}}
       .bg-overlay {
-          background: url("/images/background-dark.jpg");
-          background-repeat: no-repeat;
-          background-size: cover;
-          background-position: center center;
+          background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("/images/background-dark.jpg");
+        -webkit-background-size: cover;
+        -moz-background-size:  cover;
+        -o-background-size: cover;
+        background-size: cover;
           
       }
       {{/if}}

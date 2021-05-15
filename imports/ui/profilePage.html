@@ -4,51 +4,52 @@
       /**Estilo para que la foto de perfil aparezca sobre la foto de fondo de portada*/
       @media (min-width: 100px) and (max-width: 576px) {
          .bg-overlay {
-             background: url({{getCoverPicture getProfile._id}});
-             background-repeat: no-repeat;
-             background-size: contain;
-             background-position: top center;
-                     
+             background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url({{getCoverPicture getProfile._id}});
+            -webkit-background-size: cover;
+            -moz-background-size:  cover;
+            -o-background-size: cover;
+            background-size: cover;
          }
       }
       @media (min-width: 577px) and (max-width: 768px) {
          .bg-overlay {
-             background: url({{getCoverPicture getProfile._id}});
-             background-repeat: no-repeat;
-             background-size: contain;
-             background-position: top center;
-                     
+             background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url({{getCoverPicture getProfile._id}});
+        -webkit-background-size: cover;
+        -moz-background-size:  cover;
+        -o-background-size: cover;
+        background-size: cover;
          }
       }
       @media (min-width: 769px) and (max-width: 992px) {
          .bg-overlay {
-             background: url({{getCoverPicture getProfile._id}});
-             background-repeat: no-repeat;
-             background-size: cover;
-             background-position: top center;
-                     
+             background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url({{getCoverPicture getProfile._id}});
+        -webkit-background-size: cover;
+        -moz-background-size:  cover;
+        -o-background-size: cover;
+        background-size: cover;
          }
       }
       @media (min-width: 993px) {
          .bg-overlay {
-             background: url({{getCoverPicture getProfile._id}});
-             background-repeat: no-repeat;
-             background-size: cover;
-             background-position: top center;
-                     
+            background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url({{getCoverPicture getProfile._id}});
+        -webkit-background-size: cover;
+        -moz-background-size:  cover;
+        -o-background-size: cover;
+        background-size: cover;
          }
       }
       
       
       {{else}}
       .bg-overlay {
-          background: url("/images/background-dark.jpg");
-          background-repeat: no-repeat;
-          background-size: cover;
-          background-position: center center;
-          
+          background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("/images/background-dark.jpg");
+        -webkit-background-size: cover;
+        -moz-background-size:  cover;
+        -o-background-size: cover;
+        background-size: cover;
       }
       {{/if}}
+      
    </style>
 
    <!-- Inicia bloque para desplegar la foto de perfil -->
@@ -70,8 +71,9 @@
         <img src="/images/no-profile.jpg" class="img-round" />
         {{/if}}
       {{/if}}
-   </div>
+   </div>   
    <!-- Termina bloque para desplegar la foto de perfil -->
+
    
 {{#unless notSameUser}}
     <div class="container-fluid background-verydarkgray mx-auto">

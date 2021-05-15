@@ -19,11 +19,32 @@ Template.header.helpers({
       if(Meteor.user().profilePictureID!=null){
         profile = Media.findOne({'mediaId':Meteor.user().profilePictureID});
         if(profile!=null){
-          return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_50,h_50,c_thumb,f_auto,r_max/" + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + Meteor.user().profilePictureID;
+          return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_40,h_40,c_thumb,f_auto,r_max/" + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + Meteor.user().profilePictureID;
         }
       }
     }
   },
+  getFirstRoles(){
+    var result = new Array();
+    var strResult = "";
+     
+      var userRoles = Meteor.user().role;
+      if(userRoles!=null){
+        for (var i = 0; i < userRoles.length && i<Meteor.settings.public.MAX_ROLES_DISPLAY; i++) {
+          result.push(getRoleById(userRoles[i]));
+        }
+      }
+
+      for (var i = 0; i < result.length; i++) {
+        strResult = strResult + ", " + result[i].roleName;
+      }
+      strResult = strResult.substring(2, strResult.length);
+      if(userRoles!=null && userRoles.length>Meteor.settings.public.MAX_ROLES_DISPLAY){
+        strResult = strResult + "..." ;
+      }
+
+    return strResult;
+   },
   getInitials(){
     var name = Meteor.user().profile.name;
     var lastname = Meteor.user().profile.lastname;

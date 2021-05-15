@@ -233,7 +233,7 @@
                     {{#if getProfilePicture this.__originalId}}
                     <img src="{{getProfilePicture this.__originalId}}" />
                     {{else}}
-                    <img src="/images/no-profile.jpg" class="img-round" />
+                    <div id="profileImageMedium">{{getInitials this.__originalId}}</div>
                     {{/if}}
                     </a>
                   </div>
@@ -274,7 +274,7 @@
                       <div class="col-md-12 no-padding text-no-wrap">
                         <input type="hidden" id="thisUser" value="{{this.__originalId}}">
                         {{#if notSameUser this.__originalId}}
-                          <br/>
+                          
                           {{#if currentUser}}
                           {{#if hasTopRole}}
                             <button class="btn button-follow pushCollaborator" id="{{this.__originalId}}"> <i class="fa fa-plus-circle fa-sm"></i> COLABORADOR </button>
@@ -286,15 +286,13 @@
                   </div>
                   <div class="col-md-3">
                       {{#if getCoverPicture this.__originalId}}
-                      <img src="{{getCoverPicture this.__originalId 150}}"/>
+                      <img src="{{getCoverPicture this.__originalId}}" class="media-thumb"/>
                       {{else}}
-                      <img src="/images/c4.jpg"/>
+                      <img src="/images/c4.jpg" class="media-thumb"/>
                       {{/if}}
                     </div>
                   </div>
-                <div class="row">
-                  <div class="col-md-12"><hr></div>
-                </div>
+                <div class="spacer20"></div>
                 {{/EasySearch.Each}}
 
                 {{> EasySearch.LoadMore index=usersIndex}}

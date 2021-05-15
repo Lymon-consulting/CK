@@ -34,7 +34,15 @@
 .accordion-section .panel-default .panel-body {
     font-size: 14px;
 }
-
+ 
+.button-rounded {
+    border-radius: 2em;
+    background-color:transparent;
+    color: #ED1567;
+    box-shadow: 2px 1px 2px 1px rgba(237, 21, 103);
+    padding: 0.2rem 2rem;
+}
+ 
 .carousel-control-next-icon{
   color:#ED1567 !important;
   background-color: #ED1567 !important;
@@ -429,7 +437,7 @@ a.list-group-item.active { background-color: #6c757d; }
 .text-title-gray{
    font-family: "AvenirNext-Medium";
    font-size: 12px;
-   color:#999;
+   color:#444 !important;
    text-decoration: none;
 }
 .text-body-gray{
@@ -579,6 +587,11 @@ a.list-group-item.active { background-color: #6c757d; }
   margin: 10px;
 }
 
+.padding-5{
+  padding: 5px;
+  margin: 5px;
+}
+
 .input-width-80{
    width:80px;
 }
@@ -676,9 +689,14 @@ a.list-group-item.active { background-color: #6c757d; }
    color: #999;
 }
 
+
+
 /*Estilos para el menú desplegable*/
 .dropdown-menu{
   width: 300px;
+}
+.dropdown-menu img{
+  margin-left: 10%;
 }
 .dropdown-item{
    font-size: 16px;
@@ -987,6 +1005,11 @@ a.list-group-item.active { background-color: #6c757d; }
     margin: 0;
 }
 
+.padding-10 {
+    padding: 10;
+    margin: 10;
+}
+
 .responsive {
   width: 100%;
   height: auto;
@@ -1001,7 +1024,7 @@ a.list-group-item.active { background-color: #6c757d; }
 
 
 .footer{
-  background: #141e3c;
+  background: #1d2327;
   color:white;
   display: flex;
   align-items: center;

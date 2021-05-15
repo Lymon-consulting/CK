@@ -230,14 +230,14 @@ getPrimaryRoles(userId){
       }
       return initials;
     },
-    getCoverPicture(userId, size) {
+    getCoverPicture(userId) {
       Meteor.subscribe("allMedia");
       var user = Meteor.users.findOne({'_id':userId});
       var url;
       if(user!=null && user.crew.profileCoverID!=null){
         var cover = Media.findOne({'mediaId':user.crew.profileCoverID});
         if(cover!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_scale" + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + user.crew.profileCoverID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_202,h_132,c_scale" + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + user.crew.profileCoverID;    
 
         }
         

@@ -122,9 +122,9 @@
                   <div class="col-lg-4 col-md-2 vertical-align-top">
                      <a href="/projectPage/{{this.__originalId}}">
                      {{#if coverPicture this.__originalId 500}}
-                        <img src="{{coverPicture this.__originalId 500}}" class="cover-thumbnail" />
+                        <img src="{{coverPicture this.__originalId}}" class="media-thumb" />
                      {{else}}
-                        <img src="/images/no-cover.jpg" class="cover-thumbnail">
+                        <img src="/images/c4.jpg" class="media-thumb">
                      {{/if}}
                      </a>
                   </div>
@@ -168,7 +168,7 @@
                               <tr>
                                 <td class="text-no-wrap">
                                   <div class="row">
-                                    <div class="col-md-6 numbers">
+                                    <div class="col-md-1 numbers">
                                       <i class="fa fa-thumbs-up fa-sm"></i> <small>
                                       {{#if this.likes}}
                                           {{this.likes}}
@@ -176,7 +176,7 @@
                                          0
                                       {{/if}}</small>
                                     </div>
-                                    <div class="col-md-6 numbers">
+                                    <div class="col-md-1 numbers">
                                       <i class="fa fa-eye fa-sm"></i> <small>
                                       {{#if this.views}}
                                          {{this.views}}
@@ -198,14 +198,12 @@
                     {{#if getProfilePicture this.userId 80}}
                       <img src="{{getProfilePicture this.userId 80}}"/>
                     {{else}}
-                      <img src="/images/no-profile.jpg" class="img-round" />
+                      <div id="profileImageMedium">{{getInitials this.userId}}</div>
                     {{/if}}
                     </a>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-12"><hr></div>
-                </div>
+                <div class="spacer20"></div>
                 {{/EasySearch.Each}}
                 {{> EasySearch.LoadMore index=projectIndex content="Mostrar más"}}
                 {{#EasySearch.IfNoResults index=projectIndex}}

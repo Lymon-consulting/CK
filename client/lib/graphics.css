@@ -86,6 +86,8 @@
    object-fit:scale-down;
 }
 
+
+
 .media-preview{
    width: 400px;
    /*height: 200px;*/
@@ -127,21 +129,18 @@
   color: #fff;
   text-align: center;
   line-height: 35px;
-  margin: 10px 0;
+  margin-left: 20%;
 }
 #profileImageMenu {
-  background: #333;
-  /*border:solid;*/
+  background: #444;
   font-size: 15px;
   color: #fff;
   text-align: center;
   line-height: 40px;
-  /*margin: 10px 0;*/
   padding: 8px;
-  width: 60px;
-    height: 60px;
-    /*border: 2px solid #ED1567;*/
-    border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 #profileImageTop {
   background: #fff;
@@ -182,6 +181,23 @@
   line-height: 100px;
   margin-top: 30px;
   object-fit:scale-down;
+  /*margin: 10px 0;*/
+}
+
+#profileImageMedium {
+  width: 80px;
+  height: 80px;
+  /*height: auto;*/
+  border-radius: 50%;
+  background: #444;
+  /*border:solid;*/
+  font-size: 1.5em;
+  color: #fff;
+  padding-top: 20%;
+  text-align: center;
+  /*line-height: 100px;
+  margin-top: 30px;*/
+  /*object-fit:scale-down;*/
   /*margin: 10px 0;*/
 }
 
@@ -262,8 +278,14 @@
 }
 
 .logo{
-  width: 40px;
-  height: 40px;
+  width: 100px;
+  height: 100px;
+  max-width: unset !important;
+}
+
+.header-logo{
+  width: 50px;
+  height: 50px;
   max-width: unset !important;
 }
 
@@ -286,6 +308,11 @@
    
 }
 
+.thumbnail-gallery{
+  height: 20em;
+  object-fit: scale-down;
+}
+
 .thumbnail{
    background: transparent;
 }
@@ -303,6 +330,7 @@
 .card-img-top{
   width:100%;
   height:auto;
+  
 }
 .cover-thumbnail{
    width: 140px;
