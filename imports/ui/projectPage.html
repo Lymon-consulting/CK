@@ -1,53 +1,71 @@
 <template name="projectPage">
 {{#if statusPublishedOrIsOwner}}
    <style>
-     {{#if getProjectPicture 800}}
-     .bannerProject{
-        width: 100%;
-        height:auto;
-        background-image: url({{getProjectPicture 800}});
-        background-repeat: no-repeat;
+     {{#if getProjectPicture getProfile._id}}
+      /**Estilo para que la foto de perfil aparezca sobre la foto de fondo de portada*/
+      @media (min-width: 100px) and (max-width: 576px) {
+         .bg-overlay {
+             background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url({{getProjectPicture getProfile._id}});
+        -webkit-background-size: cover;
+        -moz-background-size:  cover;
+        -o-background-size: cover;
         background-size: cover;
-        position: relative;
-        z-index: 1;
+                     
+         }
+      }
+      @media (min-width: 577px) and (max-width: 768px) {
+         .bg-overlay {
+            background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url({{getProjectPicture getProfile._id}});
+        -webkit-background-size: cover;
+        -moz-background-size:  cover;
+        -o-background-size: cover;
+        background-size: cover;
+         }
+      }
+      @media (min-width: 769px) and (max-width: 992px) {
+         .bg-overlay {
+            background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url({{getProjectPicture getProfile._id}});
+        -webkit-background-size: cover;
+        -moz-background-size:  cover;
+        -o-background-size: cover;
+        background-size: cover;
+                     
+         }
+      }
+      @media (min-width: 993px) {
+         .bg-overlay {
+             background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url({{getProjectPicture getProfile._id}});
+        -webkit-background-size: cover;
+        -moz-background-size:  cover;
+        -o-background-size: cover;
+        background-size: cover;
+                     
+         }
       }
       {{else}}
-      .bannerProject{
-        width: 100%;
-        height:auto;
-        background-image: url("/images/no-cover.jpg");
-        background-repeat: no-repeat;
+      .bg-overlay {
+          background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("/images/background-dark.jpg");
+        -webkit-background-size: cover;
+        -moz-background-size:  cover;
+        -o-background-size: cover;
         background-size: cover;
-        position: relative;
-        z-index: 1;
+          
       }
       {{/if}}
-      .bannerProject::after {
-        content:"";
-        position:absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-        background:rgba(0,0,0,0.5);
-        z-index:-1;
-      }
    </style>
-   <div class="container-fluid bannerProject">
+    <div class="container-fluid bg-overlay">
+      <div class="spacer280"></div>
       {{#if isOwner}}
-      <div class="spacer120"></div>
-      <div class="spacer120"></div>
-      <div class="spacer120"></div>
-      <div class="container-fluid text-white">
-        <a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <i class="fa fa-camera"></i></a>
-      </div>
+      <a href="#" class="text-white text-over" id="openMediaGallery"><i class="fa fa-camera"></i></a>
+      {{/if}}
+    </div>
+
+   
+    <div class="container-fluid">
       {{#unless statusPublished}}
       <div class="pink">Tu proyecto no está publicada, nadie la podrá ver hasta que la publiques</div>
 
       {{/unless}}
-      {{/if}}
-    </div>
-    <div class="container-fluid">
       <div class="row">
         <div class="col-lg-8 col-md-12 leftpadding">
           <section>
@@ -227,7 +245,7 @@
       <div class="spacer40"></div>
       <div class="row">
         <div class="col-lg-12 text-center">
-          <a href="{{projData.proj_external_view}}" target="_blank" class="btn btn-purple"><i class="fa fa-play-circle fa-lg"></i> Ver Película</a>
+          <a href="{{projData.proj_external_view}}" target="_blank" class="btn btn-purple text-white"><i class="fa fa-play-circle fa-lg"></i> Ver Película</a>
         </div>
       </div>
       {{/if}}
@@ -270,7 +288,7 @@
       {{>companies}}
 
       {{> items}}
-
+      <div class="spacer40"></div>
       <div class="container">
         <div class="row">
           <div class="col text-center">

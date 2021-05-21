@@ -149,6 +149,13 @@ a.list-group-item.active { background-color: #6c757d; }
   
 }
 
+.text-over {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .interactions-box{
   position: fixed;
   top: 120px;
@@ -250,6 +257,7 @@ a.list-group-item.active { background-color: #6c757d; }
 .project-title{
   font-size: 36px;
   font-weight: bold;
+  line-height: 90%;
   /*margin-top: -100px;*/
 }
 .project-type{
@@ -455,13 +463,13 @@ a.list-group-item.active { background-color: #6c757d; }
 .h5-name{
    font-family: "Avenir-Medium";
    font-size: 26px;
-   color:#ED1567; 
+   color:#444; 
 }
 .subtitle-underline{
-   font-family: "AvenirNext-Heavy";
+   font-family: "Avenir-Medium";
    font-size: 14px;
-   color:#666; 
-   text-decoration: underline;
+   color:#444; 
+   /*text-decoration: underline;*/
 }
 
 .location-underline{
@@ -516,7 +524,7 @@ a.list-group-item.active { background-color: #6c757d; }
 
 /**Inician estilos para los recuadros de proyectos en la página de perfil de un usuario*/
 .card{
-  padding: 10px;
+  padding: 0.4em;
   margin: 0px;
   background: white;
   /*height: 400px;*/
@@ -526,8 +534,8 @@ a.list-group-item.active { background-color: #6c757d; }
   box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
 }
 .card > img {
-  width:100%;
-  height:auto;
+  height: 6em;
+  object-fit: scale-down;
 }
 .card-title{
   text-align: center;
@@ -586,7 +594,7 @@ a.list-group-item.active { background-color: #6c757d; }
 
 .about{
   font-family: "Avenir-Light";
-  font-size: 80%;
+  font-size: 80%;  
 }
 
 .light-padding{
@@ -594,9 +602,17 @@ a.list-group-item.active { background-color: #6c757d; }
   margin: 10px;
 }
 
+.mag-5{
+  margin-left: 5%;
+}
+
 .padding-5{
   padding: 5px;
   margin: 5px;
+}
+
+.padding-bottom-5{
+  padding-bottom: 0.5em;
 }
 
 .input-width-80{
@@ -656,7 +672,7 @@ a.list-group-item.active { background-color: #6c757d; }
 
 .agreements{
    font-size: 12px;
-   color:#666;
+   color:#444;
    font-family: "Avenir-Roman";
 }
 

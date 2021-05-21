@@ -533,6 +533,14 @@ Template.profilePage.events({
        $('#modal1').modal('show');
      }
    },
+   'click #profileImageChange': function(event,template){
+     event.preventDefault();
+     if(Meteor.userId()===FlowRouter.getParam("id")){
+       $(".media-thumb").css('border','none');
+       $("#setProfilePicture").addClass('disabled');
+       $('#modal1').modal('show');
+     }
+   },
    
    'click #openMediaGallery': function(event,template){
      event.preventDefault();

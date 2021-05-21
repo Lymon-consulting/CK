@@ -23,16 +23,35 @@ function isFirstTime(from,to){
 
 }
 
+mediaSub = Meteor.subscribe("otherUsers");
 Template.profilePageActor.rendered = function(){
-  this.autorun(function(){
+  var _this = this;
+  this.autorun(function(c) {
+
+    setTimeout(() => {  
+
+    if (mediaSub.ready()) {
+      var owl = _this.$(".owl-carousel");
+      owl.owlCarousel({
+         
+         items:1,
+          margin:10
+      });
+      c.stop();
+    }
+
+    }, 3000);
+
     window.scrollTo(0,0);
+
   });
 }
 
 
 Template.profilePageActor.helpers({
    getProfile(){
-    return Meteor.users.findOne({'_id' : FlowRouter.getParam('id')});
+    Meteor.subscribe("otherUsers");
+    return Meteor.users.findOne({_id : FlowRouter.getParam('id')});
    },
    getName(userId){
       Meteor.subscribe("otherUsers");

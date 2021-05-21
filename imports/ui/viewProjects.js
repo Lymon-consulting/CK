@@ -24,14 +24,15 @@ if (Meteor.isClient) {
         var main = Project.findOne({'_id': value}).project_is_main;
         return (main === true) ? 'checked' : '' ; 
       },
-      getProjectPicture(projectId, size) {
+      getProjectPicture(projectId) {
         Meteor.subscribe("allMedia");
         var data = Project.findOne({'_id' : projectId});
         var url;
         if(data!=null && data.projectPictureID!=null){
           var cover = Media.findOne({'mediaId':data.projectPictureID});
           if(cover!=null){
-            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_fill" + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.projectPictureID;    
+            //url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_fill" + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.projectPictureID;    
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.projectPictureID;    
           }
           
         }
@@ -44,6 +45,17 @@ if (Meteor.isClient) {
           }
          return url;*/
       },
+      projectYear(projId){
+       var proj = Project.findOne({'_id': projId});
+       var result;
+       if(proj!=null && proj.project_year!=null){
+         result = proj.project_year;
+       }
+       else{
+         result = "Año desconocido";
+       }
+       return result;
+     },
       wizard(){
         if(Meteor.user()!=null && Meteor.user().wizard!=null){
           return Meteor.user().wizard;

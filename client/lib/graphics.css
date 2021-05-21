@@ -129,7 +129,7 @@
   color: #fff;
   text-align: center;
   line-height: 35px;
-  margin-left: 20%;
+  /*margin-left: 20%;*/
 }
 #profileImageMenu {
   background: #444;
@@ -328,8 +328,8 @@
    height: 80px;
 }
 .card-img-top{
-  height: 6em;
-  object-fit: scale-down;
+  height: 8em;
+  object-fit: unset;
   
 }
 .cover-thumbnail{
@@ -339,8 +339,8 @@
 
 
 .cover-top{
-   width: 100%;
-   height: auto; 
+   height: 8em;
+  object-fit: unset;
 }
 
 .cover-large{

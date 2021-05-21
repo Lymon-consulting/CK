@@ -114,6 +114,7 @@ Accounts.onCreateUser(function(options, user) {
       });
     },
     updateCity(userId,city){
+      console.log("Actualizando ciudad en server");
       Meteor.users.update({'_id': userId},{
         $set:{"city":city}
       });

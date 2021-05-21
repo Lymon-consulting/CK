@@ -22,7 +22,7 @@
 <template name="projectList">
   <div class="spacer20"></div>
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 col-sm-6">
         <div class="card h-250">
           <a href="/projectName" class="text-black"><img class="card-img-top cover-top" src="/images/no-cover.jpg"></a>
           <div class="card-body">
@@ -52,16 +52,17 @@
         <div class="tab-pane active" id="1">
           <div class="row">
             {{#each myProjects}}
-            <div class="col-md-3">
-              <div class="card">
-               {{#if getProjectPicture this._id 500}}
-                  <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="{{getProjectPicture this._id 500}}" alt="Card image cap"></a>
+            <div class="col-md-3 col-sm-6">
+              <div class="card w-100">
+               {{#if getProjectPicture this._id}}
+                  
+                  <a href="/projectPage/{{this._id}}" class="card-img-top"><img class="card-img-top w-100" src="{{getProjectPicture this._id}}" alt="Card image cap"></a>
                {{else}}
                   <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="/images/no-cover.jpg"></a>
                {{/if}}
                 <div class="card-body">
                   <h5 class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a></h5>
-                  <p class="card-text">{{this.project_year}}</p>
+                  <p class="card-text">{{projectYear this.project_year}}</p>
                   
                 </div>
                 <div class="card-footer">
@@ -75,7 +76,7 @@
 
                   </div>
                    <div class="row">
-                      <div class="col card-text"><a href="/projectPage/{{this._id}}" class="text-black"><i class="fa fa-eye"></i>&nbsp;Ver producción</a></div>
+                      <div class="col card-text"><a href="/projectPage/{{this._id}}" class="text-black"><i class="fa fa-eye"></i>&nbsp;Ver</a></div>
                       <div class="col card-text text-right"><a href="/editProject/{{this._id}}" class="text-black"><i class="fa fa-pencil"></i>&nbsp;Editar</a></div>
                    </div>
                  </div>
@@ -87,10 +88,10 @@
         <div class="tab-pane" id="2">
           <div class="row">
             {{#each mySamples}}
-            <div class="col-md-3">
+            <div class="col-md-3 col-sm-6">
               <div class="card">
-               {{#if getProjectPicture this._id 500}}
-                  <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="{{getProjectPicture this._id 500}}" alt="Card image cap"></a>
+               {{#if getProjectPicture this._id}}
+                  <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="{{getProjectPicture this._id}}" alt="Card image cap"></a>
                {{else}}
                   <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="/images/no-cover.jpg"></a>
                {{/if}}

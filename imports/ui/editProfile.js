@@ -746,10 +746,7 @@ Template.editProfile.events({
     var fullname = name + " " + lastname + " " + personLastName2;
     Meteor.call('updateFullName', Meteor.userId(), fullname);
   },
-  'change #resume': function(event,template){
-    var resume = trimInput(event.target.value);
-    Meteor.call('updateCrewResume', Meteor.userId(), resume);
-  },
+  
   
   'change #country': function(event,template){
     var country = trimInput(event.target.value);
@@ -766,6 +763,7 @@ Template.editProfile.events({
   },
   'change #city': function(event,template){
     var city = trimInput(event.target.value);
+    console.log("Actualizando ciudad");
     Meteor.call('updateCity', Meteor.userId(), city);
     Meteor.call('updateCountry', Meteor.userId(), "México");
   },
@@ -1240,7 +1238,7 @@ else{
   },
   'change #resume': function(event,template){
     var resume = trimInput(event.target.value);
-    Meteor.call('updateCastResume', Meteor.userId(), resume);
+    Meteor.call('updateCrewResume', Meteor.userId(), resume);
   },
   'change #peculiarities': function(event,template){
     var value = event.target.value;

@@ -96,7 +96,7 @@ if (Meteor.isClient) {
         if(data!=null && data.projectPictureID!=null){
           var cover = Media.findOne({'mediaId':data.projectPictureID});
           if(cover!=null){
-            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_fill" + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.projectPictureID;    
+            url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.projectPictureID;    
           }
           
         }
@@ -139,12 +139,10 @@ if (Meteor.isClient) {
         return url;
       },
       isOwner(){
-        project = Project.findOne({'_id': FlowRouter.getParam('id')});
+        var project = Project.findOne({'_id': FlowRouter.getParam('id')});
+        var val=false;
         if(project!=null && project.userId === Meteor.userId()) {
            val = true;
-        }
-        else{
-           val = false;
         }
         return val;
       },
