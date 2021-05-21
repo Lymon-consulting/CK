@@ -17,9 +17,9 @@ import '/lib/common.js';
 Meteor.subscribe("otherUsers");
 
 Template.peopleList.rendered = function(){
-  UsersIndex.getComponentMethods().addProps('isCrew', true);
-  Session.set("selected_category",null);
   this.autorun(function(){
+    UsersIndex.getComponentMethods().addProps('isCrew', true);
+    Session.set("selected_category",null);
     window.scrollTo(0,0);
   });
 }
@@ -36,6 +36,34 @@ Template.peopleList.helpers({
    searchCount: () => {
     // index instanceof EasySearch.index
     let dict = UsersIndex.getComponentDict(/* optional name */);
+
+    // get the total count of search results, useful when displaying additional information
+    return dict.get('count')
+  },
+  projectIndex: () => ProjectIndex, // instanceof EasySearch.Index
+   inputAttributes: function () {
+     return { 
+       placeholder: 'Buscar', 
+       id: 'searchBox'
+     }; 
+   },
+   searchCount: () => {
+    // index instanceof EasySearch.index
+    let dict = ProjectIndex.getComponentDict(/* optional name */);
+
+    // get the total count of search results, useful when displaying additional information
+    return dict.get('count')
+  },
+  industryIndex: () => IndustryIndex, // instanceof EasySearch.Index
+   inputAttributes: function () {
+     return { 
+       placeholder: 'Buscar', 
+       id: 'searchBox'
+     }; 
+   },
+   searchCount: () => {
+    // index instanceof EasySearch.index
+    let dict = IndustryIndex.getComponentDict(/* optional name */);
 
     // get the total count of search results, useful when displaying additional information
     return dict.get('count')

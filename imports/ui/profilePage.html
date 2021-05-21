@@ -52,30 +52,13 @@
       
    </style>
 
-   <!-- Inicia bloque para desplegar la foto de perfil -->
-   <div class="container-fluid bg-overlay">
-      {{#if isOwner}}
-        <div class="spacer10"></div>
-        <a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <i class="fa fa-camera"></i></a>
-        <div class="spacer280"></div>
-        {{#if getProfilePicture getProfile._id 100}}
-        <img src="{{getProfilePicture getProfile._id 100}}"  id="profileImageinProfilePage"/>
-        {{else}}
-        <img src="/images/no-profile.jpg" class="img-round" />
-        {{/if}}
-      {{else}}
-        <div class="spacer280"></div>
-        {{#if getProfilePicture getProfile._id 100}}
-        <img src="{{getProfilePicture getProfile._id 100}}"  id="profileImageLarge"/>
-        {{else}}
-        <img src="/images/no-profile.jpg" class="img-round" />
-        {{/if}}
-      {{/if}}
-   </div>   
-   <!-- Termina bloque para desplegar la foto de perfil -->
+  <div class="container-fluid bg-overlay">
+    <div class="spacer280"></div>
+  </div>
 
    
 {{#unless notSameUser}}
+<!--
     <div class="container-fluid background-verydarkgray mx-auto">
      <div class="spacer5"></div>
      <div class="row">
@@ -87,183 +70,247 @@
      </div>
      <div class="spacer5"></div>
    </div>
+ -->
 {{/unless}}
 
-   <!-- Inicia bloque con los datos personales y de contacto del perfil -->
-   <div class="container">
-      <div class="spacer40"></div>
-      
-      
+
+<div class="container">
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col-md-6">
       <div class="row">
-         <div class="col-md-1 col-sm-12">
-            <div class="row">
-               <div class="col text-nowrap"><i class="fa fa-thumbs-up fa-sm"></i>
-                  <span class="numbers">{{#if getProfile.likes}}
-                     {{getProfile.likes}}
-                  {{else}}
-                     0
-                  {{/if}}</span>
-               </div>
+        <div class="col-md-4">
+          {{#if isOwner}}
+            <!--<a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <i class="fa fa-camera"></i></a>-->
+            {{#if getProfilePicture getProfile._id 100}}
+            <img src="{{getProfilePicture getProfile._id 100}}"  id="profileImageinProfilePage"/>
+            {{else}}
+            <div id="profileImageMedium">{{getInitials getProfile._id}}</div>
+            {{/if}}
+          {{else}}
+            {{#if getProfilePicture getProfile._id 100}}
+            <img src="{{getProfilePicture getProfile._id 100}}"  id="profileImageLarge"/>
+            {{else}}
+            <div id="profileImageMedium">{{getInitials getProfile._id}}</div>
+            {{/if}}
+          {{/if}}
+        </div>
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col h3-title">
+              {{getName getProfile._id}}
             </div>
-            <div class="row">
-               <div class="col text-nowrap"><i class="fa fa-eye fa-sm"></i>
-                  <span class="numbers">{{#if getProfile.views}}
-                     {{getProfile.views}}
-                  {{else}}
-                     0
-                  {{/if}}</span>
-               </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              {{#if getFirstRoles}}
+                 <span class="uppercase">{{getFirstRoles}}</span>{{#if showMoreRolesLink getProfile.role}}<a href="#" class="text-purple" data-toggle="modal" data-target="#more-roles">ver todos <i class="fa fa-plus"></i></a>{{/if}}
+              {{/if}}
             </div>
-            <div class="row">
-               <div class="col text-nowrap"><i class="fa fa-user fa-sm"></i>&nbsp;<i class="fa fa-angle-left fa-sm"></i>
-                  <span class="numbers">
-                     {{getFollowersCount}}
-                  </span>
-               </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              {{#if getProfile.city}}
+                 <i class="fa fa-map-marker fa-sm"></i> <small>{{getProfile.city}}, {{getProfile.state}}</small>
+              {{/if}}
             </div>
-            <div class="row">
-               <div class="col text-nowrap"><i class="fa fa-user fa-sm"></i>&nbsp;<i class="fa fa-angle-right fa-sm"></i>
-                  <span class="numbers">
-                     {{getFollowingCount}}</span>
-               </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              {{#if notSameUser getProfile._id}}
+                 {{#if showButtonFollow getProfile._id}}
+                  <input type="hidden" id="thisUser" value="{{getProfile._id}}">
+                  {{#if isVerified}}
+                    <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
+                  {{/if}}
+                 {{else}}
+                    <button class="btn button-unfollow" id="pushUnfollow"> <i class="fa fa-minus-circle fa-sm"></i> DEJAR DE SEGUIR</button>
+                 {{/if}}      
+                 <button class="btn button-follow" id="sendMessage"> <i class="fa fa-envelope fa-sm"></i> ENVIAR MENSAJE</button>
+              {{/if}}
             </div>
+          </div>
 
-
-         </div>
-         <div class="col-md-8 col-sm-12 text-left">
-            <div class="row">
-               <div class="col-8 text-left">
-                  {{#if getFirstRoles}}
-                     <span class="uppercase">{{getFirstRoles}}</span>{{#if showMoreRolesLink getProfile.role}}<a href="#" class="text-purple" data-toggle="modal" data-target="#more-roles">ver todos <i class="fa fa-plus"></i></a>{{/if}}
-                  {{/if}}
-               </div>
-               
-            </div>
-            <div class="row">
-               <div class="col">
-                  {{#if getProfile.city}}
-                     <i class="fa fa-map-marker fa-sm"></i> <small>{{getProfile.city}}, {{getProfile.state}}</small>
-                  {{/if}}
-               </div>
-            </div>
-            <div class="row">
-               <div class="col">
-                  {{#if notSameUser getProfile._id}}
-                     {{#if showButtonFollow getProfile._id}}
-                      <input type="hidden" id="thisUser" value="{{getProfile._id}}">
-                      {{#if isVerified}}
-                        <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
-                      {{/if}}
-                     {{else}}
-                        <button class="btn button-unfollow" id="pushUnfollow"> <i class="fa fa-minus-circle fa-sm"></i> DEJAR DE SEGUIR</button>
-                     {{/if}}      
-                     <button class="btn button-follow" id="sendMessage"> <i class="fa fa-envelope fa-sm"></i> ENVIAR MENSAJE</button>
-                  {{/if}}
-               </div>
-            </div>
-         </div>
-         <div class="col-md-3 col-sm-12 text-right">
-            &nbsp;
-         </div>
+        </div>
       </div>
-   </div>
-   
-   <!-- Termina bloque con los datos personales y de contacto del perfil -->
-   <div class="spacer40"></div>
+    </div>
+    <div class="col-md-4 border-left">
+      <div class="row">
+        <div class="col-md-1"><i class="fa fa-eye fa-sm"></i></div>
+        <div class="col-md-11 text-no-wrap"><small>Vistas {{getProfile.views}}</small></div>
+      </div>
+      <div class="row">
+        <div class="col-md-1"><i class="fa fa-thumbs-up fa-sm"></i></div>
+        <div class="col-md-11 text-no-wrap"><small>Valoraciones {{getProfile.likes}}</small></div>
+      </div>
+      <div class="row">
+        <div class="col-md-1"><i class="fa fa-angle-left fa-sm"></i></div>
+        <div class="col-md-11 text-no-wrap"><small>Seguidores {{getFollowersCount}}</small></div>
+      </div>
+      <div class="row">
+        <div class="col-md-1"><i class="fa fa-angle-right fa-sm"></i></div>
+        <div class="col-md-11 text-no-wrap"><small>Siguiendo {{getFollowingCount}}</small></div>
+      </div>
+    </div>
+    <div class="col-md-2 border-left">
+      <div class="row">
+        <div class="col">
+          {{#if getProfile.crew.facebook}}
+          <a href="{{formatURL getProfile.crew.facebook}}" target="_blank"> <i class="fa fa-sm fa-facebook text-black"></i></a>
+          {{/if}}
+        </div>
+        <div class="col">
+          {{#if getProfile.crew.instagram}}
+          <a href="{{formatURL getProfile.crew.instagram}}" target="_blank"> <i class="fa fa-sm fa-instagram text-black"></i></a>
+          {{/if}}
+        </div>
+        <div class="col">
+          {{#if getProfile.crew.twitter}}
+          <a href="{{formatURL getProfile.crew.twitter}}" target="_blank"> <i class="fa fa-sm fa-twitter text-black"></i></a>
+          {{/if}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          {{#if getProfile.crew.youtube}}
+          <a href="{{formatURL getProfile.crew.youtube}}" target="_blank"> <i class="fa fa-sm fa-youtube text-black"></i></a>
+          {{/if}}
+        </div>
+        <div class="col">
+          {{#if getProfile.crew.vimeo}}
+          <a href="{{formatURL getProfile.crew.vimeo}}" target="_blank"> <i class="fa fa-sm fa-vimeo text-black"></i></a>
+          {{/if}}
+        </div>
+        <div class="col">
+          {{#if getProfile.crew.imdb}}
+          <a href="{{formatURL getProfile.crew.imdb}}" target="_blank"> <i class="fa fa-sm fa-imdb text-black"></i></a>
+          {{/if}}
+        </div>
+      </div>
+      <div class="spacer10"></div>
+      <div class="row">
+        <div class="col text-center">
+          <a href="{{getProfile.crew.webpage}}" target="_blank" class="text-gray"><strong class="text-gray"><small>{{getProfile.crew.webpage}}</small></strong></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
 
+<div class="spacer40"></div>
 
+<div class="container">
+  {{#if getMainProject}}
+  <div class="row">
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col border-bottom">
+          <strong class="uppercase">Proyecto destacado</strong>
+        </div>
+      </div>
+      <div class="spacer20"></div>
+      <div class="row">
+        <div class="col">
+          {{#if getProjectImages getMainProject._id 175}}
+            <a href="/projectPage/{{getMainProject._id}}" class="card-img-top"><img class="thumbnail-gallery" src="{{getProjectImages getMainProject._id 175}}" alt="Card image cap"></a>
+          {{else}}
+            <a href="/projectPage/{{getMainProject._id}}" class="card-img-top"><img src="/images/no-cover.jpg" class="thumbnail-gallery" alt=""></a>
+          {{/if}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col project-type">
+              {{getMainProject.project_type}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col uppercase project-title">
+              {{getMainProject.project_title}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col uppercase">
+              {{projectRole getMainProject._id}}
+            </div>
+          </div>
+          <div class="spacer20"></div>
+          <div class="row">
+            <div class="col about">
+              {{getMainProject.project_desc}}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="spacer40"></div>
+          <div class="row">
+            <div class="col-md-2 border-left"><i class="fa fa-eye fa-sm"></i></div>
+            <div class="col-md-10 text-no-wrap"><small>Vistas {{getMainProject.views}}</small></div>
+          </div>
+          <div class="row">
+            <div class="col-md-2 border-left"><i class="fa fa-thumbs-up fa-sm"></i></div>
+            <div class="col-md-10 text-no-wrap"><small>Valoraciones {{getMainProject.likes}}</small></div>
+          </div>
+        </div>
+      </div>
+        
+    </div>
+    {{#if getProfile.crew.resume}}
+    <div class="col">
+      <div class="row">
+        <div class="col border-bottom">
+          <strong class="uppercase">Acerca de {{getName getProfile._id}}</strong>
+        </div>
+      </div>
+      <div class="spacer20"></div>
+      <div class="row">
+        <div class="col about">
+          {{getProfile.crew.resume}}
+        </div>
+      </div>
+      <div class="spacer40"></div>
+      <div class="row">
+        <div class="col">
+          <a href="{{getProfile.crew.webpage}}" target="_blank" class="text-gray"><strong class="text-gray"><small>{{getProfile.crew.webpage}}</small></strong></a>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+  {{/if}}
+
+</div>
+<div class="spacer80"></div>
    <div class="container">
       <div class="row">
          <div class="col-lg-9">
             <!-- Inicia grid de proyectos-->
+            {{#if getProjects}}
+            <div class="row">
+              <div class="col border-bottom">
+                <strong class="uppercase">Proyectos</strong>
+              </div>
+            </div>
+            {{/if}}
             <div class="container">
-               {{#if countProjects}}
-               <div class="row">
-                 <strong class="uppercase">Producciones</strong>
-                 
-               </div>
-               <div class="row">
-                 <div class="col">
-                    <hr>
-                 </div>
-               </div>
-               {{/if}}
-               <!--Inicia proyecto principal si es que existe-->
-               {{#if getMainProject}}
-               <div class="row">
-                 <div class="col-lg-12">
-                   <div class="row">
-                     <div class="col-lg-12">
-                      {{#if getProjectImages getMainProject._id 175}}
-                        <a href="/projectPage/{{getMainProject._id}}" class="card-img-top"><img class="card-img-top" src="{{getProjectImages getMainProject._id 175}}" alt="Card image cap"></a>
-                     {{else}}
-                        <a href="/projectPage/{{getMainProject._id}}" class="card-img-top"><img src="/images/no-cover.jpg" class="card-img-top w-100" alt=""></a>
-                     {{/if}}
-                     </div>
-                   </div>
-                   <div class="row">
-                     <div class="col negativeMargin project-type">{{getMainProject.project_type}}</div>
-                   </div>
-                   <div class="row">
-                     <div class="col negativeMargin project-title">{{getMainProject.project_title}}</div>
-                   </div>
-                   <div class="spacer20"></div>
-                   <div class="row">
-                     <div class="col-lg-4">
-                       <div class="row">
-                         <div class="col-lg-12 uppercase">{{projectRole getMainProject._id}}</div>
-                       </div>
-                       <div class="row">
-                         <div class="col-lg-12">
-                            <i class="fa fa-thumbs-up fa-sm"></i>
-                            <small>&nbsp;
-                              {{#if getMainProject.likes}}
-                                {{getMainProject.likes}}
-                              {{else}}
-                                0
-                              {{/if}}
-                            </small>
-                          </div>
-                       </div>
-                       <div class="row">
-                         <div class="col-lg-12">
-                            <i class="fa fa-eye fa-sm"></i>
-                            <small>&nbsp;
-                              {{#if getMainProject.views}}
-                                {{getMainProject.views}}
-                              {{else}}
-                                0
-                              {{/if}}
-                            </small>
-                          </div>
-                       </div>
-
-                     </div>
-                     <div class="col-lg-8 agreements text-justify">
-                       {{getMainProject.project_desc}}
-                     </div>
-                   </div>
-                 </div>
-               </div>
-               {{/if}}
-               <!--Termina proyecto principal-->
                
                <div class="row">
-               {{#if getProjects}}
-                  
+               {{#if getProjects}}                                      
                   {{#each getProjects}}
                   <!-- Inicia cada recuadro de cada proyecto -->
                      <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="spacer20"></div>
                         <div class="card w-100">
-                           {{#if getProjectImages this._id 175}}
-                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img class="card-img-top w-100" src="{{getProjectImages this._id 175}}" alt="Card image cap"></a>
+                           {{#if getProjectImages this._id}}
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img class="card-img-top w-100" src="{{getProjectImages this._id}}" alt="Card image cap"></a>
                            {{else}}
-                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/nocover.jpg" class="card-img-top w-100" alt=""></a>
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/no-cover.jpg" class="card-img-top w-100" alt=""></a>
                            {{/if}}  
 
                           <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a>{{#if ownerRole}}&nbsp;<a href="/editProject/{{this._id}}"><i class="fa fa-pencil fa-sm text-purple"></i></a>{{/if}}</div>
-                          <div class="agreements"><strong>{{this.project_year}}</strong></div>
+                          <div class="agreements"><strong>{{projectYear this._id}}</strong></div>
                           <div class="card-body">
                             <p class="card-text"><strong>{{projectRole this._id}}</strong></p>
                           </div>
@@ -296,7 +343,7 @@
                
                {{#if getSamples}}
                 <div class="row">
-                  <div class="col-12">
+                  <div class="col border-bottom">
                     <strong class="uppercase">Muestras de trabajo</strong>
                   </div>
                 </div>
@@ -314,11 +361,11 @@
                            {{#if getProjectImages this._id 175}}
                               <a href="/projectPage/{{this._id}}" class="card-img-top"><img class="card-img-top w-100" src="{{getProjectImages this._id 175}}" alt="Card image cap"></a>
                            {{else}}
-                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/nocover.jpg" class="card-img-top w-100" alt=""></a>
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/no-cover.jpg" class="card-img-top w-100" alt=""></a>
                            {{/if}}  
 
                           <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a>{{#if ownerRole}}&nbsp;<a href="/editProject/{{this._id}}"><i class="fa fa-pencil fa-sm text-purple"></i></a>{{/if}}</div>
-                          <div class="agreements"><strong>{{this.project_year}}</strong></div>
+                          <div class="agreements"><strong>{{projectYear this._id}}</strong></div>
                           <div class="card-body">
                             <p class="card-text"><strong>{{projectRole this._id}}</strong></p>
                           </div>
@@ -364,22 +411,7 @@
                    <iframe src="{{getVideo getProfile.crew.vimeoDemo getProfile.crew.youtubeDemo}}" class="embed-responsive-item"></iframe>
                 </div>
               {{/if}}
-               <div class="spacer40"></div>
-               {{#if countCollaborations}}
-               <div class="row">
-                 <strong class="uppercase">Filmografía</strong>
-               </div>
-               <div class="row">
-                 <div class="col">
-                    <hr>
-                 </div>
-               </div>
-               {{/if}}
-               {{#each getCrewCollaborations}}
-               <div class="row">
-                  <div class="col-lg-12"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_year}} - {{this.project_title}}</a></div>
-               </div>
-               {{/each}}
+               
                
             </div>
          </div>
@@ -387,72 +419,30 @@
             <!--Inicia columna de la derecha para el ACERCA DE y los SEGUIDORES-->
             <div class="container">
                <div class="row">
-                  <div class="col-lg-12 col-md-12 col-sm-12 text-right">
+                  <div class="col">
                      <div class="container">
-                        <div class="row">
-                           <div class="col-md-12 text-left">
-                              <strong class="uppercase">ACERCA DE {{getProfile.profile.name}}</strong>
-                           </div>
+                      {{#if countCollaborations}}
+                      <div class="row">
+                        <div class="col border-bottom">
+                          <strong class="uppercase">Filmografía</strong>
                         </div>
+                      </div>
+                       
+                         {{#each getCrewCollaborations}}
+                         <div class="row">
+                            <div class="col"><a href="/projectPage/{{this._id}}" class="about text-black">{{this.project_year}} - {{this.project_title}}</a></div>
+                         </div>
+                         {{/each}}
+                         <div class="spacer40"></div>
+                       {{/if}} 
+                        {{#if getFollowersCount}}                        
+                        
                         <div class="row">
-                           <div class="col">
-                              <hr>
-                           </div>
+                          <div class="col border-bottom">
+                            <strong class="uppercase">Seguidores</strong>
+                          </div>
                         </div>
-                        <div class="row">
-                           <div class="col">
-                              <p class="agreements text-justify">
-                                 {{#if getProfile.crew.resume}}
-                                    {{getProfile.crew.resume}}
-                                 {{else}}
-                                    Sin descripción
-                                 {{/if}}
-                                 
-                              </p>
-                           </div>
-                        </div>
-                        <div class="row">
-                           <div class="col text-left">
-                              <a href="{{getProfile.crew.webpage}}" target="_blank" class="text-gray"><strong class="text-gray"><small>{{getProfile.crew.webpage}}</small></strong></a>
-                           </div>
-                        </div>
-                        <div class="row">
-                           <div class="col-md-12">
-                              <table class="table table-responsive borderless no-scroll">
-                                 <tr>
-                                    {{#if getProfile.crew.facebook}}
-                                    <td><a href="{{formatURL getProfile.crew.facebook}}" target="_blank"> <i class="fa fa-sm fa-facebook text-purple"></i></a></td>
-                                    {{/if}}
-                                    {{#if getProfile.crew.twitter}}
-                                    <td><a href="{{formatURL getProfile.crew.twitter}}" target="_blank"><i class="fa fa-sm fa-twitter text-purple"></i></a></td>
-                                    {{/if}}
-                                    {{#if getProfile.crew.vimeo}}
-                                    <td><a href="{{formatURL getProfile.crew.vimeo}}" target="_blank"><i class="fa fa-sm fa-vimeo text-purple"></i></a></td>
-                                    {{/if}}
-                                    {{#if getProfile.crew.youtube}}
-                                    <td><a href="{{formatURL getProfile.crew.youtube}}" target="_blank"><i class="fa fa-sm fa-youtube text-purple"></i></a></td>
-                                    {{/if}}
-                                    {{#if getProfile.crew.instagram}}
-                                    <td><a href="{{formatURL getProfile.crew.instagram}}" target="_blank"><i class="fa fa-sm fa-instagram text-purple"></i></a></td>
-                                    {{/if}}
-                                    {{#if getProfile.crew.imdb}}
-                                    <td><a href="{{formatURL getProfile.crew.imdb}}" target="_blank"><i class="fa fa-sm fa-imdb text-purple"></i></a></td>
-                                    {{/if}}
-                                 </tr>
-                              </table>
-                           </div>
-                        </div>
-
-                        {{#if getFollowersCount}}
-                        <div class="row">
-                           <div class="col spacer40"></div>
-                        </div>
-                        <div class="row">
-                           <strong>SEGUIDORES</strong>
-                        </div>
-                        <div class="row">
-                           <div class="col"><hr></div>
-                        </div>
+                        <div class="spacer20"></div>
                         <div class="row">
                            <div class="col">
                               <div class="container">
@@ -472,18 +462,16 @@
                               </div>
                            </div>
                         </div>
+                        <div class="spacer40"></div>
                         {{/if}}
 
                         {{#if getFollowingCrew}}
                         <div class="row">
-                           <div class="col spacer40"></div>
+                          <div class="col border-bottom">
+                            <strong class="uppercase">Crew que sigue</strong>
+                          </div>
                         </div>
-                        <div class="row">
-                           <strong>CREW QUE SIGUE</strong>
-                        </div>
-                        <div class="row">
-                           <div class="col"><hr></div>
-                        </div>
+                        <div class="spacer20"></div>
                         <div class="row">
                            <div class="col">
                               <div class="container">
@@ -494,7 +482,7 @@
                                        {{#if getProfilePicture this._id 40}}
                                        <img src="{{getProfilePicture this._id 40}}" data-toggle="tooltip" data-placement="top" title="{{this.fullname}}">
                                        {{else}}
-                                       <img src="/images/no-profile.jpg" class="img-round" data-toggle="tooltip" style="width:40px;height: 40px" title="{{this.fullname}}"/>
+                                       <div id="profileImage" data-toggle="tooltip" data-placement="top" title="{{this.fullname}}">{{getInitials this._id}}</div>
                                        {{/if}}
                                        </a>
                                     </div>
@@ -503,18 +491,17 @@
                               </div>
                            </div>
                         </div>
+                        <div class="spacer40"></div>
                         {{/if}}
 
                         {{#if getFollowingCast}}
+                        
                         <div class="row">
-                           <div class="col spacer40"></div>
+                          <div class="col border-bottom">
+                            <strong class="uppercase">Cast que sigue</strong>
+                          </div>
                         </div>
-                        <div class="row">
-                           <strong>CAST QUE SIGUE</strong>
-                        </div>
-                        <div class="row">
-                           <div class="col"><hr></div>
-                        </div>
+                        <div class="spacer20"></div>
                         <div class="row">
                            <div class="col">
                               <div class="container">
@@ -525,7 +512,7 @@
                                        {{#if getProfilePicture this._id 40}}
                                        <img src="{{getProfilePicture this._id 40}}" data-toggle="tooltip" data-placement="top" title="{{getFollowName this._id}}">
                                        {{else}}
-                                       <img src="/images/no-profile.jpg" class="img-round" data-toggle="tooltip" style="width:40px;height: 40px" title="{{getFollowName this._id}}"/>
+                                       <div id="profileImage" data-toggle="tooltip" data-placement="top" title="{{this.fullname}}">{{getInitials this._id}}</div>
                                        {{/if}}
                                        </a>
                                     </div>
@@ -534,17 +521,16 @@
                               </div>
                            </div>
                         </div>
+                        <div class="spacer40"></div>
                         {{/if}}
                         {{#if getFollowingCompanies}}
+                        
                         <div class="row">
-                           <div class="col spacer40"></div>
+                          <div class="col border-bottom">
+                            <strong class="uppercase">Empresas que sigue</strong>
+                          </div>
                         </div>
-                        <div class="row">
-                           <strong>EMPRESAS QUE SIGUE</strong>
-                        </div>
-                        <div class="row">
-                           <div class="col"><hr></div>
-                        </div>
+                        <div class="spacer20"></div>
                         <div class="row">
                            <div class="col">
                               <div class="container">
@@ -564,6 +550,7 @@
                               </div>
                            </div>
                         </div>
+                        <div class="spacer40"></div>
                         {{/if}}
                        
                         <div class="row">
@@ -638,7 +625,7 @@
         <div class="modal-footer justify-content-center">
           <div class="row">
             <div class="col-lg-6">
-              <a href="#" class="btn btn-purple disabled" id="setProfilePicture" data-id="{{this.mediaId}}">Establecer como foto de perfil</a>
+              <a href="#" class="btn btn-white disabled" id="setProfilePicture" data-id="{{this.mediaId}}">Establecer como foto de perfil</a>
             </div>
             <!--<div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>-->
             <!--<div class="col-lg-5"><input type="file" name="profile" id="nuestroinput"></div>-->
@@ -711,7 +698,7 @@
         <div class="modal-footer justify-content-center">
           <div class="row">
             <div class="col-lg-6">
-              <a href="#" class="btn btn-purple disabled" id="setCoverPicture" data-id="{{this.mediaId}}">Establecer como foto de portada</a>
+              <a href="#" class="btn btn-white disabled" id="setCoverPicture" data-id="{{this.mediaId}}">Establecer como foto de portada</a>
             </div>
             <!--<div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>-->
             <!--<div class="col-lg-5"><input type="file" name="profile" id="nuestroinput"></div>-->

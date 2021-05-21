@@ -126,6 +126,8 @@ a.list-group-item.active { background-color: #6c757d; }
    font-family: "Avenir-Book";
    font-size: 20px;
 }
+
+
 .h1-title{
    font-family: "AvenirNext-Bold";  
    font-size: 30px;
@@ -248,12 +250,12 @@ a.list-group-item.active { background-color: #6c757d; }
 .project-title{
   font-size: 36px;
   font-weight: bold;
-  margin-top: -100px;
+  /*margin-top: -100px;*/
 }
 .project-type{
   font-size: 24px;
-  font-style: italic;
-  margin-top: -130px;
+  /*font-style: italic;
+  margin-top: -130px;*/
 }
 
 .nine-columns {
@@ -580,6 +582,11 @@ a.list-group-item.active { background-color: #6c757d; }
 .text-no-wrap{
    white-space: nowrap;
    font-family: "Avenir-Light";
+}
+
+.about{
+  font-family: "Avenir-Light";
+  font-size: 80%;
 }
 
 .light-padding{
@@ -983,7 +990,7 @@ a.list-group-item.active { background-color: #6c757d; }
 .spacer280 { 
    margin:0; 
    padding:0; 
-   height:280px; 
+   height:22em; 
 }
 .bootstrap-select.btn-group .dropdown-toggle .caret {
   width: 10px;
@@ -994,6 +1001,14 @@ a.list-group-item.active { background-color: #6c757d; }
 
 [class*="col-"] {
     width: 100%;
+}
+
+.border-left{
+  border-left: 1px solid #000;
+}
+
+.border-bottom: {
+  border-bottom: 1px solid #000;
 }
 
 

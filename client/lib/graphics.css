@@ -185,15 +185,15 @@
 }
 
 #profileImageMedium {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   /*height: auto;*/
   border-radius: 50%;
   background: #444;
   /*border:solid;*/
   font-size: 1.5em;
   color: #fff;
-  padding-top: 20%;
+  padding-top: 15%;
   text-align: center;
   /*line-height: 100px;
   margin-top: 30px;*/
@@ -209,7 +209,7 @@
   color: #fff;
   text-align: center;
   line-height: 100px;
-  margin-top: 30px;
+  /*margin-top: 30px;*/
   object-fit:scale-down;
   cursor: pointer;
 }
@@ -328,8 +328,8 @@
    height: 80px;
 }
 .card-img-top{
-  width:100%;
-  height:auto;
+  height: 6em;
+  object-fit: scale-down;
   
 }
 .cover-thumbnail{

@@ -240,6 +240,7 @@ Template.profilePage.helpers({
         if(cover!=null){
           //url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_scale" + "/v" + cover.media_version + "/" + data.userId + "/" + data.projectPictureID;    
           url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.projectPictureID;    
+          console.log(url);
         }
         
       }
@@ -252,12 +253,24 @@ Template.profilePage.helpers({
       }
      return url;*/
    },
+   projectYear(projId){
+     var proj = Project.findOne({'_id': projId});
+     var result;
+     if(proj!=null && proj.project_year!=null){
+       result = proj.project_year;
+     }
+     else{
+       result = "Año desconocido";
+     }
+     return result;
+   },
    projectRole(projId){
       var u = Project.findOne({'_id': projId});
-      var result = "";
+      var result = "Rol desconocido";
       if(u){
          rolesArray = u.project_role;
          if(rolesArray){
+          result="";
             var size = rolesArray.length;
             var count = 0;
             rolesArray.forEach(function(elem){

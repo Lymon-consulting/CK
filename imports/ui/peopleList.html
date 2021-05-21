@@ -41,7 +41,8 @@
           <div class="row">
             <div class="col agreements">
               {{> EasySearch.Input index=usersIndex event="enter" attributes=inputAttributes}}
-         
+              {{#EasySearch.IfSearching index=projectIndex}}{{/EasySearch.IfSearching}}
+            {{#EasySearch.IfSearching index=industryIndex}}{{/EasySearch.IfSearching}}
             </div>
           </div>
           <div class="spacer10"></div>

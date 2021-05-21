@@ -46,7 +46,7 @@
               </select>
             </div>
           </div>
-          <div class="spacer10"></div>
+          <div class="spacer10"></div>          
           <div class="row">
             <div class="col agreements">Nombre</div>
           </div>                  
@@ -58,51 +58,98 @@
             </div>
           </div>
           <div class="spacer10"></div>
-          <div class="row">
-            <div class="col agreements">Estatus</div>
-          </div>
-          <div class="spacer10"></div>
-          <div class="row">
-            <div class="col">
-              <select class="form-control agreements" id="status">
-                <option value="cualquier"> Cualquier estatus </option>
-                {{#each getProjectStatus}}
-                <option value="{{this}}" {{statusSelected this}}> {{this}} </option>
-                {{/each}}
-              </select>
+          <div id="fieldsForProduction">
+            <div class="row">
+              <div class="col agreements">Estatus</div>
+            </div>
+            <div class="spacer10"></div>
+            <div class="row">
+              <div class="col">
+                <select class="form-control agreements" id="status">
+                  <option value="cualquier"> Cualquier estatus </option>
+                  {{#each getProjectStatus}}
+                  <option value="{{this}}" {{statusSelected this}}> {{this}} </option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
+            <div class="spacer10"></div>
+            <div class="row">
+              <div class="col agreements">Tipo</div>
+            </div>
+            <div class="spacer10"></div>
+            <div class="row">
+              <div class="col">
+                <select class="form-control agreements" id="type">
+                  <option value="cualquier"> Cualquier tipo </option>
+                  {{#each getProjectType}}
+                  <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
+            <div class="spacer10"></div>
+            <div class="row">
+              <div class="col agreements">Género</div>
+            </div>
+            <div class="spacer10"></div>
+            <div class="row">
+              <div class="col">
+                <select class="form-control agreements" id="genre">
+                  <option value="cualquier"> Cualquier género </option>
+                  {{#each getProjectGender}}
+                  <option value="{{this}}" {{genreSelected this}}> {{this}} </option>
+                  {{/each}}
+                </select>
+              </div>
             </div>
           </div>
-          <div class="spacer10"></div>
-          <div class="row">
-            <div class="col agreements">Tipo</div>
-          </div>
-          <div class="spacer10"></div>
-          <div class="row">
-            <div class="col">
-              <select class="form-control agreements" id="type">
-                <option value="cualquier"> Cualquier tipo </option>
-                {{#each getProjectType}}
-                <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
-                {{/each}}
-              </select>
+          <div id="fieldsForSample">
+            <div class="row">
+              <div class="col agreements">Año</div>
             </div>
-          </div>
-          <div class="spacer10"></div>
-          <div class="row">
-            <div class="col agreements">Género</div>
-          </div>
-          <div class="spacer10"></div>
-          <div class="row">
-            <div class="col">
-              <select class="form-control agreements" id="genre">
-                <option value="cualquier"> Cualquier género </option>
-                {{#each getProjectGender}}
-                <option value="{{this}}" {{genreSelected this}}> {{this}} </option>
-                {{/each}}
-              </select>
+            <div class="spacer10"></div>
+            <div class="row">
+              <div class="col">
+                 <select name="proj_year" id="proj_year" class="form-control agreements">
+                    <option value="cualquier"> Cualquier año </option>
+                    {{#each getAvailableYears}}
+                       <option value="{{this}}"> {{this}} </option>   
+                    {{/each}}
+                 </select>
+              </div>
             </div>
+            <div class="spacer10"></div>
+            <div class="row">
+              <div class="col agreements">Departamento</div>
+            </div>
+            <div class="spacer10"></div>
+            <div class="row">
+              <div class="col">
+                <select name="category" id="category" class="form-control agreements">
+                  <option value="Cualquiera"> Cualquier departamento </option>
+                   {{#each getCategories}}
+                      <option value="{{title}}"> {{title}} </option>
+                   {{/each}}
+                </select>
+              </div>
+            </div>
+            <div class="spacer10"></div>
+            <div class="row">
+              <div class="col agreements">Rol</div>
+            </div>
+            <div class="spacer10"></div>
+            <div class="row">
+              <div class="col">
+                <select name="Ocupation" id="ocupation" class="form-control agreements">
+                   {{#each getOcupationsFromCategory}}
+                      <option value="{{secondary}}"> {{secondary}} </option>
+                   {{/each}}
+                </select> 
+              </div>
+            </div>
+            
           </div>
-          
         </div>
       </div>
       <div class="col-lg-9">
@@ -139,6 +186,19 @@
                                   <a href="/projectPage/{{this.__originalId}}"><h5 class="h5-name">{{this.project_title}}</h5></a>
                                 </td>
                               </tr>
+                              {{#if isSample this.project_family}}
+                              <tr>
+                                <td class="no-padding text-no-wrap subtitle-underline">
+                                  {{this.project_year}}
+                                </td>
+                              </tr>
+
+                              <tr>
+                                <td class="no-padding text-no-wrap subtitle-underline">
+                                  {{this.project_role}}
+                                </td>
+                              </tr>
+                              {{/if}}
                               <tr>
                                 <td class="no-padding text-no-wrap subtitle-underline">
                                   {{getFamily this.project_family}}

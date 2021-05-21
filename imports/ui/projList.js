@@ -4,6 +4,9 @@ import { Media } from '../api/media.js';
 import { UsersIndex } from '/lib/common.js';
 import { ProjectIndex } from '/lib/common.js';
 import { IndustryIndex } from '/lib/common.js';
+import { getParam } from '/lib/functions.js';
+import { Ocupation } from '../api/ocupations.js';
+import { City } from '../api/city.js';
 
 import './projList.html';
 import '/lib/common.js';
@@ -13,7 +16,10 @@ Meteor.subscribe("otherUsers");
 Template.projList.rendered = function(){
   ProjectIndex.getComponentMethods().addProps('status',true); 
   ProjectIndex.getComponentMethods().addProps('project_family','P'); 
+
+  
   this.autorun(function(){
+    $("#fieldsForSample").hide();
     window.scrollTo(0,0);
   });
 }
@@ -97,6 +103,10 @@ Template.projList.helpers({
           return "En "+status;
         }
       },
+      getCategories(){
+        var data = Ocupation.find({},{sort:{'title':1}}).fetch();
+        return _.uniq(data, false, function(transaction) {return transaction.title});
+      },
     getProfilePicture(userId, size) {
       Meteor.subscribe("allMedia");
       var user = Meteor.users.findOne({'_id':userId});
@@ -139,6 +149,24 @@ Template.projList.helpers({
         type.push("Videoclip");
         return type;
      },
+     getAvailableYears(){
+      var years = new Array();
+      var MIN_YEAR = getParam("MIN_YEAR");
+      var MAX_YEAR = getParam("MAX_YEAR");
+      for(i=MAX_YEAR; i>MIN_YEAR; i--){
+        years.push(i);
+      }
+      return years;
+    },
+    getOcupationsFromCategory(){
+      if(Session.get("selected_category")!=null){
+        return Ocupation.find({'title': Session.get("selected_category")}).fetch();
+      }
+      else{
+        return Ocupation.find({'title': "Cualquiera"}).fetch();
+      }
+    },
+
      getProjectFamily(){
       var type = new Array();
       type.push("Producciones"); //Producción
@@ -226,7 +254,43 @@ Template.projList.helpers({
           result = "Muestra de trabajo";
         }
         return result;
-      }
+      },
+      isSample:function(value){
+        var result = false;
+        if(value==="M"){
+          result = true;
+        }
+        return result;
+      },
+      getCountries(){
+ var data = City.find().fetch();
+ return _.uniq(data, false, function(transaction) {return transaction.country});
+},
+getStatesFromCountries(){
+  var country;
+  if(Session.get("selected_country")!=null){
+    country = City.find({'country': Session.get("selected_country")}).fetch();
+    return _.uniq(country, false, function(transaction) {return transaction.state});
+  }
+  else{
+   country = City.find({'country': 'México'}).fetch(); 
+   return _.uniq(country, false, function(transaction) {return transaction.state});
+ }
+
+},
+getCitiesFromStates(){
+  if(Session.get("selected_state")!=null){
+    return City.find({'state': Session.get("selected_state")}).fetch();
+  }
+  else{
+    if(Meteor.user() && Meteor.user().state){
+      return City.find({'state': Meteor.user().state}).fetch();    
+    }
+    else{
+      return City.find({'state': 'Aguascalientes'}).fetch();    
+    }
+  }
+},
 
    
 });
@@ -283,10 +347,65 @@ Template.projList.events({
          Session.set("status_selected",null);
       }
   },
+  'change #proj_year': function(e){
+    if($(e.target).val()!="cualquier"){
+         ProjectIndex.getComponentMethods().addProps('project_year', $(e.target).val().trim());
+         Session.set("year_selected",$(e.target).val());
+      }
+      else{
+         ProjectIndex.getComponentMethods().removeProps('project_year');  
+         Session.set("year_selected",null);
+      }
+  },
+  'change #ocupation':function(e){
+      if($(e.target).val()!="cualquier"){
+         ProjectIndex.getComponentMethods().addProps('project_role', $(e.target).val().trim());
+         Session.set("role_selected",$(e.target).val());
+      }
+      else{
+         ProjectIndex.getComponentMethods().removeProps('project_role');  
+         Session.set("role_selected",null);
+      }
+  },
   'change #family': function (e) {
       if($(e.target).val()!="cualquier"){
          ProjectIndex.getComponentMethods().addProps('project_family', $(e.target).val());
          Session.set("family_selected",$(e.target).val());
+         var prod = document.getElementById("fieldsForProduction");
+         var samp = document.getElementById("fieldsForSample");
+         if($(e.target).val()==="P"){
+            ProjectIndex.getComponentMethods().removeProps('project_role');  
+            Session.set("role_selected",null);
+            ProjectIndex.getComponentMethods().removeProps('project_year');  
+            Session.set("year_selected",null);
+            $("#fieldsForSample").hide();
+            $("#fieldsForProduction").show();
+            /*
+            if(prod!=null && prod.style.display === "none"){
+              prod.style.display = "block";  
+            }
+            if(samp!=null){
+              samp.style.display = "none";  
+            }*/
+         }
+         else if($(e.target).val()==="M"){
+            ProjectIndex.getComponentMethods().removeProps('project_status');  
+            Session.set("status_selected",null);
+            ProjectIndex.getComponentMethods().removeProps('project_genre');  
+            Session.set("genre_selected",null);
+            ProjectIndex.getComponentMethods().removeProps('project_type');  
+            Session.set("type_selected",null);
+            /*
+            if(samp!=null && samp.style.display === "none"){
+              samp.style.display = "block";  
+            }
+            if(prod!=null){
+              prod.style.display = "none";  
+            }*/
+            $("#fieldsForSample").show();
+            $("#fieldsForProduction").hide();
+            
+         }
       }
       else{
          ProjectIndex.getComponentMethods().removeProps('project_family');  
@@ -391,7 +510,50 @@ Template.projList.events({
     UsersIndex.getComponentMethods().removeProps(); 
     FlowRouter.go('/peopleList');
   }
-}
+},
+'change #category':function(event, template){
+  event.preventDefault();
+  Session.set("selected_category", event.currentTarget.value);
+  if(event.currentTarget.value==="Cualquiera"){
+    ProjectIndex.getComponentMethods().removeProps('project_role');  
+    Session.set("role_selected",null);
+  }
+},
+'change #country': function (e) {
+      Session.set("selected_country", e.target.value);
+      if($(e.target).val()!="cualquier"){
+       UsersIndex.getComponentMethods().addProps('country', $(e.target).val());
+       Session.set("country_selected",$(e.target).val());
+     }
+     else{
+       UsersIndex.getComponentMethods().removeProps('country');  
+       UsersIndex.getComponentMethods().removeProps('state');  
+       UsersIndex.getComponentMethods().removeProps('city'); 
+       Session.set("country_selected",null);
+     }
+   },
+   'change #state': function (e) {
+    Session.set("selected_state", e.target.value);
+    if($(e.target).val()!="cualquier"){
+     UsersIndex.getComponentMethods().addProps('state', $(e.target).val());
+     Session.set("state_selected",$(e.target).val());
+   }
+   else{
+     UsersIndex.getComponentMethods().removeProps('state');  
+     UsersIndex.getComponentMethods().removeProps('city'); 
+     Session.set("state_selected",null);
+   }
+ },
+ 'change #city': function (e) {
+  if($(e.target).val()!="cualquier"){
+   UsersIndex.getComponentMethods().addProps('city', $(e.target).val());
+   Session.set("city_selected",$(e.target).val());
+ }
+ else{
+   UsersIndex.getComponentMethods().removeProps('city');  
+   Session.set("city_selected",null);
+ }
+},
    
 });
 
