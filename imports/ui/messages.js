@@ -24,15 +24,16 @@ function isFirstTime(from,to){
 function sendMessage(){
   var from = Meteor.userId();
   var to;
-  if(Session.get("firstInteraction")!=null){
+  /*if(Session.get("firstInteraction")!=null){
     to = Session.get("firstInteraction");
   }
-  else if(Session.get("partnerId")!=null){
+  else */
+  if(Session.get("partnerId")!=null){
     to = Session.get("partnerId");
   } 
   var message = trimInput($('#message').val());
   var conversationId;
-
+/*
   if(isFirstTime(from, to)){
     conversationId = Meteor.call(
                           'createRelationship',
@@ -61,6 +62,7 @@ function sendMessage(){
     Session.set("partnerId",to);
   }
   else{
+    */
     if(Session.get("conversationId")!=null){
       conversationId = Session.get("conversationId");
       if(isNotEmpty(message)){
@@ -79,7 +81,7 @@ function sendMessage(){
         $('#message').val("");
       }
     }
-  }
+  //}
 
   
 }
@@ -137,26 +139,42 @@ Template.messages.onDestroyed(function(){
 Template.messages.helpers({
   getPartners(){
     //interaction = Session.get("interaction");
+    var conversations = [];
     var result = new Array();
     if(Meteor.user()!=null && Meteor.user().messagesList!=null){
-      var conversations = Meteor.user().messagesList;
-      if(Session.get("firstInteraction")!=null){
+      conversations = Meteor.user().messagesList;
+      //console.log(conversations);
+    }
+    else if(Session.get("partnerId")!=null){
+      //if(Session.get("firstInteraction")!=null){
         //console.log("La variable firstInteraction trae valor");
         var interaction = {};
         interaction.conversationId = -1;
-        interaction.partnerId = Session.get("firstInteraction");
+        interaction.partnerId = Session.get("partnerId");
         interaction.modifiedAt = new Date();
         conversations.push(interaction);
-      }
-      else{
+      //}
+      //else{
         //console.log("La variable firstInteraction es nula");
-      }
-      return _.sortBy(conversations,'modifiedAt').reverse();
+      //}
+      //return _.sortBy(conversations,'modifiedAt').reverse();
+
+      
     }
+    //return _.uniq(conversations, false, function(transaction) {
+      //return _.sortBy(conversations.conversationId,'modifiedAt').reverse;
+    //});
+
+    return _.sortBy(conversations,'modifiedAt').reverse();
   },
   getName(partner){
+    console.log("en getName partner vale "+partner);
     var user = Meteor.users.findOne({'_id':partner});
-    var name = user.fullname;
+    var name = "";
+    if(user!=null){
+      name = user.fullname;
+    }
+    console.log(name);
     return name;
   },
   countMessages(conversationId){
@@ -208,24 +226,36 @@ Template.messages.helpers({
     }
     return msgDocs;
   },
+  getInitials(userId){
+      var name = "";
+      var lastname = "";
+      var initials = "";      
+      var user = Meteor.users.findOne({'_id':Meteor.userId()});
+      if(user){
+        name = user.profile.name;
+        lastname = user.profile.lastname;
+        initials = name.charAt(0) + lastname.charAt(0);  
+      }
+      return initials;
+    },
   getProfilePicture(userId) {
     Meteor.subscribe("allMedia");
     var user = Meteor.users.findOne({'_id':userId});
     var profile;
     if(user!=null){
       
-      if(user.crew!=null && user.crew.profilePictureID!=null){
-        profile = Media.findOne({'mediaId':user.crew.profilePictureID});
+      //if(user.crew!=null && user.crew.profilePictureID!=null){
+        profile = Media.findOne({'mediaId':user.profilePictureID});
         if(profile!=null){
-          return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.crew.profilePictureID;    
+          return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + user.profilePictureID;    
         }
-        else if(user.cast!=null && user.cast.profilePictureID!=null){
-          profile = Media.findOne({'mediaId':user.cast.profilePictureID});
-          if(profile!=null){
-            return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.cast.profilePictureID;    
-          }  
-        }  
-      }
+        //else if(user.cast!=null && user.cast.profilePictureID!=null){
+          //profile = Media.findOne({'mediaId':user.cast.profilePictureID});
+          //if(profile!=null){
+            //return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + user.cast.profilePictureID;    
+          //}  
+        //}  
+      //}
     }
   },
   formatDate(date){
@@ -290,85 +320,90 @@ Template.messages.helpers({
   },
   getSelectedPartner(){
     var name = "";
-    if(Session.get("firstInteraction")!=null){
+    /*if(Session.get("firstInteraction")!=null){
       var user = Meteor.users.findOne({'_id':Session.get("firstInteraction")});
       if(user!=null){
         name = user.fullname;
       }
     }
-    else if(Session.get("partnerId")!=null){
-      var user = Meteor.users.findOne({'_id':Session.get("partnerId")});
-      if(user!=null){
-        name = user.fullname;
+    else */
+    if(Session.get("partnerId")!=null){
+      var partnerId = Meteor.users.findOne({'_id':Session.get("partnerId")});
+      if(partnerId!=null){
+        name = partnerId.fullname;
       }
     }
     return name;
   },
   getSelectedPicture(){
-    var user;
+    var receiver;
     var profile;
-    var userId;
-    if(Session.get("firstInteraction")!=null){
-      userId = Session.get("firstInteraction");
-      user = Meteor.users.findOne({'_id':userId});
-      if(user!=null){
-        if(Session.get("comesFromCrew")!=null && Session.get("comesFromCrew")===true && user.crew!=null && user.crew.profilePictureID!=null){//La interacción viene desde un perfil de crew
-          profile = Media.findOne({'mediaId':user.crew.profilePictureID});
+    var partnerId;
+    //if(Session.get("firstInteraction")!=null){
+      //userId = Session.get("firstInteraction");
+      //user = Meteor.users.findOne({'_id':userId});
+      //if(user!=null){
+        //if(Session.get("comesFromCrew")!=null && Session.get("comesFromCrew")===true && user.crew!=null && user.crew.profilePictureID!=null){//La interacción viene desde un perfil de crew
+          //profile = Media.findOne({'mediaId':user.profilePictureID});
+          //if(profile!=null){
+            //return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + user.profilePictureID;    
+          //}
+        //}
+        //else if(Session.get("comesFromCast")!=null && Session.get("comesFromCast")===true && user.cast!=null && user.cast.profilePictureID!=null){//La interacción viene desde un perfil de cast
+          //profile = Media.findOne({'mediaId':user.cast.profilePictureID});
+          //if(profile!=null){
+            //return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + user.profilePictureID;    
+          //}
+        //}  
+      //}
+    //}
+    //else 
+    if(Session.get("partnerId")!=null){
+      partnerId = Session.get("partnerId");
+      receiver = Meteor.users.findOne({'_id':partnerId});
+      if(receiver!=null){
+        //if(user.crew!=null && user.crew.profilePictureID!=null){
+          profile = Media.findOne({'mediaId':receiver.profilePictureID});
           if(profile!=null){
-            return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.crew.profilePictureID;    
+            return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + receiver.profilePictureID;    
           }
-        }
-        else if(Session.get("comesFromCast")!=null && Session.get("comesFromCast")===true && user.cast!=null && user.cast.profilePictureID!=null){//La interacción viene desde un perfil de cast
-          profile = Media.findOne({'mediaId':user.cast.profilePictureID});
-          if(profile!=null){
-            return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.cast.profilePictureID;    
-          }
-        }  
-      }
-    }
-    else if(Session.get("partnerId")!=null){
-      userId = Session.get("partnerId");
-      user = Meteor.users.findOne({'_id':userId});
-      if(user!=null){
-        if(user.crew!=null && user.crew.profilePictureID!=null){
-          profile = Media.findOne({'mediaId':user.crew.profilePictureID});
-          if(profile!=null){
-            return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.crew.profilePictureID;    
-          }
-          else if(user.cast!=null && user.cast.profilePictureID!=null){
-            profile = Media.findOne({'mediaId':user.cast.profilePictureID});
-            if(profile!=null){
-              return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.cast.profilePictureID;    
-            }  
-          }  
-        }
+          //else if(user.cast!=null && user.cast.profilePictureID!=null){
+            //profile = Media.findOne({'mediaId':user.cast.profilePictureID});
+            //if(profile!=null){
+              //return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_30,h_30,c_thumb,r_max/" + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + user.profilePictureID;    
+            //}  
+          //}  
+        //}
       }
     }
   },
-  wasSelected(partnerId){
-    var interaction;
-    if(Session.get("firstInteraction")!=null){
+  wasSelected(item){
+    var partnerId;
+    var wasSelected=false;
+    /*if(Session.get("firstInteraction")!=null){
       interaction = Session.get("firstInteraction");
     }
-    else if(Session.get("partnerId")!=null){
-      interaction = Session.get("partnerId");
+    else */
+    if(Session.get("partnerId")!=null){
+      partnerId = Session.get("partnerId");
+      if(item===partnerId){
+        console.log("wasSelected=true");
+        wasSelected = true;
+      }
     }
-    if(partnerId===interaction){
-      return true;
-    }
-    else{
-      return false;
-    }
+
+    
+    return wasSelected;
   }
 });
 
 Template.messages.events({
   'click .partner': function(event,template){
     var partnerId = $(event.target).attr("data-id");
-    Session.set("firstInteraction",null);
+    //Session.set("firstInteraction",null);
     var conversationId = $(event.target).attr("data-conversation");
     if(partnerId!=null && partnerId!="undefined"){
-      Session.set("partnerId",partnerId);  
+      Session.set("partnerId", partnerId);  
     }
     if(conversationId!=null && conversationId!="undefined"){
       Session.set("conversationId", conversationId); 
@@ -378,14 +413,14 @@ Template.messages.events({
     event.preventDefault();
     //console.log("Llamando sendMessage desde #send");
     sendMessage();
-    Session.set("firstInteraction",null);
+    //Session.set("firstInteraction",null);
   },
   'keyup #message': function(event,template){
     event.preventDefault();
     if(event.which === 13){
       //console.log("Llamando sendMessage desde #message");
       sendMessage();  
-      Session.set("firstInteraction",null);
+      //Session.set("firstInteraction",null);
     }
     
   },

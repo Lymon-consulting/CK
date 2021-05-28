@@ -307,6 +307,7 @@ Meteor.publish("otherUsers", function () {
       'profileCoverID': 1,
       'wizard' : 1,
       'likesProject' : 1,
+      'likesPeople' : 1,
       'media' : 1,
       'showArtisticName': 1,
       'height' : 1,

@@ -4,13 +4,15 @@
     &nbsp;
   </div>
 
+
+  <!--Barra de navegación superior-->
   <div class="messages-title chat-title">
     {{#if getSelectedPicture}}    
-    <img src="{{getSelectedPicture}}"> 
+    <img src="{{getSelectedPicture}}" class="img-chat"> 
     {{else}}
-    <img src="/images/no-profile.jpg" class="img-chat" />
-    {{/if}}
-    {{getSelectedPartner}}
+    <img src="/images/no-profile.jpg" class="img-chat"> 
+    {{/if}}    
+    <span class="about">{{getSelectedPartner}}</span>
   </div>
 
   <div class="interactions-box">
@@ -25,20 +27,21 @@
               {{#if wasSelected this.partnerId}}
               <a href="#" class="list-group-item list-group-item-action active text-black partner" data-id="{{this.partnerId}}" data-conversation="{{this.conversationId}}">
                 {{#if getProfilePicture this.partnerId}}
-                <img src="{{getProfilePicture this.partnerId}}">
+                <img src="{{getProfilePicture this.partnerId}}" class="img-chat">
                 {{else}}
-                <img src="/images/no-profile.jpg" class="img-chat" />
+                <img src="/images/no-profile.jpg" class="img-chat"/>
                 {{/if}}
-                
-              <span class="badge badge-danger">{{countMessages this.conversationId}}</span>{{getName this.partnerId}}</a>
+                <span class="badge badge-danger">{{countMessages this.conversationId}}</span>&nbsp;{{getName this.partnerId}}
+              </a>
               {{else}}
               <a href="#" class="list-group-item list-group-item-action bg-light text-black partner" data-id="{{this.partnerId}}" data-conversation="{{this.conversationId}}">
                 {{#if getProfilePicture this.partnerId}}
-                <img src="{{getProfilePicture this.partnerId}}">
+                <img src="{{getProfilePicture this.partnerId}}" class="img-chat">
                 {{else}}
-                <img src="/images/no-profile.jpg" class="img-chat" />
+                <img src="/images/no-profile.jpg" class="img-chat"/>
                 {{/if}}
-              <span class="badge badge-danger">{{countMessages this.conversationId}}</span>{{getName this.partnerId}}</a>
+                <span class="badge badge-danger">{{countMessages this.conversationId}}</span>&nbsp;{{getName this.partnerId}}
+              </a>
               {{/if}}              
             </div>
 
@@ -63,24 +66,24 @@
             <div class="message">
               {{#if senderIsTheSameUser this.sender}}
                 <div class="row">
-                  <div class="col-lg-1">
+                  <div class="col-lg-1 bg-sender">
                     {{#if getProfilePicture this.sender}}
-                    <img src="{{getProfilePicture this.sender}}">
+                    <img src="{{getProfilePicture this.sender}}" class="img-chat">
                     {{else}}
-                    <img src="/images/no-profile.jpg" class="img-chat" />
+                    <img src="/images/no-profile.jpg" class="img-chat"/>
                     {{/if}}
                   </div>
-                  <div class="col-lg-7">{{this.message}}</div>
-                  <div class="col-lg-4">{{formatDate this.messageDate}}</div>
+                  <div class="col-lg-7 bg-sender">{{this.message}}</div>
+                  <div class="col-lg-4 bg-sender">{{formatDate this.messageDate}}</div>
                 </div>
                 <div class="spacer10"></div>
                 {{else}}
                 <div class="row">
                   <div class="col-lg-1 bg-light">
                     {{#if getProfilePicture this.sender}}
-                    <img src="{{getProfilePicture this.sender}}">
+                    <img src="{{getProfilePicture this.sender}}" class="img-chat">
                     {{else}}
-                    <img src="/images/no-profile.jpg" class="img-chat" />
+                    <img src="/images/no-profile.jpg" class="img-chat"/>
                     {{/if}}
                   </div>
                   <div class="col-lg-7 bg-light">{{this.message}}</div>

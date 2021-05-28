@@ -200,6 +200,15 @@ Template.profilePageActor.helpers({
       Meteor.subscribe("images");
       return Images.find({'owner': userId});
    },
+   likeThisPeople(){
+      Meteor.subscribe('otherUsers');
+      var peopleUserLike = Meteor.users.find({$and : [ {'_id' : Meteor.userId()} , {"likesPeople":  FlowRouter.getParam('id')}]});
+      var found = false;
+      if(peopleUserLike!=null && peopleUserLike.count() > 0){
+         found = true;
+      }
+      return found;
+    },
 /*   personalCover(userId){
       Meteor.subscribe("personalcover");
       return PersonalCover.find({'owner': userId});
@@ -748,7 +757,46 @@ Template.profilePageActor.events({
         
         FlowRouter.go("/messages");
 
-      }
+      },
+      'click #pushLike': function(event, template) {
+         event.preventDefault();
+         var currentLikes = 1; 
+         var user = Meteor.users.findOne({'_id' : FlowRouter.getParam('id')})
+         if(user.likes){
+            currentLikes = user.likes;
+            currentLikes++;
+         }
+         Meteor.users.update(
+            {'_id': FlowRouter.getParam('id')},
+            { $set: { 'likes': currentLikes } }
+         );
+         Meteor.call(
+          'addLikesPeople',
+          Meteor.userId(),
+          FlowRouter.getParam('id')
+          );
+      }, 
+
+      'click #pushDontLike' : function(event, template){
+        event.preventDefault();
+        var currentLikes = 1; 
+        var user = Meteor.users.findOne({'_id' : FlowRouter.getParam('id')});
+        if(user.likes){
+           currentLikes = user.likes;
+           currentLikes--;
+        }
+        Meteor.users.update(
+           {'_id': FlowRouter.getParam('id')},
+           { $set: { 'likes': currentLikes } }
+        );
+
+        Meteor.call(
+          'removeLikesPeople',
+          Meteor.userId(),
+          FlowRouter.getParam('id')
+        );
+
+      },
 });
 
 Template.profilePageActor.onRendered(function () {

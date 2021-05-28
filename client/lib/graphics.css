@@ -62,8 +62,8 @@
   margin: 10px 0;
 }
 .img-chat{
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 100%;
   border-radius: 50%;
   background: #666;
   font-size: 15px;
@@ -201,6 +201,40 @@
   /*margin: 10px 0;*/
 }
 
+.profileImageMedium {
+  width: 70px;
+  height: 70px;
+  /*height: auto;*/
+  border-radius: 50%;
+  background: #444;
+  /*border:solid;*/
+  font-size: 1.5em;
+  color: #fff;
+  padding-top: 0.7em;
+  text-align: center;
+  /*line-height: 100px;
+  margin-top: 30px;*/
+  /*object-fit:scale-down;*/
+  /*margin: 10px 0;*/
+}
+
+.profileImageSmall {
+  width: 30px;
+  height: 30px;
+  /*height: auto;*/
+  border-radius: 50%;
+  background: #444;
+  /*border:solid;*/
+  font-size: 0.8em;
+  color: #fff;
+  padding-top: 0.5em;
+  text-align: center;
+  /*line-height: 100px;
+  margin-top: 30px;*/
+  /*object-fit:scale-down;*/
+  /*margin: 10px 0;*/
+}
+
 #profileImageinProfilePage {
   width: 100px;
   border-radius: 50%;
@@ -310,7 +344,8 @@
 
 .thumbnail-gallery{
   height: 20em;
-  object-fit: scale-down;
+  max-width: 100%;
+  
 }
 
 .thumbnail{

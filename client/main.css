@@ -94,6 +94,10 @@ nav.bg-dark{
   background-color: #333 !important;
 }
 
+.bg-sender{
+  background-color: #ddd !important;   
+}
+
 a.list-group-item.active { background-color: #6c757d; }
 
 .box{

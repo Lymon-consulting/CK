@@ -17,21 +17,26 @@ Meteor.methods({
       'modifiedAt': modifiedAt
     };
 
-    Meteor.users.update({'_id': sender},{
-      $push:{
-        "messagesList": doc1
-      }
+    Meteor.users.update({'_id': sender},
+      {
+        $addToSet: {
+          "messagesList": doc1
+        }
     });
-    Meteor.users.update({'_id': receiver},{
-      $push:{
-        "messagesList": doc2
-      }
+
+    
+
+    Meteor.users.update({'_id': receiver},
+      {
+        $addToSet: {
+          "messagesList": doc2
+        }
     });
     return conversationId;
   },
   updateRelationship(conversationId, sender, receiver) {
     var modifiedAt = new Date();
-    console.log("Actualizando fecha de conversationId="+conversationId);
+    console.log("Actualizando fecha de conversationId="+conversationId + ", sender="+sender+", receiver="+receiver);
     Meteor.users.update({'_id': sender, 'messagesList.conversationId':conversationId},{
       $set:{
         "messagesList.$.modifiedAt": modifiedAt

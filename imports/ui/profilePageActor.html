@@ -126,9 +126,21 @@
               {{#if notSameUser getProfile._id}}
                  {{#if showButtonFollow getProfile._id}}
                   <input type="hidden" id="thisUser" value="{{getProfile._id}}">
-                  {{#if isVerified}}
-                    <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
-                  {{/if}}
+                  {{#unless likeThisPeople}}
+                    <div class="row">
+                      <div class="col">
+                         <button class="btn button-follow uppercase" id="pushLike"> <i class="fa fa-thumbs-up fa-sm"></i> Me gusta</button>
+                      </div>
+                    </div>
+                    {{else}}
+                    <div class="row">
+                      <div class="col">
+                         <button class="btn button-follow uppercase btn-purple" id="pushDontLike"> <i class="fa fa-thumbs-up fa-sm"></i> Me gusta</button>
+                      </div>
+                    </div>
+                    {{/unless}}
+                  <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
+                  
                  {{else}}
                     <button class="btn button-unfollow" id="pushUnfollow"> <i class="fa fa-minus-circle fa-sm"></i> DEJAR DE SEGUIR</button>
                  {{/if}}      
@@ -218,6 +230,32 @@
           </div>
           <div class="spacer40">  </div>
           {{/if}}
+          <div class="row">
+            <div class="col">
+              {{#if getGallery}}
+              <div class="spacer20"></div>
+            <div class="row">
+              <div class="col border-bottom">
+                <strong class="uppercase">Galería de book</strong>
+              </div>
+            </div>
+            <div class="spacer20"></div>
+            <div class="row">
+              <div class="col-lg-12">
+                <!--Inicia carrousel -->
+                    <div class="row">
+                      <div class="owl-carousel">
+                        {{#each getGallery}}
+                        <div> <img class="thumbnail-gallery" src="{{getURL this.mediaId}}" alt=""> </div>
+                        {{/each}}  
+                      </div>
+                    </div>
+                    <!--Termina carrousel -->
+              </div>
+            </div>
+            {{/if}}
+            </div>
+          </div>
         </div>
         <div class="col-md-5">
           {{#if getProfile.cast.resume}}
@@ -297,32 +335,7 @@
 
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              {{#if getGallery}}
-              <div class="spacer20"></div>
-            <div class="row">
-              <div class="col border-bottom">
-                <strong class="uppercase">Galería de book</strong>
-              </div>
-            </div>
-            <div class="spacer20"></div>
-            <div class="row">
-              <div class="col-lg-12">
-                <!--Inicia carrousel -->
-                    <div class="row">
-                      <div class="owl-carousel">
-                        {{#each getGallery}}
-                        <div> <img class="thumbnail-gallery" src="{{getURL this.mediaId}}" alt=""> </div>
-                        {{/each}}  
-                      </div>
-                    </div>
-                    <!--Termina carrousel -->
-              </div>
-            </div>
-            {{/if}}
-            </div>
-          </div>
+          
           <div class="row">
             <div class="col">
               {{#if getFollowersCount}}

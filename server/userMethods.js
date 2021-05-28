@@ -114,7 +114,6 @@ Accounts.onCreateUser(function(options, user) {
       });
     },
     updateCity(userId,city){
-      console.log("Actualizando ciudad en server");
       Meteor.users.update({'_id': userId},{
         $set:{"city":city}
       });
@@ -161,6 +160,23 @@ Accounts.onCreateUser(function(options, user) {
           "follows": followsToId
         }
       });
+    },
+    addLikesPeople(userId, peopleId){
+      Meteor.users.update({'_id': userId}, 
+      {
+        $addToSet: {
+          "likesPeople": peopleId
+        }
+      });
+    },
+
+    removeLikesPeople(userId,peopleId){
+      Meteor.users.update({'_id': userId}, 
+      {
+        $pull: {
+          "likesPeople": peopleId
+        }
+      });    
     },
     addLikesProject(userId, projectId){
       Meteor.users.update({'_id': userId}, 

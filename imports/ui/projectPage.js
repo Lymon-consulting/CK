@@ -1553,6 +1553,11 @@ if (Meteor.isClient) {
         $("#setCoverPicture").removeClass('disabled');
 
       },
+      'click #editProject': function(e){
+        event.preventDefault();
+        var id = FlowRouter.getParam("id"); 
+        FlowRouter.go("/editProject/"+id);
+      }
    });
 
    Template.projectPage.onRendered(function () {

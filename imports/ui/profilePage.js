@@ -212,7 +212,17 @@ Template.profilePage.helpers({
        result = false;
      }
      return result;
-   },/*
+   },
+   likeThisPeople(){
+      Meteor.subscribe('otherUsers');
+      var peopleUserLike = Meteor.users.find({$and : [ {'_id' : Meteor.userId()} , {"likesPeople":  FlowRouter.getParam('id')}]});
+      var found = false;
+      if(peopleUserLike!=null && peopleUserLike.count() > 0){
+         found = true;
+      }
+      return found;
+    },
+      /*
    getCastCollaborations(){
       Meteor.subscribe("myProjects");
       return Project.find({"project_cast._id":  FlowRouter.getParam('id')});
@@ -631,37 +641,110 @@ Template.profilePage.events({
         from = Meteor.userId();
         to = FlowRouter.getParam("id");
         var conversationId;
+
+        console.log(from);
+        console.log(to);
+
+        /*En la variable de sesión partnerID se guarda el id del receptor*/
+          console.log("El id del receptor es "+to);
+          Session.set("partnerId",to);       
         
-        if(!isFirstTime(from,to)){
+        if(isFirstTime(from,to)){ 
+          /*Es la primera interacción, crear relación y ID de conversación*/
+           Meteor.call(
+              'createRelationship',
+              from,
+              to,
+              function(error,response){
+                if(!error){
+                  console.log(response);
+                  Session.set("conversationId",response);
+                }
+                else{
+                  console.log(error);
+                }
+              }
+            );
+
+
+
+          //console.log("El id de conversación creado es "+conversationId);
+
+          //Session.set("firstInteraction",to);
+          
+        }
+        else{
+          /*No es la primera interacción, recuperar el id de conversación*/
           var user1 = Meteor.users.findOne({'_id':from, 'messagesList.partnerId':to});
           var user2 = Meteor.users.findOne({'_id':to, 'messagesList.partnerId':from});
 
           if(user1!=null && user1.messagesList!=null){
-            
-            for (var i = 0; i < user1.messagesList.length; i++) {
-              if(user1.messagesList[i]!=null && user1.messagesList[i].partnerId===to){
+            console.log("--->"+user1.messagesList.length);
+            for (var i = 0; i <= user1.messagesList.length; i++) {
+              console.log(user1.messagesList[i].partnerId+"/"+to);
+              if(user1.messagesList[i].partnerId===to){
                 conversationId = user1.messagesList[i].conversationId;
                 break;
               }
             }
-            Meteor.call(
-              'updateRelationship',
-              conversationId,
-              from,
-              to,
-            );
-            Session.set("conversationId",conversationId);
+            console.log("El id de conversación recuperado (ya existía) es="+conversationId);
+
+            if(conversationId!=null){
+              Session.set("conversationId",conversationId);
+              /*Actualizar fecha de conversación en ambos perfiles*/
+                Meteor.call(
+                'updateRelationship',
+                conversationId,
+                from,
+                to,
+              );
+            }
           }
-          Session.set("partnerId",to);
         }
-        else{
-          Session.set("firstInteraction",to); 
-        }
-        Session.set("comesFromCrew",true);
-        Session.set("comesFromCast",false);
+
+        console.log("Antes de viajar a messages los valores son: conversationId="+Session.get("conversationId")+", partnerId="+Session.get("partnerId"));
         
         FlowRouter.go("/messages");
-      }
+      },
+      'click #pushLike': function(event, template) {
+         event.preventDefault();
+         var currentLikes = 1; 
+         var user = Meteor.users.findOne({'_id' : FlowRouter.getParam('id')})
+         if(user.likes){
+            currentLikes = user.likes;
+            currentLikes++;
+         }
+         Meteor.users.update(
+            {'_id': FlowRouter.getParam('id')},
+            { $set: { 'likes': currentLikes } }
+         );
+         Meteor.call(
+          'addLikesPeople',
+          Meteor.userId(),
+          FlowRouter.getParam('id')
+          );
+      }, 
+
+      'click #pushDontLike' : function(event, template){
+        event.preventDefault();
+        var currentLikes = 1; 
+        var user = Meteor.users.findOne({'_id' : FlowRouter.getParam('id')});
+        if(user.likes){
+           currentLikes = user.likes;
+           currentLikes--;
+        }
+        Meteor.users.update(
+           {'_id': FlowRouter.getParam('id')},
+           { $set: { 'likes': currentLikes } }
+        );
+
+        Meteor.call(
+          'removeLikesPeople',
+          Meteor.userId(),
+          FlowRouter.getParam('id')
+        );
+
+      },
 });
 
 Template.profilePage.onRendered(function () {

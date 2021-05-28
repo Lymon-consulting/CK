@@ -60,121 +60,127 @@
       {{/if}}
     </div>
 
-   
-    <div class="container-fluid">
       {{#unless statusPublished}}
       <div class="pink">Tu proyecto no está publicada, nadie la podrá ver hasta que la publiques</div>
 
       {{/unless}}
+<div class="container">
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col-md-6">
       <div class="row">
-        <div class="col-lg-8 col-md-12 leftpadding">
-          <section>
-             <div class="container-fluid">
-                <div class="spacer20"></div>
-                <div class="row">
-                   <div class="col-md-12 col-lg-12 text-description">
-                      {{getMetadata}}
-                   </div>
-                </div>
-                <div class="row">
-                   <div class="col-md-10 col-lg-10  h3-title">
-                      {{projData.project_title}}
-                   </div>
-                  
-                </div>
-                {{#if projData.project_status}}
-                <div class="row">
-                   <div class="col-12 text-description">
-                      {{getStatus projData.project_status}} {{{getWeb}}}
-                   </div>
-                </div>
-                {{/if}}
-                
-                
-             </div>
-          </section>
-        </div>
-        <div class="col-lg-2 col-md-6 leftpadding">
-          <section>
-            <div class="spacer20"></div>
-            <div class="row">
-              <div class="col-12 text-black">
-                <small><i class="fa fa-eye fa-sm"></i>&nbsp;Vistas {{projData.views}}</small> 
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 text-black">
-                <small><i class="fa fa-thumbs-up fa-sm"></i>&nbsp;Valoraciones {{projData.likes}}</small> 
-              </div>
-            </div>
-          </section>
-        </div>
-        <div class="col-lg-2 col-md-6 leftpadding rightpadding">
-          <section>
-            <div class="spacer20"></div>
-            <div class="row">
-              <div class="col-4 text-black">
-                <a href="{{formatURL projData.project_web_page}}" target="_blank"><i class="fa fa-sm fa-globe text-black"></i></a>
-              </div>
-              <div class="col-4 text-black">
-                <a href="{{formatURL projData.project_facebook_page}}" target="_blank"><i class="fa fa-sm fa-facebook text-black"></i></a>
-              </div>
-              <div class="col-4 text-black">
-                <a href="{{formatURL projData.proj_instagram_page}}" target="_blank"><i class="fa fa-sm fa-instagram text-black"></i></a>
-              </div>
-              <div class="col-4 text-black">
-                <a href="{{formatURL projData.project_twitter_page}}" target="_blank"><i class="fa fa-sm fa-twitter text-black"></i></a>
-              </div>
-              <div class="col-4 text-black">
-                <a href="{{formatURL projData.proj_youtube_page}}" target="_blank"><i class="fa fa-sm fa-youtube text-black"></i></a>
-              </div>
-              <div class="col-4 text-black">
-                <a href="{{formatURL projData.proj_vimeo_page}}" target="_blank"><i class="fa fa-sm fa-vimeo text-black"></i></a>
-              </div>
-            </div>
-           
-          </section>
-        </div>
-      
-      </div>
-      <div class="row">
-         <div class="col-12">
-            <hr class="gray">
-         </div>
-      </div>
-      <div class="row">
-          <div class="col-lg-2 col-md-2 col-sm-12 leftpadding">
-             <a href="/profilePage/{{projData.userId}}">
-             {{#if getProfilePicture projData.userId}}
+        <div class="col-md-4">
+          {{#if isOwner}}
+            <!--<a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <i class="fa fa-camera"></i></a>-->
+            {{#if getProfilePicture projData.userId}}
                 <img src="{{getProfilePicture projData.userId}}" border="0" class="rounded-circle"/>
              {{else}}
                 <div id="profileImageLarge">{{getInitials projData.userId}}</div>
              {{/if}}
-             </a>
+          {{/if}}
+        </div>
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col h3-title">
+              {{projData.project_title}}
+            </div>
           </div>
-          <div class="col-lg-10 col-md-10 col-sm-12">
-              <div class="container-fluid">
-                 <div class="row justify-content-start align-items-center">
-                    <div class="col-12 people-name-text">
-                       <a href="/profilePage/{{projData.userId}}" class="text-black">{{ownerName projData.userId}}</a>
-                    </div>
-                 </div>
-                 <div class="row justify-content-start align-items-center">
-                    <div class="col-12 text-black uppercase">
-                    {{#if hasTopRole}}
-                     {{getProjectRoles}}
-                    {{else}}
-                      Portafolio
-                    {{/if}}
-                      
-                    </div>
-                </div>
-             </div>
+          <div class="row">
+            <div class="col">
+              Por: {{ownerName projData.userId}}
+            </div>
           </div>
-          
+          <div class="row">
+            <div class="col uppercase">
+              {{getMetadata}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              {{getStatus projData.project_status}} {{{getWeb}}}
+            </div>
+          </div>
+          {{#unless isOwner}}
+          {{#if notLikeThisProject}}
+          <div class="row">
+            <div class="col">
+               <button class="btn button-follow uppercase" id="pushLike"> <i class="fa fa-thumbs-up fa-sm"></i> Me gusta</button>
+            </div>
+          </div>
+          {{else}}
+          <div class="row">
+            <div class="col">
+               <button class="btn button-follow uppercase btn-purple" id="pushDontLike"> <i class="fa fa-thumbs-up fa-sm"></i> Me gusta</button>
+            </div>
+          </div>
+          {{/if}}
+          {{/unless}}
+          <div class="row">
+            <div class="col">
+               <button class="btn button-follow uppercase" id="editProject"> <i class="fa fa-plus-circle fa-sm"></i> Editar proyecto</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 border-left">
+      <div class="row">
+        <div class="col-md-12"><i class="fa fa-eye fa-sm"></i>&nbsp;<span class="agreements">Vistas {{projData.views}}</span></div>
+        
+      </div>
+      <div class="row">
+        <div class="col-md-12"><i class="fa fa-thumbs-up fa-sm"></i>&nbsp;<span class="agreements">Valoraciones {{projData.likes}}</span></div>        
       </div>
       
-   </div>
+    </div>
+    <div class="col-md-2 border-left">
+      <div class="row">
+        <div class="col">
+          {{#if projData.project_facebook_page}}
+          <a href="{{formatURL projData.project_facebook_page}}" target="_blank"> <i class="fa fa-sm fa-facebook text-black"></i></a>
+          {{/if}}
+        </div>
+        <div class="col">
+          {{#if projData.proj_instagram_page}}
+          <a href="{{formatURL projData.project_instagram_page}}" target="_blank"> <i class="fa fa-sm fa-instagram text-black"></i></a>
+          {{/if}}
+        </div>
+        <div class="col">
+          {{#if projData.project_twitter_page}}
+          <a href="{{formatURL projData.project_twitter_page}}" target="_blank"> <i class="fa fa-sm fa-twitter text-black"></i></a>
+          {{/if}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          {{#if projData.proj_youtube_page}}
+          <a href="{{formatURL projData.project_youtube_page}}" target="_blank"> <i class="fa fa-sm fa-youtube text-black"></i></a>
+          {{/if}}
+        </div>
+        <div class="col">
+          {{#if projData.proj_vimeo_page}}
+          <a href="{{formatURL projData.project_vimeo_page}}" target="_blank"> <i class="fa fa-sm fa-vimeo text-black"></i></a>
+          {{/if}}
+        </div>
+        <div class="col">
+          {{#if projData.project_imdb_page}}
+          <a href="{{formatURL projData.project_imdb_page}}" target="_blank"> <i class="fa fa-sm fa-imdb text-black"></i></a>
+          {{/if}}
+        </div>
+      </div>
+      <div class="spacer10"></div>
+      <div class="row">
+        <div class="col text-center">
+          <a href="{{projData.project_web_page}}" target="_blank" class="text-gray"><strong class="text-gray"><small>{{projData.project_web_page}}</small></strong></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+   
    <div class="spacer40"></div>
    
    <div class="container-fluid background-verydarkgray mx-auto">

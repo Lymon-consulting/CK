@@ -126,9 +126,21 @@
               {{#if notSameUser getProfile._id}}
                  {{#if showButtonFollow getProfile._id}}
                   <input type="hidden" id="thisUser" value="{{getProfile._id}}">
-                  {{#if isVerified}}
+                    {{#unless likeThisPeople}}
+                    <div class="row">
+                      <div class="col">
+                         <button class="btn button-follow uppercase" id="pushLike"> <i class="fa fa-thumbs-up fa-sm"></i> Me gusta</button>
+                      </div>
+                    </div>
+                    {{else}}
+                    <div class="row">
+                      <div class="col">
+                         <button class="btn button-follow uppercase btn-purple" id="pushDontLike"> <i class="fa fa-thumbs-up fa-sm"></i> Me gusta</button>
+                      </div>
+                    </div>
+                    {{/unless}}
                     <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
-                  {{/if}}
+                  
                  {{else}}
                     <button class="btn button-unfollow" id="pushUnfollow"> <i class="fa fa-minus-circle fa-sm"></i> DEJAR DE SEGUIR</button>
                  {{/if}}      
@@ -206,7 +218,7 @@
 <div class="container">
   {{#if getMainProject}}
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-lg-8 col-md-8 col-sm-12">
       <div class="row">
         <div class="col border-bottom">
           <strong class="uppercase">Proyecto destacado</strong>
@@ -215,8 +227,8 @@
       <div class="spacer20"></div>
       <div class="row">
         <div class="col">
-          {{#if getProjectImages getMainProject._id 175}}
-            <a href="/projectPage/{{getMainProject._id}}" class="card-img-top"><img class="thumbnail-gallery" src="{{getProjectImages getMainProject._id 175}}" alt="Card image cap"></a>
+          {{#if getProjectImages getMainProject._id}}
+            <a href="/projectPage/{{getMainProject._id}}" class="card-img-top"><img class="thumbnail-gallery img-fluid" src="{{getProjectImages getMainProject._id}}" alt="Card image cap"></a>
           {{else}}
             <a href="/projectPage/{{getMainProject._id}}" class="card-img-top"><img src="/images/no-cover.jpg" class="thumbnail-gallery" alt=""></a>
           {{/if}}
@@ -266,7 +278,7 @@
         
     </div>
     
-    <div class="col-md-3 mag-5">
+    <div class="col-lg-4 col-md-4 col-sm-12">
     {{#if getProfile.crew.resume}}
       <div class="row">
         <div class="col border-bottom">
@@ -750,7 +762,7 @@
                 {{#if getProfilePicture getProfile._id 100}}
                 <img src="{{getProfilePicture getProfile._id 100}}"  id="profileImageLarge"/>
                 {{else}}
-                <img src="/images/no-profile.jpg" class="img-round" />
+                <div class="profileImageMedium">{{getInitials getProfile._id}}</div>
                 {{/if}}
               </div>
             </div>
