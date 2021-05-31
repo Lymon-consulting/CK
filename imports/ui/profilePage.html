@@ -121,6 +121,7 @@
               {{/if}}
             </div>
           </div>
+          {{#if currentUser}}
           <div class="row">
             <div class="col">
               {{#if notSameUser getProfile._id}}
@@ -148,6 +149,7 @@
               {{/if}}
             </div>
           </div>
+          {{/if}}
 
         </div>
       </div>
@@ -432,7 +434,7 @@
   </div>
   {{/if}}
   <!-- Inicia grid de proyectos-->
-  {{#if getProjects}}
+  {{#if countProjects}}
   <div class="row">
     <div class="col border-bottom">
       <strong class="uppercase">Proyectos</strong>
@@ -486,7 +488,7 @@
      </div>
      <div class="spacer40"></div>
      
-     {{#if getSamples}}
+     {{#if countSamples}}
       <div class="row">
         <div class="col border-bottom">
           <strong class="uppercase">Muestras de trabajo</strong>

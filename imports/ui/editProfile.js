@@ -25,10 +25,62 @@ Meteor.subscribe("getCountries");
 Meteor.subscribe("userData");
 Meteor.subscribe("otherUsers");
 
+
+userSub = Meteor.subscribe("otherUsers");
 Template.editProfile.rendered = function(){
-  this.autorun(function(){
-    //console.log(getRoleById(32));
-    //console.log(getRoleById(32).roleName);
+  var _this = this;
+  this.autorun(function(c) {
+
+    setTimeout(() => {  
+
+    if (userSub.ready()) {
+      
+      if(Meteor.user().isCrew){
+        $('#category').prop('disabled', false);
+        $('#ocupation').prop('disabled', false);
+        $('#selection').prop('disabled', false);
+        $('#web_page').prop('disabled', false);
+        $('#video').prop('disabled', false);
+        $('#facebook_page').prop('disabled', false);
+        $('#twitter_page').prop('disabled', false);
+        $('#vimeo_page').prop('disabled', false);
+        $('#youtube_page').prop('disabled', false);
+        $('#instagram_page').prop('disabled', false);
+        $('#imdb_page').prop('disabled', false);
+        $('#resume').prop('disabled', false);
+      }
+
+      if(Meteor.user().isCast){
+        $('.sex').prop('disabled', false);
+        $('#age').prop('disabled', false);
+        $('#resumeCast').prop('disabled', false);
+        $('#height').prop('disabled', false);
+        $('#physical').prop('disabled', false);
+        $('#ethnics').prop('disabled', false);
+        $('#eyes').prop('disabled', false);
+        $('#hair').prop('disabled', false);
+        $('#hairType').prop('disabled', false);
+        $('#peculiarities').prop('disabled', false);
+        $('#skills').prop('disabled', false);
+        $('.language').prop('disabled', false);
+        $('#web_cast').prop('disabled', false);
+        $('#video_cast').prop('disabled', false);
+        $('#facebook_cast').prop('disabled', false);
+        $('#twitter_cast').prop('disabled', false);
+        $('#vimeo_cast').prop('disabled', false);
+        $('#youtube_cast').prop('disabled', false);
+        $('#instagram_cast').prop('disabled', false);
+        $('#imdb_cast').prop('disabled', false);
+      }
+
+
+      c.stop();
+    }
+
+    }, 500);
+
+    window.scrollTo(0,0);
+
   });
 }
 

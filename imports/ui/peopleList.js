@@ -68,6 +68,12 @@ Template.peopleList.helpers({
     // get the total count of search results, useful when displaying additional information
     return dict.get('count')
   },
+  getCategories(){
+  var values = getCrewCategories();
+  return values;
+   /*var data = Ocupation.find({},{sort:{'title':1}}).fetch();
+   return _.uniq(data, false, function(transaction) {return transaction.title});*/
+ },
  getOcupationsFromCategory(){
   //var allOcupations;
   var object = new Array();

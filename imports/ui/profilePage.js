@@ -190,7 +190,31 @@ Template.profilePage.helpers({
    },
    countProjects(){
      Meteor.subscribe("myProjects");
-     var count = Project.find({'userId' : FlowRouter.getParam('id')}).count();
+     var count = Project.find({
+        $and : [ 
+          {'userId' : FlowRouter.getParam('id')},
+          {'project_is_main':false},
+          {'project_family':'P'}
+        ]
+      }).count();
+
+     if(count>0){
+       return true;
+     }
+     else{
+       return false;
+     }
+   },
+   countSamples(){
+     Meteor.subscribe("myProjects");
+     var count = Project.find({
+        $and : [ 
+          {'userId' : FlowRouter.getParam('id')},
+          {'project_is_main':false},
+          {'project_family':'M'}
+        ]
+      }).count();
+     
      if(count>0){
        return true;
      }

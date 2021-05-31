@@ -142,6 +142,7 @@ a.list-group-item.active { background-color: #6c757d; }
    font-family: "Sans-serif";
    font-size: 36px;
    color:#333;
+   /*line-height: 100%;*/
 }
 
 .negativeMargin{

@@ -100,6 +100,8 @@
               {{getStatus projData.project_status}} {{{getWeb}}}
             </div>
           </div>
+
+          {{#if currentUser}}
           {{#unless isOwner}}
           {{#if notLikeThisProject}}
           <div class="row">
@@ -114,13 +116,14 @@
             </div>
           </div>
           {{/if}}
-          {{/unless}}
+          
           <div class="row">
             <div class="col">
                <button class="btn button-follow uppercase" id="editProject"> <i class="fa fa-plus-circle fa-sm"></i> Editar proyecto</button>
             </div>
           </div>
-
+          {{/unless}}
+          {{/if}}
         </div>
       </div>
     </div>
@@ -183,6 +186,7 @@
    
    <div class="spacer40"></div>
    
+   {{#if isOwner}}
    <div class="container-fluid background-verydarkgray mx-auto">
      <div class="spacer5"></div>
      <div class="row">
@@ -217,7 +221,7 @@
      </div>
      <div class="spacer5"></div>
    </div>
-   
+   {{/if}}
   
   
 
