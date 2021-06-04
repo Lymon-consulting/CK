@@ -8,7 +8,7 @@ import { trimInput } from '/lib/functions.js';
 import { isNotEmpty } from '/lib/functions.js';
 import { formatURL } from '/lib/functions.js';
 import { getCrewCategories } from '/lib/globals.js';
-import { catTopCategories } from '/lib/globals.js';
+//import { catTopCategories } from '/lib/globals.js';
 import { getCrewRoleFromCategory } from '/lib/globals.js';
 import { getRoleById } from '/lib/globals.js';
 import { catHeights, catAges, catPhysical, catEthnics, catEyes, catHair, catHairType, catLanguages, catCategories } from '/lib/globals.js';
@@ -591,7 +591,7 @@ selectedGender(radioVal){
   else if(userSelection==='Femenino' && radioVal==='Femenino'){
     result = "checked";
   }
-  else if(userSelection==='Sin definir' && radioVal==='Sin definir'){
+  else if(userSelection==='Otrxs' && radioVal==='Otrxs'){
     result = "checked";
   }
   return result;

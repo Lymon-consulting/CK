@@ -24,153 +24,132 @@
    </style>
 
 
+<div class="container-fluid bg-overlay">
+  {{#if isOwner}}
+  <div class="spacer120"></div>
+  <div class="spacer120"></div>
+  <div class="spacer120"></div>
+  <div class="container-fluid text-white">
+    <a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <i class="fa fa-camera"></i></a>
+  </div>
+  {{#unless statusPublished}}
+  <div class="pink">Tu empresa u organización no está publicada, nadie la podrá ver hasta que la publiques</div>
 
-  <div class="container-fluid bg-overlay">
-      {{#if isOwner}}
-      <div class="spacer120"></div>
-      <div class="spacer120"></div>
-      <div class="spacer120"></div>
-      <div class="container-fluid text-white">
-        <a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <i class="fa fa-camera"></i></a>
-      </div>
-      {{#unless statusPublished}}
-      <div class="pink">Tu empresa u organización no está publicada, nadie la podrá ver hasta que la publiques</div>
-
-      {{/unless}}
-      {{/if}}
-    </div>
-    <div class="container-fluid">
-      <div class="spacer20">&nbsp;</div>
-      <div class="row">
-        <div class="col-lg-1 col-md-6 leftpadding toppadding">
-            {{#if getLogoPicture 500}}
-            <img src="{{getLogoPicture 80}}"> 
-            {{else}}
-            <img class="thumbnail-logo" src="/images/nologo.png">
-            {{/if}}
-            {{#if isOwner}}
-            <div class="container-fluid text-white">
-              <a href="#" class="text-white text-right" id="openLogoGallery">Cambiar <i class="fa fa-camera"></i></a>
-            </div>
-            
-            {{/if}}
-        </div>
-        <div class="col-lg-7 col-md-6 leftpadding">
-          <section>
-             <div class="container-fluid">
-              
-                <div class="spacer20"></div>
-                <div class="row">
-                   <div class="col-md-10 col-lg-10  h3-title">
-                      {{getCompany.company_name}}
-                   </div>
-                </div>
-                <div class="row">
-                   <div class="col-12 text-description uppercase">
-                      {{getCompany.company_type}}
-                   </div>
-                </div>
-                <div class="row">
-                  <div class="col text-left">
-                    Año de fundación: <span class="uppercase">{{getCompany.company_year}}</span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <div class="row">
-                       <div class="col">
-                          {{#if getCompany.city}}
-                             <i class="fa fa-map-marker fa-sm"></i> <small>{{getCompany.city}}, {{getCompany.state}},{{getCompany.country}}</small>
-                          {{/if}}
-                       </div>
-                    </div>
-                  </div>
-                </div>
-                {{#if currentUser}}
-                <div class="row">
-                  <div class="col">
-                    <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
-                  </div>
-                </div>
-                {{/if}}
-             </div>
-          </section>
-        </div>
-        <div class="col-lg-2 col-md-6 leftpadding">
-          <section>
-            <div class="spacer20"></div>
-            <div class="row">
-              <div class="col-12 text-black">
-                <small><i class="fa fa-eye fa-sm"></i>&nbsp;Vistas </small> 
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 text-black">
-                <small><i class="fa fa-thumbs-up fa-sm"></i>&nbsp;Valoraciones </small> 
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 text-black">
-                <small><i class="fa fa-user fa-sm"></i><i class="fa fa-arrow-left fa-sm"></i>&nbsp;Seguidores</small> 
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 text-black">
-                <small><i class="fa fa-user fa-sm"></i><i class="fa fa-arrow-right fa-sm"></i>&nbsp;Siguiendo</small> 
-              </div>
-            </div>
-          </section>
-        </div>
-        <div class="col-lg-2 col-md-6 leftpadding rightpadding">
-          <section>
-            <div class="spacer20"></div>
-            <div class="row">
-              <div class="col-4 text-black">
-                <a href="{{formatURL getCompany.company_web_page}}" target="_blank"><i class="fa fa-sm fa-globe text-black"></i></a>
-              </div>
-              <div class="col-4 text-black">
-                <a href="{{formatURL getCompany.company_facebook_page}}" target="_blank"><i class="fa fa-sm fa-facebook text-black"></i></a>
-              </div>
-              <div class="col-4 text-black">
-                <a href="{{formatURL getCompany.company_instagram_page}}" target="_blank"><i class="fa fa-sm fa-instagram text-black"></i></a>
-              </div>
-              <div class="col-4 text-black">
-                <a href="{{formatURL getCompany.company_twitter_page}}" target="_blank"><i class="fa fa-sm fa-twitter text-black"></i></a>
-              </div>
-              <div class="col-4 text-black">
-                <a href="{{formatURL getCompany.company_youtube_page}}" target="_blank"><i class="fa fa-sm fa-youtube text-black"></i></a>
-              </div>
-              <div class="col-4 text-black">
-                <a href="{{formatURL getCompany.company_vimeo_page}}" target="_blank"><i class="fa fa-sm fa-vimeo text-black"></i></a>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 text-center">
-                <a href="{{formatURL getCompany.company_web_page}}" class="text-black" target="_blank"><small>{{getCompany.company_web_page}}</small></a>
-              </div>
-            </div>
-          </section>
-        </div>
-      
-      </div>
-      <div class="spacer20"></div>
-
+  {{/unless}}
+  {{/if}}
 </div>
 
+<div class="container">
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          {{#if getLogoPicture 80}}
+          <div>
+            <img src="{{getLogoPicture 80}}"/>
+          </div>
+          {{else}}
+          <img class="thumbnail-logo" src="/images/nologo.png">
+          {{/if}}
+          {{#if isOwner}}
+          <div class="container-fluid text-white">
+            <a href="#" class="text-white text-right" id="openLogoGallery">Cambiar <i class="fa fa-camera"></i></a>
+          </div>
+          {{/if}}
+        </div>
+        <div class="col-md-8">
 
+          <div class="row">
+            <div class="col h3-title">
+              {{getCompany.company_name}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              {{getCompany.company_type}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              Año de fundación: <span class="uppercase">{{getCompany.company_year}}</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              {{#if getCompany.city}}
+                  <i class="fa fa-map-marker fa-sm"></i> <small>{{getCompany.city}}, {{getCompany.state}},{{getCompany.country}}</small>
+              {{/if}}
+            </div>
+          </div>
+          {{#if currentUser}}
+          <div class="row">
+            <div class="col">
+              <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
+            </div>
+          </div>
+          {{/if}}
 
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 border-left">
+      <div class="row">
+        <div class="col-md-12"><i class="fa fa-eye fa-sm"></i>&nbsp;<span class="agreements">Vistas {{getCompany.views}}</span></div>
+      </div>
+      <div class="row">
+        <div class="col-md-12"><i class="fa fa-thumbs-up fa-sm"></i>&nbsp;<span class="agreements">Valoraciones {{getCompany.likes}}</span></div>        
+      </div>
+    </div>
+    <div class="col-md-2 border-left">
+      <div class="row">
+        <div class="col">
+          {{#if getCompany.company_web_page}}
+          <a href="{{formatURL getCompany.company_web_page}}" target="_blank"><i class="fa fa-sm fa-globe text-black"></i></a>
+          {{/if}}
+        </div>
+        <div class="col">
+          {{#if getCompany.company_facebook_page}}
+          <a href="{{formatURL getCompany.company_facebook_page}}" target="_blank"><i class="fa fa-sm fa-facebook text-black"></i></a>
+          {{/if}}
+        </div>
+        <div class="col">
+          {{#if getCompany.company_instagram_page}}
+          <a href="{{formatURL getCompany.company_instagram_page}}" target="_blank"><i class="fa fa-sm fa-instagram text-black"></i></a>
+          {{/if}}
+        </div>
+        
+      </div>
+      <div class="row">
+        <div class="col">
+          {{#if getCompany.company_twitter_page}}
+          <a href="{{formatURL getCompany.company_twitter_page}}" target="_blank"><i class="fa fa-sm fa-twitter text-black"></i></a>
+          {{/if}}
+        </div>
+        <div class="col">
+          {{#if getCompany.company_youtube_page}}
+          <a href="{{formatURL getCompany.company_youtube_page}}" target="_blank"><i class="fa fa-sm fa-youtube text-black"></i></a>
+          {{/if}}
+        </div>
+        <div class="col">
+          {{#if getCompany.company_vimeo_page}}
+          <a href="{{formatURL getCompany.company_vimeo_page}}" target="_blank"><i class="fa fa-sm fa-vimeo text-black"></i></a>
+          {{/if}}
+        </div>
+        
+      </div>
+      <div class="spacer10"></div>
+      <div class="row">
+        <div class="col text-center">
+          <a href="{{formatURL getCompany.company_web_page}}" class="text-black" target="_blank"><small>{{getCompany.company_web_page}}</small></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
 
-
-
-
-
-
-
-
-
-
-
-
+<div class="spacer20"></div>
 
 {{#if isOwner}}
   <div class="container-fluid background-verydarkgray mx-auto">
@@ -241,7 +220,7 @@
               <div class="row">
                 <div class="owl-carousel">
                   {{#each getGallery}}
-                  <div> <img class="d-block w-50" src="{{getURL this.mediaId}}" alt=""> </div>
+                  <div class="crop"> <img src="{{getURL this.mediaId}}" alt=""> </div>
                   {{/each}}  
                 </div>
               </div>

@@ -7,11 +7,14 @@ import { IndustryIndex } from '/lib/common.js';
 import { getParam } from '/lib/functions.js';
 import { Ocupation } from '../api/ocupations.js';
 import { City } from '../api/city.js';
+import { getCrewCategories } from '/lib/globals.js';
+import { getCrewRoleFromCategory } from '/lib/globals.js';
 
 import './projList.html';
 import '/lib/common.js';
 
 Meteor.subscribe("otherUsers");
+Meteor.subscribe("getCategories");
 
 Template.projList.rendered = function(){
   ProjectIndex.getComponentMethods().addProps('status',true); 
@@ -104,9 +107,12 @@ Template.projList.helpers({
         }
       },
       getCategories(){
-        var data = Ocupation.find({},{sort:{'title':1}}).fetch();
-        return _.uniq(data, false, function(transaction) {return transaction.title});
+        //var data = Ocupation.find({},{sort:{'title':1}}).fetch();
+        //return _.uniq(data, false, function(transaction) {return transaction.title});
+        var values = getCrewCategories();
+        return values;
       },
+      
     getProfilePicture(userId, size) {
       Meteor.subscribe("allMedia");
       var user = Meteor.users.findOne({'_id':userId});
@@ -159,12 +165,19 @@ Template.projList.helpers({
       return years;
     },
     getOcupationsFromCategory(){
+      var object = new Array();
+      console.log(Session.get("selected_category"));
       if(Session.get("selected_category")!=null){
-        return Ocupation.find({'title': Session.get("selected_category")}).fetch();
+        object = getCrewRoleFromCategory(Session.get("selected_category"));
+      //  console.log(object);
+
+        //return Ocupation.find({'title': Session.get("selected_category")}).fetch();
       }
       else{
-        return Ocupation.find({'title': "Cualquiera"}).fetch();
+        object = getCrewRoleFromCategory("Animación y arte digital");
+        //return Ocupation.find({'title': "Animacion y arte digital"}).fetch();
       }
+      return object;
     },
 
      getProjectFamily(){
@@ -517,8 +530,10 @@ Template.projList.events({
   if(event.currentTarget.value==="Cualquiera"){
     ProjectIndex.getComponentMethods().removeProps('project_role');  
     Session.set("role_selected",null);
+    Session.set("selected_category",null);
   }
 },
+
 'change #country': function (e) {
       Session.set("selected_country", e.target.value);
       if($(e.target).val()!="cualquier"){

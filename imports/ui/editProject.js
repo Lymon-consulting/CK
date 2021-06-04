@@ -6,6 +6,8 @@ import { getParam } from '/lib/functions.js';
 import { trimInput } from '/lib/functions.js';
 import { isNotEmpty } from '/lib/functions.js';
 import { uploadFiles } from '/lib/functions.js';
+import { getCrewCategories } from '/lib/globals.js';
+import { getCrewRoleFromCategory } from '/lib/globals.js';
 
 import './editProject.html';
 import '/lib/common.js';
@@ -177,16 +179,29 @@ Template.editProject.helpers({
     return years;
   },
   getCategories(){
-    var data = Ocupation.find({},{sort:{'title':1}}).fetch();
-    return _.uniq(data, false, function(transaction) {return transaction.title});
+    //var data = Ocupation.find({},{sort:{'title':1}}).fetch();
+    //return _.uniq(data, false, function(transaction) {return transaction.title});
+    var values = getCrewCategories();
+    return values;
   },
   getOcupationsFromCategory(){
-    if(Session.get("selected_category")!=null){
+    /*if(Session.get("selected_category")!=null){
       return Ocupation.find({'title': Session.get("selected_category")}).fetch();
     }
     else{
       return Ocupation.find({'title': "Animacion y arte digital"}).fetch();
-    }
+    }*/
+    var object = new Array();
+      if(Session.get("selected_category")!=null){
+        object = getCrewRoleFromCategory(Session.get("selected_category"));
+
+        //return Ocupation.find({'title': Session.get("selected_category")}).fetch();
+      }
+      else{
+        object = getCrewRoleFromCategory("Animación y arte digital");
+        //return Ocupation.find({'title': "Animacion y arte digital"}).fetch();
+      }
+      return object;
   },
   roleSelected: function(value){
     var result="";

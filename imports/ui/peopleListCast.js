@@ -348,17 +348,18 @@ Template.peopleListCast.events({
   },
   'change .category': function (event) {
 
-      var modelo = $("#modelo").prop("checked");
+      var locutor = $("#locutor").prop("checked");
       var actor = $("#actor").prop("checked");
+      var extra = $("#extra").prop("checked");
+      var modelo = $("#modelo").prop("checked");
       var bailarin = $("#bailarin").prop("checked");
       var cantante = $("#cantante").prop("checked");
-      var extra = $("#extra").prop("checked");
-      var doble = $("#doble").prop("checked");
-      if(modelo && actor && bailarin && cantante && extra && doble){ //Todos seleccionados
+      
+      if(locutor && actor && bailarin && cantante && extra && modelo){ //Todos seleccionados
         UsersIndex.getComponentMethods().removeProps('cast.categories');  
         Session.set("category_selected",null);
       }
-      else if(!modelo && !actor && !bailarin && !cantante && !extra && !doble){ //Ninguno seleccionados
+      else if(!locutor && !actor && !bailarin && !cantante && !extra && !modelo){ //Ninguno seleccionados
         UsersIndex.getComponentMethods().removeProps('cast.categories');  
         Session.set("category_selected",null);
       }
@@ -383,24 +384,27 @@ Template.peopleListCast.events({
       console.log($("#m-check").prop("checked"));*/
 
       var male = $("#m-check").prop("checked");
-      var female = $("#f-check").prop("checked")
+      var female = $("#f-check").prop("checked");
+      var otrxs = $("#o-check").prop("checked");
 
-      if(male && female){ //Ambos tienen el check, buscar todos
+
+      console.log($(event.target).val());
+        
+      if(male && female && otrxs){ //Ambos tienen el check, buscar todos
         UsersIndex.getComponentMethods().removeProps('cast.sex');
         Session.set("gender_selected",null);
       }
-      else if(!male && !female){ //Ninguno tiene el check, buscar todos
+      else if(!male && !female && !otrxs){ //Ninguno tiene el check, buscar todos
         UsersIndex.getComponentMethods().removeProps('cast.sex');
         Session.set("gender_selected",null);
       }
-      else if(male && !female){ //Masculino tiene el ckeck y femenino no
-        UsersIndex.getComponentMethods().addProps('cast.sex', $("#m-check").val());
-        Session.set("gender_selected",$("#m-check").val());
+      else{
+        UsersIndex.getComponentMethods().addProps('cast.sex', $(event.target).val());
+        Session.set("gender_selected",$(event.target).val());
       }
-      else if(!male && female){ //Femenino tiene el ckeck y masculino no
-        UsersIndex.getComponentMethods().addProps('cast.sex', $("#f-check").val());
-        Session.set("gender_selected",$("#f-check").val());
-      }
+      
+
+      
 
       /*
       if(event.target.checked){

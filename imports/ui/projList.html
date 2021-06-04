@@ -34,7 +34,7 @@
           </div>
           <div class="spacer10"></div>
           <div class="row">
-            <div class="col agreements">Tipo</div>
+            <div class="col agreements">Tipo de trabajos</div>
           </div>
           <div class="spacer10"></div>
           <div class="row">
@@ -58,6 +58,21 @@
             </div>
           </div>
           <div class="spacer10"></div>
+            <div class="row">
+              <div class="col agreements">Tipo de producción</div>
+            </div>
+            <div class="spacer10"></div>
+            <div class="row">
+              <div class="col">
+                <select class="form-control agreements" id="type">
+                  <option value="cualquier"> Cualquier tipo </option>
+                  {{#each getProjectType}}
+                  <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
+          <div class="spacer10"></div>
           <div id="fieldsForProduction">
             <div class="row">
               <div class="col agreements">Estatus</div>
@@ -73,21 +88,7 @@
                 </select>
               </div>
             </div>
-            <div class="spacer10"></div>
-            <div class="row">
-              <div class="col agreements">Tipo</div>
-            </div>
-            <div class="spacer10"></div>
-            <div class="row">
-              <div class="col">
-                <select class="form-control agreements" id="type">
-                  <option value="cualquier"> Cualquier tipo </option>
-                  {{#each getProjectType}}
-                  <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
-                  {{/each}}
-                </select>
-              </div>
-            </div>
+            
             <div class="spacer10"></div>
             <div class="row">
               <div class="col agreements">Género</div>
@@ -128,9 +129,9 @@
               <div class="col">
                 <select name="category" id="category" class="form-control agreements">
                   <option value="Cualquiera"> Cualquier departamento </option>
-                   {{#each getCategories}}
-                      <option value="{{title}}"> {{title}} </option>
-                   {{/each}}
+                  {{#each getCategories}}
+                  <option value="{{this}}"> {{this}} </option>
+                  {{/each}}
                 </select>
               </div>
             </div>
@@ -142,9 +143,9 @@
             <div class="row">
               <div class="col">
                 <select name="Ocupation" id="ocupation" class="form-control agreements">
-                   {{#each getOcupationsFromCategory}}
-                      <option value="{{secondary}}"> {{secondary}} </option>
-                   {{/each}}
+                  {{#each item in getOcupationsFromCategory}}
+                  <option value="{{item.roleName}}"> {{item.roleName}} </option>
+                  {{/each}}
                 </select> 
               </div>
             </div>

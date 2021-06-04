@@ -46,26 +46,26 @@
         
         <div class="spacer10"></div>
         <div class="row">
-          <div class="col agreements">Categoría:</div>
+          <div class="col agreements">Actividades profesionales:</div>
         </div>
         <div class="row">
-          <div class="col-6" style="text-align:left">
-            <label class="agreements"><input type="checkbox" value="Modelo" id="modelo" class="category agreements"> Modelo</label>
+          <div class="col-12" style="text-align:left">
+            <label class="agreements"><input type="checkbox" value="Actor / Actriz" id="actor" class="category agreements"> Actor / Actriz</label>
           </div>
-          <div class="col-6" style="text-align:left">
-            <label class="agreements"><input type="checkbox" value="Actor" id="actor" class="category agreements"> Actor</label>
+          <div class="col-12" style="text-align:left">
+            <label class="agreements"><input type="checkbox" value="Locutor(a) / doblaje" id="locutor" class="category agreements"> Locutor(a) / doblaje</label>
           </div>
-          <div class="col-6" style="text-align:left">
-            <label class="agreements"><input type="checkbox" value="Bailarín" id="bailarin" class="category agreements"> Bailarín</label>
-          </div>
-          <div class="col-6" style="text-align:left">
-            <label class="agreements"><input type="checkbox" value="Cantante" id="cantante" class="category agreements"> Cantante</label>
-          </div>
-          <div class="col-6" style="text-align:left">
+          <div class="col-12" style="text-align:left">
             <label class="agreements"><input type="checkbox" value="Extra" id="extra" class="category agreements"> Extra</label>
           </div>
-          <div class="col-6" style="text-align:left">
-            <label class="agreements"><input type="checkbox" value="Doble" id="doble" class="category agreements"> Doble</label>
+          <div class="col-12" style="text-align:left">
+            <label class="agreements"><input type="checkbox" value="Modelo" id="modelo" class="category agreements"> Modelo</label>
+          </div>
+          <div class="col-12" style="text-align:left">
+            <label class="agreements"><input type="checkbox" value="Bailarín" id="bailarin" class="category agreements"> Bailarín</label>
+          </div>
+          <div class="col-12" style="text-align:left">
+            <label class="agreements"><input type="checkbox" value="Cantante" id="cantante" class="category agreements"> Cantante</label>
           </div>
         </div>
         <div class="spacer10"></div>
@@ -73,48 +73,29 @@
           <div class="col agreements">Género:</div>
         </div>
         <div class="row">
-          <div class="col" style="text-align:left">
+          <div class="col-12" style="text-align:left">
             <div class="checkbox">
               <label class="agreements"><input type="checkbox" value="Femenino" id="f-check" class="gender agreements"> Femenino</label>
             </div>
            </div>
-           <div class="col" style="text-align:left">
+           <div class="col-12" style="text-align:left">
             <div class="checkbox">
               <label class="agreements"><input type="checkbox" value="Masculino" id="m-check" class="gender agreements"> Masculino</label>
+            </div>
+           </div>
+           <div class="col-12" style="text-align:left">
+            <div class="checkbox">
+              <label class="agreements"><input type="checkbox" value="Otrxs" id="o-check" class="gender agreements"> Otrxs</label>
             </div>
            </div>
         </div>
         <div class="spacer10"></div>
         <div class="row">
           <div class="col">
-            <label class="agreements" for="eyes">Color de ojos </label>
-            <select name="eyes" id="eyes" class="form-control agreements">
-             <option value="cualquier"> Cualquier color de ojos </option>
-             {{#each eyes}}
-             <option value="{{spec}}"> {{spec}} </option>
-             {{/each}}
-           </select>
-          </div>
-        </div>
-        <div class="spacer10"></div>
-        <div class="row">
-          <div class="col">
-            <label class="agreements" for="hair">Color de pelo </label>
-            <select name="hair" id="hair" class="form-control agreements">
-             <option value="cualquier"> Cualquier color de pelo </option>
-             {{#each hair}}
-             <option value="{{spec}}"> {{spec}} </option>
-             {{/each}}
-           </select>
-          </div>
-        </div>
-        <div class="spacer10"></div>
-        <div class="row">
-          <div class="col">
-            <label class="agreements" for="hairType">Tipo de pelo </label>
-            <select name="hairType" id="hairType" class="form-control agreements">
-             <option value="cualquier"> Cualquier tipo de pelo </option>
-             {{#each hairType}}
+            <label class="agreements" for="age">Rango de edad </label>
+            <select name="ages" id="ages" class="form-control agreements">
+             <option value="cualquier"> Cualquier rango de edad </option>
+             {{#each ages}}
              <option value="{{spec}}"> {{spec}} </option>
              {{/each}}
            </select>
@@ -135,6 +116,18 @@
         <div class="spacer10"></div>
         <div class="row">
           <div class="col">
+            <label class="agreements" for="age">Altura </label>
+            <select name="heights" id="heights" class="form-control agreements">
+             <option value="cualquier"> Cualquier altura </option>
+             {{#each heights}}
+             <option value="{{spec}}"> {{spec}} </option>
+             {{/each}}
+           </select>
+          </div>
+        </div>
+        <div class="spacer10"></div>
+        <div class="row">
+          <div class="col">
             <label class="agreements" for="hairType">Etnia </label>
             <select name="ethnics" id="ethnics" class="form-control agreements">
              <option value="cualquier"> Cualquier etnia </option>
@@ -147,10 +140,10 @@
         <div class="spacer10"></div>
         <div class="row">
           <div class="col">
-            <label class="agreements" for="age">Rango de edad </label>
-            <select name="ages" id="ages" class="form-control agreements">
-             <option value="cualquier"> Cualquier rango de edad </option>
-             {{#each ages}}
+            <label class="agreements" for="hairType">Tipo de pelo </label>
+            <select name="hairType" id="hairType" class="form-control agreements">
+             <option value="cualquier"> Cualquier tipo de pelo </option>
+             {{#each hairType}}
              <option value="{{spec}}"> {{spec}} </option>
              {{/each}}
            </select>
@@ -159,16 +152,34 @@
         <div class="spacer10"></div>
         <div class="row">
           <div class="col">
-            <label class="agreements" for="age">Altura </label>
-            <select name="heights" id="heights" class="form-control agreements">
-             <option value="cualquier"> Cualquier altura </option>
-             {{#each heights}}
+            <label class="agreements" for="hair">Color de pelo </label>
+            <select name="hair" id="hair" class="form-control agreements">
+             <option value="cualquier"> Cualquier color de pelo </option>
+             {{#each hair}}
              <option value="{{spec}}"> {{spec}} </option>
              {{/each}}
            </select>
           </div>
         </div>
         <div class="spacer10"></div>
+        <div class="row">
+          <div class="col">
+            <label class="agreements" for="eyes">Color de ojos </label>
+            <select name="eyes" id="eyes" class="form-control agreements">
+             <option value="cualquier"> Cualquier color de ojos </option>
+             {{#each eyes}}
+             <option value="{{spec}}"> {{spec}} </option>
+             {{/each}}
+           </select>
+          </div>
+        </div>
+        
+        
+        
+        
+        <div class="spacer10"></div>
+        
+        
         <div class="row">
           <div class="col agreements">País</div>
         </div>
