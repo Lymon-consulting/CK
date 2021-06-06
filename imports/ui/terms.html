@@ -1,10 +1,34 @@
 <template name="terms">
    <div class="container text-center">
       <h1 class="h1-title">TÉRMINOS DE USO</h1>
-      <br>
-      <p class="text-description">
-      Página de términos
-      </p>
+      <br/>
+      <ul class="nav nav-tabs">
+         <li class="nav-item">
+           <a class="nav-link active" href="#terminos" data-toggle="tab">Términos y Condiciones</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link " href="#privacidad" data-toggle="tab">Aviso de Privacidad</a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link " href="#cookies" data-toggle="tab">Aviso de Cookies</a>
+          </li>
+       </ul>
+   
+       <div class="tab-content">
+         <div class="tab-pane active text-left" id="terminos">
+            <div class="spacer40"></div>
+            {{{getTerms}}}
+         </div>            
+         <div class="tab-pane text-left" id="privacidad">
+            <div class="spacer40"></div>
+            {{{getPrivacy}}}
+         </div>
+         <div class="tab-pane text-left" id="cookies">
+            <div class="spacer40"></div>
+            {{{getCookies}}}
+         </div>
+       </div>
    </div>      
-   <div class="spacer280"></div>
+   
+   
 </template>

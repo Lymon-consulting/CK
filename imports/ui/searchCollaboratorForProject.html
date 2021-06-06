@@ -153,7 +153,11 @@
                       {{#unless getRole this.__originalId}}
                       <select class="form-control agreements" id="sel_{{this.__originalId}}" name="sel_{{this.__originalId}}" disabled >
                         {{#each getAllOcupations}}
-                        <option value="{{secondary}}"> {{secondary}} </option>
+                          {{#if isThisACategory this}}
+                          <option value="{{this}}" disabled> {{this}} </option>
+                          {{else}}
+                          <option value="{{this}}"> {{this}} </option>
+                          {{/if}}
                         {{/each}}
                       </select> 
                       {{else}}
@@ -250,17 +254,22 @@
        <div class="col-lg-4 col-md-6">
         <select class="form-control agreements" id="role">
           <option value="cualquier"> Cualquier ocupación </option>
-          {{#each getAllOcupations}}
-          <option value="{{secondary}}" {{getRoleSelected secondary}}> {{secondary}} </option>
-          {{/each}}
+          {{#if isThisACategory this}}
+          <option value="{{this}}" disabled> {{this}} </option>
+          {{else}}
+          <option value="{{this}}"> {{this}} </option>
+          {{/if}}
         </select>
       </div>
       <div class="col-lg-4 col-md-6">
         <select class="form-control agreements" id="location">
-          <option value="cualquier"> Cualquier estado </option>
-          {{#each getCitiesFromCountries}}
-          <option value="{{city}}" {{getLocationSelected city}}> {{city}} </option>
-          {{/each}}
+          {{#each getAllOcupations}}
+              {{#if isThisACategory this}}
+              <option value="{{this}}" disabled> {{this}} </option>
+              {{else}}
+              <option value="{{this}}"> {{this}} </option>
+              {{/if}}
+            {{/each}}
         </select>
       </div>
       <div class="col-lg-4 col-md-6">
@@ -323,7 +332,11 @@
         {{#unless getRole this.__originalId}}
           <select class="form-control agreements" id="sel_{{this.__originalId}}" name="sel_{{this.__originalId}}" disabled >
             {{#each getAllOcupations}}
-            <option value="{{secondary}}"> {{secondary}} </option>
+              {{#if isThisACategory this}}
+              <option value="{{this}}" disabled> {{this}} </option>
+              {{else}}
+              <option value="{{this}}"> {{this}} </option>
+              {{/if}}
             {{/each}}
           </select> 
         {{else}}

@@ -90,6 +90,27 @@
                  <label for="proj_name">Título: <span class="text-purple">(Requerido)</span></label>
                  <input type="text" id="proj_name" class="form-control" placeholder="Proyecto" value="{{projData.project_title}}" maxlength="150">
                </div>
+               {{#if isProduction}}
+               <div class="col-lg-4">
+                <label for="proj_type">Tipo: <span class="text-purple">(Requerido)</span></label>
+                <select name="proj_type" id="proj_type" class="form-control">
+                   <option value="" disabled selected style='display:none;'> Seleccione </option>
+                   {{#each getProjectType}}
+                   <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
+                   {{/each}}
+                </select>
+              </div>
+              <div class="col-lg-4">
+                <label for="proj_gender">Estatus: <span class="text-purple">(Requerido)</span></label>
+                <select name="proj_status" id="proj_status" class="form-control">
+                   <option value="" disabled selected style='display:none;'> Seleccione </option>
+                   {{#each getProjectStatus}}
+                   <option value="{{this}}" {{statusSelected this}}> {{this}} </option>
+                   {{/each}}
+                   
+                </select>
+              </div>
+              {{/if}}
                <div class="col-lg-4">
                 <label for="proj_year">Año: <span class="text-purple">(Requerido)</span></label>
                  <select name="proj_year" id="proj_year" class="form-control">
@@ -114,26 +135,6 @@
              {{#if isProduction}}
              <div class="spacer20"></div>
              <div class="row">
-               <div class="col-lg-4">
-                 <label for="proj_gender">Estatus: <span class="text-purple">(Requerido)</span></label>
-                 <select name="proj_status" id="proj_status" class="form-control">
-                    <option value="" disabled selected style='display:none;'> Seleccione </option>
-                    {{#each getProjectStatus}}
-                    <option value="{{this}}" {{statusSelected this}}> {{this}} </option>
-                    {{/each}}
-                    
-                 </select>
-               </div>
-               <div class="col-lg-4">
-                 <label for="proj_type">Tipo: <span class="text-purple">(Requerido)</span></label>
-                 <select name="proj_type" id="proj_type" class="form-control">
-                    <option value="" disabled selected style='display:none;'> Seleccione </option>
-                    {{#each getProjectType}}
-                    <option value="{{this}}" {{typeSelected this}}> {{this}} </option>
-                    {{/each}}
-                    
-                 </select>
-               </div>
                <div class="col-lg-4">
                  &nbsp;
                </div>
@@ -271,6 +272,9 @@
              <div class="row">
                <div class="col-lg-12 agreements">
                  Si tu película ya se encuentra en una plataforma de streaming (Netflix, Amazon Prime, Filminlatino, Cinépolis Klic o alguna otra plataforma independiente) puedes incluir aquí el link, el cual generará un botón de play que aparecerá en el perfil de tu proyecto y que redireccionará a los visitantes para que puedan ver tu película. Si dejas el campo vacío no aparecerá en el <strong>Perfil de tu Proyecto</strong>.
+                  <br/>
+                  <br/>
+                 Si en cambio tu película y/o trailer de la misma se encuentran en youtube y/o vimeo y quieres de igual manera compartirla en el perfil del proyecto, tendrás la opción de hacerlo una vez creado el perfil y agregandola como un link de "video"
                </div>
              </div>
               <div class="spacer20"></div>
@@ -443,12 +447,14 @@
                 Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
               </div>
             </div>
+            <!--
             <div class="spacer20"></div>
             <div class="row">
               <div class="col text-center">
                 <button class="btn btn-purple goMediaLibraryCover">Ir a biblioteca de imágenes</button>
               </div>
             </div>
+            -->
             {{/if}}
           </div>
 
@@ -581,12 +587,14 @@
                       Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
                     </div>
                   </div>
+                  <!--
                   <div class="spacer20"></div>
                   <div class="row">
                     <div class="col text-center">
                       <button class="btn btn-purple goMediaLibrary">Ir a biblioteca de imágenes</button>
                     </div>
                   </div>
+                  -->
                   {{/if}}
                 </div>
               </div>

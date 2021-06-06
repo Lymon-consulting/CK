@@ -34,7 +34,33 @@ Template.searchCollaboratorForProject.helpers({
     return dict.get('count')
    },
    getAllOcupations(){
-    return Ocupation.find({},{sort:{"secondary":1}}).fetch();
+    //return Ocupation.find({},{sort:{"secondary":1}}).fetch();
+    let result = [];
+    let categories = getCrewCategories();
+    //console.log(categories);
+
+    let allRoles = [];
+    
+    for(let i = 0; i<categories.length;i++){
+      allRoles = getCrewRoleFromCategory(categories[i]);
+      result.push("--- "+categories[i]+ " ---");
+      for (let j=0; j<allRoles.length;j++) {
+        
+        result.push(allRoles[j].roleName);
+      }
+    }
+    //console.log(result);
+    return result;
+
+  },
+  isThisACategory(category){
+    console.log(category+"-->"+category.toString().indexOf("---"));
+    if(category.toString().indexOf("---")>=0){
+      return true;
+    }
+    else{
+      return false;
+    }
   },
   getAvailableYears(){
    var years = new Array();

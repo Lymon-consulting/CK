@@ -1,5 +1,6 @@
 import { Project } from '../imports/api/project.js';
 import { Portlet } from '../imports/api/portlet.js';
+import { Media } from '../imports/api/media.js';
 
 
 Meteor.methods({
@@ -413,6 +414,20 @@ Meteor.methods({
       });
   },
   deleteProject(projectID){
-     Project.remove({"_id": projectID});
+    console.log("Eliminando porlets con projectID="+projectID);
+    Portlet.remove({"projectID": projectID});
+
+    console.log("Eliminando media con projectID="+projectID);
+    Media.remove({"projectId": projectID});
+
+    console.log("Eliminando likes de los usuarios con projectID="+projectID);
+    Meteor.users.update({'likesProject': projectID}, {
+        $pull: {
+          "likesProject": projectID
+        }
+      });
+
+    console.log("Eliminando el proyecto="+projectID);
+    Project.remove({"_id": projectID});
   },
 });

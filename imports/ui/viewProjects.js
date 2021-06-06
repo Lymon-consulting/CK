@@ -3,6 +3,8 @@ import { Project } from '../api/project.js';
 import { Media } from '../api/media.js';
 import './viewProjects.html';
 
+//var cloudinary = require('cloudinary');
+
 
 
 Meteor.subscribe('myProjects');
@@ -100,6 +102,19 @@ if (Meteor.isClient) {
         Meteor.call('hideWizard');
 
         $('#myModal').hide();
+      },
+      'click #deleteProject': function(event){
+        event.preventDefault();
+        if(confirm("¿Quieres eliminar este proyecto? Esta acción no se puede deshacer")){
+          let projectId = $(event.target).attr("data-id");
+          console.log(projectId);
+          
+          Meteor.call(
+            'deleteProject',
+             projectId
+          );
+          
+        }
       }
    });
 }

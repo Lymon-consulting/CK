@@ -170,6 +170,7 @@ Template.registerHelper('fullName', function(){
 Template.registerHelper('hasTopRole', function(){
   var array = new Array();
   var result = false;
+  /*
   var idFromDatabase, idFromSettingsDirector, idFromSettingsProductor;
   idFromSettingsDirector = parseInt(Meteor.settings.public.DIRECTOR_ID); 
   idFromSettingsProductor = parseInt(Meteor.settings.public.PRODUCTOR_ID); 
@@ -184,6 +185,7 @@ Template.registerHelper('hasTopRole', function(){
       }
     }
   }
+  */
   return result;
 });
 

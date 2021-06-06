@@ -227,10 +227,10 @@ checkParticipation(userId){
   getProfilePicture(userId, size) {
     Meteor.subscribe("allMedia");
     var user = Meteor.users.findOne({'_id':userId});
-    if(user!=null && user.cast!=null && user.cast.profilePictureID!=null){
-      var profile = Media.findOne({'mediaId':user.cast.profilePictureID});
+    if(user!=null && user.cast!=null && user.profilePictureID!=null){
+      var profile = Media.findOne({'mediaId':user.profilePictureID});
       if(profile!=null){
-        return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.cast.profilePictureID;    
+        return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + user.profilePictureID;    
       }
       
     }

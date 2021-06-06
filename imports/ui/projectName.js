@@ -49,7 +49,24 @@ var hasTopRole=function(){
 
 Template.projectName.helpers({
   isProduction(){
-    return Session.get("showOficial");
+    let result;
+    if(Session.get("showOficial")!=null && Session.get("showOficial")==="P"){
+      result=true;
+    }
+    else{
+      result=false;
+    }
+    return result
+  },
+  isSample(){
+    let result;
+    if(Session.get("showOficial")!=null && Session.get("showOficial")==="M"){
+      result=true;
+    }
+    else{
+      result=false;
+    }
+    return result
   }
 });
 
@@ -96,10 +113,10 @@ Template.projectName.events({
     var inputValue = $(event.target).attr("data-answer");
     fam_value = inputValue;
     if(fam_value==="P"){
-      Session.set("showOficial",true);
+      Session.set("showOficial","P");
     }
     else{
-      Session.set("showOficial",false); 
+      Session.set("showOficial","M"); 
     }
     $('#project_title').prop('disabled', false);
     $('#continuar').prop('disabled', false);

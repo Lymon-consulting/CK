@@ -529,7 +529,7 @@ a.list-group-item.active { background-color: #6c757d; }
 
 /**Inician estilos para los recuadros de proyectos en la página de perfil de un usuario*/
 .card{
-  padding: 0.4em;
+  /*padding: 0.4em;*/
   margin: 0px;
   background: white;
   /*height: 400px;*/
@@ -538,10 +538,7 @@ a.list-group-item.active { background-color: #6c757d; }
   justify-content: center;
   box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
 }
-.card > img {
-  height: 6em;
-  object-fit: scale-down;
-}
+
 .card-title{
   text-align: center;
   /*text-transform: uppercase;*/

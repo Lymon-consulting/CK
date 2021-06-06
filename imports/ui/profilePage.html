@@ -218,8 +218,9 @@
 <div class="spacer40"></div>
 
 <div class="container">
-  {{#if getMainProject}}
+  
   <div class="row">
+    {{#if getMainProject}}
     <div class="col-lg-8 col-md-8 col-sm-12">
       <div class="row">
         <div class="col border-bottom">
@@ -279,7 +280,7 @@
       </div>
         
     </div>
-    
+    {{/if}}
     <div class="col-lg-4 col-md-4 col-sm-12">
     {{#if getProfile.crew.resume}}
       <div class="row">
@@ -432,7 +433,7 @@
           {{/if}}
     </div>
   </div>
-  {{/if}}
+  
   <!-- Inicia grid de proyectos-->
   {{#if countProjects}}
   <div class="row">
@@ -553,7 +554,7 @@
                 <div class="spacer40"></div>
                 <div class="row">
                    <div class="col-md-12 text-left">
-                      <strong class="uppercase">VIDEO DE MUESTRA</strong>
+                      <strong class="uppercase">VIDEO REEL</strong>
                    </div>
                 </div>
                 <div class="row">
@@ -637,12 +638,14 @@
                 Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
               </div>
             </div>
+            <!--
             <div class="spacer20"></div>
             <div class="row">
               <div class="col text-center">
                 <button class="btn btn-purple goMediaLibraryProfile">Ir a biblioteca de imágenes</button>
               </div>
             </div>
+            -->
             {{/if}}
           </div>
         </div>
@@ -707,12 +710,14 @@
                 Tu biblioteca de imágenes está vacía. Agrega imágenes antes de usarlas.
               </div>
             </div>
+            <!--
             <div class="spacer20"></div>
             <div class="row">
               <div class="col text-center">
                 <button class="btn btn-purple goMediaLibraryCover">Ir a biblioteca de imágenes</button>
               </div>
             </div>
+            -->
             {{/if}}
           </div>
 

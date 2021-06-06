@@ -1144,7 +1144,7 @@ else{
     },
     'click #saveAndPublish': function(event, template){
       event.preventDefault();
-      Bert.alert({message: 'Se ha guardado tu perfil', type: 'success', icon: 'fa fa-check'});
+      Bert.alert({message: 'Se ha guardado y publicado tu perfil', type: 'success', icon: 'fa fa-check'});
       //FlowRouter.go("/profilePage/" + Meteor.userId());
     },
 

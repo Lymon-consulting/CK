@@ -16,6 +16,7 @@
     </div>
   </div>
   <div class="spacer20"></div>
+  
   <div class="row">
     <div class="col-lg-4 text-14">
       <input type="radio" name="family" class="family" data-answer="P">&nbsp;Producción audiovisual
@@ -32,7 +33,15 @@
       <input type="text" id="project_title" class="form-control" placeholder="Nombre" value="" maxlength="150" disabled>
     </div>
   </div>
+  
+  <div class="spacer20"></div>
   {{#if isProduction}}
+  <div class="spacer20"></div>
+  <div class="row">
+    <div class="col">
+      Cualquier producción audiovisual (largometraje, cortometraje, videoclip, serie/ programa, comercial,, serie web, etc)  que hayas realizado o realizarás como responsable directo (Director, productor, guionista, etc).
+    </div>
+  </div>
   <div class="spacer20"></div>
   <div class="row">
     <div class="col">
@@ -41,7 +50,10 @@
   </div>
   <div class="row">
     <div class="col text-14">
-      Los proyectos en <strong>Cinekomuna</strong> pueden representar el <strong>Perfil Oficial</strong><i class="fa fa-certificate text-purple"></i> de alguna <strong>Producción audiovisual</strong>, de la cual poseas los derechos de divulgación. Si quieres publicar este proyecto como <strong>Perfil Oficial</strong><i class="fa fa-certificate text-purple"></i> por favor haz clic en la siguiente casilla y nos pondremos en contacto contigo para validarlo.
+      Los proyectos en <strong>Cinekomuna</strong> pueden representar el  <strong>"Perfil oficial"</strong> 
+      de alguna producción audiovisual, de la cual poseas los derechos creativos y de divulgación. 
+      Si quieres publicar este proyecto como <strong>"Perfil oficial"</strong> por favor haz clic en 
+      la siguiente casilla y nos pondremos en contacto contigo para validarlo.
     </div>
   </div>
   <div class="spacer20"></div>
@@ -50,6 +62,14 @@
       <input type="checkbox" id="oficial_project"> <strong>Perfil Oficial</strong><i class="fa fa-certificate text-purple"></i>
     </div>
   </div>
+  {{else}}
+    {{#if isSample}}
+  <div class="row">
+    <div class="col">
+      Una muestra de trabajo puede ser: un portafolio de tu trabajo y tu trayectoria en el medio. El trabajo específico que hiciste en una producción o producciones (Ej. tu trabajo como vestuarista para una producción). Fotos de rodaje y/o recuerdos de una filmación, bocetos, etc. En resumen, cualquier cosa que le quieras mostrar y compartir a la comunidad Cinekomuna relacionado a lo que haces en la industria.
+    </div>
+  </div>
+    {{/if}}
   {{/if}}
   <div class="spacer20"></div>
   <div class="row">
