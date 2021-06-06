@@ -170,10 +170,10 @@ checkParticipation(userId){
   getProfilePicture(userId, size) {
    Meteor.subscribe("allMedia");
     var user = Meteor.users.findOne({'_id':userId});
-    if(user!=null && user.crew!=null && user.crew.profilePictureID!=null){
-      var profile = Media.findOne({'mediaId':user.crew.profilePictureID});
+    if(user!=null && user.profilePictureID!=null){
+      var profile = Media.findOne({'mediaId':user.profilePictureID});
       if(profile!=null){
-        return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + userId + "/" + user.crew.profilePictureID;    
+        return Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",h_"+size+",c_thumb,r_max/" + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + user.profilePictureID;    
       }
 
     }

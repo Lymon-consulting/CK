@@ -25,16 +25,16 @@
 
 
 <div class="container-fluid bg-overlay">
+  
+  <div class="spacer120"></div>
+  <div class="spacer120"></div>
+  <div class="spacer120"></div>
   {{#if isOwner}}
-  <div class="spacer120"></div>
-  <div class="spacer120"></div>
-  <div class="spacer120"></div>
   <div class="container-fluid text-white">
     <a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <i class="fa fa-camera"></i></a>
   </div>
   {{#unless statusPublished}}
   <div class="pink">Tu empresa u organización no está publicada, nadie la podrá ver hasta que la publiques</div>
-
   {{/unless}}
   {{/if}}
 </div>
@@ -602,7 +602,7 @@
           {{#if getProjectPicture this._id 500}}
           <a href="/projectPage/{{this._id}}"><img class="card-img-top" src="{{getProjectPicture this._id 500}}" alt="Card image cap"></a>
           {{else}}
-          <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/nocover.jpg" class="card-img-top w-100" alt=""></a>
+          <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/no-cover.jpg" class="card-img-top w-100" alt=""></a>
           {{/if}}
           <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a></div>
           <div class="card-body">

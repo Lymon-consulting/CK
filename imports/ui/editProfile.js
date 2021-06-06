@@ -290,25 +290,17 @@ countrySelected: function(value){
 },
 getCategories(){
 
-  var values = getCrewCategories();
-  //console.log(values);
-  return values;
-  /*
- var data = Ocupation.find({},{sort:{'title':1}}).fetch();
- return _.uniq(data, false, function(transaction) {return transaction.title});*/
+    return getCrewCategories();
+   
 },
 getOcupationsFromCategory(){
  var object = new Array();
  if(Session.get("selected_category")!=null){
-  object = getCrewRoleFromCategory(Session.get("selected_category"));
-//  console.log(object);
-
-  //return Ocupation.find({'title': Session.get("selected_category")}).fetch();
-}
-else{
-  object = getCrewRoleFromCategory("Animación y arte digital");
-  //return Ocupation.find({'title': "Animacion y arte digital"}).fetch();
-}
+    object = getCrewRoleFromCategory(Session.get("selected_category"));
+  }
+  else{
+    object = getCrewRoleFromCategory("Animación y arte digital");
+  }
 return object;
 },
 getRolesSelected(){  

@@ -1,5 +1,7 @@
 import { Industry } from '../imports/api/industry.js';
+import { Media } from '../imports/api/media.js';
 import { Portlet } from '../imports/api/portlet.js';
+import { Project } from '../imports/api/project.js';
 
 
 Meteor.methods({
@@ -69,7 +71,23 @@ Meteor.methods({
     }); 
   },
   deleteCompany(companyID){
-     Industry.remove({"_id": companyID});
+     
+    Media.remove({"companyId": companyID});
+
+    Project.update({'companies._id':companyID}, {
+      $pull: {
+        "companies._id": companyID
+      }
+    });
+
+    Meteor.users.update({'companies': companyID}, {
+      $pull: {
+        "companies._id": companyID
+      }
+    });
+
+    Industry.remove({"_id": companyID});
+
   },
   addCompanyName(company_name, userId){
     return Industry.insert({

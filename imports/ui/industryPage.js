@@ -237,8 +237,10 @@ Template.company_crew.helpers({
   getCrew(){
    var collabs = null;
    var company = Industry.findOne({"_id": FlowRouter.getParam('id')});
+
    if(company){
     collabs = company.company_staff;
+    /*
     var owner = Meteor.users.findOne({'_id':company.userId});
     if(owner!=null){
       var boss = {
@@ -249,8 +251,8 @@ Template.company_crew.helpers({
       if(collabs!=null){
         collabs.unshift(boss);  
       }
-      
-    }
+     
+    }*/
     
   }
   return collabs;
@@ -283,10 +285,14 @@ getCollaboratorTitle(){
 },
 
 getInitials(userId){
+  Meteor.subscribe("otherUsers");
+
+  console.log(userId);
   var name = "";
   var lastname = "";
   var initials = "";      
   var user = Meteor.users.findOne({'_id':userId});
+  console.log(user);
   if(user){
     name = user.profile.name;
     lastname = user.profile.lastname;
@@ -345,7 +351,7 @@ Template.company_projects.helpers({
 },
 isOwner(){
   industry = Industry.findOne({'_id': FlowRouter.getParam('id')});
-  if(industry!=null && industry.userId === Meteor.userId()) {
+  if(industry!=null && industry.creator === Meteor.userId()) {
    val = true;
  }
  else{

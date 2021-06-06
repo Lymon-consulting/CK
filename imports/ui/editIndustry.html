@@ -151,14 +151,14 @@
           </div>
           <div class="col">
             {{#if hasEditPermission}}
-           <select name="company_type" id="company_type" class="form-control" multiple>
+           <select name="company_type" id="company_type" class="form-control" >
             <option value="" disabled selected style='display:none;'> Seleccione </option>
             {{#each getCompanyType}}
             <option value="{{this}}"> {{this}} </option>
             {{/each}}
           </select>
             {{else}}
-            <select name="company_type" id="company_type" class="form-control" multiple disabled>
+            <select name="company_type" id="company_type" class="form-control" disabled>
             <option value="" disabled selected style='display:none;'> Seleccione </option>
             {{#each getCompanyType}}
             <option value="{{this}}"> {{this}} </option>
@@ -405,7 +405,7 @@
         <div class="spacer40"></div>
         <div class="row">
           <div class="col-lg-8 form-group">
-            <label for="nombre">Video de muestra </label>
+            <label for="nombre">Demo reel empresa </label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fa fa-play"></i></div>
@@ -633,7 +633,7 @@
               <div class="modal-footer justify-content-center">
                 <div class="row">
                   <div class="col-lg-6">
-                    <a href="#" class="btn btn-purple disabled" id="setCoverPicture" data-id="{{this.mediaId}}">Establecer como foto de portada</a>
+                    <a href="#" class="btn btn-purple disabled text-white" id="setCoverPicture" data-id="{{this.mediaId}}">Establecer como foto de portada</a>
                   </div>
                   <!--<div class="col-lg-5"><button type="button" class="btn btn-purple btn-rounded goMediaLibraryProfile" data-dismiss="modal">Agregar más imágenes</button></div>-->
                   <!--<div class="col-lg-5"><input type="file" name="profile" id="nuestroinput"></div>-->

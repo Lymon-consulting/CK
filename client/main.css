@@ -651,6 +651,7 @@ a.list-group-item.active { background-color: #6c757d; }
 .no-padding{
    padding: 0 !important;
    margin: 0 !important;
+   font-family: "Avenir-Light";
 }
 
 .go-bottom{

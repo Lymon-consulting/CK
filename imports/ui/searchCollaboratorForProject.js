@@ -54,7 +54,6 @@ Template.searchCollaboratorForProject.helpers({
 
   },
   isThisACategory(category){
-    console.log(category+"-->"+category.toString().indexOf("---"));
     if(category.toString().indexOf("---")>=0){
       return true;
     }

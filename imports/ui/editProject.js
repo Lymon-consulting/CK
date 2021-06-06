@@ -181,8 +181,8 @@ Template.editProject.helpers({
   getCategories(){
     //var data = Ocupation.find({},{sort:{'title':1}}).fetch();
     //return _.uniq(data, false, function(transaction) {return transaction.title});
-    var values = getCrewCategories();
-    return values;
+    return getCrewCategories();
+    
   },
   getOcupationsFromCategory(){
     /*if(Session.get("selected_category")!=null){
