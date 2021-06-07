@@ -12,6 +12,7 @@ import { getCrewRoleFromCategoryIncludeTopRoles } from '/lib/globals.js';
 
 import './peopleList.html';
 import '/lib/common.js';
+import { Project } from '../api/project.js';
 
 
 Meteor.subscribe("otherUsers");
@@ -219,6 +220,15 @@ getPrimaryRoles(userId){
      }
      return found;
    },
+   hasProjects(){
+    let result = false;
+    let howMany = Project.find({"userId": Meteor.userId()}).count();
+    console.log(howMany);
+    if(howMany>0){
+      result = true;
+    }
+    return result;
+   }, 
    getRoleSelected: function(value){
     var prole = "";
     if(Session.get("role_selected")!=null){

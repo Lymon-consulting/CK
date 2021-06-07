@@ -87,15 +87,19 @@ Meteor.methods({
       *  - collaborator: Objeto JSON con los datos del colaborador
       * @author Luis Carlos Jiménez
    */
-  deleteCollaboration(projectID, collabID, collabEmail, collabRole){
+  deleteCollaboration(projectID, collabID){
 
    var collaborator = {
-      "_id": collabID,
-      "email": collabEmail,
-      "role": collabRole
+      "_id": collabID
    };
 
-   console.log("En el server eliminando a: " + collabID + ", " + collabEmail + ", " +  collabRole);
+   /*
+   ,
+      "email": collabEmail,
+      "role": collabRole
+   */
+
+   console.log("En el server eliminando a: " + collabID);
 
    Project.upsert(
       {'_id': projectID},

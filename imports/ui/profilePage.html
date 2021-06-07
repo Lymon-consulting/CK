@@ -127,7 +127,13 @@
               {{#if notSameUser getProfile._id}}
                  {{#if showButtonFollow getProfile._id}}
                   <input type="hidden" id="thisUser" value="{{getProfile._id}}">
-                    {{#unless likeThisPeople}}
+                    
+                    <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
+                  
+                 {{else}}
+                    <button class="btn button-unfollow" id="pushUnfollow"> <i class="fa fa-minus-circle fa-sm"></i> DEJAR DE SEGUIR</button>
+                 {{/if}}   
+                 {{#unless likeThisPeople}}
                     <div class="row">
                       <div class="col">
                          <button class="btn button-follow uppercase" id="pushLike"> <i class="fa fa-thumbs-up fa-sm"></i> Me gusta</button>
@@ -136,15 +142,10 @@
                     {{else}}
                     <div class="row">
                       <div class="col">
-                         <button class="btn button-follow uppercase btn-purple" id="pushDontLike"> <i class="fa fa-thumbs-up fa-sm"></i> Me gusta</button>
+                         <button class="btn button-unfollow uppercase" id="pushDontLike"> <i class="fa fa-thumbs-up fa-sm"></i>Ya no me gusta</button>
                       </div>
                     </div>
-                    {{/unless}}
-                    <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
-                  
-                 {{else}}
-                    <button class="btn button-unfollow" id="pushUnfollow"> <i class="fa fa-minus-circle fa-sm"></i> DEJAR DE SEGUIR</button>
-                 {{/if}}      
+                    {{/unless}}   
                  <button class="btn button-follow" id="sendMessage"> <i class="fa fa-envelope fa-sm"></i> ENVIAR MENSAJE</button>
               {{/if}}
             </div>
@@ -221,6 +222,7 @@
   
   <div class="row">
     {{#if getMainProject}}
+    {{#if allowedView getMainProject._id}}
     <div class="col-lg-8 col-md-8 col-sm-12">
       <div class="row">
         <div class="col border-bottom">
@@ -280,6 +282,7 @@
       </div>
         
     </div>
+    {{/if}}
     {{/if}}
     <div class="col-lg-4 col-md-4 col-sm-12">
     {{#if getProfile.crew.resume}}
@@ -447,6 +450,7 @@
      <div class="row">
      {{#if getProjects}}                                      
         {{#each getProjects}}
+          {{#if allowedView this._id}}
         <!-- Inicia cada recuadro de cada proyecto -->
            <div class="col-lg-3 col-md-4 col-sm-6">
               <div class="spacer20"></div>
@@ -484,6 +488,7 @@
               </div>      
            </div>
         <!-- Termina cada recuadro de cada proyecto -->
+           {{/if}}
         {{/each}}
      {{/if}}
      </div>
@@ -502,6 +507,7 @@
        </div>
        <div class="row">
         {{#each getSamples}}
+        {{#if allowedView this._id}}
         <!-- Inicia cada recuadro de cada proyecto -->
            <div class="col-lg-3 col-md-4 col-sm-6">
               <div class="spacer20"></div>
@@ -539,6 +545,7 @@
               </div>      
            </div>
         <!-- Termina cada recuadro de cada proyecto -->
+        {{/if}}
         {{/each}}
       </div>
      {{/if}}

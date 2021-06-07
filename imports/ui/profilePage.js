@@ -211,7 +211,8 @@ Template.profilePage.helpers({
         $and : [ 
           {'userId' : FlowRouter.getParam('id')},
           {'project_is_main':false},
-          {'project_family':'M'}
+          {'project_family':'M'},
+          {'status': true}
         ]
       }).count();
      
@@ -264,6 +265,19 @@ Template.profilePage.helpers({
           {'project_is_main':true}
         ]
       });
+   },
+   allowedView(id){
+     let project = Project.findOne({"_id": id});
+     let allowed = false;
+     if(project){
+      if(Meteor.userId()===project.userId){
+        allowed = true;
+      }       
+      else if(project.status){
+        allowed = true;
+      }
+     }
+     return allowed;
    },
    getProjectImages(projId, size){
     Meteor.subscribe("allMedia");

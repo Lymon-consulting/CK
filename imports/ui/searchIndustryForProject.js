@@ -287,8 +287,8 @@ Template.searchIndustryForProject.events({
 
     var company = {
       "_id" : companyId,
-      "confirmed": true, /*Cambiar esto para activar las notificaciones*/
-      "invite_sent": true /*Cambiar esto para activar las notificaciones*/
+      "confirmed": false, /*Cambiar esto para activar las notificaciones*/
+      "invite_sent": false /*Cambiar esto para activar las notificaciones*/
     };
 
     var exists = Project.find({$and:[{"_id":projectId},{ companies: {$elemMatch:{"_id":companyId}}}]});

@@ -251,4 +251,18 @@ Meteor.methods({
       $set:{"youtube":youtube_page}
     });
   },
+  addFollowToCompany(followerId, followsToId){
+    Meteor.users.update(
+     {'_id': followerId},
+     { $addToSet: { 'followsCompany': followsToId } }
+     );
+  },
+  removeFollowToCompany(userId, followsToId){
+    Meteor.users.update({'_id': userId}, 
+    {
+      $pull: {
+        "followsCompany": followsToId
+      }
+    });
+  },
 });

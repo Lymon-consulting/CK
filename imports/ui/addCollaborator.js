@@ -3,6 +3,9 @@ import { Project } from '../api/project.js';
 import { Ocupation } from '../api/ocupations.js';
 import { Media } from '../api/media.js';
 
+import { getCrewCategories } from '/lib/globals.js';
+import { getCrewRoleFromCategory } from '/lib/globals.js';
+
 import './addCollaborator.html';
 
 Template.availableProjects.helpers({
@@ -30,7 +33,24 @@ Template.availableProjects.helpers({
     return Project.find({'userId':Meteor.userId()}).fetch();
   },
   getAllOcupations(){
-   return Ocupation.find({},{sort:{"secondary":1}}).fetch();
+    //return Ocupation.find({},{sort:{"secondary":1}}).fetch();
+    let result = [];
+    let categories = getCrewCategories();
+    //console.log(categories);
+
+    let allRoles = [];
+    
+    for(let i = 0; i<categories.length;i++){
+      allRoles = getCrewRoleFromCategory(categories[i]);
+      result.push("--- "+categories[i]+ " ---");
+      for (let j=0; j<allRoles.length;j++) {
+        
+        result.push(allRoles[j].roleName);
+      }
+    }
+    //console.log(result);
+    return result;
+
   },
   getProjectPicture(projectId, size) {
     Meteor.subscribe("allMedia");
@@ -129,8 +149,8 @@ Template.availableProjects.events({
       "email": email,
       "role": rol,
       "name" : name,
-      "confirmed": true, /*Cambiar esto para activar las notificaciones*/
-      "invite_sent": true /*Cambiar esto para activar las notificaciones*/
+      "confirmed": false, /*Cambiar esto para activar las notificaciones*/
+      "invite_sent": false /*Cambiar esto para activar las notificaciones*/
     };
     console.log(collaborator);
 
@@ -200,6 +220,8 @@ Template.availableProjects.events({
       {'_id': projectId},
       { $pull: { project_staff: collaborator }
     });
+
+    
    
 
 

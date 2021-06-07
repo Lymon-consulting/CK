@@ -85,7 +85,11 @@
           {{#if currentUser}}
           <div class="row">
             <div class="col">
+              {{#if showButtonFollow getCompany._id}}
               <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
+              {{else}}
+              <button class="btn button-unfollow" id="pushUnfollow"> <i class="fa fa-minus-circle fa-sm"></i> DEJAR DE SEGUIR</button>
+              {{/if}}
             </div>
           </div>
           {{/if}}
@@ -99,6 +103,9 @@
       </div>
       <div class="row">
         <div class="col-md-12"><i class="fa fa-thumbs-up fa-sm"></i>&nbsp;<span class="agreements">Valoraciones {{getCompany.likes}}</span></div>        
+      </div>
+      <div class="row">
+        <div class="col-md-12"><i class="fa fa-angle-left fa-sm"></i>&nbsp;<span class="agreements">Seguidores {{getFollowersCount}}</span></div>
       </div>
     </div>
     <div class="col-md-2 border-left">

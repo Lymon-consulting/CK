@@ -361,8 +361,8 @@ Template.searchCastForProject.events({
       "email": email,
       "role": rol,
       "name" : name,
-      "confirmed": true, /*Cambiar esto para activar las notificaciones*/
-      "invite_sent": true /*Cambiar esto para activar las notificaciones*/
+      "confirmed": false, /*Cambiar esto para activar las notificaciones*/
+      "invite_sent": false /*Cambiar esto para activar las notificaciones*/
     };
     console.log(collaborator);
 

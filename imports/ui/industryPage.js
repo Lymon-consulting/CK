@@ -73,6 +73,26 @@ isOwner(){
  }
  return val;
 },
+showButtonFollow(follow){
+  var following = Meteor.users.find(
+    {$and : [ 
+      {'_id' : Meteor.userId()} , 
+      {"followsCompany": follow }
+    ]
+  });
+
+  var found = true;
+  if(following.count() > 0){
+     found = false;
+  }
+  return found;
+},
+getFollowersCount(){
+  Meteor.subscribe("otherUsers");
+  var count = 0;
+  count = Meteor.users.find({ 'followsCompany': { $all : [FlowRouter.getParam('id')]}}).count();
+  return count;
+},
 getProjects(){
   Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
       //return Project.find({$and : [ {'userId' : FlowRouter.getParam('id')} , {"project_is_main": '' }]});
@@ -512,6 +532,24 @@ Template.industryPage.events({
       $("#setLogoPicture").removeClass('disabled');
 
     },
+    'click #pushFollow': function(event, template) {
+      event.preventDefault();
+
+      Meteor.call(
+         'addFollowToCompany',
+         Meteor.userId(),
+         FlowRouter.getParam('id')
+      );
+      //$("#pushFollow").attr("disabled", true);
+   },
+   'click #pushUnfollow': function(event, template){
+      event.preventDefault();
+      Meteor.call(
+         'removeFollowToCompany',
+         Meteor.userId(),
+         FlowRouter.getParam('id')
+      );
+   },
 });
 
 Template.company_projects.events({

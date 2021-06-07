@@ -370,8 +370,8 @@ Template.searchCollaboratorForProject.events({
       "email": email,
       "role": rol,
       "name" : name,
-      "confirmed": true, /*Cambiar esto para activar las notificaciones*/
-      "invite_sent": true /*Cambiar esto para activar las notificaciones*/
+      "confirmed": false, /*Cambiar esto para activar las notificaciones*/
+      "invite_sent": false /*Cambiar esto para activar las notificaciones*/
     };
     console.log(collaborator);
 
@@ -383,6 +383,19 @@ Template.searchCollaboratorForProject.events({
        {'_id': projectId},
        { $push: { project_staff: collaborator }
      });
+
+     const from = Meteor.userId();
+
+     Meteor.call(
+      'addAlert',
+      user._id,
+      'Te han agregado como colaborador en un proyecto',
+      from,
+      4,
+      projectId,
+      null
+      );   
+
       $("#but_"+e.target.value).html('Invitación enviada');
       $("#but_"+e.target.value).attr('disabled', 'disabled');
       $("#sel_"+e.target.value).attr('disabled', 'disabled');

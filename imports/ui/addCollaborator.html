@@ -32,9 +32,9 @@
                 <div class="card-body">
                   <p></p>
                   {{#if getRole this._id}}
-                  <h5 class="card-title"><input type="checkbox" id="chk_{{this._id}}" value="{{this._id}}" {{checkParticipation this._id}} disabled> {{this.project_title}} ({{this.project_year}})</h5>
+                  <h5 class="card-title"><input type="checkbox" id="chk_{{this._id}}" value="{{this._id}}" {{checkParticipation this._id}} disabled> {{this.project_title}} {{#if this.project_year}} ({{this.project_year}}) {{/if}} </h5>
                   {{else}}
-                  <h5 class="card-title"><input type="checkbox" id="chk_{{this._id}}" value="{{this._id}}" {{checkParticipation this._id}}> {{this.project_title}} ({{this.project_year}})</h5>
+                  <h5 class="card-title"><input type="checkbox" id="chk_{{this._id}}" value="{{this._id}}" {{checkParticipation this._id}}> {{this.project_title}} {{#if this.project_year}} ({{this.project_year}}) {{/if}}</h5>
                   {{/if}}
 
                   <p><small>Rol de {{collaboratorName}}:</small></p>
@@ -43,7 +43,7 @@
                   {{#unless getRole this._id}}
                   <select class="form-control agreements" id="sel_{{this._id}}" name="sel_{{this._id}}" disabled >
                     {{#each getAllOcupations}}
-                    <option value="{{secondary}}"> {{secondary}} </option>
+                    <option value="{{this}}"> {{this}} </option>
                     {{/each}}
                   </select>
                   {{/unless}}

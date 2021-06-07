@@ -23,6 +23,9 @@ Template.notifications.helpers({
   }
   return alerts;
 },
+thisUser(){
+  return Meteor.userId();
+},
 getUrl(id){
   return getPicture(id,40);
 },
@@ -37,13 +40,7 @@ getNameAndURL(userId){
     }
     else{
       url = "<a href='/profilePageActor/"+userId+"'>"; 
-      if(user.showArtisticName){
-        fullname = user.artistic;  
-      }
-      else{
-        fullname = user.fullname;
-      }
-      
+      fullname = user.fullname;
     }
   } 
   return url + fullname + "</a>";
@@ -75,8 +72,8 @@ formatAlert(thisAlert){
      else if(thisAlert.type===3){//follow company
         msg = " sigue ahora a "
      }
-     else if(thisAlert.type===4){//request
-
+     else if(thisAlert.type===4){//collaboration
+       msg = " ha indicado que colaboraste en "
      }
      else if(thisAlert.type===5){//missing info
 
@@ -132,7 +129,42 @@ formatAlert(thisAlert){
        name = company.company_name;
      }
      return name;
-   }
+   },
+   projectName(projectId){
+    var project = Project.findOne({'_id':projectId});
+    var name="";
+    if(project){
+      name = project.project_title;
+    }
+    return name;
+  },
+  getProjectURL(projectId){
+    var project = Project.findOne({'_id':projectId});
+    var name="";
+    if(project){
+      name = project.project_title;
+    }
+
+    let url = "<a href='/projectPage/"+projectId+"'>" + name + "</a>";
+    return url;
+  },
+  projectRole(projectId){
+    Meteor.subscribe('myProjects');
+    var project = Project.findOne({'_id': projectId});
+    var result="";
+    if(project){
+      var staff = project.project_staff;
+      if(staff!=null && staff!=""){
+        for (var i = staff.length - 1; i >= 0; i--) {
+          if(staff[i]._id === Meteor.userId()){
+            result=staff[i].role;
+            break;
+          }
+        }
+      }
+    }
+    return result;
+  }
  });
 
 Template.notifications.events({
@@ -141,6 +173,7 @@ Template.notifications.events({
 
    var id = $(e.target).attr('data-id');
    var proj = $(e.target).attr('data-proj');
+   
    Meteor.call(
      'updateConfirmation',
      proj,
@@ -156,32 +189,34 @@ Template.notifications.events({
   if(confirm("Estás a punto de eliminar tu participación en este proyecto, ¿estas seguro?")){
    var proj = $(e.target).attr('data-proj');
    var id = $(e.target).attr('data-id');
-   var ownerEmail = $(e.target).attr('data-ownerEmail');
-   var collabEmail = $(e.target).attr('data-collabEmail');
-   var title = $(e.target).attr('data-title');
-   var collabRole = $(e.target).attr('data-collabRole');
+   //var ownerEmail = $(e.target).attr('data-ownerEmail');
+   //var collabEmail = $(e.target).attr('data-collabEmail');
+   //var title = $(e.target).attr('data-title');
+   //var collabRole = $(e.target).attr('data-collabRole');
 
-   console.log("En el cliente eliminando a: "+ id +", " + collabEmail +", " +  collabRole );
+   console.log("En el cliente eliminando a: "+ id);
 
    Meteor.call(
     'deleteCollaboration',
     proj,
-    id,
-    collabEmail,
-    collabRole
+    id
     );
 
 
    Bert.alert({message: 'Has eliminado tu participación en el proyecto', type: 'info'});
 
+
+   
+
+/*
    var emailData = {
      title: title,
      collabEmail: collabEmail,
      collabRole: collabRole
-   };
+   };*/
 
-   console.log("Enviando correo a " + ownerEmail);
-
+   //console.log("Enviando correo a " + ownerEmail);
+/*
    Meteor.call(
      'sendEmail',
      ownerEmail,
@@ -189,7 +224,7 @@ Template.notifications.events({
      'Un colaborador ha rechazado su participación en tu proyecto de Cinekomuna',
      'deny-collaboration-template.html',
      emailData
-     );
+     );*/
  }
 },
  'click .clickable':function(event,template){

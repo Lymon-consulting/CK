@@ -197,6 +197,7 @@ Accounts.onCreateUser(function(options, user) {
     },
     
     addAlert(userId,msg,from,type,projectId,companyId){
+      console.log(userId);
       var date = new Date();
       var alert = {
         '_id': Random.id(),
@@ -208,6 +209,7 @@ Accounts.onCreateUser(function(options, user) {
         'projectId': projectId,
         'companyId': companyId
       }
+      console.log("Agregando alerta para "+userId +" con " +alert.toString());
       Meteor.users.update({'_id': userId}, 
         {
           $addToSet: {

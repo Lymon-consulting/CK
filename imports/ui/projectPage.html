@@ -116,12 +116,13 @@
             </div>
           </div>
           {{/if}}
-          
+          {{#if isOwner}}
           <div class="row">
             <div class="col">
                <button class="btn button-follow uppercase" id="editProject"> <i class="fa fa-plus-circle fa-sm"></i> Editar proyecto</button>
             </div>
           </div>
+          {{/if}}
           {{/unless}}
           {{/if}}
         </div>
@@ -1085,11 +1086,13 @@
 
 <template name="crew">
   {{#if getCrew.project_staff}}
+     {{#if atLeastOneCrewConfirmed}}
      <div class="spacer80"></div>
      <div class="container text-center">
         <h3 class="h1-title">CREW</h3>
         <hr>
      </div>
+     {{/if}}
      
      <div class="d-flex justify-content-around text-center">
         {{#each getCrew.project_staff}}
@@ -1156,7 +1159,7 @@
                      {{#if getLogoPicture this._id 100}}
                         <img src="{{getLogoPicture this._id 100}}" border="0" class="rounded-circle" /><br/>
                      {{else}}
-                        <img class="rounded-circle" src="/images/logo.svg" style="width:100px;heigt:100px">
+                        <img class="rounded-circle" src="/images/logo.svg" style="width:60px;heigt:60px">
                      {{/if}}
                      </a>    
                   </div>

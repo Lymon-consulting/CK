@@ -340,6 +340,7 @@ Meteor.publish("otherUsers", function () {
       'cast':1,
       'crew':1,
       'messagesList':1,
+      'followsCompany':1
     }
   });
 });

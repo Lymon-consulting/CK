@@ -1591,6 +1591,21 @@ if (Meteor.isClient) {
 
          return proj;
       },
+      atLeastOneCrewConfirmed(){
+        let proj = Project.findOne({"_id": FlowRouter.getParam('id')});
+        let atLeastOne = false;
+         if(proj){
+            collabs = proj.project_staff;
+         }
+         for (let i = 0; i < collabs.length; i++) {
+           if(collabs[i].confirmed){
+             atLeastOne = true;
+             break;
+           }
+           
+         }
+         return atLeastOne;
+      },
       getPersonalURL(userId){
       var result = "";
       var user = Meteor.users.findOne({'_id':userId});

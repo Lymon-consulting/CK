@@ -23,6 +23,7 @@
   <div class="spacer20"></div>
   <div class="row">
     <div class="col-md-3 col-sm-6">
+        <div class="spacer40"></div>
         <div class="card h-250">
           <a href="/projectName" class="text-black"><img class="card-img-top cover-top" src="/images/no-cover.jpg"></a>
           <div class="card-body">
@@ -31,9 +32,9 @@
           </div>
         </div>
       </div>
-  </div>
-  <div class="spacer20"></div>
- {{#if myProjects}}
+    
+      <div class="col-md-9">
+        {{#if myProjects}}
          
   <main role="main">
 
@@ -52,7 +53,7 @@
         <div class="tab-pane active" id="1">
           <div class="row">
             {{#each myProjects}}
-            <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="col-md-4 col-sm-6">
               <div class="card w-100">
                {{#if getProjectPicture this._id}}
                   
@@ -76,9 +77,9 @@
 
                   </div>
                    <div class="row">
-                      <div class="col card-text"><a href="/projectPage/{{this._id}}" class="text-black"><i class="fa fa-eye"></i>&nbsp;Ver</a></div>
-                      <div class="col card-text text-right"><a href="/editProject/{{this._id}}" class="text-black"><i class="fa fa-pencil"></i>&nbsp;Editar</a></div>
-                      <div class="col card-text text-right"><a href="#" id="deleteProject" data-id="{{this._id}}" class="text-black"><i class="fa fa-trash" data-id="{{this._id}}"></i>&nbsp;Eliminar</a></div>
+                      <div class="col card-text"><a href="/projectPage/{{this._id}}" class="text-black"><i class="fa fa-eye"></i></a></div>
+                      <div class="col card-text text-center"><a href="/editProject/{{this._id}}" class="text-black"><i class="fa fa-pencil"></i></a></div>
+                      <div class="col card-text text-right"><a href="#" id="deleteProject" data-id="{{this._id}}" class="text-black"><i class="fa fa-trash" data-id="{{this._id}}"></i></a></div>
                    </div>
                  </div>
               </div>
@@ -89,7 +90,7 @@
         <div class="tab-pane" id="2">
           <div class="row">
             {{#each mySamples}}
-            <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="col-md-4 col-sm-6">
               <div class="card">
                {{#if getProjectPicture this._id}}
                   <a href="/projectPage/{{this._id}}"><img class="card-img-top cover-top" src="{{getProjectPicture this._id}}" alt="Card image cap"></a>
@@ -108,9 +109,9 @@
 
                   </div>
                    <div class="row">
-                      <div class="col card-text"><a href="/projectPage/{{this._id}}" class="text-black"><i class="fa fa-eye"></i>&nbsp;Ver muestra</a></div>
-                      <div class="col card-text text-right"><a href="/editProject/{{this._id}}" class="text-black"><i class="fa fa-pencil"></i>&nbsp;Editar</a></div>
-                      <div class="col card-text text-right"><a href="#" id="deleteProject" data-id="{{this._id}}" class="text-black"><i class="fa fa-trash" data-id="{{this._id}}"></i>&nbsp;Eliminar</a></div>
+                      <div class="col card-text"><a href="/projectPage/{{this._id}}" class="text-black"><i class="fa fa-eye"></i></a></div>
+                      <div class="col card-text text-center"><a href="/editProject/{{this._id}}" class="text-black"><i class="fa fa-pencil"></i></a></div>
+                      <div class="col card-text text-right"><a href="#" id="deleteProject" data-id="{{this._id}}" class="text-black"><i class="fa fa-trash" data-id="{{this._id}}"></i></a></div>
                    </div>
                  </div>
               </div>
@@ -141,6 +142,12 @@
       </tr>
    </table>
 {{/if}}
+      </div>
+      
+
+  </div>
+  <div class="spacer20"></div>
+ 
 <div class="spacer80"></div>
 
 <div class="modal modal-backdrop" tabindex="-1" id="myModal" role="dialog">
