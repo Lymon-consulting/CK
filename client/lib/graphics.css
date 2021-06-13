@@ -30,6 +30,9 @@
 }
 */
 
+.card-text > a{
+  color: black;
+}
 
 
 .imageDivHeight{
@@ -96,6 +99,9 @@
    object-fit:scale-down;
 }
 
+.card > img{
+  background-color: transparent !important;
+}
 
 .media-portlet img{
    width: 100%;

@@ -17,21 +17,21 @@
                <!-- end notify title -->
                <!-- notify content -->
                <div class="drop-content">
+                 {{#if countAlerts}}
                   {{#each getAlerts}}
                      <li>
-                        <div class="col-lg-12 col-md-6 col-sm-1 agreements {{isRead this.read}}">
-                          {{#if switch this.type 2}}
-                          <div class="row clickable" data-id="{{this.from}}">
+                        <div class="col-md-12 col-sm-12 agreements {{isRead this.read}}">
+                          <div class="row">
                             <div class="col-2">
-                            {{#if getUrl this.from}}
-                            <img src="{{getUrl this.from}}"/>
-                            {{else}}
-                            <div id="profileImageMenu">{{getInitials this.from}}</div>
-                            {{/if}}
+                              {{#if getUrl this.from}}
+                              <img src="{{getUrl this.from}}"/>
+                              {{else}}
+                              <div id="profileImageMenu">{{getInitials this.from}}</div>
+                              {{/if}}
                             </div>
                             <div class="col-9">
                               <div class="row">
-                                <div class="col">{{{getNameAndURL this.from}}} {{formatAlert this}}</div>
+                                <div class="col">{{{this.message}}}</div>
                               </div>
                               <div class="row">
                                 <div class="col">{{formatTime this.date}}</div>
@@ -39,63 +39,29 @@
                             </div>
                             {{#unless this.read}}
                             <div class="col-1"><i class="fa fa-lg fa-eye" data-toggle="tooltip" data-placement="top" data-id="{{this._id}}" title="Marcar como visto"></i></div>
-                            {{/unless}}
-                            </div>
-                          {{/if}}
-                          {{#if switch this.type 3}}
-                          <div class="row clickable" data-id="{{this.from}}">
-                            <div class="col-2">
-                            {{#if getUrl this.from}}
-                            <img src="{{getUrl this.from}}"/>
                             {{else}}
-                            <div id="profileImageMenu">{{getInitials this.from}}</div>
-                            {{/if}}
-                            </div>
-                            <div class="col-9">
-                              <div class="row">
-                                <div class="col">{{{getNameAndURL this.from}}} {{formatAlert this}} {{companyName this.companyId}}</div>
-                              </div>
-                              <div class="row">
-                                <div class="col">{{formatTime this.date}}</div>
-                              </div>
-                            </div>
-                            {{#unless this.read}}
-                            <div class="col-1"><i class="fa fa-lg fa-eye" data-toggle="tooltip" data-placement="top" data-id="{{this._id}}" title="Marcar como visto"></i></div>
+                            <div class="col-1"></div>
                             {{/unless}}
-                            </div>
-                          {{/if}}
-                          {{#if switch this.type 4}}
-                          <div class="row clickable" data-id="{{this.from}}">
-                            <div class="col-2">
-                            {{#if getUrl this.from}}
-                            <img src="{{getUrl this.from}}"/>
-                            {{else}}
-                            <div id="profileImageMenu">{{getInitials this.from}}</div>
-                            {{/if}}
-                            </div>
-                            <div class="col-9">
-                              <div class="row">
-                                <div class="col">{{{getNameAndURL this.from}}} {{formatAlert this}} {{{getProjectURL this.projectId}}} como {{projectRole this.projectId}}</div>
-                              </div>
-                              <div class="row">
-                                <div class="col"><a href="#" class="confirmCollaboration btn button-unfollow" data-id="{{thisUser}}" data-proj="{{this.projectId}}">Aceptar</a></div>
-                                <div class="col"><a href="#" data-proj="{{this.projectId}}" data-id="{{thisUser}}" class="denyColaboration btn button-unfollow">Rechazar</a></div>
-                              </div>
-                              <div class="row">
-                                <div class="col">{{formatTime this.date}}</div>
-                              </div>
-                            </div>
-                            {{#unless this.read}}
-                            <div class="col-1"><i class="fa fa-lg fa-eye" data-toggle="tooltip" data-placement="top" data-id="{{this._id}}" title="Marcar como visto"></i></div>
-                            {{/unless}}
-                            </div>
-                          {{/if}}
+                          </div>
                         </div>
                      </li>
                   {{/each}}
+                {{else}}
+                    <li>
+                      <div class="col-md-12 col-sm-12 agreements notificationRead">
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="row">
+                              <div class="col">No tienes notificaciones</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </li>
+                {{/if}}
                </div>
                <div class="notify-drop-footer text-center">
-                  <!--<a href="#" class="agreements">Ver todas</a>-->
+                  <a href="/notificationList" class="agreements">Ver todas</a>
                </div>
              </ul>
            </li>

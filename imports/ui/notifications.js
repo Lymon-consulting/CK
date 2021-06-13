@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor'
 import { Project } from '../api/project.js';
 import { Media } from '../api/media.js';
+import { Alert } from '../api/alert.js';
 import { Industry } from '../api/industry.js';
 import { getPicture } from '/lib/functions.js';
 import { timeSince } from '/lib/functions.js';
@@ -9,18 +10,17 @@ import { timeSince } from '/lib/functions.js';
 import './notifications.html'; 
 import '/lib/common.js';
 
+Meteor.subscribe("alerts");
 Template.notifications.helpers({
  getAlerts(){
-  Meteor.subscribe("otherUsers");
-  var alerts = new Array();
-
-  if(Meteor.user()){
-    var user = Meteor.users.findOne({'_id':Meteor.userId()},{sort:{'alerts.date': -1}});
-    if(user){
-      alerts = user.alerts; 
+  const alerts = Alert.find({
+      "receiver": Meteor.userId(),
+      "read":false
+    },
+    {sort:{
+      'date':-1
     }
-
-  }
+  }).fetch();
   return alerts;
 },
 thisUser(){
@@ -46,10 +46,14 @@ getNameAndURL(userId){
   return url + fullname + "</a>";
 },
 getInitials(userId){
-  var user = Meteor.users.findOne({'_id':userId});
-  var name = user.profile.name;
-  var lastname = user.profile.lastname;
-  var initials = name.charAt(0) + lastname.charAt(0);
+  let user = Meteor.users.findOne({'_id':userId});
+  let initials="";
+  if(user){
+    let name = user.profile.name;
+    let lastname = user.profile.lastname;
+    initials = name.charAt(0) + lastname.charAt(0);
+  
+  }
   return initials;
 },
 formatTime(date){
@@ -94,25 +98,20 @@ formatAlert(thisAlert){
      return result;
    },
    countAlerts(){
-    var alerts = new Array();
-    var count = null;
-    if(Meteor.user()){
-      alerts = Meteor.user().alerts;
-      if(alerts && alerts.length>0){
-        count=0;
-        for (var i = 0; i < alerts.length; i++) {
-          if(!alerts[i].read){
-            count++;
-          }
-        }
+     Meteor.subscribe("alerts");
+      const alerts = Alert.find({"receiver": Meteor.userId(),"read":false}).fetch();
+      let count = 0;
+      console.log(alerts);
+      if(alerts){
+        count = alerts.length;
+      }
+      if(count>0){
+        return count;
+      }
+      else{
+        return null;
       }
       
-    }
-    if(count==0){
-      count=null;
-    }
-    return count;
-    
    },
    switch(type, value){
       if(type===value){
@@ -229,20 +228,28 @@ Template.notifications.events({
 },
  'click .clickable':function(event,template){
     event.preventDefault();
-    userId = $(event.currentTarget).attr("data-id")
-    var user = Meteor.users.findOne({'_id':userId});
-    if(user.isCrew){
+    let from = $(event.currentTarget).attr("data-id")
+    let url = "";
+    console.log(from);
+    var user = Meteor.users.findOne({'_id':from});
+    if(user!=null && user.isCrew){
       url = "/profilePage/";
     }
-    else{
+    else if(user!=null && user.isCast){
       url = "/profilePageActor/"; 
     }
-    FlowRouter.go(url+userId);
+    FlowRouter.go(url+from);
  },
  'click .fa-eye': function(event,template){
    event.preventDefault();
    alertId = $(event.currentTarget).attr("data-id")
    console.log(alertId);
-   Meteor.call('markAlertAsRead',Meteor.userId(),alertId,true);
+   if(alertId){
+    Meteor.call(
+      'markAlertAsRead',
+      alertId,
+      true);
+   }
+   
  }
 });

@@ -18,6 +18,7 @@ import './userMethods.js';
 import './industryMethods.js';
 import './mediaMethods.js';
 import './messageMethods.js';
+import { Alert } from "../imports/api/alert.js";
 
 
 Meteor.startup(() => {
@@ -348,6 +349,18 @@ Meteor.publish("otherUsers", function () {
 Meteor.publish("follows", function (userId) {
    var cuantos = Meteor.users.find({'_id' : userId} , { fields: {'_id': 1 , 'profile': 1}});
    return cuantos;
+});
+
+Meteor.publish("alerts", function(){
+  return Alert.find({},{
+    fields:{
+      '_id':1,
+      'sender':1,
+      'receiver':1,
+      'message':1,
+      'date':1
+    }
+  });
 });
 
 Meteor.publish('myProjects', function() {

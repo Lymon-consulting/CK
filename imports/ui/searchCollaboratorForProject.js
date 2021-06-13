@@ -11,6 +11,7 @@ import { getCrewRoleFromCategory } from '/lib/globals.js';
 
 import './searchCollaboratorForProject.html';
 import '/lib/common.js';
+import { sendAlert } from '../../lib/functions.js';
 
 Template.searchCollaboratorForProject.rendered = function(){
   UsersIndex.getComponentMethods().addProps('isCrew', true);
@@ -342,6 +343,9 @@ Template.searchCollaboratorForProject.events({
 
   var rol = $( "select#sel_"+e.target.value+" option:checked" ).val();
   var projectId = FlowRouter.getParam('id');
+
+  var project = Project.findOne({'_id':projectId});
+
   var userId = e.target.value;
 
   var user = Meteor.users.findOne({'_id':userId});
@@ -386,6 +390,13 @@ Template.searchCollaboratorForProject.events({
 
      const from = Meteor.userId();
 
+     
+     let message = `Te ha agregado como colaborador en <a href='/projectPage/${projectId}'> <strong>${project.project_title}</strong> </a>`;
+
+     sendAlert(from, userId, message);
+
+     /*
+
      Meteor.call(
       'addAlert',
       user._id,
@@ -394,7 +405,7 @@ Template.searchCollaboratorForProject.events({
       4,
       projectId,
       null
-      );   
+      );   */
 
       $("#but_"+e.target.value).html('Invitación enviada');
       $("#but_"+e.target.value).attr('disabled', 'disabled');

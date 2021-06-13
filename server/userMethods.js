@@ -1,5 +1,6 @@
 import { Random } from 'meteor/random'
 import { Ocupation } from '../imports/api/ocupations.js';
+import { Alert } from '../imports/api/alert.js';
 
 Meteor.methods({
   sendVerificationLink() {
@@ -217,6 +218,27 @@ Accounts.onCreateUser(function(options, user) {
           }
         });
     },
+
+    sendAlert(sender, receiver, message){
+      var date = new Date();
+      var alert = {
+        sender: sender,
+        receiver: receiver,
+        message: message,
+        date: date,
+        read: false
+      }
+      
+      return Alert.insert(alert, function(error, result){
+        if(!error){
+          return result;
+        }
+        else{
+          return error;
+        }
+      });
+    },
+
     removeAlert(userId,alertId){
       Meteor.users.update({'_id': userId}, 
         {
@@ -225,15 +247,11 @@ Accounts.onCreateUser(function(options, user) {
           }
         });
     },
-    markAlertAsRead(userId,alertId,read){
-      /*var alert = {
-        '_id': alertId,
-        'read': read
-      }*/
-      Meteor.users.update({'_id': userId,'alerts._id':alertId}, 
+    markAlertAsRead(alertId,read){
+      Alert.update({'_id':alertId}, 
         {
           $set: {
-            'alerts.$.read': read
+            'read': read
           }
         });
     },

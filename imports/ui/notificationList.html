@@ -1,0 +1,30 @@
+<template name="notificationList">
+    <div class="container">
+      <div class="row">
+         <div class="col-12">
+            {{#if countAlerts}}
+               {{#each getAlerts}}
+            <div class="card text-left">
+               <div class="card-body">
+                  
+                  <p class="card-text text-left"><a href="/profilePage/{{this.sender}}"><img src="{{getProfilePicture this.sender}}" class="img-chat"/> <strong>{{getName this.sender}}</strong></a> {{{this.message}}}</p>
+                  <p class="agreements">{{formatTime this.date}}</p>
+                  <a href="#" class="btn btn-purple text-white">Go somewhere</a>
+               </div>
+            </div>
+               {{/each}}
+            {{else}}
+            <div class="spacer60"></div>
+            <div class="card">
+               <div class="card-body">
+                  <h5 class="card-title">No tienes notificaciones</h5>
+               </div>
+            </div>
+            <div class="spacer80"></div>
+            <div class="spacer80"></div>
+            <div class="spacer80"></div>
+            {{/if}}
+         </div>
+      </div>
+    </div>
+ </template>
