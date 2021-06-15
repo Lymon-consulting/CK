@@ -358,7 +358,10 @@ Meteor.publish("alerts", function(){
       'sender':1,
       'receiver':1,
       'message':1,
-      'date':1
+      'date':1,
+      'read':1,
+      'entityId':1,
+      'entityType':1
     }
   });
 });

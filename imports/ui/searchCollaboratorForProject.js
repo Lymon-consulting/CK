@@ -391,9 +391,12 @@ Template.searchCollaboratorForProject.events({
      const from = Meteor.userId();
 
      
-     let message = `Te ha agregado como colaborador en <a href='/projectPage/${projectId}'> <strong>${project.project_title}</strong> </a>`;
+     let message = `ha indicado que colaboraste en <a href='/projectPage/${projectId}'> 
+      <strong class='text-black'>${project.project_title}</strong> </a> como ${rol} `;
 
-     sendAlert(from, userId, message);
+     const alertId = sendAlert(from, userId, message, projectId, "P");
+
+     console.log(alertId);
 
      /*
 

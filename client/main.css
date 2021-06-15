@@ -884,6 +884,17 @@ a.list-group-item.active { background-color: #6c757d; }
    font-size: 20px;
 }
 
+.btn-alert{
+  border: none;
+  font-size: 0.8rem;
+  color: #fff !important;
+  margin-right: 2px;
+  margin-top: 2px;
+  padding: 0.1rem 1rem;
+  background-color: #fd1052;
+  ;
+}
+
 
 
 .btn-purple {

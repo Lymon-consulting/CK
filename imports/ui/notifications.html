@@ -23,25 +23,31 @@
                         <div class="col-md-12 col-sm-12 agreements {{isRead this.read}}">
                           <div class="row">
                             <div class="col-2">
-                              {{#if getUrl this.from}}
-                              <img src="{{getUrl this.from}}"/>
+                              {{#if getUrl this.sender}}
+                              <img src="{{getUrl this.sender}}"/>
                               {{else}}
-                              <div id="profileImageMenu">{{getInitials this.from}}</div>
+                              <div id="profileImageMenu">{{getInitials this.sender}}</div>
                               {{/if}}
                             </div>
                             <div class="col-9">
                               <div class="row">
-                                <div class="col">{{{this.message}}}</div>
+                                <div class="col"><a href="/profilePage/{{this.sender}}" class="text-black"> <strong>{{getName this.sender}}</strong></a> {{{this.message}}}</div>
                               </div>
                               <div class="row">
                                 <div class="col">{{formatTime this.date}}</div>
                               </div>
                             </div>
                             {{#unless this.read}}
-                            <div class="col-1"><i class="fa fa-lg fa-eye" data-toggle="tooltip" data-placement="top" data-id="{{this._id}}" title="Marcar como visto"></i></div>
+                            <div class="col-1"><i class="fa fa-lg fa-eye" data-toggle="tooltip" data-placement="top" data-id="{{this._id}}" title="Marcar como visto"></i>
+                            </div>
                             {{else}}
                             <div class="col-1"></div>
                             {{/unless}}
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <a href="#" id="collaborations" data-id="{{this.entityId}}" data-type="{{this.entityType}}" class="btn btn-alert">Ver</a>
+                            </div>
                           </div>
                         </div>
                      </li>

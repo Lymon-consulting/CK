@@ -1,0 +1,71 @@
+<template name="collaborations">
+    <nav>
+        <div class="pink">Estas son las colaboraciones a las que te han invitado</div>
+    </nav>
+
+    <div class="container">
+        <div class="spacer40"></div>
+        <div class="row">
+            <div class="col">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#collaborationInProjects" data-toggle="tab">Proyectos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="#collaborationInIndustries" data-toggle="tab">Empresas</a>
+                    </li>
+                </ul>
+                <div class="tab-content ">
+                    <div class="tab-pane active" id="collaborationInProjects">
+                        <div class="container">
+                            <div class="row">
+                                {{#each getCollaborations}}
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <div class="spacer20"></div>
+                                    <div class="card w-100">
+                                    {{#if getProjectImages this._id 175}}
+                                        <a href="/projectPage/{{this._id}}" class="card-img-top"><img class="card-img-top w-100" src="{{getProjectImages this._id 175}}" alt="Card image cap"></a>
+                                    {{else}}
+                                        <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/no-cover.jpg" class="card-img-top w-100" alt=""></a>
+                                    {{/if}}  
+                                    <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a></div>
+                                    <div class="card-body">
+                                        {{#unless this.confirmed}}
+                                        <p class="card-text">¿Confirmas tu participación?</p>
+                                        {{else}}
+                                        <p class="card-text">Participaste como:</p>
+                                        {{/unless}}
+                                        <p class="card-text"><strong>{{this.role}}</strong></p>
+                                    </div>
+                                    {{#unless this.confirmed}}
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <div class="col text-left"><a href="#" id="yes" data-id="{{this._id}}" class="btn btn-alert text-left">Si</a></div>
+                                            <div class="col text-right"><a href="#" data-id="{{this._id}}" class="btn btn-alert text-right no">No</a></div>
+                                        </div>
+                                    </div>
+                                    {{else}}
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <div class="col text-right"><a href="#" data-id="{{this._id}}" class="btn btn-alert text-right no">Eliminar participación</a></div>
+                                        </div>
+                                    </div>
+                                    {{/unless}}
+                                    
+                                    </div>      
+                                </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="collaborationInIndustries">
+                        Empresas
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+    </div>
+
+</template>

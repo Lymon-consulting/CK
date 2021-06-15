@@ -219,14 +219,16 @@ Accounts.onCreateUser(function(options, user) {
         });
     },
 
-    sendAlert(sender, receiver, message){
+    sendAlert(sender, receiver, message, entityId, entityType){
       var date = new Date();
       var alert = {
         sender: sender,
         receiver: receiver,
         message: message,
         date: date,
-        read: false
+        read: false,
+        entityId: entityId,
+        entityType: entityType
       }
       
       return Alert.insert(alert, function(error, result){

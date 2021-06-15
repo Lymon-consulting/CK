@@ -1,5 +1,6 @@
 <template name="notificationList">
     <div class="container">
+       <div class="spacer40"></div>
       <div class="row">
          <div class="col-12">
             {{#if countAlerts}}
@@ -9,7 +10,7 @@
                   
                   <p class="card-text text-left"><a href="/profilePage/{{this.sender}}"><img src="{{getProfilePicture this.sender}}" class="img-chat"/> <strong>{{getName this.sender}}</strong></a> {{{this.message}}}</p>
                   <p class="agreements">{{formatTime this.date}}</p>
-                  <a href="#" class="btn btn-purple text-white">Go somewhere</a>
+                  <a href="#" id="collaborations" data-id="{{this.entityId}}" data-type="{{this.entityType}}" class="btn btn-alert">Ver</a>
                </div>
             </div>
                {{/each}}

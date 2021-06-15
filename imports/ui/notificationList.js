@@ -60,3 +60,14 @@ Template.notificationList.helpers({
     },
 });
 
+Template.notificationList.events({
+  'click #collaborations': function(event, template){
+    event.preventDefault();
+    const entityId = $(event.currentTarget).attr("data-id");
+    const entityType= $(event.currentTarget).attr("data-type");
+ 
+    FlowRouter.go('/collaborations/'+entityType+"/"+entityId);
+ 
+  }
+});
+

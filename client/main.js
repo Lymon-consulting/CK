@@ -12,6 +12,7 @@ import '../imports/ui/addCollaborator.js';
 import '../imports/ui/addCollaboratorIndustry.js';
 import '../imports/ui/ads.js';
 import '../imports/ui/blog.js';
+import '../imports/ui/collaborations.js';
 import '../imports/ui/confirmProfile.js';
 import '../imports/ui/contact.js';
 import '../imports/ui/editIndustry.js';

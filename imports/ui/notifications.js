@@ -23,6 +23,22 @@ Template.notifications.helpers({
   }).fetch();
   return alerts;
 },
+countAlerts(){
+  Meteor.subscribe("alerts");
+   const alerts = Alert.find({"receiver": Meteor.userId(),"read":false});
+   let count = 0;
+   console.log(`----> ${alerts.count()}`);
+   if(alerts){
+     count = alerts.count();
+   }
+   if(count>0){
+     return count;
+   }
+   else{
+     return null;
+   }
+   
+},
 thisUser(){
   return Meteor.userId();
 },
@@ -97,22 +113,7 @@ formatAlert(thisAlert){
      }
      return result;
    },
-   countAlerts(){
-     Meteor.subscribe("alerts");
-      const alerts = Alert.find({"receiver": Meteor.userId(),"read":false}).fetch();
-      let count = 0;
-      console.log(alerts);
-      if(alerts){
-        count = alerts.length;
-      }
-      if(count>0){
-        return count;
-      }
-      else{
-        return null;
-      }
-      
-   },
+  
    switch(type, value){
       if(type===value){
         return true;
@@ -121,6 +122,27 @@ formatAlert(thisAlert){
         return false;
       }
    },
+   getProfilePicture(userId) {
+    Meteor.subscribe("allMedia");
+    var url;
+    var user = Meteor.users.findOne({'_id':userId});
+    if(user!=null && user.profilePictureID!=null){
+      var profile = Media.findOne({'mediaId':user.profilePictureID});
+      if(profile!=null){
+        url= Meteor.settings.public.CLOUDINARY_RES_URL + "/w_40,h_40" + "/v" + profile.media_version + "/" + Meteor.settings.public.LEVEL + "/" + user.profilePictureID;    
+      }
+
+    }
+    return url;
+  },
+  getName(userId){
+    let user = Meteor.users.findOne({"_id":userId});
+    let name = "";
+    if(user){
+        name = user.fullname;
+    }
+    return name;
+  },
    companyName(companyId){
      var company = Industry.findOne({'_id':companyId});
      var name="";
@@ -226,20 +248,7 @@ Template.notifications.events({
      );*/
  }
 },
- 'click .clickable':function(event,template){
-    event.preventDefault();
-    let from = $(event.currentTarget).attr("data-id")
-    let url = "";
-    console.log(from);
-    var user = Meteor.users.findOne({'_id':from});
-    if(user!=null && user.isCrew){
-      url = "/profilePage/";
-    }
-    else if(user!=null && user.isCast){
-      url = "/profilePageActor/"; 
-    }
-    FlowRouter.go(url+from);
- },
+
  'click .fa-eye': function(event,template){
    event.preventDefault();
    alertId = $(event.currentTarget).attr("data-id")
@@ -251,5 +260,13 @@ Template.notifications.events({
       true);
    }
    
+ },
+ 'click #collaborations': function(event, template){
+   event.preventDefault();
+   const entityId = $(event.currentTarget).attr("data-id");
+   const entityType= $(event.currentTarget).attr("data-type");
+
+   FlowRouter.go('/collaborations/'+entityType+"/"+entityId);
+
  }
 });
