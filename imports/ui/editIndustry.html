@@ -49,7 +49,7 @@
           {{#if hasEditPermission}}
           <div class="row">
             <div class="col text-14 text-purple text-center">
-              <a href="#" class="text-purple" id="openMediaGallery">Cambiar <i class="fa fa-pencil"></i></a>
+              <a href="#" class="text-purple" id="openMediaGallery">Cambiar <span class="mdi mdi-pencil"></span></a>
             </div>
           </div>
           {{/if}}
@@ -63,13 +63,13 @@
           <div><hr></div>
           <div class="row">
             <div class="col text-14">
-              <a href="/industryPage/{{companyData._id}}" class="text-black"><i class="fa fa-eye"></i> Perfil de empresa</a>    
+              <a href="/industryPage/{{companyData._id}}" class="text-black"><span class="mdi mdi-eye"></span> Perfil de empresa</a>    
             </div>
           </div>
           <div class="spacer10"></div>
           <div class="row">
             <div class="col text-14">
-              <a href="/viewProjects/{{currentUser._id}}" class="text-black" id=""><i class="fa fa-briefcase"></i> Mis producciones/muestras</a>
+              <a href="/viewProjects/{{currentUser._id}}" class="text-black" id=""><span class="mdi mdi-film"></span> Mis producciones/muestras</a>
             </div>
           </div> 
           
@@ -77,7 +77,7 @@
           <div><hr></div>
           {{#if hasEditPermission}}
           <div class="row">
-            <div class="col text-14">Portada <a href="#" class="text-purple" id="openMediaCover">Cambiar <i class="fa fa-pencil"></i></a></div>
+            <div class="col text-14">Portada <a href="#" class="text-purple" id="openMediaCover">Cambiar <span class="mdi mdi-pencil"></span></a></div>
           </div>
           {{/if}}
           <div class="row">
@@ -93,7 +93,7 @@
           <div class="spacer40"></div>
           <div class="row">
             <div class="col text-14">
-              <a href="#" class="text-black" id="deleteIndustry"><i class="fa fa-trash"></i> Eliminar empresa</a>
+              <a href="#" class="text-black" id="deleteIndustry"><span class="mdi mdi-trash-can"></span> Eliminar empresa</a>
             </div>
           </div>
           {{/if}}
@@ -285,7 +285,7 @@
           <div class="col">
            <div class="input-group">
             <div class="input-group-prepend">
-              <div class="input-group-text"><i class="fa fa-globe fa-lg"></i></div>
+              <div class="input-group-text"><span class="mdi mdi-web"></span></div>
             </div>
             {{#if hasEditPermission}}
             <input type="text" class="form-control" id="company_web_page" value="{{companyData.company_web_page}}" placeholder="Ej: www.cinekomuna.com" maxlength="120">
@@ -301,7 +301,7 @@
          <div class="col">
           <div class="input-group">
            <div class="input-group-prepend">
-             <div class="input-group-text"><i class="fa fa-facebook fa-lg"></i></div>
+             <div class="input-group-text"><span class="mdi mdi-facebook"></span></div>
            </div>
            {{#if hasEditPermission}}
            <input  type="text" class="form-control" id="facebook_page" value="{{companyData.company_facebook_page}}" placeholder="Ej. www.facebook.com/cinekomuna" maxlength="120">
@@ -317,7 +317,7 @@
          <div class="col">
           <div class="input-group">
            <div class="input-group-prepend">
-             <div class="input-group-text"><i class="fa fa-twitter fa-lg"></i></div>
+             <div class="input-group-text"><span class="mdi mdi-twitter"></span></div>
            </div>
            {{#if hasEditPermission}}
            <input type="text" class="form-control" id="twitter_page" value="{{companyData.company_twitter_page}}" placeholder="Ej. www.twitter.com/cinekomuna" maxlength="120">
@@ -332,7 +332,7 @@
          <div class="col">
           <div class="input-group">
            <div class="input-group-prepend">
-             <div class="input-group-text"><i class="fa fa-vimeo fa-lg"></i></div>
+             <div class="input-group-text"><span class="mdi mdi-vimeo"></span></div>
            </div>
            {{#if hasEditPermission}}
            <input type="text" class="form-control" id="vimeo_page" value="{{companyData.company_vimeo_page}}" placeholder="Ej. www.vimeo.com/cinekomuna" maxlength="120">
@@ -347,7 +347,7 @@
          <div class="col">
           <div class="input-group">
            <div class="input-group-prepend">
-             <div class="input-group-text"><i class="fa fa-youtube fa-lg"></i></div>
+             <div class="input-group-text"><span class="mdi mdi-youtube"></span></div>
            </div>
            {{#if hasEditPermission}}
            <input  type="text" class="form-control" id="youtube_page" value="{{companyData.company_youtube_page}}" placeholder="Ej. www.youtube.com/cinekomuna" maxlength="120">
@@ -362,7 +362,7 @@
          <div class="col">
           <div class="input-group">
            <div class="input-group-prepend">
-             <div class="input-group-text"><i class="fa fa-instagram fa-lg"></i></div>
+             <div class="input-group-text"><span class="mdi mdi-instagram"></span></div>
            </div>
            {{#if hasEditPermission}}
            <input type="text" class="form-control" id="instagram_page" value="{{companyData.company_instagram_page}}" placeholder="Ej. www.instagram.com/cinekomuna" maxlength="120">
@@ -409,7 +409,7 @@
             <label for="nombre">Demo reel empresa </label>
             <div class="input-group">
               <div class="input-group-prepend">
-                <div class="input-group-text"><i class="fa fa-play"></i></div>
+                <div class="input-group-text"><span class="mdi mdi-play"></span></div>
               </div>
               <input type="text" class="form-control" id="video" placeholder="URL de youtube, vimeo, etc." value="{{video}}" maxlength="150">
             </div>
@@ -437,7 +437,7 @@
         </div>
         {{#if hasEditPermission}}
         <div class="row">
-          <div class="col-lg-12"><a href="#" class="text-purple" data-toggle="modal" data-target="#modal3"><br>Agregar <i class="fa fa-pencil"></i></a></div>
+          <div class="col-lg-12"><a href="#" class="text-purple" data-toggle="modal" data-target="#modal3"><br>Agregar <span class="mdi mdi-plus"></span></a></div>
         </div>
         {{/if}}
         {{#if getGallery}}
@@ -484,8 +484,8 @@
          </div>
         <div class="row">
           <div class="col">
-            <button class="btn btn-purple save" publish="false"><i class="fa fa-save text-white"></i>&nbsp;Guardar cambios</button>
-            <button class="btn btn-purple save" publish="true"><i class="fa fa-external-link text-white"></i>&nbsp;Guardar y publicar</button>
+            <button class="btn btn-purple save" publish="false"><span class="mdi mdi-content-save"></span>&nbsp;Guardar cambios</button>
+            <button class="btn btn-purple save" publish="true"><span class="mdi mdi-content-save-move"></span>&nbsp;Guardar y publicar</button>
           </div>
         </div>
 
@@ -526,7 +526,7 @@
                     <div class="col-lg-12 text-center">
                       <label class="custom-file-upload">
                         <input type="file"/>
-                        <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                        <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<span class="mdi mdi-upload"></span></span>
                       </label>
                     </div>
                   </div>

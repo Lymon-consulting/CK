@@ -58,7 +58,7 @@ a:link, a.text-purple:hover
 }
 
 a.text-button{
-  font-family: "Avenir-Heavy";
+  font-family: "Avenir-Book";
 }
 
 a.text-gray{
@@ -136,6 +136,6 @@ footer{
 }
 
 td{
-  font-family: "Avenir-Light";
+  font-family: "Avenir-Book";
 }
 

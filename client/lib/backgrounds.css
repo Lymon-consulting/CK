@@ -32,7 +32,7 @@
 .purple-background{
    background-color: #ED1567;
    color:#fff;
-   font-family: Avenir-Black;
+   font-family: "Avenir-Book";
 }
 @media screen and (min-width: 100px) {
     #bgText{

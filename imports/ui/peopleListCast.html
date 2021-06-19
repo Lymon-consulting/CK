@@ -15,7 +15,7 @@
       <div class="col-lg-3 rounded background-verylightgray p-3">
         <div class="sticky-top">
         <div class="row">
-            <div>&nbsp;<i class="fa fa-sliders fa-sm"></i>&nbsp;Filtrar búsqueda</div>
+            <div>&nbsp;<span class="mdi mdi-tune"></span>&nbsp;Filtrar búsqueda</div>
           </div>
           <div class="spacer10"></div>
           <div class="row">
@@ -260,20 +260,20 @@
                     </div>
                     <div class="row">
                       <div class="col-md-12 no-padding text-no-wrap location-underline">{{#if this.city}}
-                      <i class="fa fa-map-marker fa-sm"></i> 
+                        <span class="mdi mdi-map"></span> 
                       {{this.city}}, {{this.state}}
                       {{/if}}
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-12 no-padding numbers">
-                        <i class="fa fa-thumbs-up fa-sm"></i> 
+                        <span class="mdi mdi-thumb-up"></span>
                         {{#if this.likes}}
                           {{this.likes}}
                         {{else}}
                           0
                         {{/if}} / 
-                        <i class="fa fa-eye fa-sm"></i> 
+                        <span class="mdi mdi-eye"></span>
                         {{#if this.views}}
                           {{this.views}}
                         {{else}}

@@ -16,7 +16,7 @@
       <div class="col-lg-3 rounded background-verylightgray p-3">
         <div class="sticky-top">
           <div class="row">
-            <div>&nbsp;<i class="fa fa-sliders fa-sm"></i>&nbsp;Filtrar búsqueda</div>
+            <div>&nbsp;<span class="mdi mdi-tune"></span>&nbsp;Filtrar búsqueda</div>
           </div>
           <div class="spacer10"></div>
           <div class="row">
@@ -149,18 +149,18 @@
                     </div>
                     <div class="row">
                       <div class="col-md-12 no-padding text-no-wrap location-underline">{{#if this.city}}
-                        <i class="fa fa-map-marker fa-sm"></i> {{this.city}}, {{this.state}}{{/if}}
+                        <span class="mdi mdi-map"></span> {{this.city}}, {{this.state}}{{/if}}
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-12 no-padding numbers">
-                        <i class="fa fa-thumbs-up fa-sm"></i> 
+                        <span class="mdi mdi-thumbs-up"></span>
                         {{#if this.likes}}
                           {{this.likes}}
                         {{else}}
                           0
                         {{/if}} / 
-                        <i class="fa fa-eye fa-sm"></i> 
+                        <span class="mdi mdi-eye"></span>
                         {{#if this.views}}
                           {{this.views}}
                         {{else}}
@@ -174,7 +174,7 @@
                         {{#if notSameUser this.__originalId}}
                         {{#if isCrew}}
                           {{#if hasProjects}}
-                        <button class="btn button-follow pushCollaborator" id="{{this.__originalId}}"> <i class="fa fa-plus-circle fa-sm"></i> COLABORADOR </button>
+                        <button class="btn button-follow pushCollaborator" id="{{this.__originalId}}"> <span class="mdi mdi-plus"></span> COLABORADOR </button>
                           {{/if}}
                         {{/if}}
 

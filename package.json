@@ -9,11 +9,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
+    "@mdi/font": "^5.9.55",
     "all": "*",
     "bcryptjs": "^2.4.3",
     "helmet": "^4.4.1",
     "jquery": "^3.6.0",
-    "simpl-schema": "^1.5.5",
+    "simpl-schema": "^1.12.0",
     "validator": "^10.7.1"
   },
   "meteor": {

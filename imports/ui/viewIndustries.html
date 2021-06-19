@@ -24,7 +24,7 @@
   <div class="spacer20"></div>
   <div class="row">
      <div class="col-md-12">
-        <a href="/industryName" class="btn btn-purple text-white">+</a>
+        <a href="/industryName" class="btn btn-purple text-white"><span class="mdi mdi-plus"></span></a>
      </div>
   </div>
   <div class="spacer20"></div>
@@ -34,9 +34,9 @@
      <small>
         <p>Esta es tu lista de empresas. Desde aquí puedes:</p>
         <ul>
-           <li>Ver la página de cada una de tus empresas, haciendo clic en su nombre o en el ícono <i class="fa fa-search">&nbsp;</i>.</li> 
-           <li>Editar una empresa, haciendo clic sobre el ícono <i class="fa fa-edit">&nbsp;</i></li>
-           <li>Agregar nuevas empresas con el botón + <br/><span class="agreements">(Proveedores de equipo y de servicios, bodegas de arte y vestuario, foros y estudios de grabación, agencias, festivales, escuelas, comisiones de filmaciones, instituciones de gobierno, sindicatos, etc)</span></li>
+           <li>Ver la página de cada una de tus empresas, haciendo clic en su nombre o en el ícono <span class="mdi mdi-magnify"></span></li> 
+           <li>Editar una empresa, haciendo clic sobre el ícono <span class="mdi mdi-pencil"></span></li>
+           <li>Agregar nuevas empresas con el botón <span class="mdi mdi-plus"></span> <br/><span class="agreements">(Proveedores de equipo y de servicios, bodegas de arte y vestuario, foros y estudios de grabación, agencias, festivales, escuelas, comisiones de filmaciones, instituciones de gobierno, sindicatos, etc)</span></li>
         </ul>
      </small>
 
@@ -59,7 +59,7 @@
                     </div>
                  {{/if}}
                 <div class="card-body">
-                  <h5 class="card-title"><a href="/industryPage/{{this._id}}" class="text-purple">{{this.company_name}}</a></h5>
+                  <h5 class="card-title"><a href="/industryPage/{{this._id}}" class="text-black">{{this.company_name}}</a></h5>
                   <p class="card-text agreements">{{this.company_type}}</p>
                   <p class="card-text agreements">{{this.company_year}}</p>
                   <p class="card-text agreements">{{this.company_desc}}</p>
@@ -67,7 +67,7 @@
                 </div>
                 <div class="card-footer">
                    <div class="row">
-                      <div class="col"><a href="/industryPage/{{this._id}}" class="text-purple"><i class="fa fa-search">&nbsp;</i></a></div>
+                      <div class="col"><a href="/industryPage/{{this._id}}" class="text-purple"><span class="mdi mdi-magnify"></span></a></div>
                       {{#if ownerOfIndustry this.userId}}
                       {{#if this.company_admin}}
                       <div class="col"><a href="#" class="text-purple opendiag" ><i class="fa fa-user-circle" data-answer="{{this._id}}">&nbsp;</i></a></div>    
@@ -75,7 +75,7 @@
                       {{else}}
                       {{#if this.admin}}<span class="agreements">(Eres admin)</span>{{/if}}
                       {{/if}}
-                      <div class="col text-right"><a href="#" class="text-purple editIndustry" ><i class="fa fa-edit" data-answer="{{this._id}}">&nbsp;</i></a></div>
+                      <div class="col text-right"><a href="#" class="text-purple editIndustry" ><span class="mdi mdi-pencil" data-answer="{{this._id}}"></span></a></div>
                    </div>
                  </div>
               </div>
@@ -91,7 +91,7 @@
      <table class="table">
         <tr>
            <td colspan="9">
-              No tienes empresas, agrega tu primera empresa u organización haciendo clic en el botón +
+              No tienes empresas, agrega tu primera empresa u organización haciendo clic en el botón <span class="mdi mdi-plus"></span>
               <br/>
               Al crear un perfil de empresa reconoces que eres un representante autorizado de la misma y que tienes permiso para actuar en su nombre para gestionar esta página. 
            </td>

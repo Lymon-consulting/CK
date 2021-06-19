@@ -120,6 +120,24 @@ a.list-group-item.active { background-color: #6c757d; }
 .drag-over {
   border:5px dashed #34bdeb;
 }
+
+
+.mdi-light{
+  color:#fff;
+}
+
+.mdi-light > a:hover{
+  color:#333;
+}
+
+.mdi-dark{
+  color:#000;
+}
+
+.mdi-dark:hover{
+  color:#333;
+}
+
 .modal-body {
     max-height: calc(100vh - 143px);
     overflow-y: auto; 
@@ -133,13 +151,13 @@ a.list-group-item.active { background-color: #6c757d; }
 
 
 .h1-title{
-   font-family: "AvenirNext-Bold";  
+   font-family: "Avenir-Book";  
    font-size: 30px;
    color:#333;
    margin-top: 45px;
 }
 .h3-title{
-   font-family: "Sans-serif";
+   font-family: "Avenir-Book";
    font-size: 36px;
    color:#333;
    /*line-height: 100%;*/
@@ -209,7 +227,7 @@ a.list-group-item.active { background-color: #6c757d; }
 .message{
   font-size: 12px;
    color:#666;
-   font-family: "Avenir-Roman";
+   font-family: "Avenir-Book";
 }
 /*
 .messages-box .messages-scroll .messages {
@@ -421,7 +439,7 @@ a.list-group-item.active { background-color: #6c757d; }
 }
 .badge{
    font-size: 12px;
-   font-family: verdana;
+   font-family: "Avenir-Book";
 }
 
 .hr_white{
@@ -450,41 +468,41 @@ a.list-group-item.active { background-color: #6c757d; }
     width: 300px !important;
 }
 .text-title-gray{
-   font-family: "AvenirNext-Medium";
+   font-family: "Avenir-Book";
    font-size: 12px;
    color:#444 !important;
    text-decoration: none;
 }
 .text-body-gray{
-   font-family: "AvenirNext-Medium";
+   font-family: "Avenir-Book";
    font-size: 14px;
    color:#999;
 }
 .h2-title{
-   font-family: "AvenirNext-Bold";  
+   font-family: "Avenir-Book";  
    font-size: 30px;
    color:#666;
 }
 .h5-name{
-   font-family: "Avenir-Medium";
+   font-family: "Avenir-Book";
    font-size: 26px;
    color:#444; 
 }
 .subtitle-underline{
-   font-family: "Avenir-Medium";
+   font-family: "Avenir-Book";
    font-size: 14px;
    color:#444; 
    /*text-decoration: underline;*/
 }
 
 .location-underline{
-   font-family: "AvenirNext-DemiBold";
+   font-family: "Avenir-Book";
    font-size: 13px;
    color:#000; 
    text-decoration: underline;
 }
 .numbers{
-   font-family: "Avenir-MediumOblique";
+   font-family: "Avenir-Book";
    font-size: 12px;
    color:#333; 
 }
@@ -591,11 +609,11 @@ a.list-group-item.active { background-color: #6c757d; }
 
 .text-no-wrap{
    white-space: nowrap;
-   font-family: "Avenir-Light";
+   font-family: "Avenir-Book";
 }
 
 .about{
-  font-family: "Avenir-Light";
+  font-family: "Avenir-Book";
   font-size: 80%;  
 }
 
@@ -676,7 +694,7 @@ a.list-group-item.active { background-color: #6c757d; }
 .agreements{
    font-size: 12px;
    color:#444;
-   font-family: "Avenir-Roman";
+   font-family: "Avenir-Book";
 }
 
 .text-banner{
@@ -799,7 +817,7 @@ a.list-group-item.active { background-color: #6c757d; }
    border-color: #666;
    background-color: #666;
    color: #FFF;
-   font-family: "AvenirNext-Medium";
+   font-family: "Avenir-Book";
    font-size: 12px;
 }
 
@@ -810,7 +828,7 @@ a.list-group-item.active { background-color: #6c757d; }
    border-color: #ED1567;
    background-color: #ED1567;
    color: #FFF;
-   font-family: "AvenirNext-Medium";
+   font-family: "Avenir-Book";
    font-size: 12px;
 }
 
@@ -871,7 +889,7 @@ a.list-group-item.active { background-color: #6c757d; }
    border: none;
    color:gray;
    font-size: 25px;
-   font-family: "Avenir-Medium";
+   font-family: "Avenir-Book";
 }
 
 .btn-borderless:hover{
@@ -1190,3 +1208,52 @@ hr {
   border: none;
   border-top: 3px dashed #eee;
 }
+
+
+/* Material design icons styles */
+
+.alert.mdi::before,
+.breadcrumb .mdi::before,
+.btn.mdi::before,
+.card-title.mdi::before,
+.card-subtitle.mdi::before,
+.card-link.mdi::before,
+.dropdown-item.mdi::before,
+.list-group-item.mdi::before,
+.nav-link.mdi::before {
+    font-size: 1.25em;
+    line-height: initial;
+    position: relative;
+    top: 0.09rem;
+}
+.alert.mdi::before,
+.breadcrumb .mdi:not(:empty)::before,
+.btn.mdi:not(:empty)::before,
+.card-title.mdi:not(:empty)::before,
+.card-subtitle.mdi:not(:empty)::before,
+.card-link.mdi:not(:empty)::before,
+.dropdown-item.mdi:not(:empty)::before,
+.nav-link.mdi:not(:empty)::before {
+    margin-right: 0.25rem;
+}
+.list-group-item.mdi:not(:empty)::before {
+    margin-right: 0.5rem;
+}
+.dropdown-item.mdi:not(:empty)::before {
+    margin-left: -0.75rem;
+}
+.alert.mdi::before,
+.list-group-item.mdi:not(:empty)::before {
+    margin-left: -0.5rem;
+}
+.modal-title.mdi::before {
+    font-size: 1.5em;
+    line-height: 0.5;
+    position: relative;
+    top: 0.26rem;
+    margin-right: 0.5rem;
+}
+
+
+/* End of material design icons*/
+
