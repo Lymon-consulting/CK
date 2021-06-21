@@ -5,7 +5,7 @@
          <ul class="nav navbar-nav navbar-right">
            <li class="dropdown">
             
-             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="mdi mdi-bell">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="mdi mdi-bell text-white">
                <span class="badge badge-danger">{{countAlerts}}</span>
               </span></a>
              <ul class="dropdown-menu dropdown-menu-wide notify-drop dropdown-menu-right">
@@ -27,7 +27,7 @@
                               {{#if getUrl this.sender}}
                               <img src="{{getUrl this.sender}}"/>
                               {{else}}
-                              <div id="profileImageMenu">{{getInitials this.sender}}</div>
+                              <span id="profileImageMenu">{{getInitials this.sender}}</span>
                               {{/if}}
                             </div>
                             <div class="col-9">
@@ -39,17 +39,25 @@
                               </div>
                             </div>
                             {{#unless this.read}}
-                            <div class="col-1"><i class="fa fa-lg fa-eye" data-toggle="tooltip" data-placement="top" data-id="{{this._id}}" title="Marcar como visto"></i>
+                            <div class="col-1"><span class="mdi mdi-eye" data-toggle="tooltip" data-placement="top" data-id="{{this._id}}" title="Marcar como visto"></span>
                             </div>
                             {{else}}
                             <div class="col-1"></div>
                             {{/unless}}
                           </div>
+                          {{#if isCollaborationType this.alertType}}
                           <div class="row">
                             <div class="col">
-                              <a href="#" id="collaborations" data-id="{{this.entityId}}" data-type="{{this.entityType}}" class="btn btn-alert">Ver</a>
+                              <a href="#" id="collaborations" data-id="{{this.entityId}}" data-type="{{this.entityType}}" class="btn btn-alert">Ver colaboración</a>
                             </div>
                           </div>
+                          {{else}}
+                          <div class="row">
+                            <div class="col">
+                              <a href="/notificationList" class="btn btn-alert">Ver</a>
+                            </div>
+                          </div>
+                          {{/if}}
                         </div>
                      </li>
                   {{/each}}

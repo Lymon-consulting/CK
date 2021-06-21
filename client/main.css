@@ -693,7 +693,7 @@ a.list-group-item.active { background-color: #6c757d; }
 
 .agreements{
    font-size: 12px;
-   color:#444;
+   color:#444 !important;
    font-family: "Avenir-Book";
 }
 
@@ -919,7 +919,7 @@ a.list-group-item.active { background-color: #6c757d; }
    border-width: 1px;
    border-radius: 5px;
    background: #fd1052;
-   color: #fff;
+   color: #fff !important;
    font-weight: bold;
 }
 
@@ -1203,11 +1203,7 @@ body {
   text-align: center;
 }
 
-hr {
-  margin: 6em 4em;
-  border: none;
-  border-top: 3px dashed #eee;
-}
+
 
 
 /* Material design icons styles */

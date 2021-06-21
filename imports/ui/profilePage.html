@@ -80,15 +80,15 @@
 <div class="container">
   <div class="spacer20"></div>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-lg-8 col-md-6 col-sm-12">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-lg-2 col-md-4">
           {{#if isOwner}}
             <!--<a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <i class="fa fa-camera"></i></a>-->
             {{#if getProfilePicture getProfile._id 100}}
             <div>
               <img src="{{getProfilePicture getProfile._id 100}}"  id="profileImageinProfilePage"/>
-              <a href="#" class="text-white text-over" id="profileImageChange"><i class="fa fa-camera"></i></a>
+              <a href="#" class="text-white text-over" id="profileImageChange"><span class="mdi mdi-camera"></span></a>
             </div>
             {{else}}
             <div id="profileImageMedium">{{getInitials getProfile._id}}</div>
@@ -101,7 +101,7 @@
             {{/if}}
           {{/if}}
         </div>
-        <div class="col-md-8">
+        <div class="col-lg-10 col-md-8">
           <div class="row">
             <div class="col h3-title">
               {{getName getProfile._id}}
@@ -110,14 +110,14 @@
           <div class="row">
             <div class="col">
               {{#if getFirstRoles}}
-                 <span class="uppercase">{{getFirstRoles}}</span>{{#if showMoreRolesLink getProfile.role}}<a href="#" class="text-purple" data-toggle="modal" data-target="#more-roles">ver todos <i class="fa fa-plus"></i></a>{{/if}}
+                 <span class="uppercase">{{getFirstRoles}}</span>{{#if showMoreRolesLink getProfile.role}}<a href="#" class="text-purple" data-toggle="modal" data-target="#more-roles">ver todos <span class="mdi mdi-plus"></span></a>{{/if}}
               {{/if}}
             </div>
           </div>
           <div class="row">
             <div class="col">
               {{#if getProfile.city}}
-                 <i class="fa fa-map-marker fa-sm"></i> <small>{{getProfile.city}}, {{getProfile.state}}</small>
+              <span class="mdi mdi-map-marker"></span> <small>{{getProfile.city}}, {{getProfile.state}}</small>
               {{/if}}
             </div>
           </div>
@@ -127,26 +127,17 @@
               {{#if notSameUser getProfile._id}}
                  {{#if showButtonFollow getProfile._id}}
                   <input type="hidden" id="thisUser" value="{{getProfile._id}}">
-                    
-                    <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
-                  
+                  <button class="btn button-follow" id="pushFollow"> <span class="mdi mdi-plus-circle"></span> SEGUIR</button>
                  {{else}}
-                    <button class="btn button-unfollow" id="pushUnfollow"> <i class="fa fa-minus-circle fa-sm"></i> DEJAR DE SEGUIR</button>
+                  <button class="btn button-unfollow" id="pushUnfollow"> <span class="mdi mdi-account-cancel"></span> DEJAR DE SEGUIR</button>
                  {{/if}}   
+                 <button class="btn button-follow" id="sendMessage"> <span class="mdi mdi-email"></span> ENVIAR MENSAJE</button>
                  {{#unless likeThisPeople}}
-                    <div class="row">
-                      <div class="col">
-                         <button class="btn button-follow uppercase" id="pushLike"> <i class="fa fa-thumbs-up fa-sm"></i> Me gusta</button>
-                      </div>
-                    </div>
-                    {{else}}
-                    <div class="row">
-                      <div class="col">
-                         <button class="btn button-unfollow uppercase" id="pushDontLike"> <i class="fa fa-thumbs-up fa-sm"></i>Ya no me gusta</button>
-                      </div>
-                    </div>
-                    {{/unless}}   
-                 <button class="btn button-follow" id="sendMessage"> <i class="fa fa-envelope fa-sm"></i> ENVIAR MENSAJE</button>
+                  <button class="btn button-follow uppercase" id="pushLike"> <span class="mdi mdi-thumb-up"></span> Me gusta</button>
+                  {{else}}
+                  <button class="btn button-unfollow uppercase" id="pushDontLike"> <span class="mdi mdi-thumb-up"></span> Ya no me gusta</button>
+                  {{/unless}}   
+                  
               {{/if}}
             </div>
           </div>
@@ -155,59 +146,58 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 border-left">
+    <div class="col-lg-2 col-md-3 col-sm-12 border-left">
       <div class="row">
-        <div class="col-md-12"><i class="fa fa-eye fa-sm"></i>&nbsp;<span class="agreements">Vistas {{getProfile.views}}</span></div>
-        
+        <div class="col-md-12"><span class="mdi mdi-eye"></span>&nbsp;<span class="agreements">Vistas {{getProfile.views}}</span></div>
       </div>
       <div class="row">
-        <div class="col-md-12"><i class="fa fa-thumbs-up fa-sm"></i>&nbsp;<span class="agreements">Valoraciones {{getProfile.likes}}</span></div>        
+        <div class="col-md-12"><span class="mdi mdi-thumb-up"></span>&nbsp;<span class="agreements">Valoraciones {{getProfile.likes}}</span></div>        
       </div>
       <div class="row">
-        <div class="col-md-12"><i class="fa fa-angle-left fa-sm"></i>&nbsp;<span class="agreements">Seguidores {{getFollowersCount}}</span></div>
+        <div class="col-md-12"><span class="mdi mdi-account-arrow-left"></span>&nbsp;<span class="agreements">Seguidores {{getFollowersCount}}</span></div>
       </div>
       <div class="row">
-        <div class="col-md-12"><i class="fa fa-angle-right fa-sm"></i>&nbsp;<span class="agreements">Siguiendo {{getFollowingCount}}</span></div>
+        <div class="col-md-12"><span class="mdi mdi-account-arrow-right"></span>&nbsp;<span class="agreements">Siguiendo {{getFollowingCount}}</span></div>
       </div>
     </div>
-    <div class="col-md-2 border-left">
+    <div class="col-lg-2 col-md-3 col-sm-12 border-left">
       <div class="row">
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.facebook}}
-          <a href="{{formatURL getProfile.crew.facebook}}" target="_blank"> <i class="fa fa-sm fa-facebook text-black"></i></a>
+          <a href="{{formatURL getProfile.crew.facebook}}" target="_blank"> <span class="mdi mdi-facebook"></span></a>
           {{/if}}
         </div>
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.instagram}}
-          <a href="{{formatURL getProfile.crew.instagram}}" target="_blank"> <i class="fa fa-sm fa-instagram text-black"></i></a>
+          <a href="{{formatURL getProfile.crew.instagram}}" target="_blank"> <span class="mdi mdi-instagram"></span></a>
           {{/if}}
         </div>
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.twitter}}
-          <a href="{{formatURL getProfile.crew.twitter}}" target="_blank"> <i class="fa fa-sm fa-twitter text-black"></i></a>
+          <a href="{{formatURL getProfile.crew.twitter}}" target="_blank"> <span class="mdi mdi-twitter"></span></a>
           {{/if}}
         </div>
       </div>
       <div class="row">
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.youtube}}
-          <a href="{{formatURL getProfile.crew.youtube}}" target="_blank"> <i class="fa fa-sm fa-youtube text-black"></i></a>
+          <a href="{{formatURL getProfile.crew.youtube}}" target="_blank"> <span class="mdi mdi-youtube"></span></a>
           {{/if}}
         </div>
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.vimeo}}
-          <a href="{{formatURL getProfile.crew.vimeo}}" target="_blank"> <i class="fa fa-sm fa-vimeo text-black"></i></a>
+          <a href="{{formatURL getProfile.crew.vimeo}}" target="_blank"> <span class="mdi mdi-vimeo"></span></a>
           {{/if}}
         </div>
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.imdb}}
-          <a href="{{formatURL getProfile.crew.imdb}}" target="_blank"> <i class="fa fa-sm fa-imdb text-black"></i></a>
+          <a href="{{formatURL getProfile.crew.imdb}}" target="_blank"> <i class="fa fa-sm fa-imdb"></i></a>
           {{/if}}
         </div>
       </div>
       <div class="spacer10"></div>
       <div class="row">
-        <div class="col text-center">
+        <div class="col-md-9 col-sm-12 text-center">
           <a href="{{getProfile.crew.webpage}}" target="_blank" class="text-gray"><strong class="text-gray"><small>{{getProfile.crew.webpage}}</small></strong></a>
         </div>
       </div>
@@ -271,12 +261,10 @@
         <div class="col-md-6">
           <div class="spacer40"></div>
           <div class="row">
-            <div class="col-md-2 border-left"><i class="fa fa-eye fa-sm"></i></div>
-            <div class="col-md-10 text-no-wrap"><small>Vistas {{getMainProject.views}}</small></div>
+            <div class="col border-left about"><span class="mdi mdi-eye"></span>&nbsp;Vistas {{getMainProject.views}}</div>
           </div>
           <div class="row">
-            <div class="col-md-2 border-left"><i class="fa fa-thumbs-up fa-sm"></i></div>
-            <div class="col-md-10 text-no-wrap"><small>Valoraciones {{getMainProject.likes}}</small></div>
+            <div class="col border-left about"><span class="mdi mdi-thumb-up"></span>&nbsp;Valoraciones {{getMainProject.likes}}</div>
           </div>
         </div>
       </div>
@@ -438,19 +426,17 @@
   </div>
   
   <!-- Inicia grid de proyectos-->
-  {{#if countProjects}}
-  <div class="row">
-    <div class="col border-bottom">
-      <strong class="uppercase">Proyectos</strong>
-    </div>
-  </div>
-  {{/if}}
+  
   <div class="container">
-     
+    {{#if getProjects}}
+    <div class="spacer40"></div>
+    <div class="row">
+      <div class="col border-bottom">
+        <strong class="uppercase">Proyectos</strong>
+      </div>
+    </div>
      <div class="row">
-     {{#if getProjects}}                                      
         {{#each getProjects}}
-          {{#if allowedView this._id}}
         <!-- Inicia cada recuadro de cada proyecto -->
            <div class="col-lg-3 col-md-4 col-sm-6">
               <div class="spacer20"></div>
@@ -461,21 +447,21 @@
                     <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/no-cover.jpg" class="card-img-top w-100" alt=""></a>
                  {{/if}}  
 
-                <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a>{{#if ownerRole}}&nbsp;<a href="/editProject/{{this._id}}"><i class="fa fa-pencil fa-sm text-purple"></i></a>{{/if}}</div>
+                <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a>{{#if ownerRole}}&nbsp;<a href="/editProject/{{this._id}}"><span class="mdi mdi-pencil"></span></a>{{/if}}</div>
                 <div class="agreements"><strong>{{projectYear this._id}}</strong></div>
                 <div class="card-body">
                   <p class="card-text"><strong>{{projectRole this._id}}</strong></p>
                 </div>
                 <div class="card-footer">
                   <div class="row">
-                     <div class="col"><i class="fa fa-thumbs-up fa-sm"></i><small>&nbsp;
+                     <div class="col"><span class="mdi mdi-thumb-up"></span><small>&nbsp;
                      {{#if this.likes}}
                        {{this.likes}}
                      {{else}}
                        0
                      {{/if}}
                    </small></div>
-                     <div class="col text-right"><i class="fa fa-eye fa-sm"></i><small>&nbsp;
+                     <div class="col text-right"><span class="mdi mdi-eye"></span><small>&nbsp;
                      {{#if this.views}}
                        {{this.views}}
                      {{else}}
@@ -488,13 +474,14 @@
               </div>      
            </div>
         <!-- Termina cada recuadro de cada proyecto -->
-           {{/if}}
         {{/each}}
-     {{/if}}
      </div>
      <div class="spacer40"></div>
-     
-     {{#if countSamples}}
+     {{/if}}
+    </div>
+  <div class="container">
+     {{#if getSamples}}
+     <div class="spacer40"></div>
       <div class="row">
         <div class="col border-bottom">
           <strong class="uppercase">Muestras de trabajo</strong>
@@ -507,7 +494,6 @@
        </div>
        <div class="row">
         {{#each getSamples}}
-        {{#if allowedView this._id}}
         <!-- Inicia cada recuadro de cada proyecto -->
            <div class="col-lg-3 col-md-4 col-sm-6">
               <div class="spacer20"></div>
@@ -518,21 +504,21 @@
                     <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/no-cover.jpg" class="card-img-top w-100" alt=""></a>
                  {{/if}}  
 
-                <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a>{{#if ownerRole}}&nbsp;<a href="/editProject/{{this._id}}"><i class="fa fa-pencil fa-sm text-purple"></i></a>{{/if}}</div>
+                <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a>{{#if ownerRole}}&nbsp;<a href="/editProject/{{this._id}}"><span class="mdi mdi-pencil"></span></a>{{/if}}</div>
                 <div class="agreements"><strong>{{projectYear this._id}}</strong></div>
                 <div class="card-body">
                   <p class="card-text"><strong>{{projectRole this._id}}</strong></p>
                 </div>
                 <div class="card-footer">
                   <div class="row">
-                     <div class="col"><i class="fa fa-thumbs-up fa-sm"></i><small>&nbsp;
+                     <div class="col"><span class="mdi mdi-thumb-up"></span><small>&nbsp;
                      {{#if this.likes}}
                        {{this.likes}}
                      {{else}}
                        0
                      {{/if}}
                    </small></div>
-                     <div class="col text-right"><i class="fa fa-eye fa-sm"></i><small>&nbsp;
+                     <div class="col text-right"><span class="mdi mdi-eye"></span><small>&nbsp;
                      {{#if this.views}}
                        {{this.views}}
                      {{else}}
@@ -545,11 +531,9 @@
               </div>      
            </div>
         <!-- Termina cada recuadro de cada proyecto -->
-        {{/if}}
         {{/each}}
       </div>
      {{/if}}
-
 </div>
 <div class="spacer80"></div>
    <div class="container">
@@ -626,7 +610,7 @@
               <div class="col-lg-12 text-center">
                 <label class="custom-file-upload">
                   <input type="file"/>
-                  <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                  <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<span class="mdi mdi-upload"></span></span>
                 </label>
               </div>
             </div>
@@ -698,7 +682,7 @@
               <div class="col-lg-12 text-center">
                 <label class="custom-file-upload">
                   <input type="file"/>
-                  <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                  <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<span class="mdi mdi-upload"></span></span>
                 </label>
               </div>
             </div>

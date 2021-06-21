@@ -169,59 +169,45 @@ Template.profilePage.helpers({
    getProjects(){
       Meteor.subscribe("myProjects");
       //Meteor.users.find  ({$and : [ {'_id' : Meteor.userId()} ,            {"follows": follow      }]});
-      return Project.find({
+      let displayProject = new Array();
+      const projects = Project.find({
         $and : [ 
           {'userId' : FlowRouter.getParam('id')},
           {'project_is_main':false},
           {'project_family':'P'}
         ]
       });
+
+      for (const project of projects) {
+        //sólo lo pueden ver si está publicado o si es el dueño
+        if(project.status || project.userId === Meteor.userId()){
+          displayProject.push(project);
+        }
+      }
+
+      return displayProject;
+
    },
    getSamples(){
-      Meteor.subscribe("myProjects");
-      //Meteor.users.find  ({$and : [ {'_id' : Meteor.userId()} ,            {"follows": follow      }]});
-      return Project.find({
-        $and : [ 
-          {'userId' : FlowRouter.getParam('id')},
-          {'project_is_main':false},
-          {'project_family':'M'}
-        ]
-      });
-   },
-   countProjects(){
-     Meteor.subscribe("myProjects");
-     var count = Project.find({
-        $and : [ 
-          {'userId' : FlowRouter.getParam('id')},
-          {'project_is_main':false},
-          {'project_family':'P'}
-        ]
-      }).count();
+    Meteor.subscribe("myProjects");
+    //Meteor.users.find  ({$and : [ {'_id' : Meteor.userId()} ,            {"follows": follow      }]});
+    let displayProject = new Array();
+    const projects = Project.find({
+      $and : [ 
+        {'userId' : FlowRouter.getParam('id')},
+        {'project_is_main':false},
+        {'project_family':'M'}
+      ]
+    });
 
-     if(count>0){
-       return true;
-     }
-     else{
-       return false;
-     }
-   },
-   countSamples(){
-     Meteor.subscribe("myProjects");
-     var count = Project.find({
-        $and : [ 
-          {'userId' : FlowRouter.getParam('id')},
-          {'project_is_main':false},
-          {'project_family':'M'},
-          {'status': true}
-        ]
-      }).count();
-     
-     if(count>0){
-       return true;
-     }
-     else{
-       return false;
-     }
+    for (const project of projects) {
+      //sólo lo pueden ver si está publicado o si es el dueño
+      if(project.status || project.userId === Meteor.userId()){
+        displayProject.push(project);
+      }
+    }
+
+    return displayProject;
    },
    countCollaborations(){
      Meteor.subscribe("myProjects");

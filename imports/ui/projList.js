@@ -145,6 +145,14 @@ Template.projList.helpers({
       }
       return initials;
     },
+    getAuthor(userId){
+      let user = Meteor.users.findOne({"_id":userId});
+      let name = "";
+      if(user){
+        name = user.fullname;
+      }
+      return name;
+    },
    getProjectType(){
         var type = new Array();
         type.push("Cortometraje");

@@ -607,6 +607,7 @@ Template.editProject.events({
       var proj_twitter_page = trimInput($('#proj_twitter_page').val());
       var proj_instagram_page = trimInput($('#proj_instagram_page').val());
       var proj_vimeo_page = trimInput($('#proj_vimeo_page').val());
+      var proj_imdb_page = trimInput($('#proj_imdb_page').val());
       var proj_youtube_page = trimInput($('#proj_youtube_page').val());
       var proj_external_view = trimInput($('#proj_external_view').val());
 
@@ -656,6 +657,7 @@ Template.editProject.events({
          proj_instagram_page,
          proj_vimeo_page,
          proj_youtube_page,
+         proj_imdb_page,
          proj_external_view,
          status
          );

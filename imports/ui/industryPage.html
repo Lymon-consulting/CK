@@ -31,7 +31,7 @@
   <div class="spacer120"></div>
   {{#if isOwner}}
   <div class="container-fluid text-white">
-    <a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <i class="fa fa-camera"></i></a>
+    <a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <span class="mdi mdi-camera"></span></a>
   </div>
   {{#unless statusPublished}}
   <div class="pink">Tu empresa u organización no está publicada, nadie la podrá ver hasta que la publiques</div>
@@ -42,9 +42,9 @@
 <div class="container">
   <div class="spacer20"></div>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-lg-8 col-md-6 col-sm-12">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-lg-2 col-md-4">
           {{#if getLogoPicture 80}}
           <div>
             <img src="{{getLogoPicture 80}}"/>
@@ -54,11 +54,11 @@
           {{/if}}
           {{#if isOwner}}
           <div class="container-fluid text-white">
-            <a href="#" class="text-white text-right" id="openLogoGallery">Cambiar <i class="fa fa-camera"></i></a>
+            <a href="#" class="text-white text-right" id="openLogoGallery">Cambiar <span class="mdi mdi-camera"></span></a>
           </div>
           {{/if}}
         </div>
-        <div class="col-md-8">
+        <div class="col-lg-10 col-md-8">
 
           <div class="row">
             <div class="col h3-title">
@@ -78,7 +78,7 @@
           <div class="row">
             <div class="col">
               {{#if getCompany.city}}
-                  <i class="fa fa-map-marker fa-sm"></i> <small>{{getCompany.city}}, {{getCompany.state}},{{getCompany.country}}</small>
+              <span class="mdi mdi-map-marker"></span> <small>{{getCompany.city}}, {{getCompany.state}},{{getCompany.country}}</small>
               {{/if}}
             </div>
           </div>
@@ -86,9 +86,9 @@
           <div class="row">
             <div class="col">
               {{#if showButtonFollow getCompany._id}}
-              <button class="btn button-follow" id="pushFollow"> <i class="fa fa-plus-circle fa-sm"></i> SEGUIR</button>
+              <button class="btn button-follow" id="pushFollow"> <span class="mdi mdi-plus-circle"></span> SEGUIR</button>
               {{else}}
-              <button class="btn button-unfollow" id="pushUnfollow"> <i class="fa fa-minus-circle fa-sm"></i> DEJAR DE SEGUIR</button>
+              <button class="btn button-unfollow" id="pushUnfollow"> <span class="mdi mdi-minus-circle"></span> DEJAR DE SEGUIR</button>
               {{/if}}
             </div>
           </div>
@@ -97,57 +97,57 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 border-left">
+    <div class="col-lg-2 col-md-3 col-sm-12 border-left">
       <div class="row">
-        <div class="col-md-12"><i class="fa fa-eye fa-sm"></i>&nbsp;<span class="agreements">Vistas {{getCompany.views}}</span></div>
+        <div class="col-md-12"><span class="mdi mdi-eye"></span>&nbsp;<span class="agreements">Vistas {{getCompany.views}}</span></div>
       </div>
       <div class="row">
-        <div class="col-md-12"><i class="fa fa-thumbs-up fa-sm"></i>&nbsp;<span class="agreements">Valoraciones {{getCompany.likes}}</span></div>        
+        <div class="col-md-12"><span class="mdi mdi-thumb-up"></span>&nbsp;<span class="agreements">Valoraciones {{getCompany.likes}}</span></div>        
       </div>
       <div class="row">
-        <div class="col-md-12"><i class="fa fa-angle-left fa-sm"></i>&nbsp;<span class="agreements">Seguidores {{getFollowersCount}}</span></div>
+        <div class="col-md-12"><span class="mdi mdi-account-arrow-left"></span>&nbsp;<span class="agreements">Seguidores {{getFollowersCount}}</span></div>
       </div>
     </div>
-    <div class="col-md-2 border-left">
+    <div class="col-lg-2 col-md-3 col-sm-12 border-left">
       <div class="row">
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if getCompany.company_web_page}}
-          <a href="{{formatURL getCompany.company_web_page}}" target="_blank"><i class="fa fa-sm fa-globe text-black"></i></a>
+          <a href="{{formatURL getCompany.company_web_page}}" target="_blank"><span class="mdi mdi-web"></span></a>
           {{/if}}
         </div>
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if getCompany.company_facebook_page}}
-          <a href="{{formatURL getCompany.company_facebook_page}}" target="_blank"><i class="fa fa-sm fa-facebook text-black"></i></a>
+          <a href="{{formatURL getCompany.company_facebook_page}}" target="_blank"><span class="mdi mdi-facebook"></span></a>
           {{/if}}
         </div>
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if getCompany.company_instagram_page}}
-          <a href="{{formatURL getCompany.company_instagram_page}}" target="_blank"><i class="fa fa-sm fa-instagram text-black"></i></a>
+          <a href="{{formatURL getCompany.company_instagram_page}}" target="_blank"><span class="mdi mdi-instagram"></span></a>
           {{/if}}
         </div>
         
       </div>
       <div class="row">
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if getCompany.company_twitter_page}}
-          <a href="{{formatURL getCompany.company_twitter_page}}" target="_blank"><i class="fa fa-sm fa-twitter text-black"></i></a>
+          <a href="{{formatURL getCompany.company_twitter_page}}" target="_blank"><span class="mdi mdi-twitter"></span></a>
           {{/if}}
         </div>
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if getCompany.company_youtube_page}}
-          <a href="{{formatURL getCompany.company_youtube_page}}" target="_blank"><i class="fa fa-sm fa-youtube text-black"></i></a>
+          <a href="{{formatURL getCompany.company_youtube_page}}" target="_blank"><span class="mdi mdi-youtube"></span></a>
           {{/if}}
         </div>
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if getCompany.company_vimeo_page}}
-          <a href="{{formatURL getCompany.company_vimeo_page}}" target="_blank"><i class="fa fa-sm fa-vimeo text-black"></i></a>
+          <a href="{{formatURL getCompany.company_vimeo_page}}" target="_blank"><span class="mdi mdi-vimeo"></span></a>
           {{/if}}
         </div>
         
       </div>
       <div class="spacer10"></div>
       <div class="row">
-        <div class="col text-center">
+        <div class="col-md-9 col-sm-12 text-center">
           <a href="{{formatURL getCompany.company_web_page}}" class="text-black" target="_blank"><small>{{getCompany.company_web_page}}</small></a>
         </div>
       </div>
@@ -166,18 +166,18 @@
         <div class="row">
             <div class="col-lg-3">&nbsp;</div>
             <div class="col-lg-2 leftpadding">
-              <a href="#" class="text-white" data-toggle="modal" data-target="#collabModal"><i class="fa fa-user-circle text-white" aria-hidden="true"></i> Colaboradores</a>
+              <a href="#" class="text-white" data-toggle="modal" data-target="#collabModal"><span class="mdi mdi-account-group"></span> Colaboradores</a>
             </div>
             <div class="col-lg-2">
-              <a href="#" class="text-white editIndustry" data-answer="{{getCompany._id}}" ><i class="fa fa-pencil text-white" aria-hidden="true"></i> Editar empresa</a>
+              <a href="#" class="text-white editIndustry" data-answer="{{getCompany._id}}" ><span class="mdi mdi-pencil"></span> Editar empresa</a>
            </div>
            {{#unless statusPublished}}
            <div class="col-lg-2">
-              <a href="#" class="text-white publishIndustry" data-answer="{{getCompany._id}}" ><i class="fa fa-pencil text-white" aria-hidden="true"></i> Publicar empresa</a>
+              <a href="#" class="text-white publishIndustry" data-answer="{{getCompany._id}}" ><span class="mdi mdi-publish"></span> Publicar empresa</a>
            </div>
            {{else}}
            <div class="col-lg-2">
-              <a href="#" class="text-white unpublishIndustry" data-answer="{{getCompany._id}}" ><i class="fa fa-align-justify text-white" aria-hidden="true"></i> Cambiar a borrador</a>
+              <a href="#" class="text-white unpublishIndustry" data-answer="{{getCompany._id}}" ><span class="mdi mdi-file"></span> Cambiar a borrador</a>
            </div>
            {{/unless}}
            <div class="col-lg-3">&nbsp;</div>
@@ -366,7 +366,7 @@
                     <div class="col-lg-12 text-center">
                       <label class="custom-file-upload">
                         <input type="file"/>
-                        <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                        <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<span class="mdi mdi-upload"></span></span>
                       </label>
                     </div>
                   </div>
@@ -437,7 +437,7 @@
                     <div class="col-lg-12 text-center">
                       <label class="custom-file-upload">
                         <input type="file"/>
-                        <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<i class="fa fa-upload"></i></span>
+                        <span class="btn btn-purple btn-rounded">Cargar foto &nbsp;<span class="mdi mdi-upload"></span></span>
                       </label>
                     </div>
                   </div>
@@ -509,7 +509,7 @@
       <div class="col-md-12 text-left">
         <strong class="uppercase">{{getCollaboratorTitle}}</strong>
         {{#if isOwner}}
-        <a href="#" class="text-purple text-right" id="changeCollaboratorsTitle">Cambiar este título <i class="fa fa-pencil"></i></a>
+        <a href="#" class="text-purple text-right" id="changeCollaboratorsTitle">Cambiar este título <span class="mdi mdi-pencil"></span></a>
         {{/if}}
       </div>
     </div>
@@ -593,7 +593,7 @@
       <div class="col-md-12 text-left">
         <strong class="uppercase">{{getProjectTitle}}</strong>
         {{#if isOwner}}
-        <a href="#" class="text-purple text-right" id="changeProjectsTitle">Cambiar este título <i class="fa fa-pencil"></i></a>
+        <a href="#" class="text-purple text-right" id="changeProjectsTitle">Cambiar este título <span class="mdi mdi-pencil"></span></a>
         {{/if}}
       </div>
     </div>

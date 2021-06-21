@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor'
 import { Project } from '../api/project.js';
 import { Industry } from '../api/industry.js';
 import { Media } from '../api/media.js';
+import { sendAlert } from '../../lib/functions.js';
 
 import './collaborations.html'; 
 
@@ -70,6 +71,23 @@ Template.collaborations.events({
                 );
             
             Bert.alert({message: 'Has confirmado tu participación en el proyecto', type: 'sucess', icon: 'fa fa-check'});
+            /*Envío de alerta a quien generó la invitación */
+            console.log(entityId);
+            const project = Project.findOne({"_id":entityId});
+
+            if(project){
+                console.log('Dentro');
+                const owner = project.userId;
+                const from = Meteor.userId();
+                console.log("De: "+from +" para:" + owner);
+                let message = `ha aceptado su colaboración en <a href='/projectPage/${entityId}'> 
+                            <strong class='text-black'>${project.project_title}</strong> </a>`;
+
+                console.log(message);
+            
+                const alertId = sendAlert(from, owner, message, entityId, "P", "collaborationAccepted");
+                console.log(alertId);
+            }
         }
     },
     'click .no': function(event, template){
@@ -83,8 +101,20 @@ Template.collaborations.events({
                 Meteor.userId()
                 );
             
-                Bert.alert({message: 'Has eliminado tu participación en el proyecto', type: 'sucess', icon: 'fa fa-check'});
-               
+            Bert.alert({message: 'Has eliminado tu participación en el proyecto', type: 'sucess', icon: 'fa fa-check'});
+            
+            /*Envío de alerta a quien generó la invitación */
+            const project = Project.findOne({"_id":entityId});
+            if(project){
+                const owner = project.userId;
+                const from = Meteor.userId();
+                let message = `ha rechazado su colaboración en <a href='/projectPage/${entityId}'> 
+                            <strong class='text-black'>${project.project_title}</strong> </a>`;
+            
+                const alertId = sendAlert(from, owner, message, entityId, "P", "collaborationRejected");
+                console.log(alertId);
+            }
+            
         }
     }
 });

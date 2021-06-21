@@ -34,6 +34,26 @@ Template.notificationList.helpers({
          }
          
       },
+      getInitials(userId){
+        var name = "";
+        var lastname = "";
+        var initials = "";      
+        var user = Meteor.users.findOne({'_id':userId});
+        if(user){
+          name = user.profile.name;
+          lastname = user.profile.lastname;
+          initials = name.charAt(0) + lastname.charAt(0);  
+        }
+        return initials;
+      },
+      isCollaborationType(alertType){
+        if(alertType==="collaboration"){
+          return true;
+        }
+        else{
+          return false;
+        }
+      },
       getProfilePicture(userId) {
         Meteor.subscribe("allMedia");
         var url;
@@ -58,6 +78,13 @@ Template.notificationList.helpers({
     formatTime(date){
         return timeSince(date);
     },
+    getClass(read){
+      let myClass = "";
+      if(!read){
+        myClass = "card-body";
+      }
+      return myClass;
+    }
 });
 
 Template.notificationList.events({

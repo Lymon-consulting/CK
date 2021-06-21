@@ -67,9 +67,9 @@
 <div class="container">
   <div class="spacer20"></div>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-lg-8 col-md-6 col-sm-12">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-lg-2 col-md-4">
           {{#if isOwner}}
             <!--<a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <i class="fa fa-camera"></i></a>-->
             {{#if getProfilePicture projData.userId}}
@@ -79,7 +79,7 @@
              {{/if}}
           {{/if}}
         </div>
-        <div class="col-md-8">
+        <div class="col-lg-10 col-md-8">
           <div class="row">
             <div class="col h3-title">
               {{projData.project_title}}
@@ -128,7 +128,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 border-left">
+    <div class="col-lg-2 col-md-3 col-sm-12 border-left">
       <div class="row">
         <div class="col-md-12"><span class="mdi mdi-eye"></span>&nbsp;<span class="agreements">Vistas {{projData.views}}</span></div>
         
@@ -138,44 +138,44 @@
       </div>
       
     </div>
-    <div class="col-md-2 border-left">
+    <div class="col-lg-2 col-md-3 col-sm-12 border-left">
       <div class="row">
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if projData.project_facebook_page}}
           <a href="{{formatURL projData.project_facebook_page}}" target="_blank"> <span class="mdi mdi-facebook"></span></a>
           {{/if}}
         </div>
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if projData.proj_instagram_page}}
           <a href="{{formatURL projData.project_instagram_page}}" target="_blank"> <span class="mdi mdi-instagram"></span></a>
           {{/if}}
         </div>
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if projData.project_twitter_page}}
           <a href="{{formatURL projData.project_twitter_page}}" target="_blank"> <span class="mdi mdi-twitter"></span></a>
           {{/if}}
         </div>
       </div>
       <div class="row">
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if projData.proj_youtube_page}}
           <a href="{{formatURL projData.project_youtube_page}}" target="_blank"> <span class="mdi mdi-youtube"></span></a>
           {{/if}}
         </div>
-        <div class="col">
+        <div class="col-md-3 col-sm-6">
           {{#if projData.proj_vimeo_page}}
           <a href="{{formatURL projData.project_vimeo_page}}" target="_blank"> <span class="mdi mdi-vimeo"></span></a>
           {{/if}}
         </div>
-        <div class="col">
-          {{#if projData.project_imdb_page}}
-          <a href="{{formatURL projData.project_imdb_page}}" target="_blank"> <span class="mdi mdi-imdb"></span></a>
+        <div class="col-md-3 col-sm-6">
+          {{#if projData.proj_imdb_page}}
+          <a href="{{formatURL projData.proj_imdb_page}}" target="_blank"> <i class="fa fa-sm fa-imdb"></i> </a>
           {{/if}}
         </div>
       </div>
       <div class="spacer10"></div>
       <div class="row">
-        <div class="col text-center">
+        <div class="col-md-9 col-sm-12 text-center">
           <a href="{{projData.project_web_page}}" target="_blank" class="text-gray"><strong class="text-gray"><small>{{projData.project_web_page}}</small></strong></a>
         </div>
       </div>
@@ -1073,8 +1073,8 @@
                   {{else}}
                   <td class="col agreements text-center"><span class="mdi mdi-close"></span></td>
                   {{/if}}
-                  <td class="col agreements text-center"><a href="#" class="sendIndividualInvite"><i class="fa fa-envelope fa-sm" data-id="{{this._id}}" data-name="{{this.name}}" data-email="{{this.email}}" data-role="{{this.role}}"></i></a></td>
-                  <td class="col agreements text-center"><a href="#" class="single-delete"><i class="fa fa-trash fa-sm" data-id="{{this._id}}" data-name="{{this.name}}" data-email="{{this.email}}" data-role="{{this.role}}"></i></a></td>
+                  <td class="col agreements text-center"><a href="#" class="sendIndividualInvite"><span class="mdi mdi-email" data-id="{{this._id}}" data-name="{{this.name}}" data-email="{{this.email}}" data-role="{{this.role}}"></span></a></td>
+                  <td class="col agreements text-center"><a href="#" class="single-delete"><span data-id="{{this._id}}" data-name="{{this.name}}" data-email="{{this.email}}" data-role="{{this.role}}" class="mdi mdi-delete" ></span></a></td>
                </tr>
                {{/each}}
             </tbody>
@@ -1212,16 +1212,16 @@
             </div>
             <div class="col-lg-2 col-md-4 col-sm-12">
               <span class="pull-right">
-                <a href="#" class="text-purple" id="edit_portlet"><i class="fa fa-pencil fa-sm" mode="edit" data-id="{{_id}}"></i></a>
-                <a href="#" class="text-purple" id="delete_portlet"><i class="fa fa-trash fa-sm" mode="delete" data-id="{{_id}}" data-url="{{url}}"></i></a>
+                <a href="#" class="text-purple" id="edit_portlet"><span class="mdi mdi-pencil" data-id="{{_id}}" mode="edit"></span></a>
+                <a href="#" class="text-purple" id="delete_portlet"><span class="mdi mdi-delete" mode="delete" data-id="{{_id}}" data-url="{{url}}"></span></a>
                 <!-- {{order}} -->
               </span>
               <span class="pull-right">&nbsp;</span>
               {{#if isNotTheLast order}}
-              <a href="#"><i class="fa fa-arrow-down pull-right text-purple"  data-id="{{_id}}" id="down"></i></a>
+              <a href="#"><span class="mdi mdi-arrow-down" data-id="{{_id}}" id="down"></span></a>
               {{/if}}
               {{#if isNotTheFirst order}}
-              <a href="#"><i class="fa fa-arrow-up pull-right text-purple" data-id="{{_id}}" id="up"></i></a>
+              <a href="#"><span class="mdi mdi-arrow-up" data-id="{{_id}}" id="up"></span></a>
               {{/if}}
             </div>
          </div>

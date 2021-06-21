@@ -12,10 +12,11 @@ h2{
 }
 
 hr{
-  border-color:#ccc !important;
+  border-color:#eee;
   margin: 0 !important;
-  border: none !important;
+  /*border: none !important;*/
 }
+
 
 label{
   font-size: 14px;

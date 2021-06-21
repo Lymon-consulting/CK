@@ -15,7 +15,7 @@
       <div class="col-lg-3 rounded background-verylightgray p-3">
         <div class="sticky-top">
           <div class="row">
-            <div>&nbsp;<i class="fa fa-sliders fa-sm"></i>&nbsp;Filtrar búsqueda</div>
+            <div>&nbsp;<span class="mdi mdi-tune"></span>&nbsp;Filtrar búsqueda</div>
           </div>
           <div class="spacer10"></div>
           <div class="row">
@@ -169,105 +169,60 @@
                 <div class="row">
                   <div class="col-lg-12"><hr></div>
                 </div>
+                <div class="spacer20"></div>
                 {{#EasySearch.Each index=projectIndex}}
                 <div class="row">
-                  <div class="col-lg-4 col-md-2 vertical-align-top">
-                     <a href="/projectPage/{{this.__originalId}}">
-                     {{#if coverPicture this.__originalId 500}}
-                        <img src="{{coverPicture this.__originalId}}" class="media-thumb" />
-                     {{else}}
-                        <img src="/images/c4.jpg" class="media-thumb">
-                     {{/if}}
-                     </a>
+                  <div class="col-3">
+                    <a href="/projectPage/{{this.__originalId}}">
+                      {{#if coverPicture this.__originalId 500}}
+                         <img src="{{coverPicture this.__originalId}}" class="media-thumb" />
+                      {{else}}
+                         <img src="/images/c4.jpg" class="media-thumb">
+                      {{/if}}
+                      </a>
                   </div>
-                  <div class="col-lg-6 col-md-8">
+                  <div class="col-9">
                     <div class="container-fluid">
                       <div class="row">
-                        <div class="col">
-                          <table class="table table-responsive borderless">
-                            <tbody>
-                              <tr>
-                                <td class="no-padding text-no-wrap">
-                                  <a href="/projectPage/{{this.__originalId}}"><h5 class="h5-name">{{this.project_title}}</h5></a>
-                                </td>
-                              </tr>
-                              {{#if isSample this.project_family}}
-                              <tr>
-                                <td class="no-padding text-no-wrap subtitle-underline">
-                                  {{this.project_year}}
-                                </td>
-                              </tr>
-
-                              <tr>
-                                <td class="no-padding text-no-wrap subtitle-underline">
-                                  {{this.project_role}}
-                                </td>
-                              </tr>
-                              {{/if}}
-                              <tr>
-                                <td class="no-padding text-no-wrap subtitle-underline">
-                                  {{getFamily this.project_family}}
-                                </td>
-                              </tr>
-                              {{#if this.project_status}}
-                              <tr>
-                                <td class="no-padding text-no-wrap subtitle-underline">
-                                  {{getStatus this.project_status}}
-                                </td>
-                              </tr>
-                              {{/if}}
-                              {{#if this.project_type}}
-                              <tr>
-                                <td class="no-padding text-no-wrap subtitle-underline">
-                                  {{this.project_type}}
-                                </td>
-                              </tr>
-                              {{/if}}
-                              {{#if this.project_genre}}
-                              <tr>
-                                 <td class="no-padding text-no-wrap location-underline">
-                                    {{this.project_genre}}
-                                 </td>
-                              </tr>
-                              {{/if}}
-                              <tr>
-                                <td class="text-no-wrap">
-                                  <div class="row">
-                                    <div class="col-md-1 numbers">
-                                      <i class="fa fa-thumbs-up fa-sm"></i> <small>
-                                      {{#if this.likes}}
-                                          {{this.likes}}
-                                      {{else}}
-                                         0
-                                      {{/if}}</small>
-                                    </div>
-                                    <div class="col-md-1 numbers">
-                                      <i class="fa fa-eye fa-sm"></i> <small>
-                                      {{#if this.views}}
-                                         {{this.views}}
-                                      {{else}}
-                                         0
-                                      {{/if}}</small>
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                        <div class="col-12">
+                          <a href="/projectPage/{{this.__originalId}}"><h5 class="h5-name">{{this.project_title}}</h5></a>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-4">
+                          <div class="container-fluid">
+                            <div class="row">
+                              <div class="col subtitle-underline"><strong>Publicado por:</strong></div>
+                            </div>
+                            <div class="row">
+                              <div class="col subtitle-underline"><a href="/profilePage/{{this.userId}}" class="text-black">{{getAuthor this.userId}}</a></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-4 border-left">
+                          <div class="container-fluid">
+                            {{#if this.project_type}}<div class="row"><div class="col subtitle-underline"><strong>Categoría:</strong> {{this.project_type}}</div></div>{{/if}}
+                            {{#if this.project_status}}<div class="row"><div class="col subtitle-underline"><strong>Estatus:</strong> {{getStatus this.project_status}}</div></div>{{/if}}
+                            {{#if this.project_genre}}<div class="row"><div class="col subtitle-underline"><strong>Género:</strong> {{this.project_genre}}</div></div>{{/if}}
+                            {{#if this.project_year}}<div class="row"><div class="col subtitle-underline"><strong>Año:</strong> {{this.project_year}}</div></div>{{/if}}
+                          </div>
+                        </div>
+                        <div class="col-4 border-left">
+                          <div class="container-fluid">
+                            {{#if this.views}}<div class="row"><div class="col subtitle-underline"><span class="mdi mdi-eye"></span> Vistas: {{this.views}}</div></div>{{/if}}
+                            {{#if this.likes}}<div class="row"><div class="col subtitle-underline"><span class="mdi mdi-thumb-up"></span> Valoraciones: {{this.likes}}</div></div>{{/if}}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-lg-2 col-md-2">
-                    <a href="/profilePage/{{this.userId}}">
-                    {{#if getProfilePicture this.userId 80}}
-                      <img src="{{getProfilePicture this.userId 80}}"/>
-                    {{else}}
-                      <div id="profileImageMedium">{{getInitials this.userId}}</div>
-                    {{/if}}
-                    </a>
-                  </div>
+                  
                 </div>
+                <div class="spacer20"></div>
+                <div class="row">
+                  <div class="col-lg-12"><hr></div>
+                </div>
+                
                 <div class="spacer20"></div>
                 {{/EasySearch.Each}}
                 {{> EasySearch.LoadMore index=projectIndex content="Mostrar más"}}

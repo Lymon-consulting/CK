@@ -219,7 +219,7 @@ Accounts.onCreateUser(function(options, user) {
         });
     },
 
-    sendAlert(sender, receiver, message, entityId, entityType){
+    sendAlert(sender, receiver, message, entityId, entityType, alertType){
       var date = new Date();
       var alert = {
         sender: sender,
@@ -228,7 +228,8 @@ Accounts.onCreateUser(function(options, user) {
         date: date,
         read: false,
         entityId: entityId,
-        entityType: entityType
+        entityType: entityType,
+        alertType: alertType /* collaboration */
       }
       
       return Alert.insert(alert, function(error, result){

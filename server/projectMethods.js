@@ -171,7 +171,7 @@ Meteor.methods({
         "status": status
      }});
   },
-  updateProjectProduction(projectId, proj_name, proj_year, proj_genre, proj_status, proj_type, proj_desc, proj_web_page, proj_facebook_page, proj_twitter_page, proj_instagram_page, proj_vimeo_page, proj_youtube_page, proj_external_view, status){
+  updateProjectProduction(projectId, proj_name, proj_year, proj_genre, proj_status, proj_type, proj_desc, proj_web_page, proj_facebook_page, proj_twitter_page, proj_instagram_page, proj_vimeo_page, proj_youtube_page, proj_imdb_page, proj_external_view, status){
     Project.update({_id: projectId},{ 
       $set:{
         "project_title": proj_name,
@@ -186,6 +186,7 @@ Meteor.methods({
         "proj_instagram_page": proj_instagram_page,
         "proj_vimeo_page": proj_vimeo_page,
         "proj_youtube_page": proj_youtube_page,
+        "proj_imdb_page": proj_imdb_page,
         "proj_external_view": proj_external_view,
         "status":status
      }});

@@ -28,12 +28,13 @@ Template.peopleListCast.helpers({
          id: 'searchBox'
       }; 
    },
-   searchCount: () => {
+   searchCount: async () => {
     // index instanceof EasySearch.index
-    let dict = UsersIndex.getComponentDict(/* optional name */);
+    let dict = await UsersIndex.getComponentDict(/* optional name */);
 
     // get the total count of search results, useful when displaying additional information
-    return dict.get('count')
+    console.log(dict.get('count'));
+    return dict.get('count');
    },
    projectIndex: () => ProjectIndex, // instanceof EasySearch.Index
    inputAttributes: function () {
@@ -354,18 +355,24 @@ Template.peopleListCast.events({
       var modelo = $("#modelo").prop("checked");
       var bailarin = $("#bailarin").prop("checked");
       var cantante = $("#cantante").prop("checked");
+
+      console.log("locutor="+locutor+ " / actor="+actor+ " / extra="+extra+" / modelo="+modelo+" / bailarín="+bailarin+" / cantante="+cantante);
       
       if(locutor && actor && bailarin && cantante && extra && modelo){ //Todos seleccionados
+        console.log("todos seleccionados");
         UsersIndex.getComponentMethods().removeProps('cast.categories');  
         Session.set("category_selected",null);
       }
       else if(!locutor && !actor && !bailarin && !cantante && !extra && !modelo){ //Ninguno seleccionados
+        console.log("ninguno seleccionado");
         UsersIndex.getComponentMethods().removeProps('cast.categories');  
         Session.set("category_selected",null);
       }
       else{
+        console.log("Seleccionado: "+$(event.target).val());
         UsersIndex.getComponentMethods().addProps('cast.categories', $(event.target).val());
         Session.set("category_selected",$(event.target).val());
+        
       }
 
       /*

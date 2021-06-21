@@ -282,8 +282,11 @@ profilePicture(userId){
 },
 getProfilePicture(userId) {
   Meteor.subscribe("allMedia");
-  var user = Meteor.users.findOne({'_id':userId});
-  var url;
+  Meteor.subscribe("otherUsers");
+  console.log(userId);
+  let user = Meteor.users.findOne({"_id":userId});
+  console.log(user);
+  let url="";
   if(user!=null && user.profilePictureID!=null){
     var profile = Media.findOne({'mediaId':user.profilePictureID});
     if(profile!=null){
@@ -311,7 +314,7 @@ getInitials(userId){
   var name = "";
   var lastname = "";
   var initials = "";      
-  var user = Meteor.users.findOne({'_id':userId});
+  let user = Meteor.users.findOne({'_id':userId});
   console.log(user);
   if(user){
     name = user.profile.name;

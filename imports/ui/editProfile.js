@@ -188,11 +188,11 @@ imdb_cast(){
 video(){
   var video = "";
   if(Meteor.user()!=null){
-    if(Meteor.user().crew!=null && Meteor.user().crew.vimeo!=null){
-      video = Meteor.user().crew.vimeo;
+    if(Meteor.user().crew!=null && Meteor.user().crew.vimeoDemo!=null){
+      video = Meteor.user().crew.vimeoDemo;
     }
-    else if(Meteor.user().crew!=null && Meteor.user().crew.youtube!=null){
-      video = Meteor.user().crew.youtube;
+    else if(Meteor.user().crew!=null && Meteor.user().crew.youtubeDemo!=null){
+      video = Meteor.user().crew.youtubeDemo;
     } 
   }
   return video;
@@ -1132,10 +1132,16 @@ else{
     },
     'click #save': function(event, template){
       event.preventDefault();
+      Meteor.call('updateState', Meteor.userId(), $("#states").val());
+      Meteor.call('updateCity', Meteor.userId(), $("#city").val());
+      Meteor.call('updateCountry', Meteor.userId(), "México");
       Bert.alert({message: 'Se ha guardado tu perfil', type: 'success', icon: 'fa fa-check'});
     },
     'click #saveAndPublish': function(event, template){
       event.preventDefault();
+      Meteor.call('updateState', Meteor.userId(), $("#states").val());
+      Meteor.call('updateCity', Meteor.userId(), $("#city").val());
+      Meteor.call('updateCountry', Meteor.userId(), "México");
       Bert.alert({message: 'Se ha guardado y publicado tu perfil', type: 'success', icon: 'fa fa-check'});
       //FlowRouter.go("/profilePage/" + Meteor.userId());
     },

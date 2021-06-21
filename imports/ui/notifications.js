@@ -39,6 +39,15 @@ countAlerts(){
    }
    
 },
+isCollaborationType(alertType){
+  if(alertType==="collaboration"){
+    return true;
+  }
+  else{
+    return false;
+  }
+},
+
 thisUser(){
   return Meteor.userId();
 },
@@ -249,7 +258,7 @@ Template.notifications.events({
  }
 },
 
- 'click .fa-eye': function(event,template){
+ 'click .mdi-eye': function(event,template){
    event.preventDefault();
    alertId = $(event.currentTarget).attr("data-id")
    console.log(alertId);

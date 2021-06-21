@@ -394,7 +394,7 @@ Template.searchCollaboratorForProject.events({
      let message = `ha indicado que colaboraste en <a href='/projectPage/${projectId}'> 
       <strong class='text-black'>${project.project_title}</strong> </a> como ${rol} `;
 
-     const alertId = sendAlert(from, userId, message, projectId, "P");
+     const alertId = sendAlert(from, userId, message, projectId, "P", "collaboration");
 
      console.log(alertId);
 

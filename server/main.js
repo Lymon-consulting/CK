@@ -157,6 +157,7 @@ export const UsersIndex = new Index({
           selector['cast.eyes'] = options.search.props.eyes;
         }
         if (options.search.props.categories) {
+          console.log("En server "+options.search.props.categories);
           selector['cast.categories'] = options.search.props.categories;
         }
         if (options.search.props.sex) {          
@@ -361,7 +362,8 @@ Meteor.publish("alerts", function(){
       'date':1,
       'read':1,
       'entityId':1,
-      'entityType':1
+      'entityType':1,
+      'alertType': 1
     }
   });
 });
