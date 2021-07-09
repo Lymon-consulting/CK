@@ -7,6 +7,7 @@ import { getCrewCategories } from '/lib/globals.js';
 import { getCrewRoleFromCategory } from '/lib/globals.js';
 
 import './addCollaborator.html';
+import { sendAlert } from '../../lib/functions.js';
 
 Template.availableProjects.helpers({
   collaboratorName(){
@@ -73,7 +74,7 @@ Template.availableProjects.helpers({
       var staff = project.project_staff;
       if(staff!=null && staff!=""){
         for (var i = staff.length - 1; i >= 0; i--) {
-          if(staff[i]._id === Session.get("collaborator")){
+          if(staff[i].id === Session.get("collaborator")){
             result="checked";
             break;
           }
@@ -90,7 +91,7 @@ Template.availableProjects.helpers({
       var staff = project.project_staff;
       if(staff!=null && staff!=""){
         for (var i = staff.length - 1; i >= 0; i--) {
-          if(staff[i]._id === Session.get("collaborator")){
+          if(staff[i].id === Session.get("collaborator")){
             result=staff[i].role;
             break;
           }
@@ -123,7 +124,6 @@ Template.availableProjects.events({
 
   var rol = $( "select#sel_"+e.target.value+" option:checked" ).val();
   var projectId = e.target.value
-
   var user = Meteor.users.findOne({'_id':Session.get("collaborator")});
   if(user){
     var email="";
@@ -145,7 +145,7 @@ Template.availableProjects.events({
     }
     console.log("el colaborador se va a armar con los datos siguientes:");
     var collaborator = {
-      "_id" : user._id,
+      "id" : user._id,
       "email": email,
       "role": rol,
       "name" : name,
@@ -158,7 +158,7 @@ Template.availableProjects.events({
     if(exists.count()===0){
       console.log("SE va a agregar al colaborador en el proyecto "+projectId);
 
-      Project.upsert(
+      Project.update(
        {'_id': projectId},
        { $push: { project_staff: collaborator }
      });
@@ -167,6 +167,18 @@ Template.availableProjects.events({
       $("#sel_"+e.target.value).attr('disabled', 'disabled');
       $("#chk_"+e.target.value).attr('disabled', 'disabled');
       $("#rem_"+e.target.value).show();
+
+      const from = Meteor.userId();
+      let proj = Project.findOne({"_id":projectId});
+
+      let message = `ha indicado que colaboraste en <a href='/projectPage/${projectId}'> 
+      <strong class='text-black'>${proj.project_title}</strong> </a> como ${collaborator.role} `;
+
+
+      console.log(message);
+      console.log("from: "+ from + ", to:"+ collaborator.id);
+
+      const alertId = sendAlert(from, collaborator.id, message, projectId, "P", "collaboration");
     }
   }
 },
@@ -200,7 +212,7 @@ Template.availableProjects.events({
         var staff = project.project_staff;
         if(staff!=null && staff!=""){
           for (var i = staff.length - 1; i >= 0; i--) {
-            if(staff[i]._id === Session.get("collaborator")){
+            if(staff[i].id === Session.get("collaborator")){
               rol=staff[i].role;
               break;
             }
@@ -216,7 +228,7 @@ Template.availableProjects.events({
        "name" : name
      };
 
-     Project.upsert(
+     Project.update(
       {'_id': projectId},
       { $pull: { project_staff: collaborator }
     });

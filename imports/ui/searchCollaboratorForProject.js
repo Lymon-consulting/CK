@@ -158,7 +158,7 @@ checkParticipation(userId){
       var staff = project.project_staff;
       if(staff!=null && staff!=""){
         for (var i = staff.length - 1; i >= 0; i--) {
-          if(staff[i]._id === userId){
+          if(staff[i].id === userId){
             result="checked";
             break;
           }
@@ -179,7 +179,7 @@ checkParticipation(userId){
       var staff = project.project_staff;
       if(staff!=null && staff!=""){
         for (var i = staff.length - 1; i >= 0; i--) {
-          if(staff[i]._id === userId){
+          if(staff[i].id === userId){
             result=staff[i].role;
             break;
           }
@@ -370,7 +370,7 @@ Template.searchCollaboratorForProject.events({
     console.log("el colaborador se va a armar con los datos siguientes:");
 
     var collaborator = {
-      "_id" : user._id,
+      "id" : user._id,
       "email": email,
       "role": rol,
       "name" : name,
@@ -383,7 +383,7 @@ Template.searchCollaboratorForProject.events({
     if(exists.count()===0){
       console.log("SE va a agregar al colaborador en el proyecto "+projectId);
 
-      Project.upsert(
+      Project.update(
        {'_id': projectId},
        { $push: { project_staff: collaborator }
      });
@@ -449,7 +449,7 @@ Template.searchCollaboratorForProject.events({
         var staff = project.project_staff;
         if(staff!=null && staff!=""){
           for (var i = staff.length - 1; i >= 0; i--) {
-            if(staff[i]._id === userId){
+            if(staff[i].id === userId){
               rol=staff[i].role;
               break;
             }
@@ -463,7 +463,7 @@ Template.searchCollaboratorForProject.events({
        "name" : name
      };
 
-     Project.upsert(
+     Project.update(
       {'_id': projectId},
       { $pull: { project_staff: collaborator }
     });

@@ -155,7 +155,6 @@ Template.projList.helpers({
     },
    getProjectType(){
         var type = new Array();
-        type.push("Cortometraje");
         type.push("Largometraje");
         type.push("Comercial");
         type.push("Fashion film");

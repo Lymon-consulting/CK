@@ -164,34 +164,34 @@
       <div class="row">
         <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.facebook}}
-          <a href="{{formatURL getProfile.crew.facebook}}" target="_blank"> <span class="mdi mdi-facebook"></span></a>
+          <a href="{{formatURL getProfile.crew.facebook}}" target="_blank"> <span class="mdi mdi-facebook text-black"></span></a>
           {{/if}}
         </div>
         <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.instagram}}
-          <a href="{{formatURL getProfile.crew.instagram}}" target="_blank"> <span class="mdi mdi-instagram"></span></a>
+          <a href="{{formatURL getProfile.crew.instagram}}" target="_blank"> <span class="mdi mdi-instagram text-black"></span></a>
           {{/if}}
         </div>
         <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.twitter}}
-          <a href="{{formatURL getProfile.crew.twitter}}" target="_blank"> <span class="mdi mdi-twitter"></span></a>
+          <a href="{{formatURL getProfile.crew.twitter}}" target="_blank"> <span class="mdi mdi-twitter text-black"></span></a>
           {{/if}}
         </div>
       </div>
       <div class="row">
         <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.youtube}}
-          <a href="{{formatURL getProfile.crew.youtube}}" target="_blank"> <span class="mdi mdi-youtube"></span></a>
+          <a href="{{formatURL getProfile.crew.youtube}}" target="_blank"> <span class="mdi mdi-youtube text-black"></span></a>
           {{/if}}
         </div>
         <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.vimeo}}
-          <a href="{{formatURL getProfile.crew.vimeo}}" target="_blank"> <span class="mdi mdi-vimeo"></span></a>
+          <a href="{{formatURL getProfile.crew.vimeo}}" target="_blank"> <span class="mdi mdi-vimeo text-black"></span></a>
           {{/if}}
         </div>
         <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.imdb}}
-          <a href="{{formatURL getProfile.crew.imdb}}" target="_blank"> <i class="fa fa-sm fa-imdb"></i></a>
+          <a href="{{formatURL getProfile.crew.imdb}}" target="_blank"> <i class="fa fa-sm fa-imdb text-black"></i></a>
           {{/if}}
         </div>
       </div>
@@ -411,7 +411,7 @@
                          {{#if getLogoPicture this 40}}
                          <img src="{{getLogoPicture this 40}}" data-toggle="tooltip" data-placement="top" title="{{getCompanyName this}}">
                          {{else}}
-                         <img src="/images/nologo.png" class="logo" data-toggle="tooltip" data-placement="top" title="{{getCompanyName this}}">
+                         <img src="/images/nologo.png" class="logo" style="width: 40px; height: 40px;" data-toggle="tooltip" data-placement="top" title="{{getCompanyName this}}">
                          {{/if}}
                          </a>
                       </div>

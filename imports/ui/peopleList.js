@@ -20,7 +20,7 @@ Meteor.subscribe("otherUsers");
 Template.peopleList.rendered = function(){
   this.autorun(function(){
     UsersIndex.getComponentMethods().addProps('isCrew', true);
-    Session.set("selected_category",null);
+    //Session.set("selected_category",null);
     window.scrollTo(0,0);
   });
 }
@@ -41,6 +41,7 @@ Template.peopleList.helpers({
     // get the total count of search results, useful when displaying additional information
     return dict.get('count')
   },
+  
   projectIndex: () => ProjectIndex, // instanceof EasySearch.Index
    inputAttributes: function () {
      return { 
@@ -367,7 +368,8 @@ Template.peopleList.events({
  }
 },
 'change #role': function (e) {
-  var val = $(e.target).val();
+  const val = $(e.target).val();
+  console.log(val);
   if(val!="cualquier"){
    UsersIndex.getComponentMethods().addProps('role', val); 
    Session.set("role_selected",val);
@@ -380,7 +382,9 @@ Template.peopleList.events({
 },
 'change #category':function(e, template){
  e.preventDefault();
- if($(e.target).val()!="cualquier"){
+ const category = $(e.target).val();
+ console.log(category);
+ if(category!="cualquier"){
    Session.set("selected_category", $(e.target).val()); 
  }
  else{

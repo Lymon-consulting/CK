@@ -44,7 +44,7 @@ Meteor.methods({
   updateInvitationStatusForOne(projectID, collabID, status){
    console.log("Llamada a updateInvitationStatusForOne desde el server");
     Project.update(
-      {'_id': projectID, 'project_staff._id': collabID}, 
+      {'_id': projectID, 'project_staff.id': collabID}, 
       { 
          "$set": {
             'project_staff.$.invite_sent': true
@@ -73,7 +73,7 @@ Meteor.methods({
   updateConfirmation(projectID, collabID, status){
    //console.log("Llamada a updateInvitationStatusForOne desde el server");
     Project.update(
-      {'_id': projectID, 'project_staff._id': collabID}, 
+      {'_id': projectID, 'project_staff.id': collabID}, 
       { 
          "$set": {
             'project_staff.$.confirmed': true
@@ -90,7 +90,7 @@ Meteor.methods({
   deleteCollaboration(projectID, collabID){
 
    var collaborator = {
-      "_id": collabID
+      "id": collabID
    };
 
    /*
@@ -101,7 +101,7 @@ Meteor.methods({
 
    console.log("En el server eliminando a: " + collabID);
 
-   Project.upsert(
+   Project.update(
       {'_id': projectID},
       { $pull: { project_staff: collaborator }
    });

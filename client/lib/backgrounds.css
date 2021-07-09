@@ -22,6 +22,10 @@
    background-color: #CCC;
 }
 
+.bg-white{
+   background-color: #fff !important;
+}
+
 .background-verylightgray{
    background-color: #eee;
 }

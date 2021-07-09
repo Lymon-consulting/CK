@@ -79,7 +79,7 @@ Template.notificationList.helpers({
         return timeSince(date);
     },
     getClass(read){
-      let myClass = "";
+      let myClass = "card-body bg-white";
       if(!read){
         myClass = "card-body";
       }

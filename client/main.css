@@ -697,6 +697,12 @@ a.list-group-item.active { background-color: #6c757d; }
    font-family: "Avenir-Book";
 }
 
+.agreements-white{
+  font-size: 12px;
+  color:#fff !important;
+  font-family: "Avenir-Book";
+}
+
 .text-banner{
    font-size: 34px;
    font-weight: bold;
@@ -780,7 +786,7 @@ a.list-group-item.active { background-color: #6c757d; }
 /*Terminan estilos para los botones de crew y cast en la barra superior*/
 
 .text-white{
-   color: #fff;
+   color: #fff !important;
 }
 
 .text-lightgray{
@@ -788,7 +794,7 @@ a.list-group-item.active { background-color: #6c757d; }
 }
 
 .text-black{
-   color: #000;
+   color: #000 !important;
 }
 
 .button_white{

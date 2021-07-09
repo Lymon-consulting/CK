@@ -25,7 +25,7 @@
           <div class="spacer10"></div>
           <div class="row">
             <div class="col">
-              <select name="" id="searchType" class="form-control agreements">
+              <select name="" id="searchType" class="form-control agreements-white">
                <option value="Proyectos">Proyectos</option>
                <option value="Crew" selected>Crew</option>
                <option value="Cast">Cast</option>
@@ -172,6 +172,7 @@
                     <div class="row">
                       <div class="col-md-12 no-padding text-no-wrap">
                         <input type="hidden" id="thisUser" value="{{this.__originalId}}">
+                        {{#if currentUser}}
                         {{#if notSameUser this.__originalId}}
                         {{#if isCrew}}
                           {{#if hasProjects}}
@@ -179,6 +180,7 @@
                           {{/if}}
                         {{/if}}
 
+                        {{/if}}
                         {{/if}}
 
                       </div>

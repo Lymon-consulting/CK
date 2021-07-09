@@ -11,6 +11,7 @@ import { getCrewRoleFromCategory } from '/lib/globals.js';
 
 import './searchCollaboratorForIndustry.html';
 import '/lib/common.js';
+import { sendAlert } from '../../lib/functions.js';
 
 Template.searchCollaboratorForIndustry.rendered = function(){
   UsersIndex.getComponentMethods().addProps('isCrew', true);
@@ -73,7 +74,7 @@ checkParticipation(userId){
         staff = company.company_staff;
         if(staff!=null && staff!=""){
           for (var i = staff.length - 1; i >= 0; i--) {
-            if(staff[i]._id === userId){
+            if(staff[i].id === userId){
               result="checked";
               break;
             }
@@ -84,7 +85,7 @@ checkParticipation(userId){
         staff = company.company_admin;
         if(staff!=null && staff!=""){
           for (var i = staff.length - 1; i >= 0; i--) {
-            if(staff[i]._id === userId){
+            if(staff[i].id === userId){
               result="checked";
               break;
             }
@@ -109,7 +110,7 @@ checkParticipation(userId){
         staff = company.company_staff;
         if(staff!=null && staff!=""){
           for (var i = staff.length - 1; i >= 0; i--) {
-            if(staff[i]._id === userId){
+            if(staff[i].id === userId){
               result=true;
               break;
             }
@@ -120,7 +121,7 @@ checkParticipation(userId){
         staff = company.company_admin;
         if(staff!=null && staff!=""){
           for (var i = staff.length - 1; i >= 0; i--) {
-            if(staff[i]._id === userId){
+            if(staff[i].id === userId){
               result=true;
               break;
             }
@@ -362,7 +363,7 @@ Template.searchCollaboratorForIndustry.events({
     //console.log("el colaborador se va a armar con los datos siguientes:");
 
     var collaborator = {
-      "_id" : user._id,
+      "id" : user._id,
       "email": email,
       "name" : name,
       "confirmed": false, /*Cambiar esto para activar las notificaciones*/
@@ -378,20 +379,38 @@ Template.searchCollaboratorForIndustry.events({
       console.log("entra al type crew");
       exists = Industry.findOne({$and:[{"_id":companyId},{ 'company_staff': {$elemMatch:{"email":email}}}]});
       if(!exists){
-        Industry.upsert(
+        Industry.update(
           {'_id': companyId},
           { $push: { company_staff: collaborator }
         });  
+
+        const industryData = Industry.findOne({"_id":companyId});
+        if(industryData){
+          const from = Meteor.userId();
+          let message = `ha indicado que colaboras en <a href='/industryPage/${companyId}'> 
+            <strong class='text-black'>${industryData.company_name}</strong> </a>`;
+          const alertId = sendAlert(from, collaborator.id, message, companyId, "I", "collaboration");
+          console.log(alertId);
+        }
+        
       }
     }
     else if(FlowRouter.getParam("type")==="industry"){{
       console.log("entra al type industry");
       exists = Industry.findOne({$and:[{"_id":companyId},{ 'company_admin': {$elemMatch:{"email":email}}}]});
       if(!exists){
-        Industry.upsert(
+        Industry.update(
           {'_id': companyId},
           { $push: { company_admin: collaborator }
         });  
+        const industryData = Industry.findOne({"_id":companyId});
+        if(industryData){
+          const from = Meteor.userId();
+          let message = `ha indicado que colaboras en <a href='/industryPage/${companyId}'> 
+            <strong class='text-black'>${industryData.company_name}</strong> </a>`;
+          const alertId = sendAlert(from, collaborator.id, message, companyId, "I", "collaboration");
+          console.log(alertId);
+        }
       }
     }
     

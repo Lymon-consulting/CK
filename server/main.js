@@ -110,6 +110,9 @@ export const UsersIndex = new Index({
     fields: ['profile.name', 'profile.lastname', 'profile.lastname2', 'emails'],
     engine: new MongoDBEngine({
 
+      beforePublish: function (action, doc) {
+          return doc;
+      },
     selectorPerField: function (field, searchString) {
       if ('emails' === field) {
         // return this selector if the email field is being searched
@@ -130,7 +133,6 @@ export const UsersIndex = new Index({
 
         // modify the selector to only match documents where region equals "New York"
 
-        console.log(options.search.props);
         
         if (options.search.props.isCrew) {
           selector.isCrew = options.search.props.isCrew;

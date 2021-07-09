@@ -358,7 +358,23 @@ Template.peopleListCast.events({
 
       console.log("locutor="+locutor+ " / actor="+actor+ " / extra="+extra+" / modelo="+modelo+" / bailarín="+bailarin+" / cantante="+cantante);
       
-      if(locutor && actor && bailarin && cantante && extra && modelo){ //Todos seleccionados
+      if(modelo && actor && bailarin && cantante && extra && locutor){ //Todos seleccionados
+        UsersIndex.getComponentMethods().removeProps('categories');  
+        UsersIndex.getComponentMethods().removeProps('cast.categories');  
+        Session.set("category_selected",null);
+      }
+      else if(!modelo && !actor && !bailarin && !cantante && !extra && !locutor){ //Ninguno seleccionados
+        UsersIndex.getComponentMethods().removeProps('categories');  
+        UsersIndex.getComponentMethods().removeProps('cast.categories');  
+        Session.set("category_selected",null);
+      }
+      else{
+        UsersIndex.getComponentMethods().addProps('categories', $(event.target).val());
+        UsersIndex.getComponentMethods().addProps('cast.categories', $(event.target).val());
+        Session.set("category_selected",$(event.target).val());
+      }
+
+      /*if(locutor && actor && bailarin && cantante && extra && modelo){ //Todos seleccionados
         console.log("todos seleccionados");
         UsersIndex.getComponentMethods().removeProps('cast.categories');  
         Session.set("category_selected",null);
@@ -373,7 +389,7 @@ Template.peopleListCast.events({
         UsersIndex.getComponentMethods().addProps('cast.categories', $(event.target).val());
         Session.set("category_selected",$(event.target).val());
         
-      }
+      }*/
 
       /*
       if(event.target.checked){
@@ -398,14 +414,17 @@ Template.peopleListCast.events({
       console.log($(event.target).val());
         
       if(male && female && otrxs){ //Ambos tienen el check, buscar todos
+        UsersIndex.getComponentMethods().removeProps('sex');
         UsersIndex.getComponentMethods().removeProps('cast.sex');
         Session.set("gender_selected",null);
       }
       else if(!male && !female && !otrxs){ //Ninguno tiene el check, buscar todos
+        UsersIndex.getComponentMethods().removeProps('sex');
         UsersIndex.getComponentMethods().removeProps('cast.sex');
         Session.set("gender_selected",null);
       }
       else{
+        UsersIndex.getComponentMethods().addProps('sex', $(event.target).val());
         UsersIndex.getComponentMethods().addProps('cast.sex', $(event.target).val());
         Session.set("gender_selected",$(event.target).val());
       }

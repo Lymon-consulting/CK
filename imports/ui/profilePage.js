@@ -6,6 +6,8 @@ import { uploadFiles } from '/lib/functions.js';
 import { getRoleById } from '/lib/globals.js';
 
 import './profilePage.html';
+import { sendAlert } from '../../lib/functions.js';
+
 Meteor.subscribe("otherUsers");
 
 Template.profilePage.rendered = function(){
@@ -420,8 +422,11 @@ Template.profilePage.helpers({
      Meteor.subscribe("otherUsers");
      var user = Meteor.users.findOne({'_id' : FlowRouter.getParam('id')});
 
-      if(user!=null && user.followCompany!=null){
-        return user.followCompany;
+     console.log(user);
+
+      if(user){
+        console.log(user.followsCompany);
+        return user.followsCompany;
       }
       else{
         return [];
@@ -550,6 +555,8 @@ Template.profilePage.events({
          FlowRouter.getParam('id')
       );
       //$("#pushFollow").attr("disabled", true);
+      let message = `ahora te sigue`;
+      sendAlert(Meteor.userId(),FlowRouter.getParam('id'),message,'','','follow');
    },
    'click #pushUnfollow': function(event, template){
       event.preventDefault();
@@ -558,6 +565,7 @@ Template.profilePage.events({
          Meteor.userId(),
          FlowRouter.getParam('id')
       );
+      
    },
    'click #profileImageinProfilePage': function(event,template){
      event.preventDefault();
@@ -747,6 +755,10 @@ Template.profilePage.events({
           Meteor.userId(),
           FlowRouter.getParam('id')
           );
+
+        let message = `dio me gusta en tu perfil`;
+        sendAlert(Meteor.userId(),FlowRouter.getParam('id'),message,'','','like');
+
       }, 
 
       'click #pushDontLike' : function(event, template){

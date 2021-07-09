@@ -257,6 +257,54 @@ Meteor.methods({
      { $addToSet: { 'followsCompany': followsToId } }
      );
   },
+  /** 
+      * Método para actualizar el estatus de una colaboración del proyecto
+      * Los parámetros que recibe son: 
+      *  - projectID: ID del proyecto 
+      *  - collabID: ID del colaborador 
+      *  - status: valor que va a tomar el campo confirmed
+      * @author Luis Carlos Jiménez
+   */
+   updateCollaborationConfirmation(companyID, collabID, status){
+     Industry.update(
+       {'_id': companyID, 'company_staff.id': collabID}, 
+       { 
+          "$set": {
+             'company_staff.$.confirmed': true
+          }
+       });
+   },
+   /** 
+      * Método para eliminar a un colaborador de un proyecto
+      * Los parámetros que recibe son: 
+      *  - projectID: ID del proyecto 
+      *  - collaborator: Objeto JSON con los datos del colaborador
+      * @author Luis Carlos Jiménez
+   */
+   deleteCollaborationIndustry(companyID, collabID, email, name, confirmed, invite_sent){
+
+    var collaborator = {
+       "id": collabID,
+       "email": email,
+       "name": name,
+       "confirmed": confirmed,
+       "invite_sent": invite_sent
+    };
+      
+    console.log(`En el server eliminando a ${collabID} de ${companyID}`);
+    console.log(collaborator);
+ 
+    Industry.update(
+       {'_id': companyID},
+       { $pull: { 'company_staff': collaborator }
+    });
+
+    /*Project.upsert(
+      {'_id': companyID},
+      { $pull: { company_staff: collaborator }
+   });*/
+
+   },
   removeFollowToCompany(userId, followsToId){
     Meteor.users.update({'_id': userId}, 
     {
