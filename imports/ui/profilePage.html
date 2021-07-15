@@ -165,16 +165,22 @@
         <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.facebook}}
           <a href="{{formatURL getProfile.crew.facebook}}" target="_blank"> <span class="mdi mdi-facebook text-black"></span></a>
+          {{else}}
+          <span class="mdi mdi-facebook text-gray"></span>
           {{/if}}
         </div>
         <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.instagram}}
           <a href="{{formatURL getProfile.crew.instagram}}" target="_blank"> <span class="mdi mdi-instagram text-black"></span></a>
+          {{else}}
+          <span class="mdi mdi-instagram text-gray"></span>
           {{/if}}
         </div>
         <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.twitter}}
           <a href="{{formatURL getProfile.crew.twitter}}" target="_blank"> <span class="mdi mdi-twitter text-black"></span></a>
+          {{else}}
+          <span class="mdi mdi-twitter text-gray"></span>
           {{/if}}
         </div>
       </div>
@@ -182,16 +188,22 @@
         <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.youtube}}
           <a href="{{formatURL getProfile.crew.youtube}}" target="_blank"> <span class="mdi mdi-youtube text-black"></span></a>
+          {{else}}
+          <span class="mdi mdi-youtube text-gray"></span>
           {{/if}}
         </div>
         <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.vimeo}}
           <a href="{{formatURL getProfile.crew.vimeo}}" target="_blank"> <span class="mdi mdi-vimeo text-black"></span></a>
+          {{else}}
+          <span class="mdi mdi-vimeo text-gray"></span>
           {{/if}}
         </div>
         <div class="col-md-3 col-sm-6">
           {{#if getProfile.crew.imdb}}
           <a href="{{formatURL getProfile.crew.imdb}}" target="_blank"> <i class="fa fa-sm fa-imdb text-black"></i></a>
+          {{else}}
+          <i class="fa fa-sm fa-imdb text-gray"></i>
           {{/if}}
         </div>
       </div>
@@ -211,9 +223,10 @@
 <div class="container">
   
   <div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-12">
+    
     {{#if getMainProject}}
     {{#if allowedView getMainProject._id}}
-    <div class="col-lg-8 col-md-8 col-sm-12">
       <div class="row">
         <div class="col border-bottom">
           <strong class="uppercase">Proyecto destacado</strong>
@@ -268,10 +281,9 @@
           </div>
         </div>
       </div>
-        
+    {{/if}}
+    {{/if}}
     </div>
-    {{/if}}
-    {{/if}}
     <div class="col-lg-4 col-md-4 col-sm-12">
     {{#if getProfile.crew.resume}}
       <div class="row">
@@ -409,7 +421,7 @@
                       <div class="col-md-4">
                           <a href="/industryPage/{{this}}">
                          {{#if getLogoPicture this 40}}
-                         <img src="{{getLogoPicture this 40}}" data-toggle="tooltip" data-placement="top" title="{{getCompanyName this}}">
+                         <img src="{{getLogoPicture this 80}}" data-toggle="tooltip" data-placement="top" title="{{getCompanyName this}}">
                          {{else}}
                          <img src="/images/nologo.png" class="logo" style="width: 40px; height: 40px;" data-toggle="tooltip" data-placement="top" title="{{getCompanyName this}}">
                          {{/if}}
@@ -478,7 +490,7 @@
      </div>
      <div class="spacer40"></div>
      {{/if}}
-    </div>
+  </div>
   <div class="container">
      {{#if getSamples}}
      <div class="spacer40"></div>
@@ -534,7 +546,7 @@
         {{/each}}
       </div>
      {{/if}}
-</div>
+  </div>
 <div class="spacer80"></div>
    <div class="container">
       <div class="row">

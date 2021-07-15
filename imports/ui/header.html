@@ -16,9 +16,10 @@
         <li class="nav-item">
           <a class="nav-link" href="/peopleList">Descubre</a>
         </li>
+        <!--
         <li class="nav-item">
           <a class="nav-link logout" href="#">Salir</a>
-        </li>
+        </li>-->
       </ul>
       <ul class="navbar-nav">
           <li class="nav-item dropdown">
@@ -56,26 +57,16 @@
             <div class="row">
               <div class="col"><div class="spacer10"></div></div>
             </div>
-            <div class="row">
-              <div class="col text-center">
-                {{#if isCrewChecked}}
-                <div class="row padding-5">
-                  <div class="col m-50">
-                    <a href="/profilePage/{{currentUser._id}}" class="button-rounded"><span class="mdi mdi-movie"></span>&nbsp;Ver perfil de crew</a>    
-                  </div>
-                </div>
-                
-                {{/if}}
-                {{#if isCastChecked}}
-                <div class="row padding-5">
-                  <div class="col">
-                    <a href="/profilePageActor/{{currentUser._id}}" class="button-rounded"><span class="mdi mdi-drama-masks"></span>&nbsp;Ver perfil de cast</a>    
-                  </div>
-                </div>
-                
-                {{/if}}
-              </div>
-            </div>
+            
+            <div class="dropdown-divider"></div>
+            <h4 class="dropdown-header">PERFIL</h4>
+            {{#if isCrewChecked}}
+            <a class="dropdown-item text-black" href="/profilePage/{{currentUser._id}}"><span class="mdi mdi-movie"></span>&nbsp;Ver crew</a>
+            {{/if}}
+            {{#if isCastChecked}}
+            <a class="dropdown-item text-black" href="/profilePageActor/{{currentUser._id}}"><span class="mdi mdi-drama-masks"></span>&nbsp;Ver cast</a>
+            {{/if}}
+            <div class="dropdown-divider"></div>
             <h4 class="dropdown-header">CUENTA</h4>
             <a class="dropdown-item text-black" href="/editProfile/{{currentUser._id}}"><span class="mdi mdi-account-edit"></span>&nbsp;Editar perfil</a>
             

@@ -21,6 +21,11 @@
 
 <template name="projectList">
   <div class="spacer20"></div>
+
+  {{#unless myProjects}}
+  <p> No tienes proyectos, agrega tu primer proyecto</p>
+  {{/unless}}
+
   <div class="row">
     <div class="col-md-3 col-sm-6">
         <div class="spacer40"></div>
@@ -63,7 +68,7 @@
                {{/if}}
                 <div class="card-body">
                   <h5 class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a></h5>
-                  <p class="card-text">{{projectYear this.project_year}}</p>
+                  <p class="card-text">{{projectYear this._id}}</p>
                   
                 </div>
                 <div class="card-footer">
@@ -103,7 +108,11 @@
                   
                 </div>
                 <div class="card-footer">
-                  
+                  <div class="row">
+                    <div class="col">
+                      <p class="card-text">Proyecto principal: <input type="checkbox" name="selectMain" id="samp_main" class="proj_main" {{ isMainProject this._id }} value="{{this._id}}"></p>    
+                    </div>
+                  </div>
                   <div class="row">
                     <div class="col"><hr></div>
 
@@ -127,20 +136,8 @@
   </div>
 
 </main>
-         
-               
-               
-               
-            
-         
-{{else}}
-   <table class="table">
-      <tr>
-         <td colspan="9">
-            No tienes proyectos, agrega tu primer proyecto
-         </td>
-      </tr>
-   </table>
+                                                                  
+  
 {{/if}}
       </div>
       

@@ -90,23 +90,13 @@ Template.registerHelper('isBoth', function(){
   }
   return result;
 });
-/*
+
 Template.registerHelper('isCast', function(){
   var result = false;
   if(Meteor.user()){
-    if(Session.get("viewAs")!=null){//Existe la variable en sesión
-      if(Session.get("viewAs")==="cast"){//El usuario eligió ver como cast
-        result = true;
-      }
-      else{//El usuario NO eligió ver como crew
-        result = false;
-      }
-    }
-    else{ //no existe la variable en sesión, consultar en la BD
-      if(Meteor.user().isCast!=null && Meteor.user().isCast){
-        result=true;
-      }      
-    }
+    if(Meteor.user().isCast!=null && Meteor.user().isCast){
+      result=true;
+    }      
   }
   return result;
 });
@@ -114,24 +104,14 @@ Template.registerHelper('isCast', function(){
 Template.registerHelper('isCrew', function(){
   var result = false;
   if(Meteor.user()){
-    if(Session.get("viewAs")!=null){//Existe la variable en sesión
-      if(Session.get("viewAs")==="crew"){//El usuario eligió ver como crew
-        result = true;
-      }
-      else{//El usuario NO eligió ver como crew
-        result = false;
-      }
-    }
-    else{ //no existe la variable en sesión, consultar en la BD
-      if(Meteor.user().isCrew!=null && Meteor.user().isCrew){
-        result=true;
-      }
+    if(Meteor.user().isCrew!=null && Meteor.user().isCrew){
+      result=true;
     }
   }
   return result;
 });
 
-
+/*
 
 Template.registerHelper('viewAs',function(){
   var userPreference = null;

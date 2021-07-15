@@ -66,13 +66,19 @@ Template.editProject.helpers({
     var pyear = Project.findOne({'_id': FlowRouter.getParam('id')}).project_year;
     return (pyear === value) ? 'selected' : '' ;
   },
-  isMainProject: function(value){
+  isMainProject: function(){
     var main = Project.findOne({'_id': FlowRouter.getParam('id')});
-    var verify = 'false';
-    if(main!=null){
+    var verify = false;
+    if(main){
+      console.log(main.project_is_main);
       verify = main.project_is_main;
     }
-    return (verify === 'true') ? 'checked' : '' ; 
+    if(verify){
+      return 'checked'; 
+    }
+    else{
+      return '';
+    }
   },
   getRolesSelected: function(){
     var proj = Project.findOne({'_id': FlowRouter.getParam('id')});

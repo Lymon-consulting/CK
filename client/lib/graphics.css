@@ -187,6 +187,9 @@
   line-height: 100px;
   margin-top: 30px;
   object-fit:scale-down;
+  display: table;
+  margin: 0 auto;
+  
   /*margin: 10px 0;*/
 }
 
@@ -333,6 +336,12 @@
    height: 50px; 
    width: 50px;
 }
+
+.company-logo{
+  height: 80px; 
+  width: 80px;
+}
+
 .thumbnail-project{
   /*Las portadas tienen un aspectRatio de 2:1*/
    width: 200px;

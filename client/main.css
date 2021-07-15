@@ -86,6 +86,11 @@
   width: 100%
 }
 
+.chat-text{
+  font-size: 16px;
+  color: #000;
+}
+
 nav.bg-dark{
   background-color: #1d2327 !important;
 }

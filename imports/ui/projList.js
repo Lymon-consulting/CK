@@ -156,6 +156,7 @@ Template.projList.helpers({
    getProjectType(){
         var type = new Array();
         type.push("Largometraje");
+        type.push("Cortometraje");
         type.push("Comercial");
         type.push("Fashion film");
         type.push("Serie/programa televison");
@@ -207,8 +208,7 @@ Template.projList.helpers({
       return type;
     },
      getProjectGender(){
-        var type = new Array();
-        type.push("Cortometraje");
+        var type = new Array();        
         type.push("Animacion");
         type.push("Comedia");
         type.push("Documental");

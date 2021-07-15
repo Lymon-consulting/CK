@@ -219,7 +219,7 @@
    
    <div class="container">
       <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-8">
           {{#if getVideo getProfile.cast.vimeo_demo getProfile.cast.youtube_demo}}
           <div class="row">
             <div class="col border-bottom">
@@ -232,10 +232,11 @@
           </div>
           <div class="spacer40">  </div>
           {{/if}}
+          {{#if getGallery}}
           <div class="row">
             <div class="col">
-              {{#if getGallery}}
-              <div class="spacer20"></div>
+              
+              
             <div class="row">
               <div class="col border-bottom">
                 <strong class="uppercase">Galería de book</strong>
@@ -248,18 +249,18 @@
                     <div class="row">
                       <div class="owl-carousel">
                         {{#each getGallery}}
-                        <div class="crop"> <img src="{{getURL this.mediaId}}" alt=""> </div>
+                        <div class="crop"> <a href="#" data-id="{{this.mediaId}}" class="openImage"> <img src="{{getURL this.mediaId}}" alt=""> </a></div>
                         {{/each}}  
                       </div>
                     </div>
                     <!--Termina carrousel -->
               </div>
             </div>
-            {{/if}}
             </div>
           </div>
+          {{/if}}
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
           {{#if getProfile.cast.resume}}
           <div class="row">
             <div class="col border-bottom">
@@ -466,27 +467,181 @@
       
       <div class="spacer40"></div>
       <div class="row">
-         <div class="col-lg-8">
-            
-            <div class="spacer40"></div>
-            
-
-            
-            <!-- Inicia grid de proyectos-->
-              <!--No sabemos si va a haber algo aquí, en todo caso copiar de profilePage.html-->
-              <div class="container">
-               
-               
-               <div class="spacer40"></div>
-               
-               <div class="spacer40"></div>
+        <div class="col">
+          {{#if getMainProject}}
+          {{#if allowedView getMainProject._id}}
+            <div class="row">
+              <div class="col border-bottom">
+                <strong class="uppercase">Proyecto destacado</strong>
+              </div>
             </div>
-            <!-- Termina grid de proyectos-->
+            <div class="spacer20"></div>
+            <div class="row">
+              <div class="col">
+                {{#if getProjectImages getMainProject._id}}
+                  <a href="/projectPage/{{getMainProject._id}}" class="card-img-top"><img class="thumbnail-gallery img-fluid" src="{{getProjectImages getMainProject._id}}" alt="Card image cap"></a>
+                {{else}}
+                  <a href="/projectPage/{{getMainProject._id}}" class="card-img-top"><img src="/images/no-cover.jpg" class="thumbnail-gallery" alt=""></a>
+                {{/if}}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="spacer20"></div>
+                <div class="row">
+                  <div class="col project-type">
+                    {{getMainProject.project_type}}
+                  </div>
+
+                </div>
+                <div class="spacer20"></div>
+                <div class="row">
+                  <div class="col uppercase project-title">
+                    {{getMainProject.project_title}}
+                  </div>
+                </div>
+                <div class="spacer20"></div>
+                <div class="row">
+                  <div class="col uppercase">
+                    {{projectRole getMainProject._id}}
+                  </div>
+                </div>
+                <div class="spacer20"></div>
+                <div class="row">
+                  <div class="col about">
+                    {{getMainProject.project_desc}}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="spacer40"></div>
+                <div class="row">
+                  <div class="col border-left about"><span class="mdi mdi-eye"></span>&nbsp;Vistas {{getMainProject.views}}</div>
+                </div>
+                <div class="row">
+                  <div class="col border-left about"><span class="mdi mdi-thumb-up"></span>&nbsp;Valoraciones {{getMainProject.likes}}</div>
+                </div>
+              </div>
+            </div>
+          {{/if}}
+          {{/if}}
+        </div>
+      </div>
+      <div class="spacer40"></div>
+      <div class="row">
             
-         </div>
-         <div class="col-lg-4 vertical-center-row ">
+            <div class="container">
+              {{#if getProjects}}
+              <div class="spacer40"></div>
+              <div class="row">
+                <div class="col border-bottom">
+                  <strong class="uppercase">Proyectos</strong>
+                </div>
+              </div>
+               <div class="row">
+                  {{#each getProjects}}
+                  <!-- Inicia cada recuadro de cada proyecto -->
+                     <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="spacer20"></div>
+                        <div class="card w-100">
+                           {{#if getProjectImages this._id}}
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img class="card-img-top w-100" src="{{getProjectImages this._id}}" alt="Card image cap"></a>
+                           {{else}}
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/no-cover.jpg" class="card-img-top w-100" alt=""></a>
+                           {{/if}}  
+          
+                          <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a>{{#if ownerRole}}&nbsp;<a href="/editProject/{{this._id}}"><span class="mdi mdi-pencil"></span></a>{{/if}}</div>
+                          <div class="agreements"><strong>{{projectYear this._id}}</strong></div>
+                          <div class="card-body">
+                            <p class="card-text"><strong>{{projectRole this._id}}</strong></p>
+                          </div>
+                          <div class="card-footer">
+                            <div class="row">
+                               <div class="col"><span class="mdi mdi-thumb-up"></span><small>&nbsp;
+                               {{#if this.likes}}
+                                 {{this.likes}}
+                               {{else}}
+                                 0
+                               {{/if}}
+                             </small></div>
+                               <div class="col text-right"><span class="mdi mdi-eye"></span><small>&nbsp;
+                               {{#if this.views}}
+                                 {{this.views}}
+                               {{else}}
+                                 0
+                               {{/if}}
+                             </small></div>
+                              
+                            </div>
+                          </div>
+                        </div>      
+                     </div>
+                  <!-- Termina cada recuadro de cada proyecto -->
+                  {{/each}}
+               </div>
+               <div class="spacer40"></div>
+               {{/if}}
+            </div>
+            <div class="container">
+               {{#if getSamples}}
+               <div class="spacer40"></div>
+                <div class="row">
+                  <div class="col border-bottom">
+                    <strong class="uppercase">Muestras de trabajo</strong>
+                  </div>
+                </div>
+                <div class="row">
+                   <div class="col">
+                      <hr>
+                   </div>
+                 </div>
+                 <div class="row">
+                  {{#each getSamples}}
+                  <!-- Inicia cada recuadro de cada proyecto -->
+                     <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="spacer20"></div>
+                        <div class="card w-100">
+                           {{#if getProjectImages this._id 175}}
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img class="card-img-top w-100" src="{{getProjectImages this._id 175}}" alt="Card image cap"></a>
+                           {{else}}
+                              <a href="/projectPage/{{this._id}}" class="card-img-top"><img src="/images/no-cover.jpg" class="card-img-top w-100" alt=""></a>
+                           {{/if}}  
+          
+                          <div class="card-title"><a href="/projectPage/{{this._id}}" class="text-black">{{this.project_title}}</a>{{#if ownerRole}}&nbsp;<a href="/editProject/{{this._id}}"><span class="mdi mdi-pencil"></span></a>{{/if}}</div>
+                          <div class="agreements"><strong>{{projectYear this._id}}</strong></div>
+                          <div class="card-body">
+                            <p class="card-text"><strong>{{projectRole this._id}}</strong></p>
+                          </div>
+                          <div class="card-footer">
+                            <div class="row">
+                               <div class="col"><span class="mdi mdi-thumb-up"></span><small>&nbsp;
+                               {{#if this.likes}}
+                                 {{this.likes}}
+                               {{else}}
+                                 0
+                               {{/if}}
+                             </small></div>
+                               <div class="col text-right"><span class="mdi mdi-eye"></span><small>&nbsp;
+                               {{#if this.views}}
+                                 {{this.views}}
+                               {{else}}
+                                 0
+                               {{/if}}
+                             </small></div>
+                              
+                            </div>
+                          </div>
+                        </div>      
+                     </div>
+                  <!-- Termina cada recuadro de cada proyecto -->
+                  {{/each}}
+                </div>
+               {{/if}}
+            </div>
             
-         </div>
+         
+         
       </div>
    </div>
 

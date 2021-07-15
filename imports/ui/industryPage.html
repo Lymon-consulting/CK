@@ -25,19 +25,16 @@
 
 
 <div class="container-fluid bg-overlay">
-  
-  <div class="spacer120"></div>
-  <div class="spacer120"></div>
-  <div class="spacer120"></div>
+  <div class="spacer280"></div>
   {{#if isOwner}}
-  <div class="container-fluid text-white">
-    <a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <span class="mdi mdi-camera"></span></a>
-  </div>
-  {{#unless statusPublished}}
-  <div class="pink">Tu empresa u organización no está publicada, nadie la podrá ver hasta que la publiques</div>
-  {{/unless}}
+  <a href="#" class="text-white text-over" id="openMediaGallery"><span class="mdi mdi-camera"></span></a>
   {{/if}}
 </div>
+
+  {{#unless statusPublished}}
+  <div class="pink">Tu proyecto no está publicada, nadie la podrá ver hasta que la publiques</div>
+
+  {{/unless}}
 
 <div class="container">
   <div class="spacer20"></div>
@@ -47,10 +44,10 @@
         <div class="col-lg-2 col-md-4">
           {{#if getLogoPicture 80}}
           <div>
-            <img src="{{getLogoPicture 80}}"/>
+            <img src="{{getLogoPicture 100}}"/>
           </div>
           {{else}}
-          <img class="thumbnail-logo" src="/images/nologo.png">
+          <img class="company-logo" src="/images/nologo.png">
           {{/if}}
           {{#if isOwner}}
           <div class="container-fluid text-white">
@@ -227,7 +224,7 @@
               <div class="row">
                 <div class="owl-carousel">
                   {{#each getGallery}}
-                  <div class="crop"> <img src="{{getURL this.mediaId}}" alt=""> </div>
+                  <div class="crop"> <a href="#" data-id="{{this.mediaId}}" class="openImage"> <img src="{{getURL this.mediaId}}" alt=""> </a> </div>
                   {{/each}}  
                 </div>
               </div>

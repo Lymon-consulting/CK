@@ -469,7 +469,7 @@ isDirectorOrProducer(){
       if(data!=null && data.companyLogoID!=null){
         var cover = Media.findOne({'mediaId':data.companyLogoID});
         if(cover!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_limit" + "/v" + cover.media_version + "/" + data.userId + "/" + data.companyLogoID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_limit" + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.companyLogoID;    
         }
         
       }

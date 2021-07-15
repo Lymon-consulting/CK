@@ -1554,9 +1554,20 @@ if (Meteor.isClient) {
 
       },
       'click #editProject': function(e){
-        event.preventDefault();
+        e.preventDefault();
         var id = FlowRouter.getParam("id"); 
         FlowRouter.go("/editProject/"+id);
+      },
+      'click .openImage': function(event, template){
+        event.preventDefault();
+        var mediaId = $(event.currentTarget).attr("data-id");
+        console.log(mediaId);
+        const media = Media.findOne({'mediaId':mediaId});
+        let url = "";
+        if(media!=null){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.settings.public.LEVEL + "/" + media.mediaId;
+        }
+        window.open(url,'newWindow','toolbars=0,scrollbars=1,resizable=1, location=0');
       }
    });
 
@@ -1743,7 +1754,7 @@ Template.companies.helpers({
        if(proj){
           collabs = proj.companies;
        }
-       return proj;
+       return collabs;
       },
       getCompanyName(companyId){
         var name;

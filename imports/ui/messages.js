@@ -424,4 +424,21 @@ Template.messages.events({
     }
     
   },
+  'click .delete': function(event,template){
+    event.preventDefault();
+    const conversationId = $(event.currentTarget).attr("data-id");
+    const sender = Meteor.userId();
+    const receiver = $(event.currentTarget).attr("data-receiver");
+
+    console.log(conversationId + " - " + sender + " - " + receiver);
+
+    if(confirm("¿Deseas borrar esta conversación? Esta acción no se puede deshacer")){
+      Meteor.call(
+        'deleteConversation',
+        conversationId,
+        sender,
+        receiver
+      );
+    }
+  }
 });

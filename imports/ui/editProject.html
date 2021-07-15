@@ -158,7 +158,6 @@
                    </div>
                  </div>
                  {{/if}}
-                 {{#if hasTopRole}}
                  <div class="spacer20"></div>
                  <div class="row">
                     <div class="col-md-6">
@@ -190,7 +189,7 @@
                     </div>
                     
                  </div>
-                 {{/if}}
+                 <div class="spacer40"></div>
              <div class="row">
                <div class="col-lg-12">
                  <label for="proj_desc">Descripción / Sinopsis: <span class="text-purple">(Requerido)</span></label>
@@ -302,25 +301,7 @@
                  </div>
               </div>
 
-              <div class="spacer20"></div>
-              <div class="row">
-                <div class="col titles">Marcar como proyecto principal</div>
-              </div>
-              <div class="row">
-               <div class="col-lg-12 agreements">
-                 Los proyectos marcados como <strong>Proyecto Principal</strong> tienen una presencia destacada en tu <strong>Perfil</strong>, ubicándose en la parte superior, con un formato más grande.
-               </div>
-             </div>
-              <div class="row">
-                <div class="col">
-                   <input type="checkbox" id="proj_main" {{ isMainProject }}>
-                   {{#if isMainProject}}
-                   <input type="hidden" name="isMainProject" id="isMainProject" value="true">
-                   {{else}}
-                   <input type="hidden" name="isMainProject" id="isMainProject" value="">
-                   {{/if}}
-                </div>
-              </div>
+              
               {{/if}}
 
               {{#unless isProduction}}
@@ -363,7 +344,25 @@
                </div>
               {{/unless}}
 
-
+              <div class="spacer20"></div>
+              <div class="row">
+                <div class="col titles">Marcar como proyecto principal</div>
+              </div>
+              <div class="row">
+               <div class="col-lg-12 agreements">
+                 Los proyectos marcados como <strong>Proyecto Principal</strong> tienen una presencia destacada en tu <strong>Perfil</strong>, ubicándose en la parte superior, con un formato más grande.
+               </div>
+             </div>
+              <div class="row">
+                <div class="col">
+                   <input type="checkbox" id="proj_main" {{ isMainProject }}>
+                   {{#if isMainProject}}
+                   <input type="hidden" name="isMainProject" id="isMainProject" value="true">
+                   {{else}}
+                   <input type="hidden" name="isMainProject" id="isMainProject" value="">
+                   {{/if}}
+                </div>
+              </div>
             <div class="spacer40"></div>
               <div class="row">
                 <div class="col-lg-12">Galería de imágenes <a href="#" class="text-purple" data-toggle="modal" data-target="#modal4"><br>Agregar <span class="mdi mdi-plus"></span></a></div>

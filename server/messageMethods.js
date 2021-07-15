@@ -67,6 +67,28 @@ Meteor.methods({
         "read":value
       }
     });
+  },
+  deleteConversation(conversationId, sender, receiver){
+
+    console.log("En deleteConversation");
+    console.log(conversationId + " - " + sender + " - " + receiver);
+    
+    Message.remove({'_id': conversationId});
+
+
+
+    Meteor.users.update({'_id': sender},{
+      $pull:{
+        'messagesList.conversationId':conversationId,
+        'messagesList.partnerId': receiver
+      }
+    });
+    Meteor.users.update({'_id': receiver},{
+      $pull:{
+        'messagesList.conversationId':conversationId,
+        'messagesList.partnerId': sender
+      }
+    });
   }
 });
 

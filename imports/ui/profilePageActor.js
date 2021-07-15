@@ -196,6 +196,17 @@ Template.profilePageActor.helpers({
       }
       return email;
    },
+   projectYear(projId){
+    var proj = Project.findOne({'_id': projId});
+    var result;
+    if(proj!=null && proj.project_year!=null){
+      result = proj.project_year;
+    }
+    else{
+      result = "Año desconocido";
+    }
+    return result;
+  },
    profilePicture(userId){
       Meteor.subscribe("images");
       return Images.find({'owner': userId});
@@ -214,15 +225,70 @@ Template.profilePageActor.helpers({
       return PersonalCover.find({'owner': userId});
    },*/
    getProjects(){
-      Meteor.subscribe("myProjects");
-      //return Project.find({$and : [ {'userId' : FlowRouter.getParam('id')} , {"project_is_main": '' }]});
-      return Project.find({$and : [{'userId' : FlowRouter.getParam('id')}, {'project_family':'Portafolios'}]});
-//      var following = Meteor.users.find({$and : [ {'_id' : Meteor.userId()} , {"follows": follow }]});
-   },
-   getMainProject(){
-      Meteor.subscribe("myMainProject", FlowRouter.getParam('id'));
-      return Project.findOne({'userId': FlowRouter.getParam('id'), 'project_is_main' : 'true'});
-   },
+    Meteor.subscribe("myProjects");
+    //Meteor.users.find  ({$and : [ {'_id' : Meteor.userId()} ,            {"follows": follow      }]});
+    let displayProject = new Array();
+    const projects = Project.find({
+      $and : [ 
+        {'userId' : FlowRouter.getParam('id')},
+        {'project_is_main':false},
+        {'project_family':'P'}
+      ]
+    });
+
+    for (const project of projects) {
+      //sólo lo pueden ver si está publicado o si es el dueño
+      if(project.status || project.userId === Meteor.userId()){
+        displayProject.push(project);
+      }
+    }
+
+    return displayProject;
+
+ },
+ getSamples(){
+  Meteor.subscribe("myProjects");
+  //Meteor.users.find  ({$and : [ {'_id' : Meteor.userId()} ,            {"follows": follow      }]});
+  let displayProject = new Array();
+  const projects = Project.find({
+    $and : [ 
+      {'userId' : FlowRouter.getParam('id')},
+      {'project_is_main':false},
+      {'project_family':'M'}
+    ]
+  });
+
+  for (const project of projects) {
+    //sólo lo pueden ver si está publicado o si es el dueño
+    if(project.status || project.userId === Meteor.userId()){
+      displayProject.push(project);
+    }
+  }
+
+  return displayProject;
+ },
+ getMainProject(){
+  Meteor.subscribe("myProjects");
+  return Project.findOne({
+    $and : [ 
+      {'userId' : FlowRouter.getParam('id')},
+      {'project_is_main':true}
+    ]
+  });
+},
+allowedView(id){
+ let project = Project.findOne({"_id": id});
+ let allowed = false;
+ if(project){
+  if(Meteor.userId()===project.userId){
+    allowed = true;
+  }       
+  else if(project.status){
+    allowed = true;
+  }
+ }
+ return allowed;
+},
    countProjects(){
      Meteor.subscribe("myProjects", FlowRouter.getParam('id'));
      var count = Project.find({'userId' : FlowRouter.getParam('id')}).count();
@@ -292,7 +358,7 @@ Template.profilePageActor.helpers({
       if(data!=null && data.projectPictureID!=null){
         var cover = Media.findOne({'mediaId':data.projectPictureID});
         if(cover!=null){
-          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/w_"+size+",c_scale" + "/v" + cover.media_version + "/" + data.userId + "/" + data.projectPictureID;    
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/c_scale" + "/v" + cover.media_version + "/" + Meteor.settings.public.LEVEL + "/" + data.projectPictureID;    
         }
         
       }
@@ -797,6 +863,17 @@ Template.profilePageActor.events({
         );
 
       },
+      'click .openImage': function(event, template){
+        event.preventDefault();
+        var mediaId = $(event.currentTarget).attr("data-id");
+        console.log(mediaId);
+        const media = Media.findOne({'mediaId':mediaId});
+        let url = "";
+        if(media!=null){
+          url = Meteor.settings.public.CLOUDINARY_RES_URL + "/v" + media.media_version + "/" + Meteor.settings.public.LEVEL + "/" + media.mediaId;
+        }
+        window.open(url,'newWindow','toolbars=0,scrollbars=1,resizable=1, location=0');
+      }
 });
 
 Template.profilePageActor.onRendered(function () {

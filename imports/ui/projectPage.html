@@ -70,14 +70,12 @@
     <div class="col-lg-8 col-md-6 col-sm-12">
       <div class="row">
         <div class="col-lg-2 col-md-4">
-          {{#if isOwner}}
             <!--<a href="#" class="text-white text-right" id="openMediaGallery">Cambiar <i class="fa fa-camera"></i></a>-->
             {{#if getProfilePicture projData.userId}}
              <a href="/profilePage/{{projData.userId}}" class="text-black"><img src="{{getProfilePicture projData.userId}}" border="0" class="rounded-circle"/></a>
              {{else}}
              <a href="/profilePage/{{projData.userId}}" class="text-black"><div id="profileImageLarge">{{getInitials projData.userId}}</div></a>
              {{/if}}
-          {{/if}}
         </div>
         <div class="col-lg-10 col-md-8">
           <div class="row">
@@ -280,7 +278,7 @@
               <div class="row">
                 <div class="owl-carousel">
                   {{#each getGallery}}
-                  <div> <img class="thumbnail-gallery" src="{{getURL this.mediaId}}" alt=""> </div>
+                  <div> <a href="#" data-id="{{this.mediaId}}" class="openImage"> <img class="thumbnail-gallery" src="{{getURL this.mediaId}}" alt=""> </a> </div>
                   {{/each}}  
                 </div>
               </div>
@@ -1094,18 +1092,18 @@
      </div>
      {{/if}}
      
-     <div class="d-flex justify-content-around text-center">
+     <div class="d-flex text-center">
         {{#each getCrew.project_staff}}
            {{#if this.confirmed}}
-              <div class="p-2">
-                <a href="{{getPersonalURL this._id}}/{{this._id}}">
-                 {{#if getProfilePicture this._id}}
-                    <img src="{{getProfilePicture this._id}}" border="0" class="rounded-circle" /><br/>
+              <div class="p-2 mx-auto">
+                <a href="{{getPersonalURL this.id}}/{{this.id}}">
+                 {{#if getProfilePicture this.id}}
+                    <img src="{{getProfilePicture this.id}}" border="0" class="rounded-circle" /><br/>
                  {{else}}
-                    <div id="profileImageLarge">{{getInitials this._id}}</div>
+                    <div id="profileImageLarge">{{getInitials this.id}}</div>
                  {{/if}}
                  </a>
-                  <span class="people-name-text-circle"><a href="/profilePage/{{this._id}}" class="text-title-gray">{{this.name}}</a></span> <br><span class="people-role-text-circle uppercase">{{this.role}}</span> 
+                  <span class="people-name-text-circle"><a href="/profilePage/{{this.id}}" class="text-title-gray">{{this.name}}</a></span> <br><span class="people-role-text-circle uppercase">{{this.role}}</span> 
               </div>
            {{/if}}
         {{/each}}
@@ -1141,7 +1139,7 @@
 </template>
 
 <template name="companies">
-  {{#if getCompanies.companies}}
+  {{#if getCompanies}}
      <div class="spacer40"></div>
      <div class="container text-center">
         <h3 class="h1-title">EMPRESAS</h3>
@@ -1149,17 +1147,17 @@
      </div>
      
      <div class="d-flex justify-content-around text-center">
-        {{#each getCompanies.companies}}
-           {{#if this.confirmed}}
+        {{#each getCompanies}}
+   
            <div class="col-lg-2 col-sm-4 col-xs-12">
               <div class="p-2">
                 <div class="row">
                   <div class="col">
                     <a href="/industryPage/{{this._id}}">
                      {{#if getLogoPicture this._id 100}}
-                        <img src="{{getLogoPicture this._id 100}}" border="0" class="rounded-circle" /><br/>
+                        <img src="{{getLogoPicture this._id 200}}" border="0" class="rounded-circle" /><br/>
                      {{else}}
-                        <img class="rounded-circle" src="/images/logo.svg" style="width:60px;heigt:60px">
+                        <img class="rounded-circle" src="/images/logo.svg" style="width:60px;height:60px">
                      {{/if}}
                      </a>    
                   </div>
@@ -1195,7 +1193,6 @@
               </div>
             -->
             </div>   
-           {{/if}}
         {{/each}}
      </div>
    {{/if}}
@@ -1207,10 +1204,7 @@
     {{#each items}}
       <li data-id="{{_id}}" class="list-group-item clearfix">
         <div class="row">
-            <div class="col-lg-10 col-md-8 col-sm-12 text-center">
-               <h1 class="h1-title">{{title}}</h1>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-12">
+            <div class="col">
               <span class="pull-right">
                 <a href="#" class="text-purple" id="edit_portlet"><span class="mdi mdi-pencil" data-id="{{_id}}" mode="edit"></span></a>
                 <a href="#" class="text-purple" id="delete_portlet"><span class="mdi mdi-delete" mode="delete" data-id="{{_id}}" data-url="{{url}}"></span></a>
@@ -1223,6 +1217,11 @@
               {{#if isNotTheFirst order}}
               <a href="#"><span class="mdi mdi-arrow-up" data-id="{{_id}}" id="up"></span></a>
               {{/if}}
+            </div>
+         </div>
+         <div class="row">
+            <div class="col text-center">
+               <h1 class="h1-title">{{title}}</h1>
             </div>
          </div>
          <div class="row">
