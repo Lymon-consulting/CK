@@ -188,6 +188,29 @@ Template.projList.helpers({
       return object;
     },
 
+    userIsCrew(userId){
+      const user = Meteor.users.findOne({'_id': userId});
+      let result = false;
+      if(user){
+        if(user.isCrew){
+          result = true;
+        }
+      }
+      return result;
+      
+    },
+    userIsCast(userId){
+      const user = Meteor.users.findOne({'_id': userId});
+      let result = false;
+      if(user){
+        if(user.isCast){
+          result = true;
+        }
+      }
+      return result;
+      
+    },
+
      getProjectFamily(){
       var type = new Array();
       type.push("Producciones"); //Producción

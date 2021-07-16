@@ -195,13 +195,14 @@
                               <div class="col subtitle-underline"><strong>Publicado por:</strong></div>
                             </div>
                             <div class="row">
-                            {{#if isCrew}}
+                            {{#if userIsCrew this.userId}}
                               <div class="col subtitle-underline"><a href="/profilePage/{{this.userId}}" class="text-black">{{getAuthor this.userId}}</a></div>
                             {{else}}
-                              {{#if isCast}}
-                              <div class="col subtitle-underline"><a href="/profilePageActor/{{this.userId}}" class="text-black">{{getAuthor this.userId}}</a></div>
+                              {{#if userIsCast this.userId}}
+                            <div class="col subtitle-underline"><a href="/profilePageActor/{{this.userId}}" class="text-black">{{getAuthor this.userId}}</a></div>
                               {{/if}}
                             {{/if}}
+                            
                             </div>
                           </div>
                         </div>

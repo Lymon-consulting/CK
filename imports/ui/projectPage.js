@@ -110,12 +110,14 @@ if (Meteor.isClient) {
          return url;*/
       },
       getStatus(status){
-        if(status==="Terminado"){
-          return "";
+        const data = Project.findOne({'_id' : FlowRouter.getParam('id')});
+        let result = "";
+        if(data.project_family==="P"){
+          if(status!="Terminado"){
+            result = "En "+status;
+          }
         }
-        else{
-          return "En "+status;
-        }
+        return result;
       },
       getWeb(){
         var data = Project.findOne({'_id' : FlowRouter.getParam('id')});

@@ -25,6 +25,11 @@ Template.peopleList.rendered = function(){
   });
 }
 
+Template.peopleList.onDestroyed(function () {
+   Session.set("selected_category", null);
+   Session.set("role_selected",null);
+});
+
 
 Template.peopleList.helpers({
    usersIndex: () => UsersIndex, // instanceof EasySearch.Index

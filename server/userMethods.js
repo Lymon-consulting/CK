@@ -250,6 +250,11 @@ Accounts.onCreateUser(function(options, user) {
           }
         });
     },
+
+    deleteAlert(alertId){
+      Alert.remove({'_id':alertId});
+    },
+
     markAlertAsRead(alertId,read){
       Alert.update({'_id':alertId}, 
         {

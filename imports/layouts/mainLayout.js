@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { Media } from '../api/media.js';
 import { Params } from '../api/params.js';
 import './mainLayout.html';
 
@@ -95,6 +96,7 @@ Template.registerHelper('isCast', function(){
   var result = false;
   if(Meteor.user()){
     if(Meteor.user().isCast!=null && Meteor.user().isCast){
+      console.log("isCast");
       result=true;
     }      
   }
@@ -102,13 +104,19 @@ Template.registerHelper('isCast', function(){
 });
 
 Template.registerHelper('isCrew', function(){
-  var result = false;
+  console.log("Validando si es Crew");
+  console.log(Meteor.user());
+  console.log(Meteor.user().isCrew);
+  if(Meteor.user().isCrew) return true;
+  else return false;
+  /*var result = false;
   if(Meteor.user()){
     if(Meteor.user().isCrew!=null && Meteor.user().isCrew){
+      console.log("isCrew");
       result=true;
     }
   }
-  return result;
+  return result;*/
 });
 
 /*

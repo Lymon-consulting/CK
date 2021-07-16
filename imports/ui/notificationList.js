@@ -95,6 +95,26 @@ Template.notificationList.events({
  
     FlowRouter.go('/collaborations/'+entityType+"/"+entityId);
  
+  },
+  'click .delete': function(event,template){
+    event.preventDefault();
+    const id = $(event.currentTarget).attr("data-id");
+    console.log(id);
+
+    if(confirm("¿Quieres borrar esta notificación? Esta acción no se puede deshacer")){
+      Meteor.call(
+        'removeAlert',
+        Meteor.userId(),
+        id
+      );
+
+      Meteor.call(
+        'deleteAlert',
+        id
+      );
+    }
+
+
   }
 });
 
